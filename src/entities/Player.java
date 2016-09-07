@@ -5,21 +5,22 @@ import javafx.scene.image.Image;
 
 public class Player extends Entity {
 
-	private static Image PLAYER_SPRITE = new Image("resources/player.png");
+	private static Image SPRITE = new Image("resources/player.png");
 	
 	private double speedY;
 	
 	public Player() {
 		super();
-		this.offsetX = (int) (PLAYER_SPRITE.getWidth()/2);
-		this.offsetY = (int) (PLAYER_SPRITE.getHeight());
+		this.offsetX = (int) (SPRITE.getWidth()/2);
+		this.offsetY = (int) (SPRITE.getHeight());
 		this.speedY = 0;
 	}
 	
 	public Player(int x, int y) {
 		super(x, y);
-		this.offsetX = (int) (PLAYER_SPRITE.getWidth()/2);
-		this.offsetY = (int) (PLAYER_SPRITE.getHeight());
+		this.offsetX = (int) (SPRITE.getWidth()/2);
+		this.offsetY = (int) (SPRITE.getHeight());
+        this.speedY = 0;
 	}
 	
 	public void update(double timeDifference) {
@@ -33,6 +34,6 @@ public class Player extends Entity {
 	}
 	
 	public void draw(GraphicsContext gc) {
-		gc.drawImage(PLAYER_SPRITE, x - offsetX, y - offsetY);
+	    gc.drawImage(SPRITE, x - offsetX, y - offsetY);
 	}
 }

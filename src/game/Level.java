@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 
+import entities.Block;
 import entities.Entity;
 import entities.Player;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,11 +14,13 @@ public class Level {
 	
 	public Level() {
 		entities = new ArrayList<Entity>();
-		entities.add(new Player(256, 256));
-		entities.add(new Player(256, 224));
-		entities.add(new Player(128, 192));
-		entities.add(new Player(256, 288));
-		entities.add(new Player(256, 320));
+		entities.add(new Player(128, 256));
+		entities.add(new Player(384, 256));
+
+		for (int x = 0; x < 512; x += 64) {
+			entities.add(new Block(x, 448));
+		}
+
 		background = new Image("resources/cloud.png");
 	}
 	

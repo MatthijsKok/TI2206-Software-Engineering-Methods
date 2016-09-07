@@ -3,7 +3,7 @@ package entities;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Entity {
-	
+
 	protected int x, y, offsetX, offsetY, width, height;
 	
 	public Entity() {
