@@ -48,14 +48,14 @@ public class Player extends Entity {
 		this.position.y += this.speed.y*dt;
 
         // Left boundary
-        if (this.position.x <= 0) {
-            this.position.x = 0;
-            this.speed.x = Math.max(0, this.speed.x);
+        if (this.position.x <= 33) {
+            this.position.x = 33;
+            this.speed.x = Math.max(33, this.speed.x);
         }
 
         // Right boundary
-        if (this.position.x >= 512) {
-            this.position.x = 512;
+        if (this.position.x >= 500) {
+            this.position.x = 500;
             this.speed.x = Math.min(this.speed.x, 0);
         }
 
