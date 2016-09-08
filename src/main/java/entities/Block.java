@@ -1,25 +1,22 @@
 package entities;
 
+import com.sun.javafx.geom.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import util.Sprite;
 
 /**
  * Created by wouterraateland on 07-09-16.
  */
 public class Block extends Entity {
+    private static Sprite SPRITE = new Sprite("block.png");
 
     public Block() {
-        super();
+        this(0, 0);
     }
 
-    public Block(int x, int y) {
+    public Block(float x, float y) {
         super(x, y);
-    }
-
-    private static final Image SPRITE = new Image("block.png");
-
-
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(SPRITE, x - offsetX, y - offsetY);
+        sprite = Block.SPRITE;
     }
 }

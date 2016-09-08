@@ -7,7 +7,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
- 
+import util.GameCanvas;
+
 public class BubbleTrouble extends Application 
 {
     public static void main(String[] args) 
@@ -20,13 +21,10 @@ public class BubbleTrouble extends Application
     	theStage.setTitle("BubbleTrouble");
     	 
         Group root = new Group();
-        Scene theScene = new Scene( root );
-        theStage.setScene( theScene );
-     
-        Canvas canvas = new Canvas(512, 512);
-        root.getChildren().add( canvas );
-     
-        final GraphicsContext gc = canvas.getGraphicsContext2D();
+        Scene theScene = new Scene(root);
+        theStage.setScene(theScene);
+
+        root.getChildren().add(GameCanvas.getInstance().getCanvas());
         
         final Game game = new Game();
      
@@ -43,11 +41,12 @@ public class BubbleTrouble extends Application
             	game.update(t);
             	
             	// Clear canvas
+                GraphicsContext gc = GameCanvas.getInstance().getContext();
             	gc.setFill(Color.ALICEBLUE);
                 gc.fillRect(0, 0, 512, 512);
                 
                 // And redraw
-            	game.draw(gc);
+            	game.draw();
             }
         }.start();
      

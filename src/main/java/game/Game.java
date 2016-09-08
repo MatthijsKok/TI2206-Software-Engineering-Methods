@@ -18,28 +18,17 @@ public class Game {
 		currentLevel.update(timeDifference);
 	}
 	
-	public void draw(GraphicsContext gc) {
-		currentLevel.draw(gc);
+	public void draw() {
+		currentLevel.draw();
 	}
 }
 
 
 /*
 
-        Image background = new Image("resources/background.jpg");
-        Image player     = new Image("resources/player.png");
-        Image wall       = new Image("resources/wall.png");
-        
-
-/*for (Entity entity : entities) {
-	entity.update(t);
-}
-
-for (Entity entity : entities) {
-	entity.draw(gc);
-}*/
-
-
+Image background = new Image("resources/background.jpg");
+Image player     = new Image("resources/player.png");
+Image wall       = new Image("resources/wall.png");
 
 
 //double x = 256 + 128 * Math.cos(t);

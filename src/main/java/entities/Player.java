@@ -1,39 +1,28 @@
 package entities;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+import com.sun.javafx.geom.Vec2f;
+import util.Sprite;
 
 public class Player extends Entity {
 
-	private static Image SPRITE = new Image("player.png");
-	
-	private double speedY;
-	
-	public Player() {
-		super();
-		this.offsetX = (int) (SPRITE.getWidth()/2);
-		this.offsetY = (int) (SPRITE.getHeight());
-		this.speedY = 0;
-	}
-	
-	public Player(int x, int y) {
-		super(x, y);
-		this.offsetX = (int) (SPRITE.getWidth()/2);
-		this.offsetY = (int) (SPRITE.getHeight());
-        this.speedY = 0;
-	}
-	
+	private static Sprite SPRITE = new Sprite("player.png", new Vec2f(32, 64));
+
+    public Player() {
+        this(0, 0);
+    }
+
+    public Player(float x, float y) {
+        super(x, y);
+        sprite = Player.SPRITE;
+    }
+
 	public void update(double timeDifference) {
-		this.speedY += 0.1;
-		this.y += this.speedY;
+		this.speed.y += 0.1;
+		this.position.y += this.speed.y;
 		
-		if (this.y >= 512) {
-			this.y = 512;
-			this.speedY = -this.speedY;
+		if (this.position.y >= 512) {
+			this.position.y = 512;
+			this.speed.y = -this.speed.y;
 		}
-	}
-	
-	public void draw(GraphicsContext gc) {
-	    gc.drawImage(SPRITE, x - offsetX, y - offsetY);
 	}
 }

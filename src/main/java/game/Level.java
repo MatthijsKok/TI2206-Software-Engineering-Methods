@@ -30,9 +30,9 @@ public class Level {
 		}
 	}
 	
-	public void draw(GraphicsContext gc) {
+	public void draw() {
 		for (Entity entity : entities) {
-			entity.draw(gc);
+			entity.draw();
 		}
 	}
 }
