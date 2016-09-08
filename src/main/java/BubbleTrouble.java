@@ -27,7 +27,7 @@ public class BubbleTrouble extends Application
         KeyboardInputManager.getInstance().addScene(scene);
         root.getChildren().add(GameCanvasManager.getInstance().getCanvas());
         
-        final Game game = new Game();
+        final Game game = Game.getInstance();
 
         new AnimationTimer() {
             public void handle(long currentNanoTime)

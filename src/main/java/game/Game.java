@@ -2,22 +2,35 @@ package game;
 
 import java.util.ArrayList;
 
-import javafx.scene.canvas.GraphicsContext;
-
 public class Game {
 	private ArrayList<Level> levels;
 	private Level currentLevel;
 
     private long lastNanoTime, currentNanoTime;
-	
-	public Game() {
+	private static Game gameInstance = null;
+
+    private Game() {
 		levels = new ArrayList<Level>();
 		levels.add(new Level());
 		currentLevel = levels.get(0);
 
         lastNanoTime = System.nanoTime();
 	}
-	
+
+    /**
+     * Creates a new instance of a game if there is not one yet created and return that instance.
+     * @return a Game instance.
+     */
+    public static Game getInstance() {
+        if (gameInstance == null){
+            gameInstance = new Game();
+        }
+        return gameInstance;
+    }
+
+    /**
+     * Updates the game
+     */
 	public void update() {
         currentNanoTime = System.nanoTime();
         double dt = (currentNanoTime - lastNanoTime) / 1000000000.0;
@@ -28,6 +41,13 @@ public class Game {
 	public void draw() {
 		currentLevel.draw();
 	}
+
+    /**
+     * @return Return the level curently in play
+     */
+    public Level getCurrentLevel() {
+        return currentLevel;
+    }
 }
 
 

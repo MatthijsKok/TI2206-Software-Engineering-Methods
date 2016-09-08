@@ -1,13 +1,11 @@
 package util;
 
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 
 /**
- * Created by wouterraateland on 08-09-16.
+ * A Class that manages keyboard input
  */
 public class KeyboardInputManager {
 

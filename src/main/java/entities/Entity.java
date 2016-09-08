@@ -8,6 +8,12 @@ public abstract class Entity {
 	protected Vec2d position, speed;
 	protected Sprite sprite = null;
 
+    /**
+     * Boolen with the current visibility state of an entity.
+     */
+    protected boolean visible;
+
+
 	public Entity() {
 		this(0, 0);
 	}
@@ -19,6 +25,7 @@ public abstract class Entity {
 	public Entity(Vec2d position) {
 		setPosition(position);
 		setSpeed(new Vec2d(0, 0));
+        visible = true;
 	}
 
 	public void setPosition(double x, double y) {
@@ -42,7 +49,7 @@ public abstract class Entity {
 	}
 	
 	public void draw() {
-		if (sprite != null) {
+		if (sprite != null && visible) {
 			sprite.draw(position);
 		}
 	}
