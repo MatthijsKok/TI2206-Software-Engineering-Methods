@@ -18,7 +18,7 @@ public class BubbleTrouble extends Application
  
     public void start(Stage theStage) 
     {
-    	theStage.setTitle("BubbleTrouble");
+    	theStage.setTitle("Bubble Trouble");
     	 
         Group root = new Group();
         Scene scene = new Scene(root);
