@@ -6,20 +6,20 @@ import javafx.scene.canvas.GraphicsContext;
 /**
  * Created by wouterraateland on 08-09-16.
  */
-public class GameCanvas {
-    private static GameCanvas instance = null;
+public class GameCanvasManager {
+    private static GameCanvasManager instance = null;
 
     private Canvas canvas;
     private GraphicsContext gc;
 
-    protected GameCanvas() {
+    protected GameCanvasManager() {
         canvas = new Canvas(512, 512);
         gc = canvas.getGraphicsContext2D();
     }
 
-    public static GameCanvas getInstance() {
+    public static GameCanvasManager getInstance() {
         if (instance == null) {
-            instance = new GameCanvas();
+            instance = new GameCanvasManager();
         }
         return instance;
     }

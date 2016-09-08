@@ -1,40 +1,39 @@
 package entities;
 
-import com.sun.javafx.geom.Vec2f;
-import javafx.scene.canvas.GraphicsContext;
+import com.sun.javafx.geom.Vec2d;
 import util.Sprite;
 
 public abstract class Entity {
 
-	protected Vec2f position, speed;
+	protected Vec2d position, speed;
 	protected Sprite sprite = null;
 
 	public Entity() {
 		this(0, 0);
 	}
 	
-	public Entity(float x, float y) {
-		this(new Vec2f(x, y));
+	public Entity(double x, double y) {
+		this(new Vec2d(x, y));
 	}
 
-	public Entity(Vec2f position) {
+	public Entity(Vec2d position) {
 		setPosition(position);
-		setSpeed(new Vec2f(0, 0));
+		setSpeed(new Vec2d(0, 0));
 	}
 
-	public void setPosition(float x, float y) {
-		setPosition(new Vec2f(x, y));
+	public void setPosition(double x, double y) {
+		setPosition(new Vec2d(x, y));
 	}
 
-	public void setPosition(Vec2f position) {
+	public void setPosition(Vec2d position) {
 		this.position = position;
 	}
 
-	public void setSpeed(float x, float y) {
-		setSpeed(new Vec2f(x, y));
+	public void setSpeed(double x, double y) {
+		setSpeed(new Vec2d(x, y));
 	}
 
-	public void setSpeed(Vec2f speed) {
+	public void setSpeed(Vec2d speed) {
 		this.speed = speed;
 	}
 	

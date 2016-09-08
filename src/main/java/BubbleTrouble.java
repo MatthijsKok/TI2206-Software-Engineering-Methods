@@ -3,11 +3,11 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import util.GameCanvas;
+import util.GameCanvasManager;
+import util.KeyboardInputManager;
 
 public class BubbleTrouble extends Application 
 {
@@ -21,27 +21,22 @@ public class BubbleTrouble extends Application
     	theStage.setTitle("BubbleTrouble");
     	 
         Group root = new Group();
-        Scene theScene = new Scene(root);
-        theStage.setScene(theScene);
+        Scene scene = new Scene(root);
+        theStage.setScene(scene);
 
-        root.getChildren().add(GameCanvas.getInstance().getCanvas());
+        KeyboardInputManager.getInstance().addScene(scene);
+        root.getChildren().add(GameCanvasManager.getInstance().getCanvas());
         
         final Game game = new Game();
-     
-        final long startNanoTime = System.nanoTime();
 
-        new AnimationTimer()
-        {
+        new AnimationTimer() {
             public void handle(long currentNanoTime)
             {
-            	double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-            	//lastNanoTime = System.nanoTime();
-            	
             	// Update the game
-            	game.update(t);
+            	game.update();
             	
             	// Clear canvas
-                GraphicsContext gc = GameCanvas.getInstance().getContext();
+                GraphicsContext gc = GameCanvasManager.getInstance().getContext();
             	gc.setFill(Color.ALICEBLUE);
                 gc.fillRect(0, 0, 512, 512);
                 

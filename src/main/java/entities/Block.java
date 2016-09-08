@@ -15,7 +15,7 @@ public class Block extends Entity {
         this(0, 0);
     }
 
-    public Block(float x, float y) {
+    public Block(double x, double y) {
         super(x, y);
         sprite = Block.SPRITE;
     }

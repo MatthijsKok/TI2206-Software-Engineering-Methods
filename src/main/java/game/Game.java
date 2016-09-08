@@ -7,15 +7,22 @@ import javafx.scene.canvas.GraphicsContext;
 public class Game {
 	private ArrayList<Level> levels;
 	private Level currentLevel;
+
+    private long lastNanoTime, currentNanoTime;
 	
 	public Game() {
 		levels = new ArrayList<Level>();
 		levels.add(new Level());
 		currentLevel = levels.get(0);
+
+        lastNanoTime = System.nanoTime();
 	}
 	
-	public void update(double timeDifference) {
-		currentLevel.update(timeDifference);
+	public void update() {
+        currentNanoTime = System.nanoTime();
+        double dt = (currentNanoTime - lastNanoTime) / 1000000000.0;
+        lastNanoTime = currentNanoTime;
+		currentLevel.update(dt);
 	}
 	
 	public void draw() {

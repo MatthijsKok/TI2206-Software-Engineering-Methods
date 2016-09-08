@@ -1,6 +1,6 @@
 package util;
 
-import com.sun.javafx.geom.Vec2f;
+import com.sun.javafx.geom.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -12,21 +12,21 @@ public class Sprite {
     private Image image;
     private int frames;
     private int currentFrame;
-    private Vec2f offset;
+    private Vec2d offset;
 
     public Sprite(String uri) {
-        this(uri, 1, new Vec2f(0, 0));
+        this(uri, 1, new Vec2d(0, 0));
     }
 
     public Sprite(String uri, int frames) {
-        this(uri, frames, new Vec2f(0, 0));
+        this(uri, frames, new Vec2d(0, 0));
     }
 
-    public Sprite(String uri, Vec2f offset) {
+    public Sprite(String uri, Vec2d offset) {
         this(uri, 1, offset);
     }
 
-    public Sprite(String uri, int frames, Vec2f offset) {
+    public Sprite(String uri, int frames, Vec2d offset) {
         setImage(uri);
         setFrames(frames);
         setOffset(offset);
@@ -49,20 +49,20 @@ public class Sprite {
         }
     }
 
-    public void setOffset(float x, float y) {
-        setOffset(new Vec2f(x, y));
+    public void setOffset(double x, double y) {
+        setOffset(new Vec2d(x, y));
     }
 
-    public void setOffset(Vec2f offset) {
+    public void setOffset(Vec2d offset) {
         this.offset = offset;
     }
 
-    public void draw(Vec2f position) {
+    public void draw(Vec2d position) {
         draw(position.x, position.y);
     }
 
-    public void draw(float x, float y) {
-        GraphicsContext gc = GameCanvas.getInstance().getContext();
-        gc.drawImage(image, x, y);
+    public void draw(double x, double y) {
+        GraphicsContext gc = GameCanvasManager.getInstance().getContext();
+        gc.drawImage(image, x - offset.x, y - offset.y);
     }
 }
