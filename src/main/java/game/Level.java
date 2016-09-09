@@ -1,6 +1,7 @@
 package game;
 
 import entities.Block;
+import entities.WallBlock;
 import entities.Entity;
 import entities.Player;
 import entities.Rope;
@@ -23,24 +24,20 @@ public class Level {
         //add the rope to the game
         entities.add(new Rope(0,0));
 
-		//Floor blocks
-		for (int x = 0; x < 1024; x += 64) {
-			entities.add(new Block(x, 544));
+
+		// wall blocks
+		for (int x = 0; x < 608; x += 32) {
+			entities.add(new WallBlock(0, x));
+			entities.add(new WallBlock(992, x));
 		}
-		//left wall blocks
-		for (int x = 0; x < 608; x += 64) {
-			entities.add(new Block(0, x));
-		}
-		//right wall blocks
-		for (int x = 0; x < 608; x += 64) {
-			entities.add(new Block(960, x));
-		}
-		//ceiling blocks
-		for (int x = 0; x < 1024; x += 64) {
-			entities.add(new Block(x, 0));
+		// Floor & ceiling blocks
+		for (int x = 0; x < 1024; x += 32) {
+			entities.add(new Block(x, 544));	//top floor
+			entities.add(new Block(x, 576));	//lower floor
+			entities.add(new Block(x, 0));		//ceiling
 		}
 
-		background = new Image("cloud.png");
+		background = new Image("bg2.jpg");
 	}
 	
 	public void update(double timeDifference) {

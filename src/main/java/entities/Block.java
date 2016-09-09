@@ -9,7 +9,7 @@ import util.Sprite;
  * Created by wouterraateland on 07-09-16.
  */
 public class Block extends Entity {
-    private static Sprite SPRITE = new Sprite("block.png");
+    private static Sprite SPRITE = new Sprite("block2.png");
 
     public Block() {
         this(0, 0);
