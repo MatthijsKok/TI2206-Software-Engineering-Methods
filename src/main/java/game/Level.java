@@ -24,19 +24,19 @@ public class Level {
         entities.add(new Rope(0,0));
 
 		//Floor blocks
-		for (int x = 0; x < 512; x += 64) {
-			entities.add(new Block(x, 448));
+		for (int x = 0; x < 1024; x += 64) {
+			entities.add(new Block(x, 544));
 		}
 		//left wall blocks
-		for (int x = 0; x < 512; x += 64) {
+		for (int x = 0; x < 608; x += 64) {
 			entities.add(new Block(0, x));
 		}
 		//right wall blocks
-		for (int x = 0; x < 512; x += 64) {
-			entities.add(new Block(448, x));
+		for (int x = 0; x < 608; x += 64) {
+			entities.add(new Block(960, x));
 		}
 		//ceiling blocks
-		for (int x = 0; x < 512; x += 64) {
+		for (int x = 0; x < 1024; x += 64) {
 			entities.add(new Block(x, 0));
 		}
 

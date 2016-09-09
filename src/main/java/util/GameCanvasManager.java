@@ -13,7 +13,7 @@ public class GameCanvasManager {
     private GraphicsContext gc;
 
     protected GameCanvasManager() {
-        canvas = new Canvas(1000, 600);
+        canvas = new Canvas(1024, 608);
         gc = canvas.getGraphicsContext2D();
     }
 
