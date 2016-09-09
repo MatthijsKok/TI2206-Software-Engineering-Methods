@@ -23,8 +23,21 @@ public class Level {
         //add the rope to the game
         entities.add(new Rope(0,0));
 
+		//Floor blocks
 		for (int x = 0; x < 512; x += 64) {
 			entities.add(new Block(x, 448));
+		}
+		//left wall blocks
+		for (int x = 0; x < 512; x += 64) {
+			entities.add(new Block(0, x));
+		}
+		//right wall blocks
+		for (int x = 0; x < 512; x += 64) {
+			entities.add(new Block(448, x));
+		}
+		//ceiling blocks
+		for (int x = 0; x < 512; x += 64) {
+			entities.add(new Block(x, 0));
 		}
 
 		background = new Image("cloud.png");
