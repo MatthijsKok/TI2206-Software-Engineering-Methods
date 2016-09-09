@@ -17,7 +17,7 @@ public class Level {
 		entities = new ArrayList<Entity>();
 
         //create a new player
-        player = new Player(128, 256);
+        player = new Player(512, 512);
         //add player to the game
         entities.add(player);
         //add the rope to the game

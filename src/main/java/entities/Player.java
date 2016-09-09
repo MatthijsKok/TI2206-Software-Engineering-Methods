@@ -39,7 +39,7 @@ public class Player extends Entity {
 		this.speed.y += gravity*dt;
 
         // Jump
-        if (this.position.y >= 448 && keyboard.keyPressed(up)) {
+        if (this.position.y >= 544 && keyboard.keyPressed(up)) {
             this.speed.y = -jumpSpeed;
         }
 
@@ -48,20 +48,20 @@ public class Player extends Entity {
 		this.position.y += this.speed.y*dt;
 
         // Left boundary
-        if (this.position.x <= 33) {
-            this.position.x = 33;
-            this.speed.x = Math.max(33, this.speed.x);
+        if (this.position.x <= 96) {
+            this.position.x = 96;
+            this.speed.x = Math.max(96, this.speed.x);
         }
 
         // Right boundary
-        if (this.position.x >= 500) {
-            this.position.x = 500;
+        if (this.position.x >= 960) {
+            this.position.x = 960;
             this.speed.x = Math.min(this.speed.x, 0);
         }
 
         // Bottom boundary
-		if (this.position.y >= 448) {
-			this.position.y = 448;
+		if (this.position.y >= 544) {
+			this.position.y = 544;
 			this.speed.y = Math.min(this.speed.y, 0);
 		}
 	}
