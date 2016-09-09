@@ -37,8 +37,8 @@ public class BubbleTrouble extends Application
             	
             	// Clear canvas
                 GraphicsContext gc = GameCanvasManager.getInstance().getContext();
-            	gc.setFill(Color.ALICEBLUE);
-                gc.fillRect(0, 0, 512, 512);
+               	gc.setFill(Color.ALICEBLUE);
+                gc.fillRect(0, 0, 1024, 608);
                 
                 // And redraw
             	game.draw();

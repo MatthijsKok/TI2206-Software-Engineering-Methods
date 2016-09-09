@@ -37,7 +37,7 @@ public class Level {
 			entities.add(new Block(x, 0));		//ceiling
 		}
 
-		background = new Image("bg2.jpg");
+//		background = new Image("background.jpg");
 	}
 	
 	public void update(double timeDifference) {
