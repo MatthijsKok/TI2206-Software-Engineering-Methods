@@ -1,10 +1,6 @@
 package game;
 
-import entities.Block;
-import entities.WallBlock;
-import entities.Entity;
-import entities.Player;
-import entities.Rope;
+import entities.*;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -36,6 +32,12 @@ public class Level {
 			entities.add(new Block(x, 576));	//lower floor
 			entities.add(new Block(x, 0));		//ceiling
 		}
+
+		// Lives
+		for (int x = 0; x < 105; x += 35) {
+			entities.add(new Life(x+850, 560));
+		}
+
 
 //		background = new Image("background.jpg");
 	}
