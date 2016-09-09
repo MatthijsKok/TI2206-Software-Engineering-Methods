@@ -38,6 +38,9 @@ public class Level {
 			entities.add(new Life(x+850, 560));
 		}
 
+		// DeathTest
+		entities.add(new DeathTestTemp(400,500));
+
 //		background = new Image("background.jpg");
 	}
 	
