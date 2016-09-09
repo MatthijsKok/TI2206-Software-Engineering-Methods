@@ -34,10 +34,9 @@ public class Level {
 		}
 
 		// Lives
-		for (int x = 0; x < 105; x += 35) {
+		for (int x = 0; x < Player.life*35; x += 35) {
 			entities.add(new Life(x+850, 560));
 		}
-
 
 //		background = new Image("background.jpg");
 	}

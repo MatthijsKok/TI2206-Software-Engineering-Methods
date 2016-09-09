@@ -15,6 +15,7 @@ public class Player extends Entity {
     private double runSpeed  = 256; // px/s
     private double jumpSpeed = 256; // px/s
     private double gravity   = 300; // px/s^2
+    public static int life = 3;     // We start with 3 lives
 
     public Player() {
         this(0, 0);
@@ -28,6 +29,19 @@ public class Player extends Entity {
         right = "RIGHT";
         up = "UP";
         shoot = "SPACE";
+    }
+
+    /**
+     * If you die, you lose a life
+     * If you have no life, GAME OVER
+     */
+    public void death (){
+        if(life > 0) {
+            life = life - 1;
+        }
+        if(life==0){
+            // GAME OVER
+        }
     }
 
 	public void update(double dt) {
