@@ -1,8 +1,6 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
-import game.Game;
-import util.KeyboardInputManager;
 import util.Sprite;
 
 /**
@@ -11,19 +9,9 @@ import util.Sprite;
 public class Rope extends Entity {
 
     /**
-     * Key used for shooting. Will be SPACE if not defined otherwise.
-     */
-    public String shootKey = "SPACE";
-
-    /**
      * Sprite of the rope.
      */
-    private static Sprite SPRITE = new Sprite("arrow.png", new Vec2d(30, 64));
-
-    /**
-     * Keyboard manager used for gathering user input.
-     */
-    private static KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
+    private static Sprite SPRITE = new Sprite("arrow.png");
 
     /**
      * Constant upward speed of the rope in px/s.
@@ -36,14 +24,46 @@ public class Rope extends Entity {
     private boolean traveling = false;
 
     /**
+     * Boolean indicating if the rope was activated by the player.
+     */
+    private boolean activated = false;
+
+    /**
+     * The position where the rope will be spawned when it is activated.
+     */
+    private Vec2d spawnPosition;
+
+    /**
      * Creates a new rope
      * @param x the x postiton of the rope
      * @param y the y position of the rope
      */
     public Rope(double x, double y) {
         super(x, y);
+        // Set sprite
         sprite = Rope.SPRITE;
+        sprite.setOffsetToCenter();
+        // Make the rope invisible by default
         visible = false;
+        // Set default spawn position
+        spawnPosition = new Vec2d(0,0);
+    }
+
+    /**
+     * If the rope is not yet traveling, a rope will spawn at the indicated position.
+     * @param spawnPosition The position where the rope will be spawned.
+     */
+    public void activate(Vec2d spawnPosition) {
+        this.activated = true;
+        this.spawnPosition.x = spawnPosition.x;
+        this.spawnPosition.y = spawnPosition.y;
+    }
+
+    /**
+     * Deactivates the rope.
+     */
+    public void deactivate() {
+        this.activated = false;
     }
 
     /**
@@ -52,18 +72,17 @@ public class Rope extends Entity {
      */
     public void update(double dt) {
 
-        //if the arrow is not traveling, and the shoot key is pressed...
+        //If the arrow is not traveling, and the shoot key is pressed...
         if (!traveling) {
-            if (keyboard.keyPressed(shootKey)) {
-                //make the rope visible...
+            if (activated) {
+                // make the rope visible...
                 visible = true;
 
-                //set its traveling state to true...
+                // set its traveling state to true...
                 traveling = true;
 
-                //and set the position of the rope to the position of the player
-                position.y = Game.getInstance().getCurrentLevel().getPlayer().position.y;
-                position.x = Game.getInstance().getCurrentLevel().getPlayer().position.x;
+                // and set the position of the rope to the position of the player.
+                position = spawnPosition;
             }
         }
 
@@ -73,12 +92,13 @@ public class Rope extends Entity {
             // move the arrow upwards with the speed of the arrow...
             position.y -= ARROWSPEED;
 
-            // and if the rope has reached the top of the screen, change its traveling state to false.
+            // and if the rope has reached the top of the screen, change its traveling and activated state to false.
             if(position.y <= 0) {
+                activated = false;
                 traveling = false;
                 visible = false;
+            }
         }
-    }
 
-}
+    }
 }
