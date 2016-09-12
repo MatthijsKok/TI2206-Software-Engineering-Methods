@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class Level {
 	private ArrayList<Entity> entities;
-	private Image background;
     private Player player;
 	
 	public Level() {
@@ -40,8 +39,6 @@ public class Level {
 
 		// DeathTest
 		entities.add(new DeathTestTemp(400,500));
-
-//		background = new Image("background.jpg");
 	}
 	
 	public void update(double timeDifference) {
@@ -62,5 +59,19 @@ public class Level {
 
     public ArrayList<Entity> getEntities() {
         return entities;
+    }
+
+    public void addEntity(Entity e) { entities.add(e); }
+
+    public boolean removeEntity(Entity e) {
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i) instanceof Entity) {
+                if (entities.get(i).equals(e)) {
+                    entities.remove(i);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
