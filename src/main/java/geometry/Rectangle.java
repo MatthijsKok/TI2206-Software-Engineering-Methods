@@ -14,6 +14,7 @@ public class Rectangle extends Shape {
     }
 
     public Rectangle(double width, double height) {
+        super();
         setPosition(0, 0);
         setSize(width, height);
     }
@@ -32,6 +33,10 @@ public class Rectangle extends Shape {
     public double getTop() { return position.y; }
     public double getRight() { return position.x + size.x; }
     public double getBottom() { return position.y + size.y; }
+
+    public boolean intersects(Circle circle) {
+        return circle.intersects(this);
+    }
 
     public boolean intersects(Rectangle rect) {
         return (rect.getLeft() > getRight() ||
