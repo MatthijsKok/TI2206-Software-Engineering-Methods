@@ -15,6 +15,7 @@ public class Player extends Entity {
     private double runSpeed  = 256; // px/s
     private double jumpSpeed = 256; // px/s
     private double gravity   = 300; // px/s^2
+    public static int life = 3;     // We start with 3 lives
 
     private double scale, scaleSpeed;
     private int side;
@@ -37,10 +38,21 @@ public class Player extends Entity {
         side = 1;
     }
 
+    /**
+     * If you die, you lose a life
+     * If you have no life, GAME OVER
+     */
+    public void death (){
+        if(life > 0) {
+            life = life - 1;
+        }
+        if(life==0){
+            // GAME OVER
+        }
+    }
+
 	public void update(double dt) {
 	    sprite.update(dt);
-        scaleSpeed -= (this.scale - 2)*dt;
-        scale += scaleSpeed*dt;
 
 	    // Set speed
 	    this.speed.x = 0;
