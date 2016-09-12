@@ -45,7 +45,9 @@ public abstract class Entity {
 	}
 	
 	public void update(double timeDifference) {
-		
+		if (sprite != null) {
+			sprite.update(timeDifference);
+		}
 	}
 	
 	public void draw() {
