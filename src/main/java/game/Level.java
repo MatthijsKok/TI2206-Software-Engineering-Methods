@@ -95,6 +95,11 @@ public class Level {
 
 	public void addEntity(Entity e) { entities.add(e); }
 
+    /**
+     * Removes entity e from the level
+     * @param e The entity to remove
+     * @return true if e is found, false otherwise
+     */
 	public boolean removeEntity(Entity e) {
 		for (int i = 0; i < entities.size(); i++) {
 				if (entities.get(i).equals(e)) {

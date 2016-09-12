@@ -17,6 +17,9 @@ public class HUD extends UIElement {
         this.level = level;
     }
 
+    /**
+     * Draws the lives that the first player of a level has left
+     */
     public void draw() {
         int lives = level.getPlayer(0).getLives();
 
