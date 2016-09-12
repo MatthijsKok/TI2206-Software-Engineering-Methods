@@ -26,6 +26,8 @@ public class Rectangle extends Shape {
         this.size = size;
     }
 
+    public Vec2d getSize() { return this.size; }
+
     public double getLeft() { return position.x; }
     public double getTop() { return position.y; }
     public double getRight() { return position.x + size.x; }
