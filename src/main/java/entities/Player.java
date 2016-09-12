@@ -53,8 +53,6 @@ public class Player extends Entity {
 
 	public void update(double dt) {
 	    sprite.update(dt);
-        scaleSpeed -= (this.scale - 2)*dt;
-        scale += scaleSpeed*dt;
 
 	    // Set speed
 	    this.speed.x = 0;
