@@ -1,11 +1,10 @@
 package game;
 
 import entities.Block;
-import entities.Life;
-import entities.WallBlock;
 import entities.Entity;
+import entities.Life;
 import entities.Player;
-import entities.Rope;
+import entities.WallBlock;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -22,8 +21,8 @@ public class Level {
         player = new Player(512, 512);
         //add player to the game
         entities.add(player);
-        //add the rope to the game
-        entities.add(new Rope(0,0));
+        // add the rope of the player
+        entities.add(player.getRope());
 
 
 		// wall blocks
