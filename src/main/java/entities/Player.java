@@ -6,7 +6,7 @@ import util.Sprite;
 
 public class Player extends Entity {
 
-	private static Sprite SPRITE = new Sprite("player.png", new Vec2d(32, 64));
+	private static Sprite SPRITE = new Sprite("player.png", 3, new Vec2d(32, 64));
 
     private static KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
 
