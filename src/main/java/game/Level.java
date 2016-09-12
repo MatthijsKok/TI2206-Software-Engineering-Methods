@@ -1,5 +1,7 @@
 package game;
 
+import UI.HUD;
+import UI.UIElement;
 import entities.Block;
 import entities.Life;
 import entities.WallBlock;
@@ -9,59 +11,85 @@ import entities.Rope;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Level {
-	private ArrayList<Entity> entities;
-	private Image background;
-    private Player player;
+    private Image background;
+	private List<Entity> entities = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
+    private List<UIElement> uiElements = new ArrayList<>();
 	
-	public Level() {
-		entities = new ArrayList<Entity>();
+	public Level(String file) {
+	    load(file);
 
-        //create a new player
-        player = new Player(512, 512);
-        //add player to the game
-        entities.add(player);
-        //add the rope to the game
-        entities.add(new Rope(0,0));
-
-
-		// wall blocks
-		for (int x = 0; x < 608; x += 32) {
-			entities.add(new WallBlock(0, x));
-			entities.add(new WallBlock(992, x));
-		}
-		// Floor & ceiling blocks
-		for (int x = 0; x < 1024; x += 32) {
-			entities.add(new Block(x, 544));	//top floor
-			entities.add(new Block(x, 576));	//lower floor
-			entities.add(new Block(x, 0));		//ceiling
-		}
-
-		// Lives
-		for (int x = 0; x < Player.life*35; x += 35) {
-			entities.add(new Life(x+850, 560));
-		}
-
+        setPlayers();
+        initUI();
 	}
+
+    /**
+     * Loads a level from a file
+     * TODO: implement
+     * @param file the file to read
+     */
+	private void load(String file) {
+        // Player
+        addEntity(new Player(512, 512));
+
+        // Rope
+        addEntity(new Rope(0,0));
+
+        // Wall blocks
+        for (int y = 0; y < 608; y += 32) {
+            addEntity(new WallBlock(0, y));
+            addEntity(new WallBlock(992, y));
+        }
+
+        // Floor & ceiling blocks
+        for (int x = 0; x < 1024; x += 32) {
+            addEntity(new Block(x, 544));	//top floor
+            addEntity(new Block(x, 576));	//lower floor
+            addEntity(new Block(x, 0));		//ceiling
+        }
+    }
+
+    private void setPlayers() {
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i) instanceof Player) {
+                players.add((Player)entities.get(i));
+            }
+        }
+    }
+
+    private void initUI() {
+        uiElements.add(new HUD(this));
+    }
 	
-	public void update(double timeDifference) {
+	public void update(double dt) {
 		for (Entity entity : entities) {
-			entity.update(timeDifference);
+			entity.update(dt);
 		}
 	}
-	
+
+    /**
+     * Draws all entities and UIElements in the current level.
+     */
 	public void draw() {
 		for (Entity entity : entities) {
 			entity.draw();
 		}
+
+		// Draw UI elements over entities
+		for (UIElement uiElement : uiElements) {
+		    uiElement.draw();
+        }
 	}
 
-    public Player getPlayer() {
-        return player;
+	public Player getPlayer(int i) { return players.get(i); }
+    public List<Player> getPlayers() {
+        return players;
     }
 
-    public ArrayList<Entity> getEntities() {
+    public List<Entity> getEntities() {
         return entities;
     }
 
@@ -69,12 +97,10 @@ public class Level {
 
 	public boolean removeEntity(Entity e) {
 		for (int i = 0; i < entities.size(); i++) {
-			if (entities.get(i) instanceof Entity) {
 				if (entities.get(i).equals(e)) {
-					entities.remove(i);
-					return true;
-				}
-			}
+                    entities.remove(i);
+                    return true;
+                }
 		}
 		return false;
 	}

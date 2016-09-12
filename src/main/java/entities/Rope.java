@@ -62,8 +62,8 @@ public class Rope extends Entity {
                 traveling = true;
 
                 //and set the position of the rope to the position of the player
-                position.y = Game.getInstance().getCurrentLevel().getPlayer().position.y;
-                position.x = Game.getInstance().getCurrentLevel().getPlayer().position.x;
+                position.y = Game.getInstance().getCurrentLevel().getPlayer(0).position.y;
+                position.x = Game.getInstance().getCurrentLevel().getPlayer(0).position.x;
             }
         }
 
