@@ -25,6 +25,13 @@ public abstract class Shape {
         this.position = position;
     }
 
+    public Vec2d getPosition() {
+        return position;
+    }
+
+    public double getX() { return position.x; }
+    public double getY() { return position.y; }
+
     public boolean intersects(Shape shape) {
         return false;
     }

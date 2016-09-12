@@ -14,6 +14,7 @@ public class Rectangle extends Shape {
     }
 
     public Rectangle(double width, double height) {
+        super();
         setPosition(0, 0);
         setSize(width, height);
     }
@@ -26,7 +27,21 @@ public class Rectangle extends Shape {
         this.size = size;
     }
 
+    public Vec2d getSize() { return this.size; }
+
+    public double getLeft() { return position.x; }
+    public double getTop() { return position.y; }
+    public double getRight() { return position.x + size.x; }
+    public double getBottom() { return position.y + size.y; }
+
+    public boolean intersects(Circle circle) {
+        return circle.intersects(this);
+    }
+
     public boolean intersects(Rectangle rect) {
-        return false;
+        return (rect.getLeft() > getRight() ||
+                rect.getRight() < getLeft() ||
+                rect.getTop() > getBottom() ||
+                rect.getBottom() < getTop());
     }
 }
