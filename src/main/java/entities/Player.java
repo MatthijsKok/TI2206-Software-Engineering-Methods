@@ -6,7 +6,7 @@ import util.Sprite;
 
 public class Player extends Entity {
 
-	private static Sprite SPRITE = new Sprite("player.png", new Vec2d(32, 64));
+	private static Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
 
     private static KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
 
@@ -16,6 +16,9 @@ public class Player extends Entity {
     private double jumpSpeed = 256; // px/s
     private double gravity   = 300; // px/s^2
     public static int life = 3;     // We start with 3 lives
+
+    private double scale, scaleSpeed;
+    private int side;
 
     public Player() {
         this(0, 0);
@@ -29,6 +32,10 @@ public class Player extends Entity {
         right = "RIGHT";
         up = "UP";
         shoot = "SPACE";
+
+        scale = 2;
+        scaleSpeed = 1;
+        side = 1;
     }
 
     /**
@@ -45,10 +52,17 @@ public class Player extends Entity {
     }
 
 	public void update(double dt) {
+	    sprite.update(dt);
+        scaleSpeed -= (this.scale - 2)*dt;
+        scale += scaleSpeed*dt;
+
 	    // Set speed
 	    this.speed.x = 0;
 	    if (keyboard.keyPressed(left))  { this.speed.x -= runSpeed; }
         if (keyboard.keyPressed(right)) { this.speed.x += runSpeed; }
+
+        if (this.speed.x < 0) { side = -1; }
+        if (this.speed.x > 0) { side = 1; }
 
 		this.speed.y += gravity*dt;
 
@@ -79,4 +93,8 @@ public class Player extends Entity {
 			this.speed.y = Math.min(this.speed.y, 0);
 		}
 	}
+
+	public void draw() {
+	    sprite.draw(position, scale*side, scale);
+    }
 }
