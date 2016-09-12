@@ -15,6 +15,7 @@ public class Player extends Entity {
     private double runSpeed  = 256; // px/s
     private double jumpSpeed = 256; // px/s
     private double gravity   = 300; // px/s^2
+    public static int life = 3;
 
     public Player() {
         this(0, 0);
@@ -29,6 +30,8 @@ public class Player extends Entity {
         up = "UP";
         shoot = "SPACE";
     }
+
+
 
 	public void update(double dt) {
 	    // Set speed

@@ -1,6 +1,7 @@
 package game;
 
 import entities.Block;
+import entities.Life;
 import entities.WallBlock;
 import entities.Entity;
 import entities.Player;
@@ -37,7 +38,11 @@ public class Level {
 			entities.add(new Block(x, 0));		//ceiling
 		}
 
-//		background = new Image("background.jpg");
+		// Lives
+		for (int x = 0; x < Player.life*35; x += 35) {
+			entities.add(new Life(x+850, 560));
+		}
+
 	}
 	
 	public void update(double timeDifference) {
