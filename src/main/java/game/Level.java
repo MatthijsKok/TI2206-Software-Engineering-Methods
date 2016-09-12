@@ -64,4 +64,18 @@ public class Level {
     public ArrayList<Entity> getEntities() {
         return entities;
     }
+
+	public void addEntity(Entity e) { entities.add(e); }
+
+	public boolean removeEntity(Entity e) {
+		for (int i = 0; i < entities.size(); i++) {
+			if (entities.get(i) instanceof Entity) {
+				if (entities.get(i).equals(e)) {
+					entities.remove(i);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }
