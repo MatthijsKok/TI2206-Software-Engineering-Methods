@@ -3,6 +3,7 @@ package entities;
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import game.Level;
+import geometry.Circle;
 import util.Sprite;
 
 /**
@@ -55,6 +56,9 @@ public class Ball extends Entity {
             case 4: sprite = Ball.HUGE_BALL_SPRITE;
                 break;
         }
+
+        shape = new Circle(sprite.getWidth()/2);
+        updatePosition(0);
     }
 
     /**
@@ -82,6 +86,13 @@ public class Ball extends Entity {
             level.addEntity(new Ball(this.position, false, this.ballSize - 1));
         }
         level.removeEntity(this);
+    }
+
+    public void updatePosition(double dt) {
+        this.position.x += this.speed.x*dt;
+        this.position.y += this.speed.y*dt;
+
+        shape.setPosition(position.x, position.y);
     }
 
     /**
@@ -118,7 +129,6 @@ public class Ball extends Entity {
             }
         }
         // Move
-        this.position.x += this.speed.x*dt;
-        this.position.y += this.speed.y*dt;
+        updatePosition(dt);
     }
 }

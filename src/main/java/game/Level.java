@@ -2,12 +2,8 @@ package game;
 
 import UI.HUD;
 import UI.UIElement;
-import entities.Block;
-import entities.Life;
-import entities.WallBlock;
-import entities.Entity;
-import entities.Player;
-import entities.Rope;
+import com.sun.javafx.geom.Vec2d;
+import entities.*;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -35,9 +31,6 @@ public class Level {
         // Player
         addEntity(new Player(512, 512));
 
-        // Rope
-        addEntity(new Rope(0,0));
-
         // Wall blocks
         for (int y = 0; y < 608; y += 32) {
             addEntity(new WallBlock(0, y));
@@ -50,6 +43,9 @@ public class Level {
             addEntity(new Block(x, 576));	//lower floor
             addEntity(new Block(x, 0));		//ceiling
         }
+
+        // Balls
+        addEntity(new Ball(new Vec2d(256, 256), false, 2));
     }
 
     private void setPlayers() {
@@ -68,7 +64,23 @@ public class Level {
 		for (Entity entity : entities) {
 			entity.update(dt);
 		}
+
+		handleCollisions();
 	}
+
+	private void handleCollisions() {
+        int size = entities.size();
+        Entity a, b;
+        for (int i = 0; i < size; i++) {
+            a = entities.get(i);
+            for (int j = i+1; j < size; j++) {
+                b = entities.get(j);
+                if (a.intersects(b)) {
+                    a.handleCollision(b);
+                }
+            }
+        }
+    }
 
     /**
      * Draws all entities and UIElements in the current level.
