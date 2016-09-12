@@ -1,12 +1,14 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import geometry.Shape;
 import util.Sprite;
 
 public abstract class Entity {
 
 	protected Vec2d position, speed;
 	protected Sprite sprite = null;
+    protected Shape shape = null;
 
     /**
      * Boolen with the current visibility state of an entity.
@@ -49,6 +51,14 @@ public abstract class Entity {
 			sprite.update(timeDifference);
 		}
 	}
+
+	public boolean intersects(Entity entity) {
+	    if (shape == null || entity.shape == null) {
+	        return false;
+        }
+
+        return shape.intersects(entity.shape);
+    }
 	
 	public void draw() {
 		if (sprite != null && visible) {
