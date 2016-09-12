@@ -1,9 +1,13 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import game.Game;
 import geometry.Rectangle;
 import util.Sprite;
 
+/**
+ * The Player class represents a player
+ */
 public class Player extends Entity {
 
 	private static Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
@@ -21,6 +25,7 @@ public class Player extends Entity {
 
     private boolean respawning = false;
     private double hitTime;
+    private Rope rope;
 
     /**
      * Instantiate a new player at position (0, 0)
@@ -40,8 +45,11 @@ public class Player extends Entity {
 
         life = 3;
 
+        rope = new Rope();
+        Game.getInstance().getCurrentLevel().addEntity(rope);
+
         shape = new Rectangle(sprite.getWidth(), sprite.getHeight());
-        shape.setPosition(position.x - sprite.getOffsetX(), position.y - sprite.getOffsetY());
+        updatePosition(0);
     }
 
     public int getLives() {
@@ -53,6 +61,10 @@ public class Player extends Entity {
         return (System.nanoTime() - hitTime) / 1000000000.0;
     }
 
+    /**
+     * Update the players position and collision shape
+     * @param dt the time
+     */
     private void updatePosition(double dt) {
         this.position.x += this.speed.x*dt;
         this.position.y += this.speed.y*dt;
@@ -106,13 +118,17 @@ public class Player extends Entity {
 		}
 	}
 
-	public void handleCollision(Entity entity) {
+	public void collideWith(Entity entity) {
 	    if (entity instanceof Ball) {
-	        handleCollision((Ball) entity);
+	        collideWith((Ball) entity);
         }
     }
 
-    public void handleCollision(Ball ball) {
+    /**
+     * When a player collides with a ball, the player loses a life
+     * @param ball
+     */
+    public void collideWith(Ball ball) {
         if (!respawning) {
             respawning = true;
             hitTime = System.nanoTime();

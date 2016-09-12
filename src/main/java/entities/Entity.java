@@ -14,7 +14,7 @@ public abstract class Entity {
     protected Shape shape = null;
 
     /**
-     * Boolen with the current visibility state of an entity.
+     * Boolean with the current visibility state of an entity.
      */
     protected boolean visible;
 
@@ -63,7 +63,7 @@ public abstract class Entity {
         return shape.intersects(entity.shape);
     }
 
-    public void handleCollision(Entity entity) {}
+    public void collideWith(Entity entity) {}
 	
 	public void draw() {
 		if (sprite != null && visible) {

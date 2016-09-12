@@ -88,11 +88,26 @@ public class Ball extends Entity {
         level.removeEntity(this);
     }
 
-    public void updatePosition(double dt) {
+    private void updatePosition(double dt) {
         this.position.x += this.speed.x*dt;
         this.position.y += this.speed.y*dt;
 
         shape.setPosition(position.x, position.y);
+    }
+
+    private void bounce() {
+        switch (ballSize) {
+            case 0: this.speed.y = -TINY_BALL_BOUNCE_SPEED;
+                break;
+            case 1: this.speed.y = -SMALL_BALL_BOUNCE_SPEED;
+                break;
+            case 2: this.speed.y = -MEDIUM_BALL_BOUNCE_SPEED;
+                break;
+            case 3: this.speed.y = -LARGE_BALL_BOUNCE_SPEED;
+                break;
+            case 4: this.speed.y = -HUGE_BALL_BOUNCE_SPEED;
+                break;
+        }
     }
 
     /**
@@ -100,6 +115,9 @@ public class Ball extends Entity {
      * @param dt Time difference from previous update in seconds.
      */
     public void update(double dt) {
+        // Apply gravity
+        this.speed.y += gravity*dt;
+
         // Left boundary
         if (this.position.x <= 64) {
             this.position.x = 64;
@@ -110,25 +128,25 @@ public class Ball extends Entity {
             this.position.x = 992;
             this.speed.x = -BALL_MOVE_SPEED;
         }
-        // Update the gravity to vertical speed.
-        this.speed.y += gravity*dt;
+
         // Bottom boundary
         if (this.position.y >= 544) {
             this.position.y = 544;
-            switch (ballSize) {
-                case 0: this.speed.y = -TINY_BALL_BOUNCE_SPEED;
-                    break;
-                case 1: this.speed.y = -SMALL_BALL_BOUNCE_SPEED;
-                    break;
-                case 2: this.speed.y = -MEDIUM_BALL_BOUNCE_SPEED;
-                    break;
-                case 3: this.speed.y = -LARGE_BALL_BOUNCE_SPEED;
-                    break;
-                case 4: this.speed.y = -HUGE_BALL_BOUNCE_SPEED;
-                    break;
-            }
+
+            bounce();
         }
+
         // Move
         updatePosition(dt);
+    }
+
+    public void collideWith(Entity entity) {
+        if (entity instanceof Player) {
+            collideWith((Player) entity);
+        }
+    }
+
+    public void collideWith(Player player) {
+        bounce();
     }
 }

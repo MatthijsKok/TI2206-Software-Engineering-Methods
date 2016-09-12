@@ -14,13 +14,18 @@ public class Level {
 	private List<Entity> entities = new ArrayList<>();
     private List<Player> players = new ArrayList<>();
     private List<UIElement> uiElements = new ArrayList<>();
-	
+	private String file;
+
 	public Level(String file) {
-	    load(file);
+	    this.file = file;
+	}
+
+	public void start() {
+        load(file);
 
         setPlayers();
         initUI();
-	}
+    }
 
     /**
      * Loads a level from a file
@@ -68,6 +73,10 @@ public class Level {
 		handleCollisions();
 	}
 
+    /**
+     * Handles collisions between all entities currently in the level.
+     * Both a.collideWith(b) and b.collideWith(a) are called because a only knows what to do with itself and so does b.
+     */
 	private void handleCollisions() {
         int size = entities.size();
         Entity a, b;
@@ -76,7 +85,8 @@ public class Level {
             for (int j = i+1; j < size; j++) {
                 b = entities.get(j);
                 if (a.intersects(b)) {
-                    a.handleCollision(b);
+                    a.collideWith(b);
+                    b.collideWith(a);
                 }
             }
         }
