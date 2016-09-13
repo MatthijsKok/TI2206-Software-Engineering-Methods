@@ -140,29 +140,46 @@ public class Ball extends Entity {
         // Apply gravity
         this.speed.y += gravity*dt;
 
-        // Left boundary
-        if (this.position.x <= 64) {
-            this.position.x = 64;
-            this.speed.x = BALL_MOVE_SPEED;
-        }
-        // Right boundary
-        if (this.position.x >= 992) {
-            this.position.x = 992;
-            this.speed.x = -BALL_MOVE_SPEED;
-        }
-
-        // Bottom boundary
-        if (this.position.y >= 544) {
-            this.position.y = 544;
-
-            bounce();
-        }
-
         // Move
         updatePosition(dt);
     }
 
+    /**
+     * Entry point for all collisions
+     * @param entity the entity this ball collides with
+     */
     public void collideWith(Entity entity) {
+        if (entity instanceof Block) {
+            collideWith((Block) entity);
+        }
 
+        if (entity instanceof Wall) {
+            collideWith((Wall) entity);
+        }
+
+        if (entity instanceof Rope) {
+            collideWith((Rope) entity);
+        }
+    }
+
+    private void collideWith(Block block) {
+        position.y = Math.min(block.getY(), position.y);
+        updatePosition(0);
+        bounce();
+    }
+
+    private void collideWith(Wall wall) {
+        if (wall.getX() > getX()) {
+            position.x = Math.min(position.x, wall.getLeft() - 32);
+        } else {
+            position.x = Math.max(position.x, wall.getRight() + 32);
+        }
+
+        speed.x = -speed.x;
+        updatePosition(0);
+    }
+
+    private void collideWith(Rope rope) {
+        split();
     }
 }

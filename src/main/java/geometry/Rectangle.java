@@ -51,9 +51,9 @@ public class Rectangle extends Shape {
 
 
     public boolean intersects(Rectangle rect) {
-        return (rect.getLeft() > getRight() ||
-                rect.getRight() < getLeft() ||
-                rect.getTop() > getBottom() ||
-                rect.getBottom() < getTop());
+        return (rect.getLeft() < getRight() &&
+                rect.getRight() > getLeft() &&
+                rect.getTop() < getBottom() &&
+                rect.getBottom() > getTop());
     }
 }
