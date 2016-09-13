@@ -42,7 +42,7 @@ public class Rope extends Entity {
         super(x, y);
         // Set sprite
         sprite = Rope.SPRITE;
-        sprite.setOffset(10,0);
+        sprite.setOffset(SPRITE.getWidth()/2,0);
         // Make the rope invisible by default
         visible = false;
         // Set default spawn position
@@ -101,6 +101,12 @@ public class Rope extends Entity {
                 visible = false;
             }
         }
+    }
 
+    @Override
+    public void draw(){
+        if (sprite != null && visible) {
+            sprite.draw(position, 0.5);
+        }
     }
 }
