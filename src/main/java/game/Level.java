@@ -12,7 +12,7 @@ import java.util.List;
 public class Level {
     private Image background;
 	private List<Entity> entities = new ArrayList<>();
-    private List<Player> players = new ArrayList<>();
+    private List<Player> players;
     private List<UIElement> uiElements = new ArrayList<>();
 	private String file;
 
@@ -21,10 +21,23 @@ public class Level {
 	}
 
 	public void start() {
-        load(file);
+        load();
 
         setPlayers();
         initUI();
+    }
+
+    /**
+     * Restarts a level
+     */
+    public void restart() {
+        unload();
+        load();
+    }
+
+    private void unload() {
+        entities = new ArrayList<>();
+        load();
     }
 
     /**
@@ -32,7 +45,7 @@ public class Level {
      * TODO: implement
      * @param file the file to read
      */
-	private void load(String file) {
+	private void load() {
         // Player
         addEntity(new Player(512, 512));
 
@@ -54,6 +67,7 @@ public class Level {
     }
 
     private void setPlayers() {
+        players = new ArrayList<>();
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i) instanceof Player) {
                 players.add((Player)entities.get(i));

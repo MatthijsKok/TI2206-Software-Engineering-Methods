@@ -141,12 +141,6 @@ public class Ball extends Entity {
     }
 
     public void collideWith(Entity entity) {
-        if (entity instanceof Player) {
-            collideWith((Player) entity);
-        }
-    }
 
-    public void collideWith(Player player) {
-        bounce();
     }
 }

@@ -12,19 +12,15 @@ public class Player extends Entity {
 
 	private static Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
 
-    private static double respawnTime = 2; // s
+    private static final double RUN_SPEED  = 256; // px/s
+    private static final double JUMP_SPEED = 256; // px/s
+    private static final double GRAVITY    = 300; // px/s^2
 
     // Input characters
     private String left, right, up, shoot;
 
-    private double runSpeed  = 256; // px/s
-    private double jumpSpeed = 256; // px/s
-    private double gravity   = 300; // px/s^2
+    private int side = 1;
 
-    private int life, side = 1;
-
-    private boolean respawning = false;
-    private double hitTime;
     private Rope rope;
 
     /**
@@ -43,8 +39,6 @@ public class Player extends Entity {
         up = "UP";
         shoot = "SPACE";
 
-        life = 3;
-
         rope = new Rope();
         Game.getInstance().getCurrentLevel().addEntity(rope);
 
@@ -52,13 +46,8 @@ public class Player extends Entity {
         updatePosition(0);
     }
 
-    public int getLives() {
-        return life;
-    }
-    public void die() { life--; }
-
-    public double timeFromLastHit() {
-        return (System.nanoTime() - hitTime) / 1000000000.0;
+    private void die() {
+        Game.getInstance().getCurrentLevel().restart();
     }
 
     /**
@@ -75,25 +64,20 @@ public class Player extends Entity {
 	    // Update the player sprite
 	    sprite.update(dt);
 
-        // If a player is hit, it can not be hit again immediately, thus the respawn timer
-        if (respawning && timeFromLastHit() > Player.respawnTime) {
-            respawning = false;
-        }
-
 	    // Walk
 	    this.speed.x = 0;
-	    if (keyboard.keyPressed(left))  { this.speed.x -= runSpeed; }
-        if (keyboard.keyPressed(right)) { this.speed.x += runSpeed; }
+	    if (keyboard.keyPressed(left))  { this.speed.x -= RUN_SPEED; }
+        if (keyboard.keyPressed(right)) { this.speed.x += RUN_SPEED; }
 
         if (speed.x < 0) { side = -1; }
         if (speed.x > 0) { side = 1; }
 
         // Apply gravity
-		this.speed.y += gravity*dt;
+		this.speed.y += GRAVITY*dt;
 
         // Jump
         if (this.position.y >= 544 && keyboard.keyPressed(up)) {
-            this.speed.y = -jumpSpeed;
+            this.speed.y = -JUMP_SPEED;
         }
 
         // Move
@@ -129,11 +113,7 @@ public class Player extends Entity {
      * @param ball
      */
     public void collideWith(Ball ball) {
-        if (!respawning) {
-            respawning = true;
-            hitTime = System.nanoTime();
-            die();
-        }
+        die();
     }
 
 	public void draw() {
