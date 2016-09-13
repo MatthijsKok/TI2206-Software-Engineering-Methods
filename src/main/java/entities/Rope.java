@@ -42,7 +42,7 @@ public class Rope extends Entity {
         super(x, y);
         // Set sprite
         sprite = Rope.SPRITE;
-        sprite.setOffsetToCenter();
+        sprite.setOffset(10,0);
         // Make the rope invisible by default
         visible = false;
         // Set default spawn position
@@ -54,9 +54,11 @@ public class Rope extends Entity {
      * @param spawnPosition The position where the rope will be spawned.
      */
     public void activate(Vec2d spawnPosition) {
-        this.activated = true;
-        this.spawnPosition.x = spawnPosition.x;
-        this.spawnPosition.y = spawnPosition.y + 830;
+        if(!activated) {
+            this.activated = true;
+            this.spawnPosition.x = spawnPosition.x;
+            this.spawnPosition.y = spawnPosition.y;
+        }
     }
 
     /**
@@ -93,7 +95,7 @@ public class Rope extends Entity {
             position.y -= ARROWSPEED;
 
             // and if the rope has reached the top of the screen, change its traveling and activated state to false.
-            if(position.y <= 910) {
+            if(position.y <= 0) {
                 activated = false;
                 traveling = false;
                 visible = false;
