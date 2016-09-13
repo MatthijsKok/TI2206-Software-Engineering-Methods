@@ -11,12 +11,12 @@ public class Rope extends Entity {
     /**
      * Sprite of the rope.
      */
-    private static Sprite SPRITE = new Sprite("arrow.png");
+    private static Sprite SPRITE = new Sprite("rope.png");
 
     /**
      * Constant upward speed of the rope in px/s.
      */
-    final private double ARROWSPEED = 10; // px/s
+    final private double ARROWSPEED = 6; // px/s
 
     /**
      * Boolean indicating if the rope is still traveling towards the top of the screen.
@@ -56,7 +56,7 @@ public class Rope extends Entity {
     public void activate(Vec2d spawnPosition) {
         this.activated = true;
         this.spawnPosition.x = spawnPosition.x;
-        this.spawnPosition.y = spawnPosition.y;
+        this.spawnPosition.y = spawnPosition.y + 830;
     }
 
     /**
@@ -93,7 +93,7 @@ public class Rope extends Entity {
             position.y -= ARROWSPEED;
 
             // and if the rope has reached the top of the screen, change its traveling and activated state to false.
-            if(position.y <= 0) {
+            if(position.y <= 910) {
                 activated = false;
                 traveling = false;
                 visible = false;
