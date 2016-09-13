@@ -21,10 +21,18 @@ public class Ball extends Entity {
     private static final double BALL_MOVE_SPEED = 100; // Horizontal move speed
     private static final double gravity = 300; // px/s^2
 
-    public enum Colour{BLUE, GREEN, ORANGE, PURPLE, RED, YELLOW} //Enum that represents the colour of the ball
+    public enum Colour { BLUE, GREEN, ORANGE, PURPLE, RED, YELLOW } //Enum that represents the colour of the ball
 
     private int ballSize; // Integer that represents the ball size from 0 (tiny) to 4 (huge).
     private Colour colour; //Colour of the ball.
+
+    public Ball(Vec2d position, int size) {
+        this(position, size, randomColour());
+    }
+
+    public Ball(Vec2d position, int size, Colour colour) {
+        this(position, size, colour, true);
+    }
 
     /**
      * Constructor for the bouncing balls in our game.
@@ -33,7 +41,7 @@ public class Ball extends Entity {
      * @param ballSize Integer ranging 0-4 representing the ball size.
      * @param left Boolean that is set to 1 if the ball initially moves left, 0 if right.
      */
-    public Ball(Vec2d position, Ball.Colour colour, int ballSize, boolean left) {
+    public Ball(Vec2d position, int ballSize, Ball.Colour colour, boolean left) {
         //Ball position
         this.setPosition(position);
         //Ball colour
@@ -104,8 +112,8 @@ public class Ball extends Entity {
     public void split() {
         Level level = Game.getInstance().getCurrentLevel();
         if (this.ballSize != 0) {
-            level.addEntity(new Ball(this.position, this.getBallColour(), this.getBallSize() - 1, true));
-            level.addEntity(new Ball(this.position, this.getBallColour(), this.getBallSize() - 1, false));
+            level.addEntity(new Ball(this.position, this.getBallSize() - 1, this.getBallColour(), true));
+            level.addEntity(new Ball(this.position, this.getBallSize() - 1, this.getBallColour(), false));
         }
         level.removeEntity(this);
     }
@@ -181,5 +189,11 @@ public class Ball extends Entity {
 
     private void collideWith(Rope rope) {
         split();
+    }
+
+    private static Colour randomColour() {
+        Colour[] values = Colour.values();
+
+        return values[(int)Math.floor(Math.random()*values.length)];
     }
 }
