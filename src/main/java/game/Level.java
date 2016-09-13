@@ -43,24 +43,24 @@ public class Level {
     /**
      * Loads a level from a file
      * TODO: implement
-     * @param file the file to read
      */
 	private void load() {
-        // Player
-        addEntity(new Player(512, 512));
 
         // Wall blocks
         for (int y = 0; y < 608; y += 32) {
-            addEntity(new WallBlock(0, y));
-            addEntity(new WallBlock(992, y));
+            addEntity(new Wall(0, y));
+            addEntity(new Wall(992, y));
         }
 
         // Floor & ceiling blocks
         for (int x = 0; x < 1024; x += 32) {
             addEntity(new Block(x, 544));	//top floor
             addEntity(new Block(x, 576));	//lower floor
-            addEntity(new Block(x, 0));		//ceiling
+            //addEntity(new Block(x, 0));		//ceiling
         }
+
+        // Player
+        addEntity(new Player(512, 512));
 
         // Balls
         addEntity(new Ball(new Vec2d(256, 256), false, 2));

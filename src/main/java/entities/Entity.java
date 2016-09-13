@@ -41,6 +41,14 @@ public abstract class Entity {
 		this.position = position;
 	}
 
+	public double getX() {
+	    return position.x;
+    }
+
+    public double getY() {
+        return position.y;
+    }
+
 	public void setSpeed(double x, double y) {
 		setSpeed(new Vec2d(x, y));
 	}
