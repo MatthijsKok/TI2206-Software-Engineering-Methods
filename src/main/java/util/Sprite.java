@@ -130,4 +130,12 @@ public class Sprite {
     public void draw(double x, double y, double xScale, double yScale) {
         gc.drawImage(image, currentFrame*width, 0, width, height, x - offset.x*xScale, y - offset.y*yScale, width*xScale, height*yScale);
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
