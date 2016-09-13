@@ -25,6 +25,18 @@ public class Circle extends Shape {
 
     public double getRadius() { return this.radius; }
 
+    public boolean intersects(Shape shape) {
+        if (shape instanceof Circle) {
+            return intersects((Circle) shape);
+        }
+
+        if (shape instanceof Rectangle) {
+            return intersects((Rectangle) shape);
+        }
+
+        return false;
+    }
+
     public boolean intersects(Rectangle rect) {
         double dx = getX() - Math.max(rect.getLeft(), Math.min(getX(), rect.getRight()));
         double dy = getY() - Math.max(rect.getTop(), Math.min(getY(), rect.getBottom()));

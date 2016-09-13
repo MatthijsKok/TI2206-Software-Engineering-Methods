@@ -2,12 +2,8 @@ package game;
 
 import UI.HUD;
 import UI.UIElement;
-import entities.Block;
-import entities.Life;
-import entities.WallBlock;
-import entities.Entity;
-import entities.Player;
-import entities.Rope;
+import com.sun.javafx.geom.Vec2d;
+import entities.*;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -16,27 +12,42 @@ import java.util.List;
 public class Level {
     private Image background;
 	private List<Entity> entities = new ArrayList<>();
-    private List<Player> players = new ArrayList<>();
+    private List<Player> players;
     private List<UIElement> uiElements = new ArrayList<>();
-	
+	private String file;
+
 	public Level(String file) {
-	    load(file);
+	    this.file = file;
+	}
+
+	public void start() {
+        load();
 
         setPlayers();
         initUI();
-	}
+    }
+
+    /**
+     * Restarts a level
+     */
+    public void restart() {
+        unload();
+        load();
+    }
+
+    private void unload() {
+        entities = new ArrayList<>();
+        load();
+    }
 
     /**
      * Loads a level from a file
      * TODO: implement
      * @param file the file to read
      */
-	private void load(String file) {
+	private void load() {
         // Player
         addEntity(new Player(512, 512));
-
-        // Rope
-        addEntity(new Rope(0,0));
 
         // Wall blocks
         for (int y = 0; y < 608; y += 32) {
@@ -50,9 +61,13 @@ public class Level {
             addEntity(new Block(x, 576));	//lower floor
             addEntity(new Block(x, 0));		//ceiling
         }
+
+        // Balls
+        addEntity(new Ball(new Vec2d(256, 256), false, 2));
     }
 
     private void setPlayers() {
+        players = new ArrayList<>();
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i) instanceof Player) {
                 players.add((Player)entities.get(i));
@@ -68,7 +83,28 @@ public class Level {
 		for (Entity entity : entities) {
 			entity.update(dt);
 		}
+
+		handleCollisions();
 	}
+
+    /**
+     * Handles collisions between all entities currently in the level.
+     * Both a.collideWith(b) and b.collideWith(a) are called because a only knows what to do with itself and so does b.
+     */
+	private void handleCollisions() {
+        int size = entities.size();
+        Entity a, b;
+        for (int i = 0; i < size; i++) {
+            a = entities.get(i);
+            for (int j = i+1; j < size; j++) {
+                b = entities.get(j);
+                if (a.intersects(b)) {
+                    a.collideWith(b);
+                    b.collideWith(a);
+                }
+            }
+        }
+    }
 
     /**
      * Draws all entities and UIElements in the current level.

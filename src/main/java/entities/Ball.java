@@ -3,6 +3,7 @@ package entities;
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import game.Level;
+import geometry.Circle;
 import util.Sprite;
 
 /**
@@ -55,6 +56,9 @@ public class Ball extends Entity {
             case 4: sprite = Ball.HUGE_BALL_SPRITE;
                 break;
         }
+
+        shape = new Circle(sprite.getWidth()/2);
+        updatePosition(0);
     }
 
     /**
@@ -84,11 +88,36 @@ public class Ball extends Entity {
         level.removeEntity(this);
     }
 
+    private void updatePosition(double dt) {
+        this.position.x += this.speed.x*dt;
+        this.position.y += this.speed.y*dt;
+
+        shape.setPosition(position.x, position.y);
+    }
+
+    private void bounce() {
+        switch (ballSize) {
+            case 0: this.speed.y = -TINY_BALL_BOUNCE_SPEED;
+                break;
+            case 1: this.speed.y = -SMALL_BALL_BOUNCE_SPEED;
+                break;
+            case 2: this.speed.y = -MEDIUM_BALL_BOUNCE_SPEED;
+                break;
+            case 3: this.speed.y = -LARGE_BALL_BOUNCE_SPEED;
+                break;
+            case 4: this.speed.y = -HUGE_BALL_BOUNCE_SPEED;
+                break;
+        }
+    }
+
     /**
      * Update the speed and position of the ball.
      * @param dt Time difference from previous update in seconds.
      */
     public void update(double dt) {
+        // Apply gravity
+        this.speed.y += gravity*dt;
+
         // Left boundary
         if (this.position.x <= 64) {
             this.position.x = 64;
@@ -99,26 +128,19 @@ public class Ball extends Entity {
             this.position.x = 992;
             this.speed.x = -BALL_MOVE_SPEED;
         }
-        // Update the gravity to vertical speed.
-        this.speed.y += gravity*dt;
+
         // Bottom boundary
         if (this.position.y >= 544) {
             this.position.y = 544;
-            switch (ballSize) {
-                case 0: this.speed.y = -TINY_BALL_BOUNCE_SPEED;
-                    break;
-                case 1: this.speed.y = -SMALL_BALL_BOUNCE_SPEED;
-                    break;
-                case 2: this.speed.y = -MEDIUM_BALL_BOUNCE_SPEED;
-                    break;
-                case 3: this.speed.y = -LARGE_BALL_BOUNCE_SPEED;
-                    break;
-                case 4: this.speed.y = -HUGE_BALL_BOUNCE_SPEED;
-                    break;
-            }
+
+            bounce();
         }
+
         // Move
-        this.position.x += this.speed.x*dt;
-        this.position.y += this.speed.y*dt;
+        updatePosition(dt);
+    }
+
+    public void collideWith(Entity entity) {
+
     }
 }

@@ -66,10 +66,16 @@ public class Sprite {
     public void setOffset(double x, double y) {
         setOffset(new Vec2d(x, y));
     }
-
     public void setOffset(Vec2d offset) {
         this.offset = offset;
     }
+
+    public Vec2d getOffset() { return offset; }
+    public double getOffsetX() { return offset.x; }
+    public double getOffsetY() { return offset.y; }
+
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
 
     public void update(double dt) {
         framePart = (framePart + dt*frameSpeed) % frames;

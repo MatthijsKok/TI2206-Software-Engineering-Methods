@@ -2,16 +2,19 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import geometry.Shape;
+import util.KeyboardInputManager;
 import util.Sprite;
 
 public abstract class Entity {
+
+	protected static KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
 
 	protected Vec2d position, speed;
 	protected Sprite sprite = null;
     protected Shape shape = null;
 
     /**
-     * Boolen with the current visibility state of an entity.
+     * Boolean with the current visibility state of an entity.
      */
     protected boolean visible;
 
@@ -59,6 +62,8 @@ public abstract class Entity {
 
         return shape.intersects(entity.shape);
     }
+
+    public void collideWith(Entity entity) {}
 	
 	public void draw() {
 		if (sprite != null && visible) {

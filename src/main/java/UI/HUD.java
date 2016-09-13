@@ -21,10 +21,10 @@ public class HUD extends UIElement {
      * Draws the lives that the first player of a level has left
      */
     public void draw() {
-        int lives = level.getPlayer(0).getLives();
+        /*int lives = level.getPlayer(0).getLives();
 
         for (int i = 0; i < lives; i++) {
             HEART_SPRITE.draw(16 + 48*i, gc.getCanvas().getHeight() - 48);
-        }
+        }*/
     }
 }

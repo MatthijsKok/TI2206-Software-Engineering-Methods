@@ -21,11 +21,6 @@ public class Rope extends Entity {
     private static Sprite SPRITE = new Sprite("arrow.png", new Vec2d(30, 64));
 
     /**
-     * Keyboard manager used for gathering user input.
-     */
-    private static KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
-
-    /**
      * Constant upward speed of the rope in px/s.
      */
     final private double ARROWSPEED = 10; // px/s
@@ -34,6 +29,10 @@ public class Rope extends Entity {
      * Boolean indicating if the rope is still traveling towards the top of the screen.
      */
     private boolean traveling = false;
+
+    public Rope() {
+        this(0, 0);
+    }
 
     /**
      * Creates a new rope
