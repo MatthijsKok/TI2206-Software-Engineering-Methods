@@ -10,18 +10,23 @@ import util.Sprite;
  */
 public class Player extends Entity {
 
-	private static Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
+    private static Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
 
     private static final double RUN_SPEED  = 256; // px/s
     private static final double JUMP_SPEED = 256; // px/s
     private static final double GRAVITY    = 300; // px/s^2
 
-    // Input characters
-    private String left, right, up, shoot;
+    /**
+     * Input characters
+     */
+    private String leftKey, rightKey, upKey, shootKey;
 
     private int side = 1;
     private boolean onground = false;
 
+    /**
+     * Rope of the player
+     */
     private Rope rope;
 
     /**
@@ -33,12 +38,19 @@ public class Player extends Entity {
 
     public Player(double x, double y) {
         super(x, y);
+
+        // Set player sprite
         sprite = Player.SPRITE;
 
-        left = "LEFT";
-        right = "RIGHT";
-        up = "UP";
-        shoot = "SPACE";
+        // Create rope for the player
+        rope = new Rope(-100, -100);
+
+        // Define player keys
+        leftKey = "LEFT";
+        rightKey = "RIGHT";
+        upKey = "UP";
+        shootKey = "SPACE";
+
 
         rope = new Rope();
         Game.getInstance().getCurrentLevel().addEntity(rope);
@@ -77,34 +89,40 @@ public class Player extends Entity {
         shape.setPosition(position.x - sprite.getOffsetX(), position.y - sprite.getOffsetY());
     }
 
-	public void update(double dt) {
-	    // Update the player sprite
-	    sprite.update(dt);
+    /**
+     * Updates the Player object
+     * @param dt The time since the last time the update method was called
+     */
+    public void update(double dt) {
 
-	    // Walk
-	    speed.x = 0;
-	    if (keyboard.keyPressed(left))  { speed.x -= RUN_SPEED; }
-        if (keyboard.keyPressed(right)) { speed.x += RUN_SPEED; }
+        // Update the player sprite
+        sprite.update(dt);
+
+        // Walk
+        speed.x = 0;
+        if (keyboard.keyPressed(leftKey))  { speed.x -= RUN_SPEED; }
+        if (keyboard.keyPressed(rightKey)) { speed.x += RUN_SPEED; }
+        if (keyboard.keyPressed(shootKey)) { this.rope.activate(this.position);}
 
         if (speed.x < 0) { side = -1; }
         if (speed.x > 0) { side = 1; }
 
         // Apply gravity
-		this.speed.y += GRAVITY*dt;
+        this.speed.y += GRAVITY*dt;
 
         // Jump
-        if (onground && keyboard.keyPressed(up)) {
+        if (onground && keyboard.keyPressed(upKey)) {
             onground = false;
             speed.y = -JUMP_SPEED;
         }
 
         // Move
         updatePosition(dt);
-	}
+    }
 
-	public void collideWith(Entity entity) {
-	    if (entity instanceof Ball) {
-	        collideWith((Ball) entity);
+    public void collideWith(Entity entity) {
+        if (entity instanceof Ball) {
+            collideWith((Ball) entity);
         }
 
         if (entity instanceof Block) {
@@ -144,7 +162,12 @@ public class Player extends Entity {
         }
     }
 
-	public void draw() {
-	    sprite.draw(position, side, 1);
+    public void draw() {
+        sprite.draw(position, side, 1);
     }
+
+    public Rope getRope() {
+        return rope;
+    }
+
 }

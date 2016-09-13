@@ -1,12 +1,11 @@
 package util;
 
 import com.sun.javafx.geom.Vec2d;
-import com.sun.javafx.geom.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * Created by wouterraateland on 08-09-16.
+ * Class that handles the creation of sprites
  */
 public class Sprite {
 
@@ -41,12 +40,20 @@ public class Sprite {
         framePart = 0;
     }
 
+    /**
+     * Sets the sprite image.
+     * @param image a image object containing the desired image.
+     */
     public void setImage(Image image) {
         this.image = image;
         width = (int)image.getWidth()/frames;
         height = (int)image.getHeight();
     }
 
+    /**
+     * Sets the sprite image.
+     * @param uri the universal resource identifier (filename) of the object.
+     */
     public void setImage(String uri) {
         setImage(new Image(uri));
     }
@@ -63,25 +70,43 @@ public class Sprite {
         frameSpeed = speed;
     }
 
+    /**
+     * Sets the offset so it is in the middle of the sprite.
+     */
+    public void setOffsetToCenter() {
+        setOffset(new Vec2d(image.getWidth()/2, image.getHeight()/2));
+    }
+
+    /**
+     * Moves the center of the sprite to the x and y locations.
+     * @param x offset on the x axis.
+     * @param y offset on the y axis.
+     */
     public void setOffset(double x, double y) {
         setOffset(new Vec2d(x, y));
     }
+
+    /**
+     * Moves the center of the sprite to the x and y locations.
+     * @param offset A Vec2d containing the x and y values of the offset.
+     */
     public void setOffset(Vec2d offset) {
         this.offset = offset;
     }
 
-    public Vec2d getOffset() { return offset; }
-    public double getOffsetX() { return offset.x; }
-    public double getOffsetY() { return offset.y; }
-
-    public int getWidth() { return width; }
-    public int getHeight() { return height; }
-
+    /**
+     * Updates the sprite.
+     * @param dt Time expired since the last time the method was called.
+     */
     public void update(double dt) {
         framePart = (framePart + dt*frameSpeed) % frames;
         currentFrame = (int)Math.floor(framePart);
     }
 
+    /**
+     * Draws the sprite to the screen.
+     * @param position A Vec2D containing the x and y coordinates of the sprite.
+     */
     public void draw(Vec2d position) {
         draw(position.x, position.y);
     }
@@ -105,4 +130,12 @@ public class Sprite {
     public void draw(double x, double y, double xScale, double yScale) {
         gc.drawImage(image, currentFrame*width, 0, width, height, x - offset.x*xScale, y - offset.y*yScale, width*xScale, height*yScale);
     }
+
+    // GETTERS
+    public Vec2d getOffset() { return offset; }
+    public double getOffsetX() { return offset.x; }
+    public double getOffsetY() { return offset.y; }
+
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
 }
