@@ -30,19 +30,28 @@ public class Ball extends Entity {
 
     private int ballSize; // Integer that represents the ball size from 0 (tiny) to 4 (huge).
 
+    public enum Colour{BLUE, GREEN, ORANGE, PURPLE, RED, YELLOW} //Enum that represents the colour of the ball
+    public Colour colour; //Colour of the ball.
+
     /**
      * Constructor for the bouncing balls in our game.
-     * @param position A Vec2D of the starting position of the ball.
-     * @param left A boolean that is set to 1 if the ball initially moves left, 0 if right.
-     * @param ballSize An integer ranging 0-4 representing the ball size.
+     * @param position Vec2D of the starting position of the ball.
+     * @param colour Enum representing the colour of the ball.
+     * @param ballSize Integer ranging 0-4 representing the ball size.
+     * @param left Boolean that is set to 1 if the ball initially moves left, 0 if right.
      */
-    public Ball(Vec2d position, boolean left, int ballSize) {
+    public Ball(Vec2d position, Ball.Colour colour, int ballSize, boolean left) {
+        //Ball position
         this.setPosition(position);
+        //Ball colour
+        this.setBallColour(colour);
+        //Ball direction
         if (left) {
             this.setSpeed(-BALL_MOVE_SPEED, 0);
         } else {
             this.setSpeed(BALL_MOVE_SPEED, 0);
         }
+        //Ball size
         this.setBallSize(ballSize);
         switch (ballSize) {
             case 0: sprite = Ball.TINY_BALL_SPRITE;
@@ -56,7 +65,7 @@ public class Ball extends Entity {
             case 4: sprite = Ball.HUGE_BALL_SPRITE;
                 break;
         }
-
+        //Ball collision box
         shape = new Circle(sprite.getWidth()/2);
         updatePosition(0);
     }
@@ -76,14 +85,30 @@ public class Ball extends Entity {
     public int getBallSize() { return this.ballSize; }
 
     /**
+     * Sets the ball colour. Method only used internally.
+     * @param colour Enum with options BLUE, GREEN, ORANGE, PURPLE, RED and YELLOW.
+     */
+    private void setBallColour(Colour colour) {
+        this.colour = colour;
+    }
+
+    /**
+     * Gets the ball colour.
+     * @return Enum with options BLUE, GREEN, ORANGE, PURPLE, RED and YELLOW.
+     */
+    public Colour getBallColour() {
+        return this.colour;
+    }
+
+    /**
      * Removes this ball from the Level and adds two smaller balls on the same position, moving in different directions.
      * If the ball is already at it's smallest, no new balls will be added.
      */
     public void split() {
         Level level = Game.getInstance().getCurrentLevel();
         if (this.ballSize != 0) {
-            level.addEntity(new Ball(this.position, true, this.ballSize - 1));
-            level.addEntity(new Ball(this.position, false, this.ballSize - 1));
+            level.addEntity(new Ball(this.position, this.getBallColour(), this.ballSize - 1, true));
+            level.addEntity(new Ball(this.position, this.getBallColour(), this.ballSize - 1, false));
         }
         level.removeEntity(this);
     }
