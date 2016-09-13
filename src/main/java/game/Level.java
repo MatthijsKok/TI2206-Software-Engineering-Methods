@@ -63,7 +63,7 @@ public class Level {
         }
 
         // Balls
-        addEntity(new Ball(new Vec2d(256, 256), false, 2));
+        addEntity(new Ball(new Vec2d(256, 256), Ball.Colour.RED, 2,false));
     }
 
     private void setPlayers() {

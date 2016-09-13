@@ -29,10 +29,44 @@ public class CircleTest {
     }
     /**
      * Test intersection; check if the circle intersects with a rectangle.
+     * Their initial placement (0,0) is not changed, so they should intersect
      */
-//    @Test
-//    public void intersects(){
-//
-//    }
-
+    @Test
+    public void intersectsCircleRectangle(){
+        Rectangle rectangle = new Rectangle(1,1);
+        Circle circle = new Circle(1);
+        assertTrue(circle.intersects(rectangle));
+    }
+    /**
+     * Test intersection; check if the circle intersects with a rectangle.
+     * the rectangle in moved with (4,5) they should not intersect.
+     */
+    @Test
+    public void intersectsCircleRectangle2(){
+        Rectangle rectangle = new Rectangle(1,1);
+        Circle circle = new Circle(1);
+        rectangle.setOffset(4,5);
+        assertFalse(circle.intersects(rectangle));
+    }
+    /**
+     * Test intersection; check if the circle intersects with a circle.
+     * Their initial placement (0,0) is not changed, so they should intersect
+     */
+    @Test
+    public void intersectsCircleCircle(){
+        Circle circle = new Circle(1);
+        Circle circle2 = new Circle(1);
+        assertTrue(circle.intersects(circle2));
+    }
+    /**
+     * Test intersection; check if the circle intersects with a circle.
+     * the rectangle in moved with (4,5) they should not intersect.
+    */
+    @Test
+    public void intersectsCircleCircle2(){
+        Circle circle = new Circle(1);
+        Circle circle2 = new Circle(1);
+        circle2.setPosition(4,5);
+        assertFalse(circle.intersects(circle2));
+    }
 }
