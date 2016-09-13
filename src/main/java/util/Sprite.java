@@ -131,11 +131,11 @@ public class Sprite {
         gc.drawImage(image, currentFrame*width, 0, width, height, x - offset.x*xScale, y - offset.y*yScale, width*xScale, height*yScale);
     }
 
-    public int getWidth() {
-        return width;
-    }
+    // GETTERS
+    public Vec2d getOffset() { return offset; }
+    public double getOffsetX() { return offset.x; }
+    public double getOffsetY() { return offset.y; }
 
-    public int getHeight() {
-        return height;
-    }
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
 }

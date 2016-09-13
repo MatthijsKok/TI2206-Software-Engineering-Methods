@@ -1,66 +1,149 @@
 package game;
 
-import entities.Block;
-import entities.Entity;
-import entities.Life;
-import entities.Player;
-import entities.WallBlock;
+
+import UI.HUD;
+import UI.UIElement;
+import com.sun.javafx.geom.Vec2d;
+import entities.*;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Level {
-	private ArrayList<Entity> entities;
-	private Image background;
-    private Player player;
-	
-	public Level() {
-		entities = new ArrayList<Entity>();
+    private Image background;
+	private List<Entity> entities = new ArrayList<>();
+    private List<Player> players;
+    private List<UIElement> uiElements = new ArrayList<>();
+	private String file;
 
-        //create a new player
-        player = new Player(512, 512);
-        //add player to the game
-        entities.add(player);
-        // add the rope of the player
-        entities.add(player.getRope());
-
-
-		// wall blocks
-		for (int x = 0; x < 608; x += 32) {
-			entities.add(new WallBlock(0, x));
-			entities.add(new WallBlock(992, x));
-		}
-		// Floor & ceiling blocks
-		for (int x = 0; x < 1024; x += 32) {
-			entities.add(new Block(x, 544));	//top floor
-			entities.add(new Block(x, 576));	//lower floor
-			entities.add(new Block(x, 0));		//ceiling
-		}
-
-		// Lives
-		for (int x = 0; x < Player.life*35; x += 35) {
-			entities.add(new Life(x+850, 560));
-		}
-
+	public Level(String file) {
+	    this.file = file;
 	}
+
+	public void start() {
+        load();
+
+        setPlayers();
+        initUI();
+    }
+
+    /**
+     * Restarts a level
+     */
+    public void restart() {
+        unload();
+        load();
+    }
+
+    private void unload() {
+        entities = new ArrayList<>();
+        load();
+    }
+
+    /**
+     * Loads a level from a file
+     * TODO: implement
+     */
+	private void load() {
+
+        // Wall blocks
+        for (int y = 0; y < 608; y += 32) {
+            addEntity(new Wall(0, y));
+            addEntity(new Wall(992, y));
+        }
+
+        // Floor & ceiling blocks
+        for (int x = 0; x < 1024; x += 32) {
+            addEntity(new Block(x, 544));	//top floor
+            addEntity(new Block(x, 576));	//lower floor
+            //addEntity(new Block(x, 0));		//ceiling
+        }
+
+        // Player
+        addEntity(new Player(512, 512));
+
+        // Balls
+        addEntity(new Ball(new Vec2d(256, 256), Ball.Colour.BLUE, 2, false));
+    }
+
+    private void setPlayers() {
+        players = new ArrayList<>();
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i) instanceof Player) {
+                players.add((Player)entities.get(i));
+            }
+        }
+    }
+
+    private void initUI() {
+        uiElements.add(new HUD(this));
+    }
 	
-	public void update(double timeDifference) {
+	public void update(double dt) {
 		for (Entity entity : entities) {
-			entity.update(timeDifference);
+			entity.update(dt);
 		}
+
+		handleCollisions();
 	}
-	
+
+    /**
+     * Handles collisions between all entities currently in the level.
+     * Both a.collideWith(b) and b.collideWith(a) are called because a only knows what to do with itself and so does b.
+     */
+	private void handleCollisions() {
+        int size = entities.size();
+        Entity a, b;
+        for (int i = 0; i < size; i++) {
+            a = entities.get(i);
+            for (int j = i+1; j < size; j++) {
+                b = entities.get(j);
+                if (a.intersects(b)) {
+                    a.collideWith(b);
+                    b.collideWith(a);
+                }
+            }
+        }
+    }
+
+    /**
+     * Draws all entities and UIElements in the current level.
+     */
 	public void draw() {
 		for (Entity entity : entities) {
 			entity.draw();
 		}
+
+		// Draw UI elements over entities
+		for (UIElement uiElement : uiElements) {
+		    uiElement.draw();
+        }
 	}
 
-    public Player getPlayer() {
-        return player;
+	public Player getPlayer(int i) { return players.get(i); }
+    public List<Player> getPlayers() {
+        return players;
     }
 
-    public ArrayList<Entity> getEntities() {
+    public List<Entity> getEntities() {
         return entities;
     }
+
+	public void addEntity(Entity e) { entities.add(e); }
+
+    /**
+     * Removes entity e from the level
+     * @param e The entity to remove
+     * @return true if e is found, false otherwise
+     */
+	public boolean removeEntity(Entity e) {
+		for (int i = 0; i < entities.size(); i++) {
+				if (entities.get(i).equals(e)) {
+                    entities.remove(i);
+                    return true;
+                }
+		}
+		return false;
+	}
 }

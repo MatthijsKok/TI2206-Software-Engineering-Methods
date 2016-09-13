@@ -33,6 +33,10 @@ public class Rope extends Entity {
      */
     private Vec2d spawnPosition;
 
+    public Rope() {
+        this(0, 0);
+    }
+
     /**
      * Creates a new rope
      * @param x the x postiton of the rope
