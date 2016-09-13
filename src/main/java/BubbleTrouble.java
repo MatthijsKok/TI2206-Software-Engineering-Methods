@@ -44,6 +44,8 @@ public class BubbleTrouble extends Application
             	game.draw();
             }
         }.start();
+
+        game.start();
      
         theStage.show();
     }

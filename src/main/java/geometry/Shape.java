@@ -32,7 +32,5 @@ public abstract class Shape {
     public double getX() { return position.x; }
     public double getY() { return position.y; }
 
-    public boolean intersects(Shape shape) {
-        return false;
-    }
+    public abstract boolean intersects(Shape shape);
 }

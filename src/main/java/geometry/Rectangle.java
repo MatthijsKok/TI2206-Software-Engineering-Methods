@@ -7,7 +7,7 @@ import com.sun.javafx.geom.Vec2d;
  */
 public class Rectangle extends Shape {
 
-    protected Vec2d size;
+    protected Vec2d size, offset;
 
     public Rectangle() {
         this(1.d, 1.d);
@@ -16,27 +16,39 @@ public class Rectangle extends Shape {
     public Rectangle(double width, double height) {
         super();
         setPosition(0, 0);
+        setOffset(0, 0);
         setSize(width, height);
     }
 
     public void setSize(double width, double height) {
         setSize(new Vec2d(width, height));
     }
-
     public void setSize(Vec2d size) {
         this.size = size;
     }
 
     public Vec2d getSize() { return this.size; }
 
-    public double getLeft() { return position.x; }
-    public double getTop() { return position.y; }
-    public double getRight() { return position.x + size.x; }
-    public double getBottom() { return position.y + size.y; }
+    public void setOffset(double x, double y) { setOffset(new Vec2d(x, y)); }
+    public void setOffset(Vec2d offset) { this.offset = offset; }
 
-    public boolean intersects(Circle circle) {
-        return circle.intersects(this);
+    public double getLeft() { return position.x - offset.x; }
+    public double getTop() { return position.y - offset.y; }
+    public double getRight() { return position.x + size.x - offset.x; }
+    public double getBottom() { return position.y + size.y - offset.y; }
+
+    public boolean intersects(Shape shape) {
+        if (shape instanceof Rectangle) {
+            return intersects((Rectangle) shape);
+        }
+
+        if (shape instanceof Circle) {
+            return ((Circle) shape).intersects(this);
+        }
+
+        return false;
     }
+
 
     public boolean intersects(Rectangle rect) {
         return (rect.getLeft() > getRight() ||

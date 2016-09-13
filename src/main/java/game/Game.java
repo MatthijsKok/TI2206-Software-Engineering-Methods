@@ -12,9 +12,6 @@ public class Game {
 
     protected Game() {
 		levels.add(new Level("level.txt"));
-		currentLevel = levels.get(0);
-
-        lastNanoTime = System.nanoTime();
 	}
 
     /**
@@ -26,6 +23,16 @@ public class Game {
             gameInstance = new Game();
         }
         return gameInstance;
+    }
+
+    /**
+     * Loads and starts the first level
+     */
+    public void start() {
+        lastNanoTime = System.nanoTime();
+
+        currentLevel = levels.get(0);
+        currentLevel.start();
     }
 
     /**
