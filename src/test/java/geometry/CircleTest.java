@@ -1,4 +1,5 @@
 package geometry;
+import entities.Ball;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
@@ -83,5 +84,38 @@ public class CircleTest {
         assertFalse(circle.intersects(circle2));
     }
 
-    
+    /**
+     * Test if the right intersections function is called. (Circle)
+     */
+    @Test
+    public void intersectsShape(){
+        Circle circle = new Circle();
+        Shape shape = new Circle();
+        assertTrue(circle.intersects(shape));
+    }
+
+    /**
+     * Test if the right intersections function is called. (rectangle)
+     */
+    @Test
+    public void intersectsShape2(){
+        Circle circle = new Circle();
+        Shape shape = new Rectangle();
+        assertTrue(circle.intersects(shape));
+    }
+
+    /**
+     * Test if the right intersections function is called. (none; false)
+     */
+    @Test
+    public void intersectsShape3(){
+        Circle circle = new Circle();
+        Shape shape = new Shape() {
+            @Override
+            public boolean intersects(Shape shape) {
+                return false;
+            }
+        };
+        assertFalse(circle.intersects(shape));
+    }
 }
