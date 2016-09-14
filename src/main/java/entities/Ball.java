@@ -122,8 +122,8 @@ public class Ball extends Entity {
         Level level = Game.getInstance().getCurrentLevel();
 
         if (size > 0) {
-            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(speed.x, -100)));
-            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(-speed.x, -100)));
+            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(speed.x, -BOUNCE_SPEEDS[size-1])));
+            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(-speed.x, -BOUNCE_SPEEDS[size-1])));
         }
 
         level.removeEntity(this);
@@ -158,10 +158,6 @@ public class Ball extends Entity {
     public void update(double dt) {
         // Apply gravity
         speed.y += GRAVITY*dt;
-
-        if (keyboard.keyPressed("S") && size == 2) {
-            split();
-        }
 
         // Move
         updatePosition(dt);
@@ -223,13 +219,19 @@ public class Ball extends Entity {
         split();
     }
 
+    /**
+     * Draws the Ball sprite on the Entity's position with scale depending on the ball size.
+     */
     public void draw() {
         sprite.draw(position, radius*2 / sprite.getWidth());
     }
 
+    /**
+     * Picks a random Colour from the Ball.Colour options and returns it.
+     * @return a random Ball.Colour.
+     */
     private static Colour randomColour() {
         Colour[] values = Colour.values();
-
         return values[(int)Math.floor(Math.random()*values.length)];
     }
 }
