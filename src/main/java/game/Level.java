@@ -13,6 +13,8 @@ import java.util.List;
 public class Level {
     private Image background;
 	private List<Entity> entities = new ArrayList<>();
+    private List<Entity> entitiesToRemove = new ArrayList<>();
+    private List<Entity> entitiesToAdd = new ArrayList<>();
     private List<Player> players;
     private List<UIElement> uiElements = new ArrayList<>();
 	private String file;
@@ -64,7 +66,10 @@ public class Level {
         addEntity(new Player(512, 512));
 
         // Balls
-        addEntity(new Ball(new Vec2d(256, 256), Ball.Colour.BLUE, 2, false));
+        addEntity(new Ball(new Vec2d(256, 256), 2));
+        addEntity(new Ball(new Vec2d(512, 256), 2));
+
+        addEntities();
     }
 
     private void setPlayers() {
@@ -84,6 +89,9 @@ public class Level {
 		for (Entity entity : entities) {
 			entity.update(dt);
 		}
+
+		removeEntities();
+        addEntities();
 
 		handleCollisions();
 	}
@@ -130,20 +138,35 @@ public class Level {
         return entities;
     }
 
-	public void addEntity(Entity e) { entities.add(e); }
+	public void addEntity(Entity e) { entitiesToAdd.add(e); }
 
     /**
-     * Removes entity e from the level
+     * Register that an entity has to be removed
      * @param e The entity to remove
-     * @return true if e is found, false otherwise
+     * @return true if e is not already removed, false otherwise
      */
 	public boolean removeEntity(Entity e) {
-		for (int i = 0; i < entities.size(); i++) {
-				if (entities.get(i).equals(e)) {
-                    entities.remove(i);
-                    return true;
-                }
-		}
-		return false;
+	    if (entities.contains(e) && !entitiesToRemove.contains(e)) {
+            entitiesToRemove.add(e);
+            return true;
+        }
+
+        return false;
 	}
+
+    /**
+     * Really removes all entities that need to be removed from the entity list
+     */
+	private void removeEntities() {
+	    entities.removeAll(entitiesToRemove);
+        entitiesToRemove = new ArrayList<>();
+    }
+
+    /**
+     * Really add all entities that need to be removed to the entity list
+     */
+    private void addEntities() {
+        entities.addAll(entitiesToAdd);
+        entitiesToAdd = new ArrayList<>();
+    }
 }
