@@ -18,16 +18,16 @@ public class RectangleTest {
     @Test
     public void intersectCircle2(){
         Circle circle = new Circle(6);
-        circle.setPosition(10,40);            ///WTF HOE KAN DIT?
+        circle.setPosition(10,40);
         Rectangle rectangle = new Rectangle(4,5);
-        assertTrue(rectangle.intersects(circle));  // zou false moeten zijn
+        assertFalse(rectangle.intersects(circle));
     }
 
     @Test
     public void intersectRectangle(){
         Rectangle rectangle = new Rectangle(4,5);
         Rectangle rectangle2 = new Rectangle(1,2);
-        rectangle.setOffset(5,5);           //dit is gek
-        assertTrue(rectangle.intersects(rectangle2)); // zou false moeten zijn
+        rectangle.setOffset(5,5);
+        assertFalse(rectangle.intersects(rectangle2));
     }
 }
