@@ -4,6 +4,7 @@ import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import game.Level;
 import geometry.Circle;
+import org.lwjgl.Sys;
 import util.Sprite;
 
 /**
@@ -12,89 +13,105 @@ import util.Sprite;
 public class Ball extends Entity {
 
     // Bounce speed for the different ball sizes.
-    private static final double TINY_BALL_BOUNCE_SPEED = 225;
-    private static final double SMALL_BALL_BOUNCE_SPEED = 300;
-    private static final double MEDIUM_BALL_BOUNCE_SPEED = 375;
-    private static final double LARGE_BALL_BOUNCE_SPEED = 450;
-    private static final double HUGE_BALL_BOUNCE_SPEED = 500;
+    private static final double[] BOUNCE_SPEEDS = { 225, 300, 375, 450, 500 };
 
-    private static final double BALL_MOVE_SPEED = 100; // Horizontal move speed
-    private static final double gravity = 300; // px/s^2
+    private static final double HORIZONTAL_SPEED = 100; // px/s
+    private static final double GRAVITY = 300; // px/s^2
 
-    public enum Colour{BLUE, GREEN, ORANGE, PURPLE, RED, YELLOW} //Enum that represents the colour of the ball
+    public enum Colour { BLUE, GREEN, ORANGE, PURPLE, RED, YELLOW } //Enum that represents the colour of the ball
 
-    private int ballSize; // Integer that represents the ball size from 0 (tiny) to 4 (huge).
-    private Colour colour; //Colour of the ball.
+    private int size; // Integer that represents the ball size from 0 (tiny) to 4 (huge).
+    private Colour colour; // Colour of the ball.
+    private double radius; // The radius of the ball.
+
+    public Ball(Vec2d position, int size) {
+        this(position, size, randomColour());
+    }
+
+    public Ball(Vec2d position, int size, Colour colour) {
+        this(position, size, colour, new Vec2d(HORIZONTAL_SPEED, 0));
+    }
 
     /**
      * Constructor for the bouncing balls in our game.
-     * @param position Vec2D of the starting position of the ball.
+     * @param position Vec2d of the starting position of the ball.
      * @param colour Enum representing the colour of the ball.
-     * @param ballSize Integer ranging 0-4 representing the ball size.
-     * @param left Boolean that is set to 1 if the ball initially moves left, 0 if right.
+     * @param size Integer ranging 0-4 representing the ball size.
+     * @param speed Vec2d initial speed of the bal.
      */
-    public Ball(Vec2d position, Ball.Colour colour, int ballSize, boolean left) {
-        //Ball position
-        this.setPosition(position);
-        //Ball colour
-        this.setBallColour(colour);
-        //Ball size
-        this.setBallSize(ballSize);
-        //Ball direction
-        if (left) {
-            this.setSpeed(-BALL_MOVE_SPEED, 0);
-        } else {
-            this.setSpeed(BALL_MOVE_SPEED, 0);
-        }
-        //Ball collision box
-        shape = new Circle(sprite.getWidth()/2);
+    public Ball(Vec2d position, int size, Ball.Colour colour, Vec2d speed) {
+        super(position);
+
+        // Ball collision box
+        shape = new Circle(0);
+
+        setColour(colour);
+        setSize(size);
+        setSpeed(speed);
+
         updatePosition(0);
     }
 
     /**
      * Sets the ball size. Method only used internally.
-     * @param ballSize Integer from 0 (tiny ball) to 4 (huge ball).
+     * @param size Integer from 0 (tiny ball) to 4 (huge ball).
      */
-    private void setBallSize(int ballSize) {
-        this.ballSize = ballSize;
+    private void setSize(int size) {
+        this.size = Math.max(0, size);
+        radius = 8*Math.pow(2, this.size);
+        ((Circle)shape).setRadius(radius);
     }
 
     /**
      * Gets the ball size.
      * @return Integer from 0 (tiny ball) to 4 (huge ball).
      */
-    public int getBallSize() { return this.ballSize; }
+    public int getSize() { return size; }
 
     /**
      * Sets the ball colour. Method only used internally.
      * @param colour Enum with options BLUE, GREEN, ORANGE, PURPLE, RED and YELLOW.
      */
-    private void setBallColour(Colour colour) {
+    private void setColour(Colour colour) {
         this.colour = colour;
+
+        String uri;
+
         switch (colour) {
-            case BLUE: this.sprite = new Sprite("balls/blue_ball.png", new Vec2d(51,51));
+            case BLUE:
+                uri = "balls/blue_ball.png";
                 break;
-            case GREEN: this.sprite = new Sprite("balls/green_ball.png", new Vec2d(51,51));
+            case GREEN:
+                uri = "balls/green_ball.png";
                 break;
-            case ORANGE: this.sprite = new Sprite("balls/orange_ball.png", new Vec2d(51,51));
+            case ORANGE:
+                uri = "balls/orange_ball.png";
                 break;
-            case PURPLE: this.sprite = new Sprite("balls/purple_ball.png", new Vec2d(51,51));
+            case PURPLE:
+                uri = "balls/purple_ball.png";
                 break;
-            case RED: this.sprite = new Sprite("balls/red_ball.png", new Vec2d(51,51));
+            case RED:
+                uri = "balls/red_ball.png";
                 break;
-            case YELLOW: this.sprite = new Sprite("balls/yellow_ball.png", new Vec2d(51,51));
+            case YELLOW:
+                uri = "balls/yellow_ball.png";
                 break;
-            default: this.sprite = new Sprite("balls/blue_ball.png", new Vec2d(51,51));
+            default:
+                uri = "balls/blue_ball.png";
                 break;
         }
+
+        sprite = new Sprite(uri);
+        sprite.setOffset(51, 51);
+        //sprite.setOffsetToCenter();
     }
 
     /**
      * Gets the ball colour.
      * @return Enum with options BLUE, GREEN, ORANGE, PURPLE, RED and YELLOW.
      */
-    public Colour getBallColour() {
-        return this.colour;
+    public Colour getColour() {
+        return colour;
     }
 
     /**
@@ -103,33 +120,24 @@ public class Ball extends Entity {
      */
     public void split() {
         Level level = Game.getInstance().getCurrentLevel();
-        if (this.ballSize != 0) {
-            level.addEntity(new Ball(this.position, this.getBallColour(), this.getBallSize() - 1, true));
-            level.addEntity(new Ball(this.position, this.getBallColour(), this.getBallSize() - 1, false));
+
+        if (size > 0) {
+            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(speed.x, -100)));
+            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(-speed.x, -100)));
         }
+
         level.removeEntity(this);
     }
 
     private void updatePosition(double dt) {
-        this.position.x += this.speed.x*dt;
-        this.position.y += this.speed.y*dt;
+        position.x += speed.x*dt;
+        position.y += speed.y*dt;
 
         shape.setPosition(position.x, position.y);
     }
 
     private void bounce() {
-        switch (ballSize) {
-            case 0: this.speed.y = -TINY_BALL_BOUNCE_SPEED;
-                break;
-            case 1: this.speed.y = -SMALL_BALL_BOUNCE_SPEED;
-                break;
-            case 2: this.speed.y = -MEDIUM_BALL_BOUNCE_SPEED;
-                break;
-            case 3: this.speed.y = -LARGE_BALL_BOUNCE_SPEED;
-                break;
-            case 4: this.speed.y = -HUGE_BALL_BOUNCE_SPEED;
-                break;
-        }
+        speed.y = -BOUNCE_SPEEDS[size];
     }
 
     /**
@@ -138,31 +146,65 @@ public class Ball extends Entity {
      */
     public void update(double dt) {
         // Apply gravity
-        this.speed.y += gravity*dt;
+        speed.y += GRAVITY*dt;
 
-        // Left boundary
-        if (this.position.x <= 64) {
-            this.position.x = 64;
-            this.speed.x = BALL_MOVE_SPEED;
-        }
-        // Right boundary
-        if (this.position.x >= 992) {
-            this.position.x = 992;
-            this.speed.x = -BALL_MOVE_SPEED;
-        }
-
-        // Bottom boundary
-        if (this.position.y >= 544) {
-            this.position.y = 544;
-
-            bounce();
+        if (keyboard.keyPressed("S") && size == 2) {
+            split();
         }
 
         // Move
         updatePosition(dt);
     }
 
+    /**
+     * Entry point for all collisions
+     * @param entity the entity this ball collides with
+     */
     public void collideWith(Entity entity) {
+        if (entity instanceof Block) {
+            collideWith((Block) entity);
+        }
 
+        if (entity instanceof Wall) {
+            collideWith((Wall) entity);
+        }
+
+        if (entity instanceof Rope) {
+            collideWith((Rope) entity);
+        }
+    }
+
+    private void collideWith(Block block) {
+        position.y = Math.min(block.getY() - radius, position.y);
+        updatePosition(0);
+        bounce();
+    }
+
+    private void collideWith(Wall wall) {
+        if (position.x + radius > wall.getLeft() && position.x + radius < wall.getRight()) {
+            // Hit the wall from the right
+            position.x = wall.getLeft() - radius;
+            if (speed.x > 0) { speed.x = -speed.x; }
+        } else if (position.x - radius > wall.getLeft() && position.x - radius < wall.getRight()) {
+            // Hit the wall from the left
+            position.x = wall.getRight() + radius;
+            if (speed.x < 0) { speed.x = -speed.x; }
+        }
+
+        updatePosition(0);
+    }
+
+    private void collideWith(Rope rope) {
+        split();
+    }
+
+    public void draw() {
+        sprite.draw(position, radius*2 / sprite.getWidth());
+    }
+
+    private static Colour randomColour() {
+        Colour[] values = Colour.values();
+
+        return values[(int)Math.floor(Math.random()*values.length)];
     }
 }

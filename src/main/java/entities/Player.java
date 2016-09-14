@@ -10,17 +10,23 @@ import util.Sprite;
  */
 public class Player extends Entity {
 
-	private static Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
+    private static Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
 
     private static final double RUN_SPEED  = 256; // px/s
     private static final double JUMP_SPEED = 256; // px/s
     private static final double GRAVITY    = 300; // px/s^2
 
-    // Input characters
-    private String left, right, up, shoot;
+    /**
+     * Input characters
+     */
+    private String leftKey, rightKey, upKey, shootKey;
 
     private int side = 1;
+    private boolean onground = false;
 
+    /**
+     * Rope of the player
+     */
     private Rope rope;
 
     /**
@@ -32,12 +38,19 @@ public class Player extends Entity {
 
     public Player(double x, double y) {
         super(x, y);
+
+        // Set player sprite
         sprite = Player.SPRITE;
 
-        left = "LEFT";
-        right = "RIGHT";
-        up = "UP";
-        shoot = "SPACE";
+        // Create rope for the player
+        rope = new Rope(-100, -100);
+
+        // Define player keys
+        leftKey = "LEFT";
+        rightKey = "RIGHT";
+        upKey = "UP";
+        shootKey = "SPACE";
+
 
         rope = new Rope();
         Game.getInstance().getCurrentLevel().addEntity(rope);
@@ -50,6 +63,22 @@ public class Player extends Entity {
         Game.getInstance().getCurrentLevel().restart();
     }
 
+    private double getLeft() {
+        return position.x - sprite.getOffsetX();
+    }
+
+    private double getRight() {
+        return getLeft() + sprite.getWidth();
+    }
+
+    private void setLeft(double left) {
+        position.x = left + sprite.getOffsetX();
+    }
+
+    private void setRight(double right) {
+        position.x = right - sprite.getWidth() + sprite.getOffsetX();
+    }
+
     /**
      * Update the players position and collision shape
      * @param dt the time
@@ -60,63 +89,85 @@ public class Player extends Entity {
         shape.setPosition(position.x - sprite.getOffsetX(), position.y - sprite.getOffsetY());
     }
 
-	public void update(double dt) {
-	    // Update the player sprite
-	    sprite.update(dt);
+    /**
+     * Updates the Player object
+     * @param dt The time since the last time the update method was called
+     */
+    public void update(double dt) {
 
-	    // Walk
-	    this.speed.x = 0;
-	    if (keyboard.keyPressed(left))  { this.speed.x -= RUN_SPEED; }
-        if (keyboard.keyPressed(right)) { this.speed.x += RUN_SPEED; }
+        // Update the player sprite
+        sprite.update(dt);
+
+        // Walk
+        speed.x = 0;
+        if (keyboard.keyPressed(leftKey))  { speed.x -= RUN_SPEED; }
+        if (keyboard.keyPressed(rightKey)) { speed.x += RUN_SPEED; }
+        if (keyboard.keyPressed(shootKey)) { this.rope.activate(this.position);}
 
         if (speed.x < 0) { side = -1; }
         if (speed.x > 0) { side = 1; }
 
         // Apply gravity
-		this.speed.y += GRAVITY*dt;
+        this.speed.y += GRAVITY*dt;
 
         // Jump
-        if (this.position.y >= 544 && keyboard.keyPressed(up)) {
-            this.speed.y = -JUMP_SPEED;
+        if (onground && keyboard.keyPressed(upKey)) {
+            onground = false;
+            speed.y = -JUMP_SPEED;
         }
 
         // Move
         updatePosition(dt);
+    }
 
-        // Left boundary
-        if (this.position.x <= 64) {
-            this.position.x = 64;
-            this.speed.x = Math.max(0, this.speed.x);
+    public void collideWith(Entity entity) {
+        if (entity instanceof Ball) {
+            collideWith((Ball) entity);
         }
 
-        // Right boundary
-        if (this.position.x >= 992) {
-            this.position.x = 992;
-            this.speed.x = Math.min(this.speed.x, 0);
+        if (entity instanceof Block) {
+            collideWith((Block) entity);
         }
 
-        // Bottom boundary
-		if (this.position.y >= 544) {
-			this.position.y = 544;
-			this.speed.y = Math.min(this.speed.y, 0);
-		}
-	}
-
-	public void collideWith(Entity entity) {
-	    if (entity instanceof Ball) {
-	        collideWith((Ball) entity);
+        if (entity instanceof Wall) {
+            collideWith((Wall) entity);
         }
     }
 
     /**
-     * When a player collides with a ball, the player loses a life
+     * When a player collides with a ball, the player dies
      * @param ball
      */
-    public void collideWith(Ball ball) {
+    private void collideWith(Ball ball) {
         die();
     }
 
-	public void draw() {
-	    sprite.draw(position, side, 1);
+    private void collideWith(Block block) {
+        onground = true;
+
+        position.y = Math.min(position.y, block.getY());
+        speed.y = Math.min(speed.y, 0);
+        updatePosition(0);
     }
+
+    private void collideWith(Wall wall) {
+        if (getRight() > wall.getLeft() && getRight() < wall.getRight()) {
+            // Hit the wall from the right
+            setRight(wall.getLeft());
+            speed.x = Math.min(speed.x, 0);
+        } else if (getLeft() > wall.getLeft() && getLeft() < wall.getRight()) {
+            // Hit the wall from the left
+            setLeft(wall.getRight());
+            speed.x = Math.max(0, speed.x);
+        }
+    }
+
+    public void draw() {
+        sprite.draw(position, side, 1);
+    }
+
+    public Rope getRope() {
+        return rope;
+    }
+
 }
