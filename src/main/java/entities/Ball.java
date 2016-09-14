@@ -110,6 +110,14 @@ public class Ball extends Entity {
         level.removeEntity(this);
     }
 
+    /**
+     * Updates the position with the current speed * the Delta Time.
+     * Also syncs the position of the Shape with the Entity, for collision purposes.
+     * If this method is called with a dt of 0 the position of the Entity will not be changed,
+     * only the Shape will sync up.
+     * This is usually done after manually editing the position of the Entity.
+     * @param dt Time difference from previous update in seconds.
+     */
     private void updatePosition(double dt) {
         this.position.x += this.speed.x*dt;
         this.position.y += this.speed.y*dt;
@@ -117,6 +125,9 @@ public class Ball extends Entity {
         shape.setPosition(position.x, position.y);
     }
 
+    /**
+     * Set the vertical speed to up at the speed for that balls bounce height.
+     */
     private void bounce() {
         switch (ballSize) {
             case 0: this.speed.y = -TINY_BALL_BOUNCE_SPEED;
@@ -145,8 +156,10 @@ public class Ball extends Entity {
     }
 
     /**
-     * Entry point for all collisions
-     * @param entity the entity this ball collides with
+     * Entry point for all collisions.
+     * This method should only change the behaviour of the Ball, not the Entity it is colliding with.
+     * The colliding Entity should handle that itself in it's own "collideWith" method.
+     * @param entity the Entity this Ball collides with.
      */
     public void collideWith(Entity entity) {
         if (entity instanceof Block) {
@@ -162,12 +175,20 @@ public class Ball extends Entity {
         }
     }
 
+    /**
+     * The behaviour of the Ball when it collides with a Block Entity.
+     * @param block The Block Entity this Ball collides with.
+     */
     private void collideWith(Block block) {
         position.y = Math.min(block.getY(), position.y);
         updatePosition(0);
         bounce();
     }
 
+    /**
+     * The behaviour of the Ball when it collides with a Wall Entity.
+     * @param wall The Wall Entity this Ball collides with.
+     */
     private void collideWith(Wall wall) {
         if (wall.getX() > getX()) {
             position.x = Math.min(position.x, wall.getLeft() - 32);
@@ -179,6 +200,10 @@ public class Ball extends Entity {
         updatePosition(0);
     }
 
+    /**
+     * The behaviour of the Ball when it collides with a Rope Entity.
+     * @param rope The Rope Entity this Ball collides with.
+     */
     private void collideWith(Rope rope) {
         split();
     }
