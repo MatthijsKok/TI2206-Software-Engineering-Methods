@@ -17,6 +17,7 @@ public class CircleTest {
         Circle Circle = new Circle(6);
         assertTrue(Circle.getRadius()==6);
     }
+
     /**
      * Test the Circle constructor
      */
@@ -25,6 +26,17 @@ public class CircleTest {
         Circle Circle = new Circle(6);
         assertFalse(Circle.getRadius()==4);
     }
+
+    /**
+     * Test the circle standard constructor,
+     * circle with no parameters should have a radiu of 0.
+     */
+    @Test
+    public void emptyCircle(){
+        Circle circle = new Circle();
+        assertTrue(circle.getRadius()==1);
+    }
+
     /**
      * Test intersection; check if the circle intersects with a rectangle.
      * Their initial placement (0,0) is not changed, so they should intersect
@@ -35,6 +47,7 @@ public class CircleTest {
         Circle circle = new Circle(1);
         assertTrue(circle.intersects(rectangle));
     }
+
     /**
      * Test intersection; check if the circle intersects with a rectangle.
      * the rectangle in moved with (4,5) they should not intersect.
@@ -46,6 +59,7 @@ public class CircleTest {
         rectangle.setOffset(4,5);
         assertFalse(circle.intersects(rectangle));
     }
+
     /**
      * Test intersection; check if the circle intersects with a circle.
      * Their initial placement (0,0) is not changed, so they should intersect
@@ -56,6 +70,7 @@ public class CircleTest {
         Circle circle2 = new Circle(1);
         assertTrue(circle.intersects(circle2));
     }
+
     /**
      * Test intersection; check if the circle intersects with a circle.
      * the rectangle in moved with (4,5) they should not intersect.
@@ -67,4 +82,6 @@ public class CircleTest {
         circle2.setPosition(4,5);
         assertFalse(circle.intersects(circle2));
     }
+
+    
 }
