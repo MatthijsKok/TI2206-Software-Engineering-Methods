@@ -42,16 +42,13 @@ public class Player extends Entity {
         // Set player sprite
         sprite = Player.SPRITE;
 
-        // Create rope for the player
-        rope = new Rope(-100, -100);
-
         // Define player keys
         leftKey = "LEFT";
         rightKey = "RIGHT";
         upKey = "UP";
         shootKey = "SPACE";
 
-
+        // Create rope for the player and add it to the level
         rope = new Rope();
         Game.getInstance().getCurrentLevel().addEntity(rope);
 
@@ -84,8 +81,8 @@ public class Player extends Entity {
      * @param dt the time
      */
     private void updatePosition(double dt) {
-        this.position.x += this.speed.x*dt;
-        this.position.y += this.speed.y*dt;
+        position.x += speed.x*dt;
+        position.y += speed.y*dt;
         shape.setPosition(position.x - sprite.getOffsetX(), position.y - sprite.getOffsetY());
     }
 
@@ -94,7 +91,6 @@ public class Player extends Entity {
      * @param dt The time since the last time the update method was called
      */
     public void update(double dt) {
-
         // Update the player sprite
         sprite.update(dt);
 
@@ -102,7 +98,6 @@ public class Player extends Entity {
         speed.x = 0;
         if (keyboard.keyPressed(leftKey))  { speed.x -= RUN_SPEED; }
         if (keyboard.keyPressed(rightKey)) { speed.x += RUN_SPEED; }
-        if (keyboard.keyPressed(shootKey)) { this.rope.activate(this.position);}
 
         if (speed.x < 0) { side = -1; }
         if (speed.x > 0) { side = 1; }
@@ -115,6 +110,9 @@ public class Player extends Entity {
             onground = false;
             speed.y = -JUMP_SPEED;
         }
+
+        // Shoot
+        if (keyboard.keyPressed(shootKey)) { rope.shoot(position); }
 
         // Move
         updatePosition(dt);
@@ -165,9 +163,4 @@ public class Player extends Entity {
     public void draw() {
         sprite.draw(position, side, 1);
     }
-
-    public Rope getRope() {
-        return rope;
-    }
-
 }
