@@ -118,13 +118,12 @@ public class Ball extends Entity {
      * Removes this ball from the Level and adds two smaller balls on the same position, moving in different directions.
      * If the ball is already at it's smallest, no new balls will be added.
      */
-    private void split() {
+    public void split() {
         Level level = Game.getInstance().getCurrentLevel();
 
         if (size > 0) {
-            bounce();
-            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(speed.x, speed.y)));
-            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(-speed.x, speed.y)));
+            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(speed.x, -100)));
+            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(-speed.x, -100)));
         }
 
         level.removeEntity(this);
