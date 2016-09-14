@@ -29,32 +29,26 @@ public class Ball extends Entity {
     }
 
     public Ball(Vec2d position, int size, Colour colour) {
-        this(position, size, colour, false);
+        this(position, size, colour, new Vec2d(HORIZONTAL_SPEED, 0));
     }
 
     /**
      * Constructor for the bouncing balls in our game.
-     * @param position Vec2D of the starting position of the ball.
+     * @param position Vec2d of the starting position of the ball.
      * @param colour Enum representing the colour of the ball.
      * @param size Integer ranging 0-4 representing the ball size.
-     * @param left Boolean that is set to 1 if the ball initially moves left, 0 if right.
+     * @param speed Vec2d initial speed of the bal.
      */
-    public Ball(Vec2d position, int size, Ball.Colour colour, boolean left) {
+    public Ball(Vec2d position, int size, Ball.Colour colour, Vec2d speed) {
         super(position);
 
         // Ball collision box
         shape = new Circle(0);
 
-        // Ball colour
         setColour(colour);
-        // Ball size
         setSize(size);
-        // Ball direction
-        if (left) {
-            setSpeed(-HORIZONTAL_SPEED, 0);
-        } else {
-            setSpeed(HORIZONTAL_SPEED, 0);
-        }
+        setSpeed(speed);
+
         updatePosition(0);
     }
 
@@ -128,8 +122,8 @@ public class Ball extends Entity {
         Level level = Game.getInstance().getCurrentLevel();
 
         if (size > 0) {
-            level.addEntity(new Ball(position, getSize() - 1, getColour(), true));
-            level.addEntity(new Ball(position, getSize() - 1, getColour(), false));
+            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(speed.x, -100)));
+            level.addEntity(new Ball(position, getSize() - 1, getColour(), new Vec2d(-speed.x, -100)));
         }
 
         level.removeEntity(this);

@@ -66,6 +66,7 @@ public class Level {
 
         // Balls
         addEntity(new Ball(new Vec2d(256, 256), 2));
+        addEntity(new Ball(new Vec2d(512, 256), 2));
 
         addEntities();
     }

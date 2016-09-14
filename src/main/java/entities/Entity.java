@@ -9,7 +9,8 @@ public abstract class Entity {
 
 	protected static KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
 
-	protected Vec2d position, speed;
+	protected Vec2d position = new Vec2d(0, 0);
+    protected Vec2d speed = new Vec2d(0, 0);
 	protected Sprite sprite = null;
     protected Shape shape = null;
 
@@ -29,16 +30,16 @@ public abstract class Entity {
 
 	public Entity(Vec2d position) {
 		setPosition(position);
-		setSpeed(new Vec2d(0, 0));
         visible = true;
 	}
 
 	public void setPosition(double x, double y) {
-		setPosition(new Vec2d(x, y));
+		this.position.x = x;
+        this.position.y = y;
 	}
 
 	public void setPosition(Vec2d position) {
-		this.position = position;
+	    setPosition(position.x, position.y);
 	}
 
 	public double getX() {
@@ -50,11 +51,12 @@ public abstract class Entity {
     }
 
 	public void setSpeed(double x, double y) {
-		setSpeed(new Vec2d(x, y));
+		speed.x = x;
+        speed.y = y;
 	}
 
 	public void setSpeed(Vec2d speed) {
-		this.speed = speed;
+	    setSpeed(speed.x, speed.y);
 	}
 	
 	public void update(double timeDifference) {
