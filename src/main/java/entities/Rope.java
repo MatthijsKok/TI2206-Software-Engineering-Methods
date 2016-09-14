@@ -1,6 +1,7 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import geometry.Rectangle;
 import util.Sprite;
 
 /**
@@ -16,22 +17,14 @@ public class Rope extends Entity {
     /**
      * Constant upward speed of the rope in px/s.
      */
-    final private double ARROWSPEED = 6; // px/s
+    final private static double TRAVEL_SPEED = 300; // px/s
 
     /**
      * Boolean indicating if the rope is still traveling towards the top of the screen.
      */
     private boolean traveling = false;
 
-    /**
-     * Boolean indicating if the rope was activated by the player.
-     */
-    private boolean activated = false;
-
-    /**
-     * The position where the rope will be spawned when it is activated.
-     */
-    private Vec2d spawnPosition;
+    private static double scale = 0.5;
 
     public Rope() {
         this(0, 0);
@@ -45,31 +38,45 @@ public class Rope extends Entity {
     public Rope(double x, double y) {
         super(x, y);
         // Set sprite
-        sprite = Rope.SPRITE;
-        sprite.setOffset(SPRITE.getWidth()/2,0);
-        // Make the rope invisible by default
-        visible = false;
-        // Set default spawn position
-        spawnPosition = new Vec2d(0,0);
+        setSprite();
+        setShape();
+        updatePosition(0);
+    }
+
+    /**
+     * Initializes the sprite of the rope
+     */
+    private void setSprite() {
+        sprite = SPRITE;
+        sprite.setOffset(SPRITE.getWidth()/2, 0);
+    }
+
+    /**
+     * Initializes the shape of the rope
+     */
+    private void setShape() {
+        shape = new Rectangle(sprite.getWidth()*scale, sprite.getHeight()*scale);
     }
 
     /**
      * If the rope is not yet traveling, a rope will spawn at the indicated position.
-     * @param spawnPosition The position where the rope will be spawned.
+     * @param position The position where the rope will be spawned.
      */
-    public void activate(Vec2d spawnPosition) {
-        if(!activated) {
-            this.activated = true;
-            this.spawnPosition.x = spawnPosition.x;
-            this.spawnPosition.y = spawnPosition.y;
+    public void shoot(Vec2d position) {
+        if(!traveling) {
+            traveling = true;
+            setPosition(position);
         }
     }
 
     /**
-     * Deactivates the rope.
+     * Update the ropes position and collision shape
+     * @param dt the time
      */
-    public void deactivate() {
-        this.activated = false;
+    private void updatePosition(double dt) {
+        position.x += speed.x*dt;
+        position.y += speed.y*dt;
+        shape.setPosition(position.x - sprite.getOffsetX()*scale, position.y - sprite.getOffsetY()*scale);
     }
 
     /**
@@ -77,40 +84,44 @@ public class Rope extends Entity {
      * @param dt delta time
      */
     public void update(double dt) {
-
-        //If the arrow is not traveling, and the shoot key is pressed...
-        if (!traveling) {
-            if (activated) {
-                // make the rope visible...
-                visible = true;
-
-                // set its traveling state to true...
-                traveling = true;
-
-                // and set the position of the rope to the position of the player.
-                position = spawnPosition;
-            }
+        if (traveling) {
+            speed.y = -TRAVEL_SPEED;
+        } else {
+            speed.y = 0;
+            position.y = 10000;
         }
 
-        // while the rope is traveling...
-        if (traveling) {
+        updatePosition(dt);
 
-            // move the arrow upwards with the speed of the arrow...
-            position.y -= ARROWSPEED;
-
-            // and if the rope has reached the top of the screen, change its traveling and activated state to false.
-            if(position.y <= 0) {
-                activated = false;
-                traveling = false;
-                visible = false;
-            }
+        if (position.y <= 0) {
+            traveling = false;
         }
     }
 
-    @Override
+    /**
+     * Entry point for collisions
+     * @param entity the entity this rope collides with
+     */
+    public void collideWith(Entity entity) {
+        if (entity instanceof Ball) {
+            collideWith((Ball) entity);
+        }
+    }
+
+    /**
+     * Collision with a ball, the rope should disapear
+     * @param ball the ball this rope collides with
+     */
+    private void collideWith(Ball ball) {
+        traveling = false;
+    }
+
+    /**
+     * Draw only if traveling
+     */
     public void draw(){
-        if (sprite != null && visible) {
-            sprite.draw(position, 0.5);
+        if (traveling) {
+            sprite.draw(position, scale);
         }
     }
 }
