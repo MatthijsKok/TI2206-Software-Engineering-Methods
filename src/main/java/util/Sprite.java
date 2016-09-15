@@ -11,12 +11,39 @@ public class Sprite {
 
     private static GraphicsContext gc = GameCanvasManager.getInstance().getContext();
 
+    /**
+     * Image of the sprite.
+     */
     private Image image;
+
+    /**
+     * The amount of frames the sprite consists of.
+     */
     private int frames;
+
+    /**
+     * The current frame to be displayed.
+     */
     private int currentFrame;
+
+    /**
+     * The frameSpeed at which the sprite should be displayed in frames per second.
+     */
     private int frameSpeed; // Frames / second
+
+    /**
+     * A Vec2d containing the x and y coordinates to be used as the center of the sprite.
+     */
     private Vec2d offset;
+
+    /**
+     * The with and height of the sprite in pixels.
+     */
     private int width, height;
+
+    /**
+     * A double representing a timeline from frame 0 to the last frame. Is used to determine currentFrame.
+     */
     private double framePart;
 
     public Sprite(String uri) {
@@ -138,4 +165,12 @@ public class Sprite {
 
     public int getWidth() { return width; }
     public int getHeight() { return height; }
+
+    /**
+     * Sets the frame of the sprite to be currently displayed, starting at 0.
+     * @param currentFrame
+     */
+    public void setCurrentFrame(int currentFrame) {
+        this.currentFrame = currentFrame;
+    }
 }
