@@ -1,14 +1,19 @@
 package game;
 
+import util.KeyboardInputManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
+    private static Game gameInstance = null;
+
 	private List<Level> levels = new ArrayList<>();
 	private Level currentLevel;
 
     private long lastNanoTime;
-	private static Game gameInstance = null;
+
+    private KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
 
     protected Game() {
 		levels.add(new Level("level.txt"));
@@ -43,6 +48,12 @@ public class Game {
         double dt = (currentNanoTime - lastNanoTime) / 1000000000.0;
         lastNanoTime = currentNanoTime;
 		currentLevel.update(dt);
+
+        if (keyboard.keyPressed("R")) {
+            if (levelWon() || levelLost()) {
+                getCurrentLevel().restart();
+            }
+        }
 	}
 	
 	public void draw() {
@@ -55,9 +66,23 @@ public class Game {
 	public List<Level> getLevels() { return levels; }
 
     /**
-     * @return Return the level curently in play
+     * @return Returns the level curently in play
      */
     public Level getCurrentLevel() {
         return currentLevel;
+    }
+
+    /**
+     * @return Returns whether the current level is won
+     */
+    public boolean levelWon() {
+        return getCurrentLevel().won();
+    }
+
+    /**
+     * @return Returns whether the current level is lost
+     */
+    public boolean levelLost() {
+        return getCurrentLevel().lost();
     }
 }
