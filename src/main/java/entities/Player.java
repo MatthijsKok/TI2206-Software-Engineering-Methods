@@ -13,7 +13,7 @@ public class Player extends Entity {
     private static Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
 
     private static final double RUN_SPEED  = 256; // px/s
-    private static final double JUMP_SPEED = 256; // px/s
+//    private static final double JUMP_SPEED = 256; // px/s
     private static final double GRAVITY    = 300; // px/s^2
 
     /**
@@ -22,7 +22,6 @@ public class Player extends Entity {
     private String leftKey, rightKey, upKey, shootKey;
 
     private int side = 1;
-    private boolean onground = false;
 
     /**
      * Rope of the player
@@ -105,14 +104,9 @@ public class Player extends Entity {
         // Apply gravity
         this.speed.y += GRAVITY*dt;
 
-        // Jump
-        if (onground && keyboard.keyPressed(upKey)) {
-            onground = false;
-            speed.y = -JUMP_SPEED;
-        }
-
-        // Shoot
+        // Shoot (use space or up key
         if (keyboard.keyPressed(shootKey)) { rope.shoot(position); }
+        if (keyboard.keyPressed(upKey)) { rope.shoot(position); }
 
         // Move
         updatePosition(dt);
@@ -141,8 +135,6 @@ public class Player extends Entity {
     }
 
     private void collideWith(Block block) {
-        onground = true;
-
         position.y = Math.min(position.y, block.getY());
         speed.y = Math.min(speed.y, 0);
         updatePosition(0);
