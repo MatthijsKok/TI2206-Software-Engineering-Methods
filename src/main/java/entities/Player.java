@@ -23,6 +23,7 @@ public class Player extends Entity {
     private String leftKey, rightKey, upKey, shootKey;
 
     private int side = 1;
+    private boolean alive = true;
 
     /**
      * Rope of the player
@@ -57,8 +58,10 @@ public class Player extends Entity {
     }
 
     private void die() {
-        Game.getInstance().getCurrentLevel().restart();
+        alive = false;
     }
+
+    public boolean isAlive() { return alive; }
 
     private double getLeft() {
         return position.x - sprite.getOffsetX();
@@ -106,7 +109,7 @@ public class Player extends Entity {
         // Apply gravity
         this.speed.y += GRAVITY*dt;
 
-        // Shoot (use space or up key
+        // Shoot (use space or up key)
         if (keyboard.keyPressed(shootKey)) { rope.shoot(position); }
         if (keyboard.keyPressed(upKey)) { rope.shoot(position); }
 

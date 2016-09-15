@@ -25,8 +25,8 @@ public class Level {
 
 	public void start() {
         load();
-
         setPlayers();
+
         initUI();
     }
 
@@ -36,10 +36,13 @@ public class Level {
     public void restart() {
         unload();
         load();
+        setPlayers();
     }
 
     private void unload() {
         entities = new ArrayList<>();
+        entitiesToRemove = new ArrayList<>();
+        entitiesToAdd = new ArrayList<>();
         load();
     }
 
@@ -74,9 +77,9 @@ public class Level {
 
     private void setPlayers() {
         players = new ArrayList<>();
-        for (int i = 0; i < entities.size(); i++) {
-            if (entities.get(i) instanceof Player) {
-                players.add((Player)entities.get(i));
+        for (Entity entity : entities) {
+            if (entity instanceof Player) {
+                players.add((Player) entity);
             }
         }
     }
@@ -168,5 +171,31 @@ public class Level {
     private void addEntities() {
         entities.addAll(entitiesToAdd);
         entitiesToAdd = new ArrayList<>();
+    }
+
+    /**
+     * @return true if all balls are destroyed, false otherwise.
+     */
+    boolean won() {
+        for (Entity entity : entities) {
+            if (entity instanceof Ball) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return true if a player died, false otherwise.
+     */
+    boolean lost() {
+        for (Player player : getPlayers()) {
+            if (!player.isAlive()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
