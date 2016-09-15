@@ -10,6 +10,7 @@ import util.Sprite;
  */
 public class Player extends Entity {
 
+    private static final int STATIONARY_FRAME = 3;
     private static Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
 
     private static final double RUN_SPEED  = 256; // px/s
@@ -91,8 +92,9 @@ public class Player extends Entity {
      */
     public void update(double dt) {
         // Update the player sprite
-        sprite.update(dt);
-
+        if(isMoving()) {
+            sprite.update(dt);
+        }
         // Walk
         speed.x = 0;
         if (keyboard.keyPressed(leftKey))  { speed.x -= RUN_SPEED; }
@@ -154,5 +156,19 @@ public class Player extends Entity {
 
     public void draw() {
         sprite.draw(position, side, 1);
+    }
+
+    /**
+     * Checks if any of the movement keys are currently pressed to determine if the player is moving;
+     * @return A boolean that is true if the player is moving, and false otherwise;
+     */
+    public boolean isMoving() {
+        if (keyboard.keyPressed(leftKey) || keyboard.keyPressed(rightKey)){
+            return true;
+        }
+        else {
+            sprite.setCurrentFrame(STATIONARY_FRAME);
+            return false;
+        }
     }
 }
