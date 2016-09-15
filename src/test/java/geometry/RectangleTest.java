@@ -3,6 +3,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import com.sun.javafx.geom.Vec2d;
+
 /**
  * Created by dana on 13/09/2016.
  */
@@ -52,5 +55,52 @@ public class RectangleTest {
         Rectangle rectangle2 = new Rectangle(1,2);
         rectangle.setOffset(5,5);
         assertFalse(rectangle.intersects(rectangle2));
+    }
+
+    /**
+     * check if a rectangle itersects with a shape (rectangle)
+     * should be true
+     */
+    @Test
+    public void intersectShape(){
+        Rectangle rect = new Rectangle();
+        Shape shape = new Rectangle();
+        assertTrue(rect.intersects(shape));
+    }
+
+    /**
+     * check if a rectangle itersects with a shape (circle)
+     * should be true
+     */
+    @Test
+    public void intersectShape2(){
+        Rectangle rect = new Rectangle();
+        Shape shape = new Circle();
+        assertTrue(rect.intersects(shape));
+    }
+
+    /**
+     * check if a rectangle itersects with a shape (none)
+     * should be false
+     */
+    @Test
+    public void intersectShape3(){
+        Rectangle rect = new Rectangle();
+        Shape shape = new Shape() {
+            @Override
+            public boolean intersects(Shape shape) {
+                return false;
+            }
+        };
+        assertFalse(rect.intersects(shape));
+    }
+    /**
+     * check setSize
+     */
+    @Test
+    public void setSize(){
+        Rectangle rect = new Rectangle(2,2);
+        Vec2d vector = new Vec2d(2.0,2.0);
+        assertEquals(rect.getSize(), vector);
     }
 }
