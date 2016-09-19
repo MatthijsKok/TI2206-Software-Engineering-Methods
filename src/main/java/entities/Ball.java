@@ -4,7 +4,6 @@ import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import game.Level;
 import geometry.Circle;
-import org.lwjgl.Sys;
 import util.Sprite;
 
 /**

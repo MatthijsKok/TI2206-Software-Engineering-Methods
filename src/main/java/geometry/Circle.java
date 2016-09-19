@@ -1,7 +1,5 @@
 package geometry;
 
-import com.sun.javafx.geom.Vec2d;
-
 /**
  * Created by wouterraateland on 12-09-16.
  */

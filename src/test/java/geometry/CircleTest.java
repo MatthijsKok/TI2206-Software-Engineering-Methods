@@ -1,5 +1,5 @@
 package geometry;
-import entities.Ball;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
