@@ -1,10 +1,9 @@
 package geometry;
+
+import com.sun.javafx.geom.Vec2d;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import com.sun.javafx.geom.Vec2d;
+import static org.junit.Assert.*;
 
 /**
  * Created by dana on 13/09/2016.
