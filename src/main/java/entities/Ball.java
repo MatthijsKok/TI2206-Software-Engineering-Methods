@@ -12,6 +12,13 @@ import util.Sprite;
  */
 public class Ball extends Entity {
 
+    private static final Sprite BLUE_BALL   = new Sprite("balls/blue_ball.png", new Vec2d(51, 51));
+    private static final Sprite GREEN_BALL  = new Sprite("balls/green_ball.png", new Vec2d(51, 51));
+    private static final Sprite ORANGE_BALL = new Sprite("balls/orange_ball.png", new Vec2d(51, 51));
+    private static final Sprite PURPLE_BALL = new Sprite("balls/purple_ball.png", new Vec2d(51, 51));
+    private static final Sprite RED_BALL    = new Sprite("balls/red_ball.png", new Vec2d(51, 51));
+    private static final Sprite YELLOW_BALL = new Sprite("balls/yellow_ball.png", new Vec2d(51, 51));
+
     // Bounce speed for the different ball sizes.
     private static final double[] BOUNCE_SPEEDS = { 225, 300, 375, 450, 500 };
 
@@ -74,36 +81,29 @@ public class Ball extends Entity {
      */
     private void setColour(Colour colour) {
         this.colour = colour;
-
-        String uri;
-
         switch (colour) {
             case BLUE:
-                uri = "balls/blue_ball.png";
+                sprite = BLUE_BALL;
                 break;
             case GREEN:
-                uri = "balls/green_ball.png";
+                sprite = GREEN_BALL;
                 break;
             case ORANGE:
-                uri = "balls/orange_ball.png";
+                sprite = ORANGE_BALL;
                 break;
             case PURPLE:
-                uri = "balls/purple_ball.png";
+                sprite = PURPLE_BALL;
                 break;
             case RED:
-                uri = "balls/red_ball.png";
+                sprite = RED_BALL;
                 break;
             case YELLOW:
-                uri = "balls/yellow_ball.png";
+                sprite = YELLOW_BALL;
                 break;
             default:
-                uri = "balls/blue_ball.png";
+                sprite = BLUE_BALL;
                 break;
         }
-
-        sprite = new Sprite(uri);
-        sprite.setOffset(51, 51);
-        //sprite.setOffsetToCenter();
     }
 
     /**
