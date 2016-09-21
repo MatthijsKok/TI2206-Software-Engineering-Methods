@@ -5,3 +5,5 @@ notifications:
   email:
     recipients:
       - matthijs.kok2@gmail.com
+    on_succes: never
+    on_failure: always
