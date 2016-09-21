@@ -1,4 +1,4 @@
 /**
- * This package contains classes that handle the UI of the game.
+ * This package contains classes that handle the ui of the game.
  */
-package UI;
+package ui;
