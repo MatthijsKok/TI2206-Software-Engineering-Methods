@@ -6,18 +6,26 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 
 /**
- * Created by Matthijs on 19-Sep-16.
+ * LogRecord class to represent a log message and all it's attributes.
  */
-public class LogRecord {
+class LogRecord {
 
-    private Level level;
-    private String sourceClassName;
-    private String sourceMethodName;
-    private String message;
-    private LocalTime localTime;
-    private LocalDate localDate;
+    private final Level level;
+    private final String sourceClassName;
+    private final String sourceMethodName;
+    private final String message;
+    private final LocalTime localTime;
+    private final LocalDate localDate;
 
-    public LogRecord(Level level, String sourceClassName, String sourceMethodName, String message, long milliseconds) {
+    /**
+     * Constructor for LogRecord. Should only be called by Logger.log().
+     * @param level The Level for this LogRecord.
+     * @param sourceClassName The name of the class that called logger.log().
+     * @param sourceMethodName The name of the method that called logger.log().
+     * @param message The message of this LogRecord.
+     * @param milliseconds The amount of milliseconds since epoch in POSIX time.
+     */
+    LogRecord(Level level, String sourceClassName, String sourceMethodName, String message, long milliseconds) {
         this.level = level;
         this.sourceClassName = sourceClassName;
         this.sourceMethodName = sourceMethodName;
@@ -26,21 +34,16 @@ public class LogRecord {
         this.localTime = Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).toLocalTime();
     }
 
-    public String format() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[");
-        stringBuilder.append(localDate.toString());
-        stringBuilder.append("][");
-        stringBuilder.append(localTime.toString());
-        stringBuilder.append("][");
-        stringBuilder.append(sourceClassName);
-        stringBuilder.append("][");
-        stringBuilder.append(sourceMethodName);
-        stringBuilder.append("]\n");
-        stringBuilder.append(level.getName());
-        stringBuilder.append(": ");
-        stringBuilder.append(message);
-        stringBuilder.append("\n");
-        return stringBuilder.toString();
+    /**
+     * Formats the LogRecord as a String to be written to the log file.
+     * Example:
+     *
+     * [2016-09-21][13:17:45.980][BubbleTrouble][start]
+     * DEBUG: Testing Logging....
+     *
+     * @return a String representing the LogRecord.
+     */
+    String format() {
+        return "[" + localDate.toString() + "][" + localTime.toString() + "][" + sourceClassName + "][" + sourceMethodName + "]\n" + level.getName() + ": " + message + "\n";
     }
 }
