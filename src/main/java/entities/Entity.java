@@ -65,12 +65,16 @@ public abstract class Entity {
 		}
 	}
 
+	public Shape getShape() {
+	    return shape;
+    }
+
 	public boolean intersects(Entity entity) {
-	    if (shape == null || entity.shape == null) {
+	    if (getShape() == null || entity.getShape() == null) {
 	        return false;
         }
 
-        return shape.intersects(entity.shape);
+        return getShape().intersects(entity.getShape());
     }
 
     public void collideWith(Entity entity) {}
