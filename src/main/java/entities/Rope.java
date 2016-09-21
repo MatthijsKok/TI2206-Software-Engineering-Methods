@@ -20,7 +20,7 @@ public final class Rope extends Entity {
     private static final double TRAVEL_SPEED = 300; // px/s
 
     /**
-     * Y location that is not in the visible on the canvas
+     * Y location that is not in the visible on the canvas.
      */
     private static final int OFFSCREEN_Y_LOCATION = 10000;
 
