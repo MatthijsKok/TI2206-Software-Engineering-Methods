@@ -43,7 +43,9 @@ public class Logger {
      * @param message The String message to be logged.
      */
     public void fatal(String message) {
-        log(LogLevel.FATAL, message);
+        if (message != null && LogLevel.FATAL.getValue() >= Logger.logLevel.getValue()) {
+            logRecords.add(new LogRecord(LogLevel.FATAL, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
+        }
     }
 
     /**
@@ -51,7 +53,9 @@ public class Logger {
      * @param message The String message to be logged.
      */
     public void error(String message) {
-        log(LogLevel.ERROR, message);
+        if (message != null && LogLevel.ERROR.getValue() >= Logger.logLevel.getValue()) {
+            logRecords.add(new LogRecord(LogLevel.ERROR, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
+        }
     }
 
     /**
@@ -59,7 +63,9 @@ public class Logger {
      * @param message The String message to be logged.
      */
     public void warn(String message) {
-        log(LogLevel.WARN, message);
+        if (message != null && LogLevel.WARN.getValue() >= Logger.logLevel.getValue()) {
+            logRecords.add(new LogRecord(LogLevel.WARN, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
+        }
     }
 
     /**
@@ -67,7 +73,9 @@ public class Logger {
      * @param message The String message to be logged.
      */
     public void info(String message) {
-        log(LogLevel.INFO, message);
+        if (message != null && LogLevel.INFO.getValue() >= Logger.logLevel.getValue()) {
+            logRecords.add(new LogRecord(LogLevel.INFO, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
+        }
     }
 
     /**
@@ -75,7 +83,9 @@ public class Logger {
      * @param message The String message to be logged.
      */
     public void debug(String message) {
-        log(LogLevel.DEBUG, message);
+        if (message != null && LogLevel.DEBUG.getValue() >= Logger.logLevel.getValue()) {
+            logRecords.add(new LogRecord(LogLevel.DEBUG, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
+        }
     }
 
     /**
@@ -83,7 +93,9 @@ public class Logger {
      * @param message The String message to be logged.
      */
     public void trace(String message) {
-        log(LogLevel.TRACE, message);
+        if (message != null && LogLevel.TRACE.getValue() >= Logger.logLevel.getValue()) {
+            logRecords.add(new LogRecord(LogLevel.TRACE, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
+        }
     }
 
     /**
