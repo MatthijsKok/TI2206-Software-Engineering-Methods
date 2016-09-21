@@ -1,9 +1,6 @@
 package entities;
 
-import com.sun.javafx.geom.Vec2f;
 import geometry.Rectangle;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import util.Sprite;
 
 /**
