@@ -4,15 +4,20 @@ import geometry.Rectangle;
 import util.Sprite;
 
 /**
- * Created by dana on 09/09/2016.
+ * Represents a Block entity used for walls in the game.
  */
 public class Wall extends Entity {
-    private static Sprite SPRITE = new Sprite("wall.png");
 
-    public Wall() {
-        this(0, 0);
-    }
+    /**
+     * The sprite of the wall.
+     */
+    private static final Sprite SPRITE = new Sprite("wall.png");
 
+    /**
+     * Creates a wall on position (x,y).
+     * @param x the x coordinate of the wall
+     * @param y the y coordinate of the wall
+     */
     public Wall(double x, double y) {
         super(x, y);
         sprite = Wall.SPRITE;
@@ -20,10 +25,18 @@ public class Wall extends Entity {
         shape.setPosition(x, y);
     }
 
+    /**
+     * Returns the x value that is most left on the sprite.
+     * @return the x value that is most left on the sprite
+     */
     public double getLeft() {
         return getX();
     }
 
+    /**
+     * Returns the x value that is most right on the sprite.
+     * @return the x value that is most right on the sprite
+     */
     public double getRight() {
         return getX() + sprite.getWidth();
     }

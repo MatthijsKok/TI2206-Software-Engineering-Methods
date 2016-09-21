@@ -4,7 +4,7 @@ import geometry.Rectangle;
 import util.Sprite;
 
 /**
- * Represents a Block entity used for floors and walls and ceilings in the game.
+ * Represents a Block entity used for floors in the game.
  */
 public class Block extends Entity {
 
