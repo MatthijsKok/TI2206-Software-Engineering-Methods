@@ -14,33 +14,35 @@ public abstract class Entity {
      * KeyboardInputMangaer object that manages
      * the keyboard input of the entity.
      */
-    private static KeyboardInputManager
+    static KeyboardInputManager
             keyboard = KeyboardInputManager.getInstance();
 
+
+    //TODO: Rethink the use of protected variables
     /**
      * Position of the entity.
      */
-    private Vec2d position = new Vec2d(0, 0);
+    protected Vec2d position = new Vec2d(0, 0);
 
     /**
      * Speed of the entity.
      */
-    private Vec2d speed = new Vec2d(0, 0);
+    protected Vec2d speed = new Vec2d(0, 0);
 
     /**
      * Sprite of the entity.
      */
-    private Sprite sprite = null;
+    protected Sprite sprite = null;
 
     /**
      * Shape used for collision detection of the entity.
      */
-    private Shape shape = null;
+    protected Shape shape = null;
 
     /**
      * Boolean with the current visibility state of an entity.
      */
-    private boolean visible;
+    protected boolean visible;
 
     /**
      * Creates a new entity at position (0,0).
@@ -78,46 +80,6 @@ public abstract class Entity {
     }
 
     /**
-     * Set the position of the entity.
-     * @param position A Vec2D containing the coordinates of the position
-     */
-    public void setPosition(Vec2d position) {
-        setPosition(position.x, position.y);
-    }
-
-    /**
-     * @return The x position of the entity.
-     */
-    public double getX() {
-        return position.x;
-    }
-
-    /**
-     * @return The y position of the entity.
-     */
-    public double getY() {
-        return position.y;
-    }
-
-    /**
-     * Sets the speed of the entity.
-     * @param x The horizontal speed
-     * @param y The vertical speed
-     */
-    public void setSpeed(double x, double y) {
-        speed.x = x;
-        speed.y = y;
-    }
-
-    /**
-     * Sets the speed of the entity.
-     * @param speed a Vec2D containing the x and y speeds of the entity.
-     */
-    public void setSpeed(Vec2d speed) {
-        setSpeed(speed.x, speed.y);
-    }
-
-    /**
      * Updates the entity's sprite if it has one.
      * @param timeDifference The time elapsed since the last time the method was called
      */
@@ -152,6 +114,8 @@ public abstract class Entity {
             sprite.draw(position);
         }
     }
+
+    //GETTERS
 
     /**
      * Returns the keyboard manager of the entity.
@@ -200,4 +164,64 @@ public abstract class Entity {
     public boolean isVisible() {
         return visible;
     }
+
+
+    //SETTERS
+
+    /**
+     * Set the position of the entity.
+     * @param position A Vec2D containing the coordinates of the position
+     */
+    public void setPosition(Vec2d position) {
+        setPosition(position.x, position.y);
+    }
+
+    /**
+     * @return The x position of the entity.
+     */
+    public double getX() {
+        return position.x;
+    }
+
+    /**
+     * @return The y position of the entity.
+     */
+    public double getY() {
+        return position.y;
+    }
+
+    /**
+     * Sets the speed of the entity.
+     * @param x The horizontal speed
+     * @param y The vertical speed
+     */
+    public void setSpeed(double x, double y) {
+        speed.x = x;
+        speed.y = y;
+    }
+
+    /**
+     * Sets the speed of the entity.
+     * @param speed a Vec2D containing the x and y speeds of the entity.
+     */
+    public void setSpeed(Vec2d speed) {
+        setSpeed(speed.x, speed.y);
+    }
+
+    /**
+     * Sets the sprite of the entity.
+     * @param sprite a Sprite object for the entity
+     */
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
+
+    /**
+     * Set the visable atribute for the entity.
+     * @param visible a boolean indicating if the entity should be visable
+     */
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
 }
