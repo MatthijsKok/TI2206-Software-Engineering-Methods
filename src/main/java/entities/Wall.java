@@ -1,6 +1,7 @@
 package entities;
 
 import geometry.Rectangle;
+import geometry.Shape;
 import util.Sprite;
 
 /**
@@ -14,11 +15,16 @@ public class Wall extends Entity {
     private static final Sprite SPRITE = new Sprite("wall.png");
 
     /**
+     * The shape of the wall.
+     */
+    private Rectangle shape;
+
+    /**
      * Creates a wall on position (x,y).
      * @param x the x coordinate of the wall
      * @param y the y coordinate of the wall
      */
-    public Wall(double x, double y) {
+    public Wall(final double x, final double y) {
         super(x, y);
         sprite = Wall.SPRITE;
         shape = new Rectangle(sprite.getWidth(), sprite.getHeight());
@@ -26,18 +32,25 @@ public class Wall extends Entity {
     }
 
     /**
+     * @return the collision shape of the wall.
+     */
+    public final Shape getShape() {
+        return shape;
+    }
+
+    /**
      * Returns the x value that is most left on the sprite.
      * @return the x value that is most left on the sprite
      */
-    public double getLeft() {
-        return getX();
+    public final double getLeft() {
+        return shape.getLeft();
     }
 
     /**
      * Returns the x value that is most right on the sprite.
      * @return the x value that is most right on the sprite
      */
-    public double getRight() {
-        return getX() + sprite.getWidth();
+    public final double getRight() {
+        return shape.getRight();
     }
 }

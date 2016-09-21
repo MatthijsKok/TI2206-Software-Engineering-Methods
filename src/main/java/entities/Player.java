@@ -3,6 +3,7 @@ package entities;
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import geometry.Rectangle;
+import geometry.Shape;
 import util.Sprite;
 
 /**
@@ -11,37 +12,34 @@ import util.Sprite;
 public class Player extends Entity {
 
     /**
-     * The frame of the Sprite that should be displayed when the player is not moving.
+     * The sprite for when a player is standing still.
      */
-    private static final int STATIONARY_FRAME = 3;
+    private static final Sprite IDLE_SPRITE =
+            new Sprite("player/idle.png", 1, new Vec2d(8, 32));
 
     /**
-     * The sprite of the player.
+     * The sprite for when a player is running.
      */
-    private static final Sprite SPRITE = new Sprite("mario.png", 8, new Vec2d(11, 35));
+    private static final Sprite RUNNING_SPRITE =
+            new Sprite("player/running.png", 8, new Vec2d(11, 35));
 
     /**
-     * The run speed of the player in px/s.
+     * The running speed of a player. In pixels per second.
      */
-    private static final double RUN_SPEED = 256; // px/s
+    private static final double RUN_SPEED  = 256; // px/s
 
     /**
-     * The gravity applied to the player.
+     * The gravity applied to a player. In pixels per second squared.
      */
-    private static final double GRAVITY = 300; // px/s^2
+    private static final double GRAVITY    = 300; // px/s^2
 
     /**
      * Input characters.
      */
-    private String leftKey, rightKey, upKey, shootKey;
+    private String leftKey, rightKey, shootKey;
 
     /**
-     * The direction the player is facing, where 1 is right and -1 is left.
-     */
-    private int direction = 1;
-
-    /**
-     * Boolean indicating if the player is alive.
+     * Indicates whether a player is alive or not.
      */
     private boolean alive = true;
 
@@ -51,149 +49,150 @@ public class Player extends Entity {
     private Rope rope;
 
     /**
-     * Instantiate a new player at position (0, 0).
+     * The sprites of the player.
      */
-    public Player() {
-        this(0, 0);
-    }
+    private Sprite idleSprite, runningSprite;
 
     /**
-     * Creates a player on the (x,y) position.
-     * @param x the x coordinate
-     * @param y the y coordinate
+     * The bounding box of the player.
      */
-    public Player(double x, double y) {
+    private Rectangle shape;
+
+    /**
+     * Instantiate a new player at position (x, y).
+     * @param x the x position of the player
+     * @param y the y position of the player
+     */
+    public Player(final double x, final double y) {
         super(x, y);
 
         // Set player sprite
-        sprite = Player.SPRITE;
+        idleSprite = Player.IDLE_SPRITE.clone();
+        runningSprite = Player.RUNNING_SPRITE.clone();
 
         // Define player keys
         leftKey = "LEFT";
         rightKey = "RIGHT";
-        upKey = "UP";
-        shootKey = "SPACE";
+        shootKey = "UP";
 
         // Create rope for the player and add it to the level
         rope = new Rope();
         Game.getInstance().getCurrentLevel().addEntity(rope);
 
-        shape = new Rectangle(sprite.getWidth(), sprite.getHeight());
+        shape = new Rectangle(
+                runningSprite.getWidth(),
+                runningSprite.getHeight());
         updatePosition(0);
     }
 
+    /**
+     * The player dies. Soo sad...
+     */
     private void die() {
         alive = false;
     }
 
     /**
-     * Returns true if the player is alive, false otherwise.
-     * @return true if the player is alive, false otherwise
+     * @return whether the player is alive
      */
-    public boolean isAlive() {
+    public final boolean isAlive() {
         return alive;
     }
 
     /**
-     * Returns the x position that indicates a left bound of the player.
-     * @return the x position that indicates a left bound of the player
+     * @return the left side of the bounding box of the player.
      */
     private double getLeft() {
-        return position.x - sprite.getOffsetX();
+        return shape.getLeft();
     }
 
     /**
-     * Returns the y position that indicates a right bound of the player.
-     * @return the y position that indicates a right bound of the player
+     * @return the right side of the bounding box of the player.
      */
     private double getRight() {
-        return getLeft() + sprite.getWidth();
+        return shape.getRight();
     }
 
     /**
-     * Sets the position of the player so the left bound is at the specified position.
-     * @param left the x position indicating where the left bound of the player should be
+     * Set the left side of the bounding box of the player to equal left.
+     * @param left the target for the left side of the bounding box.
      */
-    private void setLeft(double left) {
-        position.x = left + sprite.getOffsetX();
+    private void setLeft(final double left) {
+        position.x += left - shape.getLeft();
+        updatePosition();
     }
 
     /**
-     * Sets the position of the player so the right bound is at the specified position.
-     * @param right the x position indicating where the right bound of the player should be
+     * Set the right side of the bounding box of the player to equal right.
+     * @param right the target for the right side of the bounding box.
      */
-    private void setRight(double right) {
-        position.x = right - sprite.getWidth() + sprite.getOffsetX();
+    private void setRight(final double right) {
+        position.x += right - shape.getRight();
+        updatePosition();
+    }
+
+    /**
+     * Updates only the position of the bounding box.
+     */
+    private void updatePosition() {
+        updatePosition(0);
     }
 
     /**
      * Update the players position and collision shape.
-     *
      * @param dt the time
      */
-    private void updatePosition(double dt) {
+    private void updatePosition(final double dt) {
         position.x += speed.x * dt;
         position.y += speed.y * dt;
-        shape.setPosition(position.x - sprite.getOffsetX(), position.y - sprite.getOffsetY());
+        shape.setPosition(
+                position.x - runningSprite.getOffsetX(),
+                position.y - runningSprite.getOffsetY()
+        );
     }
 
     /**
      * Updates the Player object.
-     * @param dt The time since the last time the update method was called.
+     * @param dt The time since the last time the update method was called
      */
-    public void update(double dt) {
+    public final void update(final double dt) {
         // Update the player sprite
-        if (isMoving()) {
-            sprite.update(dt);
-        }
+        runningSprite.update(dt);
 
-        updateSpeed(dt);
-        updatePosition(dt);
-        updateRope();
-    }
-
-    /**
-     * Updates the rope according to the keys pressed.
-     */
-    private void updateRope() {
-        // Shoot (use space or up key)
-        if (keyboard.keyPressed(shootKey)) {
-            rope.shoot(position);
-        }
-        if (keyboard.keyPressed(upKey)) {
-            rope.shoot(position);
-        }
-    }
-
-    /**
-     * Changes the position of the player according to the keys pressed.
-     * @param dt Time since the last time the method was called
-     */
-    private void updateSpeed(double dt) {
         // Walk
         speed.x = 0;
         if (keyboard.keyPressed(leftKey)) {
             speed.x -= RUN_SPEED;
         }
+
         if (keyboard.keyPressed(rightKey)) {
             speed.x += RUN_SPEED;
-        }
-        if (speed.x < 0) {
-            direction = -1;
-        }
-        if (speed.x > 0) {
-            direction = 1;
         }
 
         // Apply gravity
         this.speed.y += GRAVITY * dt;
+
+        // Shoot
+        if (keyboard.keyPressed(shootKey)) {
+            rope.shoot(position);
+        }
+
+        // Move
+        updatePosition(dt);
     }
 
     /**
-     * Handles colision of the player with other entities.
+     * @return the player's shape.
+     */
+    public final Shape getShape() {
+        return shape;
+    }
+
+    /**
+     * Entry point for collisions.
      * @param entity the entity the player collides with
      */
-    public void collideWith(Entity entity) {
+    public final void collideWith(final Entity entity) {
         if (entity instanceof Ball) {
             collideWith((Ball) entity);
         }
@@ -209,28 +208,30 @@ public class Player extends Entity {
 
     /**
      * When a player collides with a ball, the player dies.
-     *
-     * @param ball The ball the player collides with
+     * @param ball the ball the player collides with
      */
-    private void collideWith(Ball ball) {
-        die();
+    private void collideWith(final Ball ball) {
+        if (ball != null) {
+            die();
+        }
     }
 
     /**
-     * If the player collides with a block this method is called.
-     * @param block the block the player collides with
+     * If a player collides with a ground block, the player should not sink
+     * through it.
+     * @param block the ground block the player collides with
      */
-    private void collideWith(Block block) {
+    private void collideWith(final Block block) {
         position.y = Math.min(position.y, block.getY());
         speed.y = Math.min(speed.y, 0);
-        updatePosition(0);
+        updatePosition();
     }
 
     /**
-     * When the player collides with a wall this method is called.
+     * If a player collides with a wall, it should move outside that wall.
      * @param wall the wall the player collides with
      */
-    private void collideWith(Wall wall) {
+    private void collideWith(final Wall wall) {
         if (getRight() > wall.getLeft() && getRight() < wall.getRight()) {
             // Hit the wall from the right
             setRight(wall.getLeft());
@@ -243,23 +244,14 @@ public class Player extends Entity {
     }
 
     /**
-     * Draws the player to the screen.
+     * Draws the running sprite if the player is moving, draws the idle sprite
+     * otherwise.
      */
-    public void draw() {
-        sprite.draw(position, direction, 1);
-    }
-
-    /**
-     * Checks if any of the movement keys are currently pressed
-     * to determine if the player is moving.
-     * @return A boolean that is true if the player is moving, and false otherwise;
-     */
-    public boolean isMoving() {
-        if (keyboard.keyPressed(leftKey) || keyboard.keyPressed(rightKey)) {
-            return true;
+    public final void draw() {
+        if (speed.x == 0) {
+            idleSprite.draw(position);
         } else {
-            sprite.setCurrentFrame(STATIONARY_FRAME);
-            return false;
+            runningSprite.draw(position, Math.signum(speed.x), 1);
         }
     }
 }

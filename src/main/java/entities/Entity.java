@@ -95,13 +95,17 @@ public abstract class Entity {
      * @return a boolean indicating if the entity intersects with the other entity
      */
     public boolean intersects(Entity entity) {
-        return !(shape == null || entity.shape == null) && shape.intersects(entity.shape);
+        if (getShape() == null || entity.getShape() == null) {
+            return false;
+        }
 
+        return getShape().intersects(entity.getShape());
     }
 
-    //TODO: Implement or delete this method.
     /**
-     * This does nothing?
+     * This method is an empty because it *may* be overwritten
+     * by subclasses. Is does not necessarily have to be overwritten
+     * so it is not an abstract method.
      * @param entity the entity to do nothing with.
      */
     public void collideWith(Entity entity) { }
@@ -172,7 +176,7 @@ public abstract class Entity {
      * Set the position of the entity.
      * @param position A Vec2D containing the coordinates of the position
      */
-    public void setPosition(Vec2d position) {
+    public void setPosition(final Vec2d position) {
         setPosition(position.x, position.y);
     }
 
@@ -223,5 +227,4 @@ public abstract class Entity {
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
-
 }
