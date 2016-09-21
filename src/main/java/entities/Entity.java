@@ -183,7 +183,7 @@ public abstract class Entity {
      * Set the position of the entity.
      * @param position A Vec2D containing the coordinates of the position
      */
-    public void setPosition(Vec2d position) {
+    public void setPosition(final Vec2d position) {
         setPosition(position.x, position.y);
     }
 

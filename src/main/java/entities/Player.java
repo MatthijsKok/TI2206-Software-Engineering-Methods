@@ -3,6 +3,7 @@ package entities;
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import geometry.Rectangle;
+import geometry.Shape;
 import util.Sprite;
 
 /**
@@ -33,7 +34,7 @@ public class Player extends Entity {
     private static final double GRAVITY    = 300; // px/s^2
 
     /**
-     * Input characters
+     * Input characters.
      */
     private String leftKey, rightKey, shootKey;
 
