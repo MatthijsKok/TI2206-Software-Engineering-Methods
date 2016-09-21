@@ -90,13 +90,6 @@ public abstract class Entity {
     }
 
     /**
-     * @return The shape of the entity.
-     */
-    public Shape getShape() {
-        return shape;
-    }
-
-    /**
      * Checks if the entity intersects with another entity.
      * @param entity The entity you want to check for intersection
      * @return a boolean indicating if the entity intersects with the other entity
