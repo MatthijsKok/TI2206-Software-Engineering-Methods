@@ -1,4 +1,4 @@
 /**
- * The game package contains all classes representing a abstract part of the game.
+ * This package contains high-level constructs that manage the game and levels.
  */
 package game;
