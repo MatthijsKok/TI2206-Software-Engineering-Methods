@@ -3,7 +3,6 @@ package game;
 import UI.HUD;
 import UI.UIElement;
 import com.sun.javafx.geom.Vec2d;
-import entities.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -12,63 +11,69 @@ import util.GameCanvasManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.Entity;
+import entities.Ball;
+import entities.Player;
+import entities.Wall;
+import entities.Block;
+
 /**
  * The level class represents a level, which is loaded from a file and consists
  * of players, balls, walls and so on.
  */
 public class Level {
     /**
-     * The background image of this level
+     * The background image of this level.
      */
     private Image background;
 
     /**
-     * The size of the level
+     * The size of the level.
      */
 
     private Vec2d size = new Vec2d(0, 0);
 
     /**
-     * The entities currently active in the level
+     * The entities currently active in the level.
      */
     private List<Entity> entities = new ArrayList<>();
 
     /**
-     * The entities that will be removed from the level after the update cycle
+     * The entities that will be removed from the level after the update cycle.
      */
     private List<Entity> entitiesToRemove = new ArrayList<>();
 
     /**
-     * The entities that will be added to the level after the update cycle
+     * The entities that will be added to the level after the update cycle.
      */
     private List<Entity> entitiesToAdd = new ArrayList<>();
 
     /**
-     * All player instances in the level
+     * All player instances in the level.
      */
     private List<Player> players;
 
     /**
-     * All UI elements active in the level
+     * All UI elements active in the level.
      */
     private List<UIElement> uiElements = new ArrayList<>();
 
     /**
-     * The file the level is loaded from
+     * The file the level is loaded from.
      */
     private String file;
 
     /**
      * Creates a new level instance.
      *
-     * @param file the file to load the level from.
+     * @param uri the file to load the level from.
      */
-    public Level(final String file) {
-        this.file = file;
+    public Level(final String uri) {
+        file = uri;
     }
 
     /**
-     * Starts the level
+     * Starts the level.
      */
     public final void start() {
         load();
@@ -78,7 +83,7 @@ public class Level {
     }
 
     /**
-     * Restarts a level
+     * Restarts the level.
      */
     public final void restart() {
         unload();
@@ -96,10 +101,10 @@ public class Level {
     }
 
     /**
-     * Loads a level from a file
-     * TODO: implement
+     * Loads a level from a file.
      */
     private void load() {
+        // TODO: implement file reading
         // Set level dimensions
         setSize(1024, 608);
 
@@ -113,7 +118,7 @@ public class Level {
         for (int x = 0; x < getWidth(); x += 32) {
             addEntity(new Block(x, 544));    //top floor
             addEntity(new Block(x, 576));    //lower floor
-            //addEntity(new Block(x, 0));		//ceiling
+            //addEntity(new Block(x, 0));    //ceiling
         }
 
         // Player
@@ -155,7 +160,7 @@ public class Level {
     }
 
     /**
-     * Set the level size
+     * Set the level size.
      * @param width the width of the level
      * @param height the height of the level
      */
@@ -262,7 +267,7 @@ public class Level {
     }
 
     /**
-     * Register that an entity has to be added
+     * Register that an entity has to be added.
      * @param e entity to add
      */
     public final void addEntity(final Entity e) {
@@ -270,7 +275,7 @@ public class Level {
     }
 
     /**
-     * Register that an entity has to be removed
+     * Register that an entity has to be removed.
      *
      * @param e The entity to remove
      * @return true if e is not already removed, false otherwise
@@ -285,7 +290,7 @@ public class Level {
     }
 
     /**
-     * Really removes all entities that need to be removed from the entity list
+     * Really removes all entities that need to be removed from the entity list.
      */
     private void removeEntities() {
         entities.removeAll(entitiesToRemove);
@@ -293,7 +298,7 @@ public class Level {
     }
 
     /**
-     * Really add all entities that need to be removed to the entity list
+     * Really add all entities that need to be removed to the entity list.
      */
     private void addEntities() {
         entities.addAll(entitiesToAdd);
