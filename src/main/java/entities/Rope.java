@@ -141,7 +141,6 @@ public final class Rope extends Entity {
     /**
      * Draw only if traveling.
      */
-    @Override
     public void draw() {
         if (traveling) {
             sprite.draw(position, SCALE);
