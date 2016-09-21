@@ -1,21 +1,16 @@
 package game;
 
-import UI.HUD;
-import UI.UIElement;
 import com.sun.javafx.geom.Vec2d;
+import entities.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import ui.HUD;
+import ui.UIElement;
 import util.GameCanvasManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import entities.Entity;
-import entities.Ball;
-import entities.Player;
-import entities.Wall;
-import entities.Block;
 
 /**
  * The level class represents a level, which is loaded from a file and consists
@@ -54,7 +49,7 @@ public class Level {
     private List<Player> players;
 
     /**
-     * All UI elements active in the level.
+     * All ui elements active in the level.
      */
     private List<UIElement> uiElements = new ArrayList<>();
 
@@ -186,7 +181,7 @@ public class Level {
      * Initializes the ui elements in a level.
      */
     private void initUI() {
-        uiElements.add(new HUD(this));
+        uiElements.add(new HUD());
     }
 
     /**
@@ -238,7 +233,7 @@ public class Level {
             entity.draw();
         }
 
-        // Draw UI elements over entities
+        // Draw ui elements over entities
         for (UIElement uiElement : uiElements) {
             uiElement.draw();
         }
