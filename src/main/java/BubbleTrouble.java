@@ -19,7 +19,7 @@ public class BubbleTrouble extends Application
     {
         launch(args);
     }
- 
+
     public void start(Stage theStage) 
     {
     	logger.setLevel(LogLevel.INFO);
