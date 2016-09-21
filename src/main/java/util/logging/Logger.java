@@ -30,12 +30,60 @@ public class Logger {
      * Checks if the message exists and if its LogLevel is important enough to be logged.
      * If so it adds a new LogRecord to the ArrayList.
      * @param logLevel The LogLevel this LogRecord is logged at.
-     * @param message The message to be logged.
+     * @param message The String message to be logged.
      */
     public void log(LogLevel logLevel, String message) {
         if (message != null && logLevel.getValue() >= Logger.logLevel.getValue()) {
             logRecords.add(new LogRecord(logLevel, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
         }
+    }
+
+    /**
+     * Logs a FATAL message.
+     * @param message The String message to be logged.
+     */
+    public void fatal(String message) {
+        log(LogLevel.FATAL, message);
+    }
+
+    /**
+     * Logs an ERROR message.
+     * @param message The String message to be logged.
+     */
+    public void error(String message) {
+        log(LogLevel.ERROR, message);
+    }
+
+    /**
+     * Logs a WARN message.
+     * @param message The String message to be logged.
+     */
+    public void warn(String message) {
+        log(LogLevel.WARN, message);
+    }
+
+    /**
+     * Logs an INFO message.
+     * @param message The String message to be logged.
+     */
+    public void info(String message) {
+        log(LogLevel.INFO, message);
+    }
+
+    /**
+     * Logs a DEBUG message.
+     * @param message The String message to be logged.
+     */
+    public void debug(String message) {
+        log(LogLevel.DEBUG, message);
+    }
+
+    /**
+     * Logs a TRACE message.
+     * @param message The String message to be logged.
+     */
+    public void trace(String message) {
+        log(LogLevel.TRACE, message);
     }
 
     /**
