@@ -47,6 +47,10 @@ public final class KeyboardInputManager {
      * @param scene the scene to add keyboard input handling to.
      */
     public void addScene(final Scene scene) {
+        if (scenes.contains(scene)) {
+            return;
+        }
+
         scenes.add(scene);
 
         scene.setOnKeyPressed(e -> {
@@ -61,20 +65,6 @@ public final class KeyboardInputManager {
             String code = e.getCode().toString();
             input.remove(code);
         });
-    }
-
-    /**
-     * Removes keyboard input handling from a scene.
-     * @param scene the scene to remove keyboard input handling from.
-     */
-    public void removeScene(final Scene scene) {
-        if (scenes.contains(scene)) {
-            scenes.remove(scene);
-            scene.setOnKeyPressed(e -> {
-            });
-            scene.setOnKeyReleased(e -> {
-            });
-        }
     }
 
     /**
