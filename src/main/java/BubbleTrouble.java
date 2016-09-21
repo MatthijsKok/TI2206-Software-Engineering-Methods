@@ -15,7 +15,7 @@ public class BubbleTrouble extends Application
     {
         launch(args);
     }
- 
+
     public void start(Stage theStage) 
     {
     	theStage.setTitle("Bubble Trouble");

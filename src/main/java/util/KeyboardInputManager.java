@@ -3,22 +3,37 @@ package util;
 import javafx.scene.Scene;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * A Class that manages keyboard input
+ * This singleton class manages keyboard input and makes it available
+ * everywhere.
  */
-public class KeyboardInputManager {
+public final class KeyboardInputManager {
 
-    protected static KeyboardInputManager instance = null;
+    /**
+     * The singleton instance of KeyboardInputManager.
+     */
+    private static KeyboardInputManager instance = null;
 
-    private Scene scene;
-    private ArrayList<String> input;
+    /**
+     * The list of scenes on which the manager manages keyboard input.
+     */
+    private List<Scene> scenes = new ArrayList<>();
 
-    private KeyboardInputManager() {
-        scene = null;
-        input = new ArrayList<>();
-    }
+    /**
+     * The list containing information about which keys are pressed at any time.
+     */
+    private List<String> input = new ArrayList<>();
 
+    /**
+     * This overrides the default public constructor.
+     */
+    private KeyboardInputManager() { }
+
+    /**
+     * @return the singleton instance of KeyboardInputManager.
+     */
     public static KeyboardInputManager getInstance() {
         if (instance == null) {
             instance = new KeyboardInputManager();
@@ -27,7 +42,17 @@ public class KeyboardInputManager {
         return instance;
     }
 
-    public void addScene(Scene scene) {
+    /**
+     * Adds keyboard input handling to a scene.
+     * @param scene the scene to add keyboard input handling to.
+     */
+    public void addScene(final Scene scene) {
+        if (scenes.contains(scene)) {
+            return;
+        }
+
+        scenes.add(scene);
+
         scene.setOnKeyPressed(e -> {
             String code = e.getCode().toString();
 
@@ -42,7 +67,11 @@ public class KeyboardInputManager {
         });
     }
 
-    public boolean keyPressed(String key) {
+    /**
+     * @param key a string representation of the key to check.
+     * @return a boolean that indicates if key is currently pressed.
+     */
+    public boolean keyPressed(final String key) {
         return input.contains(key);
     }
 }
