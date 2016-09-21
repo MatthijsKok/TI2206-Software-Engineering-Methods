@@ -3,54 +3,57 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import util.GameCanvasManager;
 import util.KeyboardInputManager;
 import util.logging.LogLevel;
 import util.logging.Logger;
 
-public class BubbleTrouble extends Application 
-{
-    private static final Logger logger = new Logger();
+/**
+ * Bubble Trouble is a game written in JavaFX.
+ */
+public class BubbleTrouble extends Application {
+    /**
+     * The logger access point to which everything will be logged.
+     */
+    private static final Logger LOGGER = new Logger();
 
-    public static void main(String[] args)
-    {
+    /**
+     * Entry method of the whole game.
+     * @param args optional arguments to start the game with.
+     */
+    public static void main(final String[] args) {
         launch(args);
     }
 
-    public void start(Stage theStage) 
-    {
-    	logger.setLevel(LogLevel.INFO);
-        theStage.setTitle("Bubble Trouble");
+    /**
+     * This method opens a new window and starts the game.
+     * @param stage the window in which the game will be displayed.
+     */
+    public final void start(final Stage stage) {
+        LOGGER.setLevel(LogLevel.INFO);
+        stage.setTitle("Bubble Trouble");
         Group root = new Group();
         Scene scene = new Scene(root);
-        theStage.setScene(scene);
+        stage.setScene(scene);
 
         KeyboardInputManager.getInstance().addScene(scene);
         root.getChildren().add(GameCanvasManager.getInstance().getCanvas());
-        
+
         final Game game = Game.getInstance();
 
         new AnimationTimer() {
-            public void handle(long currentNanoTime)
-            {
-            	// Update the game
-            	game.update();
-            	
-            	// Clear canvas
-                GraphicsContext gc = GameCanvasManager.getInstance().getContext();
-               	gc.setFill(Color.ALICEBLUE);
-                gc.fillRect(0, 0, 1024, 608);
-                
+            public void handle(final long currentNanoTime) {
+                // Update the game
+                game.update();
+
                 // And redraw
-            	game.draw();
+                game.draw();
             }
         }.start();
 
         game.start();
-     
-        theStage.show();
+
+        stage.show();
     }
 }
