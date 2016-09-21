@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import util.GameCanvasManager;
 import util.KeyboardInputManager;
-import util.logging.Level;
+import util.logging.LogLevel;
 import util.logging.Logger;
 
 public class BubbleTrouble extends Application 
@@ -22,7 +22,7 @@ public class BubbleTrouble extends Application
  
     public void start(Stage theStage) 
     {
-    	logger.setLevel(Level.INFO);
+    	logger.setLevel(LogLevel.INFO);
         theStage.setTitle("Bubble Trouble");
         Group root = new Group();
         Scene scene = new Scene(root);

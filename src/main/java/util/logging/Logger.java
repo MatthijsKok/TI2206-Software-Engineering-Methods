@@ -13,28 +13,28 @@ public class Logger {
 
     private final static File LOG_FILE = new File(System.getProperty("user.home"), "/desktop/log.txt");
     private static ArrayList<LogRecord> logRecords = new ArrayList<>();
-    private static Level level;
+    private static LogLevel logLevel;
 
 
     /**
-     * Sets the Level of all the Loggers, since level is static.
-     * @param level The Level of all Loggers.
+     * Sets the LogLevel of all the Loggers, since logLevel is static.
+     * @param logLevel The LogLevel of all Loggers.
      */
-    public void setLevel(Level level) {
-        Logger.level = level;
+    public void setLevel(LogLevel logLevel) {
+        Logger.logLevel = logLevel;
     }
 
     /**
      * Entry point for the logging framework.
      * This method should be called by classes that want something logged.
-     * Checks if the message exists and if its Level is important enough to be logged.
+     * Checks if the message exists and if its LogLevel is important enough to be logged.
      * If so it adds a new LogRecord to the ArrayList.
-     * @param level The Level this LogRecord is logged at.
+     * @param logLevel The LogLevel this LogRecord is logged at.
      * @param message The message to be logged.
      */
-    public void log(Level level, String message) {
-        if (message != null && level.getValue() >= Logger.level.getValue()) {
-            logRecords.add(new LogRecord(level, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
+    public void log(LogLevel logLevel, String message) {
+        if (message != null && logLevel.getValue() >= Logger.logLevel.getValue()) {
+            logRecords.add(new LogRecord(logLevel, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
         }
     }
 
