@@ -33,7 +33,7 @@ public abstract class Shape {
      * @param x x position
      * @param y y position
      */
-    protected void setPosition(double x, double y) {
+    public void setPosition(double x, double y) {
         setPosition(new Vec2d(x, y));
     }
 
@@ -41,7 +41,7 @@ public abstract class Shape {
      * Sets the position of the shape.
      * @param position vector of position
      */
-    protected void setPosition(Vec2d position) {
+    public void setPosition(Vec2d position) {
         this.position = position;
     }
 
