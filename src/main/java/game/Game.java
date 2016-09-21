@@ -1,6 +1,7 @@
 package game;
 
 import util.KeyboardInputManager;
+import util.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ public class Game {
 	private Level currentLevel;
 
     private long lastNanoTime;
+
+    private static final Logger logger = new Logger();
 
     private KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
 
@@ -54,6 +57,7 @@ public class Game {
                 getCurrentLevel().restart();
             }
         }
+        logger.writeLogRecords();
 	}
 	
 	public void draw() {
