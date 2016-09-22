@@ -6,20 +6,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
- * Created by wouterraateland on 12-09-16.
- * HUD is a accronym for Heads Up Display. A common name for the overlay of a game.
+ * HUD is a acronym for Heads Up Display. A common name for the overlay of a game.
  */
 public class HUD extends UIElement {
     /**
      * Font size used for bigger text.
      */
-    private static final double BIGGER_FONT_SIZE = 32;
+    private static final Font BIGGER_FONT  = Font.font("Georgia", 32);
 
     /**
      * Font size used for smaller text.
      */
-    private static final double SMALLER_FONT_SIZE = 16;
-
+    private static final Font SMALLER_FONT = Font.font("Georgia", 16);
 
     /**
      * Creates a new HUD object.
@@ -47,15 +45,15 @@ public class HUD extends UIElement {
         gc().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc().setFill(Color.WHITE);
 
-        gc().setFont(Font.font("Georgia", BIGGER_FONT_SIZE));
+        gc().setFont(BIGGER_FONT);
         gc().fillText("You won!",
                 canvas.getWidth() / 2,
-                canvas.getHeight() / 2 - BIGGER_FONT_SIZE);
+                canvas.getHeight() / 2 - BIGGER_FONT.getSize());
 
-        gc().setFont(Font.font("Georgia", SMALLER_FONT_SIZE));
+        gc().setFont(SMALLER_FONT);
         gc().fillText("Press R to restart",
                 canvas.getWidth() / 2,
-                canvas.getHeight() / 2 + BIGGER_FONT_SIZE);
+                canvas.getHeight() / 2 + BIGGER_FONT.getSize());
     }
 
     private void drawLostScreen(Canvas canvas) {
@@ -63,15 +61,15 @@ public class HUD extends UIElement {
         gc().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc().setFill(Color.WHITE);
 
-        gc().setFont(Font.font("Georgia", BIGGER_FONT_SIZE));
+        gc().setFont(BIGGER_FONT);
         gc().fillText("You died...",
                 canvas.getWidth() / 2,
-                canvas.getHeight() / 2 - BIGGER_FONT_SIZE);
+                canvas.getHeight() / 2 - BIGGER_FONT.getSize());
 
-        gc().setFont(Font.font("Georgia", SMALLER_FONT_SIZE));
+        gc().setFont(SMALLER_FONT);
         gc().fillText("Press R to restart",
                 canvas.getWidth() / 2,
-                canvas.getHeight() / 2 + BIGGER_FONT_SIZE);
+                canvas.getHeight() / 2 + BIGGER_FONT.getSize());
     }
 
 

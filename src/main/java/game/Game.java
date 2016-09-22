@@ -11,6 +11,11 @@ import java.util.List;
  */
 public class Game {
 
+    /**
+     * Defines how many nano seconds there are in one second.
+     */
+    private static final double NANO_SECONDS_IN_SECOND = 1000000000.0;
+
      /**
      * The one and only instance of the game object.
      */
@@ -77,17 +82,16 @@ public class Game {
         long currentNanoTime = System.nanoTime();
 
         //gives the time difference in seconds
-        @SuppressWarnings("magicnumber") // use of number is clear from context
-        double dt = (currentNanoTime - lastNanoTime) / 1000000000.0;
+        double dt = (currentNanoTime - lastNanoTime) / NANO_SECONDS_IN_SECOND;
 
         lastNanoTime = currentNanoTime;
         currentLevel.update(dt);
 
-        if (keyboard.keyPressed("R")) {
-            if (levelWon() || levelLost()) {
-                getCurrentLevel().restart();
-            }
+        if (keyboard.keyPressed("R")
+                && (levelWon() || levelLost())) {
+            getCurrentLevel().restart();
         }
+
         LOGGER.writeLogRecords();
     }
 

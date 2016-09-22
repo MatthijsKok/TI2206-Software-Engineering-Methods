@@ -7,8 +7,8 @@ import geometry.Circle;
 import geometry.Shape;
 import util.Sprite;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Class that represents the bouncing balls in our game.
@@ -23,7 +23,7 @@ public class Ball extends Entity {
     /**
      * HashMap that contains the ball's sprites by colour.
      */
-    private static final Map<Colour, Sprite> BALL_SPRITES = new HashMap<>();
+    private static final Map<Colour, Sprite> BALL_SPRITES = new ConcurrentHashMap<>();
 
     static {
         BALL_SPRITES.put(Colour.BLUE,   new Sprite("balls/blue_ball.png"));
@@ -40,6 +40,16 @@ public class Ball extends Entity {
      * Bounce speed for the different ball sizes.
      */
     private static final double[] BOUNCE_SPEEDS = { 225, 300, 375, 450, 500 };
+
+    /**
+     * Radius of a ball with size 0.
+     */
+    private static final double BASE_SIZE = 8;
+
+    /**
+     * Exponential growth factor.
+     */
+    private static final double GROW_FACTOR = 2;
 
     /**
      * Horizontal speed of a ball. In pixels per second.
@@ -76,7 +86,7 @@ public class Ball extends Entity {
      * @param position ball position
      * @param size ball size
      */
-    public Ball(Vec2d position, int size) {
+    public Ball(final Vec2d position, final int size) {
         this(position, size, randomColour());
     }
 
@@ -86,7 +96,7 @@ public class Ball extends Entity {
      * @param size ball size
      * @param colour ball colour
      */
-    public Ball(Vec2d position, int size, Colour colour) {
+    public Ball(final Vec2d position, final int size, final Colour colour) {
         this(position, size, colour, new Vec2d(HORIZONTAL_SPEED, 0));
     }
 
@@ -97,7 +107,7 @@ public class Ball extends Entity {
      * @param size Integer ranging 0-4 representing the ball size.
      * @param speed Vec2d initial speed of the bal.
      */
-    public Ball(Vec2d position, int size, Ball.Colour colour, Vec2d speed) {
+    public Ball(final Vec2d position, final int size, final Ball.Colour colour, final Vec2d speed) {
         super(position);
 
         // Ball collision box
@@ -115,10 +125,8 @@ public class Ball extends Entity {
      * @param size Integer from 0 (tiny ball) to 4 (huge ball).
      */
     private void setSize(int size) {
-        final double startSize = 8;
-
         this.size = Math.max(0, size);
-        radius = startSize * Math.pow(2, this.size);
+        radius = BASE_SIZE * Math.pow(GROW_FACTOR, this.size);
         shape.setRadius(radius);
     }
 
@@ -168,8 +176,6 @@ public class Ball extends Entity {
     /**
      * Updates the position with the current speed * the Delta Time.
      * Also syncs the position of the Shape with the Entity, for collision purposes.
-     * If this method is called with a dt of 0 the position of the Entity will not be changed,
-     * only the Shape will sync up.
      * This is usually done after manually editing the position of the Entity.
      * @param dt Time difference from previous update in seconds.
      */
@@ -272,7 +278,8 @@ public class Ball extends Entity {
     }
 
     /**
-     * Draws the Ball sprite on the Entity's position with scale depending on the ball size.
+     * Draws the Ball sprite on the Entity's position with scale depending
+     * on the ball size.
      */
     public void draw() {
         sprite.draw(position, radius * 2 / sprite.getWidth());

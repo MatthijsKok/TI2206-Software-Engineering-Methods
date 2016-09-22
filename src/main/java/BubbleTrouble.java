@@ -22,7 +22,7 @@ public class BubbleTrouble extends Application {
      * Entry method of the whole game.
      * @param args optional arguments to start the game with.
      */
-    public static void main(final String[] args) {
+    public static void main(final String... args) {
         launch(args);
     }
 

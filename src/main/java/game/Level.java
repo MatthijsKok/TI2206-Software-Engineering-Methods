@@ -188,7 +188,7 @@ public class Level {
      * Updates the state of all entities in the level.
      * @param dt time difference between now and last update
      */
-    public final void update(final double dt) {
+    final void update(final double dt) {
         for (Entity entity : entities) {
             entity.update(dt);
         }
@@ -303,7 +303,7 @@ public class Level {
     /**
      * @return true if all balls are destroyed, false otherwise.
      */
-    public final boolean won() {
+    final boolean won() {
         for (Entity entity : entities) {
             if (entity instanceof Ball) {
                 return false;
@@ -316,7 +316,7 @@ public class Level {
     /**
      * @return true if a player died, false otherwise.
      */
-    public final boolean lost() {
+    final boolean lost() {
         for (Player player : getPlayers()) {
             if (!player.isAlive()) {
                 return true;

@@ -61,8 +61,8 @@ public final class Rope extends Entity {
      * Initializes the sprite of the rope.
      */
     private void setSprite() {
-        sprite = SPRITE;
-        sprite.setOffset(SPRITE.getWidth() / 2, 0);
+        sprite = SPRITE.clone();
+        sprite.setOffset(0.5 * sprite.getWidth(), 0);
     }
 
     /**
@@ -135,7 +135,9 @@ public final class Rope extends Entity {
      * @param ball the ball this rope collides with
      */
     private void collideWith(final Ball ball) {
-        traveling = false;
+        if (ball != null) {
+            traveling = false;
+        }
     }
 
     /**

@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 /**
  * Class that handles the creation of sprites.
  */
-public class Sprite {
+public class Sprite implements Cloneable {
 
     /**
      * The context this sprite is drawn to.

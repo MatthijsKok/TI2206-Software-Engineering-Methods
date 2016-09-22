@@ -74,7 +74,7 @@ public abstract class Entity {
      * @param x The x coordinate of the entity
      * @param y The y coordinate of the entity
      */
-    public void setPosition(double x, double y) {
+    public final void setPosition(double x, double y) {
         this.position.x = x;
         this.position.y = y;
     }
@@ -108,7 +108,9 @@ public abstract class Entity {
      * so it is not an abstract method.
      * @param entity the entity to do nothing with.
      */
-    public void collideWith(Entity entity) { }
+    public void collideWith(Entity entity) {
+
+    }
 
     /**
      * Draws the entity to the screen.
