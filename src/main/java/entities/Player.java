@@ -170,7 +170,7 @@ public class Player extends Entity {
         }
 
         // Apply gravity
-        this.speed.y += GRAVITY * dt;
+        speed.y += GRAVITY * dt;
 
         // Shoot
         if (keyboard.keyPressed(shootKey)) {
