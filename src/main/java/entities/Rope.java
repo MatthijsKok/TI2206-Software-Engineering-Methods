@@ -7,35 +7,49 @@ import util.Sprite;
 /**
  * Rope class, controlling the rope in the game.
  */
-public class Rope extends Entity {
+public final class Rope extends Entity {
 
     /**
      * Sprite of the rope.
      */
-    private static Sprite SPRITE = new Sprite("rope.png");
+    private static final Sprite SPRITE = new Sprite("rope.png");
 
     /**
      * Constant upward speed of the rope in px/s.
      */
-    final private static double TRAVEL_SPEED = 300; // px/s
+    private static final double TRAVEL_SPEED = 300; // px/s
 
     /**
-     * Boolean indicating if the rope is still traveling towards the top of the screen.
+     * Y location that is not in the visible on the canvas.
+     */
+    private static final int OFFSCREEN_Y_LOCATION = 10000;
+
+
+    /**
+     * Boolean indicating if the rope is still traveling
+     * towards the top of the screen.
      */
     private boolean traveling = false;
 
-    private static double scale = 0.5;
+    /**
+     * The SCALE at which the rope sprite wil be drawn.
+     */
+    private static final double SCALE = 0.5;
 
+    /**
+     * Creates a new rope at position (0,0).
+     */
     public Rope() {
         this(0, 0);
     }
 
     /**
-     * Creates a new rope
+     * Creates a new rope.
+     *
      * @param x the x postiton of the rope
      * @param y the y position of the rope
      */
-    public Rope(double x, double y) {
+    public Rope(final double x, final double y) {
         super(x, y);
         // Set sprite
         setSprite();
@@ -44,51 +58,57 @@ public class Rope extends Entity {
     }
 
     /**
-     * Initializes the sprite of the rope
+     * Initializes the sprite of the rope.
      */
     private void setSprite() {
-        sprite = SPRITE;
-        sprite.setOffset(SPRITE.getWidth()/2, 0);
+        sprite = SPRITE.clone();
+        sprite.setOffset(0.5 * sprite.getWidth(), 0);
     }
 
     /**
-     * Initializes the shape of the rope
+     * Initializes the shape of the rope.
      */
     private void setShape() {
-        shape = new Rectangle(sprite.getWidth()*scale, sprite.getHeight()*scale);
+        shape = new Rectangle(sprite.getWidth() * SCALE,
+                              sprite.getHeight() * SCALE);
     }
 
     /**
-     * If the rope is not yet traveling, a rope will spawn at the indicated position.
+     * If the rope is not yet traveling,
+     * a rope will spawn at the indicated position.
+     *
      * @param position The position where the rope will be spawned.
      */
-    public void shoot(Vec2d position) {
-        if(!traveling) {
+    public void shoot(final Vec2d position) {
+        if (!traveling) {
             traveling = true;
             setPosition(position);
         }
     }
 
     /**
-     * Update the ropes position and collision shape
+     * Update the ropes position and collision shape.
+     *
      * @param dt the time
      */
-    private void updatePosition(double dt) {
-        position.x += speed.x*dt;
-        position.y += speed.y*dt;
-        shape.setPosition(position.x - sprite.getOffsetX()*scale, position.y - sprite.getOffsetY()*scale);
+    private void updatePosition(final double dt) {
+        position.x += speed.x * dt;
+        position.y += speed.y * dt;
+        shape.setPosition(position.x - sprite.getOffsetX() * SCALE,
+                          position.y - sprite.getOffsetY() * SCALE);
     }
 
     /**
      * Updates the state of the rope.
+     *
      * @param dt delta time
      */
-    public void update(double dt) {
+    public void update(final double dt) {
         if (traveling) {
             speed.y = -TRAVEL_SPEED;
         } else {
             speed.y = 0;
-            position.y = 10000;
+            position.y = OFFSCREEN_Y_LOCATION;
         }
 
         updatePosition(dt);
@@ -99,29 +119,33 @@ public class Rope extends Entity {
     }
 
     /**
-     * Entry point for collisions
+     * Entry point for collisions.
+     *
      * @param entity the entity this rope collides with
      */
-    public void collideWith(Entity entity) {
+    public void collideWith(final Entity entity) {
         if (entity instanceof Ball) {
             collideWith((Ball) entity);
         }
     }
 
     /**
-     * Collision with a ball, the rope should disapear
+     * Collision with a ball, the rope should disapear.
+     *
      * @param ball the ball this rope collides with
      */
-    private void collideWith(Ball ball) {
-        traveling = false;
+    private void collideWith(final Ball ball) {
+        if (ball != null) {
+            traveling = false;
+        }
     }
 
     /**
-     * Draw only if traveling
+     * Draw only if traveling.
      */
-    public void draw(){
+    public void draw() {
         if (traveling) {
-            sprite.draw(position, scale);
+            sprite.draw(position, SCALE);
         }
     }
 }

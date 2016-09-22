@@ -1,30 +1,56 @@
 package entities;
 
 import geometry.Rectangle;
+import geometry.Shape;
 import util.Sprite;
 
 /**
- * Created by dana on 09/09/2016.
+ * Represents a Block entity used for walls in the game.
  */
 public class Wall extends Entity {
-    private static Sprite SPRITE = new Sprite("wall.png");
 
-    public Wall() {
-        this(0, 0);
-    }
+    /**
+     * The sprite of the wall.
+     */
+    private static final Sprite SPRITE = new Sprite("wall.png");
 
-    public Wall(double x, double y) {
+    /**
+     * The shape of the wall.
+     */
+    private Rectangle shape;
+
+    /**
+     * Creates a wall on position (x,y).
+     * @param x the x coordinate of the wall
+     * @param y the y coordinate of the wall
+     */
+    public Wall(final double x, final double y) {
         super(x, y);
         sprite = Wall.SPRITE;
         shape = new Rectangle(sprite.getWidth(), sprite.getHeight());
         shape.setPosition(x, y);
     }
 
-    public double getLeft() {
-        return getX();
+    /**
+     * @return the collision shape of the wall.
+     */
+    public final Shape getShape() {
+        return shape;
     }
 
-    public double getRight() {
-        return getX() + sprite.getWidth();
+    /**
+     * Returns the x value that is most left on the sprite.
+     * @return the x value that is most left on the sprite
+     */
+    public final double getLeft() {
+        return shape.getLeft();
+    }
+
+    /**
+     * Returns the x value that is most right on the sprite.
+     * @return the x value that is most right on the sprite
+     */
+    public final double getRight() {
+        return shape.getRight();
     }
 }

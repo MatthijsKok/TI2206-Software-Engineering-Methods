@@ -4,16 +4,21 @@ import geometry.Rectangle;
 import util.Sprite;
 
 /**
- * Created by wouterraateland on 07-09-16.
+ * Represents a Block entity used for floors in the game.
  */
 public class Block extends Entity {
-    private static Sprite SPRITE = new Sprite("block.png");
 
-    public Block() {
-        this(0, 0);
-    }
+    /**
+     * The sprite used for the block object in the game.
+     */
+    private static final Sprite SPRITE = new Sprite("block.png");
 
-    public Block(double x, double y) {
+    /**
+     * Creates a new Block at position (x,y).
+     * @param x the x position of the block
+     * @param y the y position of the block
+     */
+    public Block(final double x, final double y) {
         super(x, y);
         sprite = Block.SPRITE;
         shape = new Rectangle(sprite.getWidth(), sprite.getHeight());
