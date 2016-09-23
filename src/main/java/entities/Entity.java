@@ -11,6 +11,11 @@ import util.Sprite;
 public abstract class Entity {
 
     /**
+     * The logger access point to which everything will be logged.
+     */
+    private static final util.logging.Logger LOGGER = new util.logging.Logger();
+
+    /**
      * KeyboardInputMangaer object that manages
      * the keyboard input of the entity.
      */
@@ -75,6 +80,7 @@ public abstract class Entity {
      * @param y The y coordinate of the entity
      */
     public final void setPosition(double x, double y) {
+        LOGGER.trace("Setting position (" + position.x + "," + position.y + ") for entity: " + this.toString());
         this.position.x = x;
         this.position.y = y;
     }
@@ -117,6 +123,7 @@ public abstract class Entity {
      */
     public void draw() {
         if (sprite != null && visible) {
+            LOGGER.trace("Drawing entity: " + this.toString());
             sprite.draw(position);
         }
     }
@@ -202,6 +209,7 @@ public abstract class Entity {
      * @param y The vertical speed
      */
     public void setSpeed(double x, double y) {
+        LOGGER.trace("Setting speed (" + position.x + "," + position.y + ") for entity: " + this.toString());
         speed.x = x;
         speed.y = y;
     }
