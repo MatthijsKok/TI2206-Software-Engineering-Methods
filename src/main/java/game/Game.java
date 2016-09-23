@@ -21,7 +21,12 @@ public class Game {
      */
     private static final double NANO_SECONDS_IN_SECOND = 1000000000.0;
 
-     /**
+    /**
+     * Defines the maximum timespan a frame can simulate.
+     */
+    private static final double MAX_FRAME_DURATION = 0.033333333;
+
+    /**
      * The one and only instance of the game object.
      */
     private static Game gameInstance = null;
@@ -70,12 +75,11 @@ public class Game {
      * Loads and starts the first level.
      */
     public void start() {
-        lastNanoTime = System.nanoTime();
-
         currentLevel = levels.get(0);
         LOGGER.info("Starting Level...");
         currentLevel.start();
         LOGGER.info("Level started.");
+        lastNanoTime = System.nanoTime();
     }
 
     /**
@@ -85,7 +89,9 @@ public class Game {
         long currentNanoTime = System.nanoTime();
 
         //gives the time difference in seconds
-        double dt = (currentNanoTime - lastNanoTime) / NANO_SECONDS_IN_SECOND;
+        double dt = Math.min(
+                (currentNanoTime - lastNanoTime) / NANO_SECONDS_IN_SECOND,
+                MAX_FRAME_DURATION);
         LOGGER.trace("Time difference since last update: " + dt + " seconds.");
 
         lastNanoTime = currentNanoTime;
