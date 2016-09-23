@@ -9,6 +9,12 @@ import javafx.scene.text.Font;
  * HUD is a acronym for Heads Up Display. A common name for the overlay of a game.
  */
 public class HUD extends UIElement {
+
+    /**
+     * The logger access point to which everything will be logged.
+     */
+    private static final util.logging.Logger LOGGER = new util.logging.Logger();
+
     /**
      * Font size used for bigger text.
      */
@@ -31,6 +37,7 @@ public class HUD extends UIElement {
      */
     public void draw() {
         Canvas canvas = gc().getCanvas();
+        LOGGER.trace("Drawing UI element: " + canvas.toString());
         if (Game.getInstance().levelLost()) {
             drawLostScreen(canvas);
         }
@@ -41,6 +48,7 @@ public class HUD extends UIElement {
     }
 
     private void drawWonScreen(Canvas canvas) {
+        LOGGER.debug("Drawing Level Won Screen...");
         gc().setFill(Color.CORNFLOWERBLUE);
         gc().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc().setFill(Color.WHITE);
@@ -54,9 +62,11 @@ public class HUD extends UIElement {
         gc().fillText("Press R to restart",
                 canvas.getWidth() / 2,
                 canvas.getHeight() / 2 + BIGGER_FONT.getSize());
+        LOGGER.debug("Level Won Screen drawn.");
     }
 
     private void drawLostScreen(Canvas canvas) {
+        LOGGER.debug("Drawing Level Lost Screen...");
         gc().setFill(Color.DARKRED);
         gc().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc().setFill(Color.WHITE);
@@ -70,6 +80,7 @@ public class HUD extends UIElement {
         gc().fillText("Press R to restart",
                 canvas.getWidth() / 2,
                 canvas.getHeight() / 2 + BIGGER_FONT.getSize());
+        LOGGER.debug("Level Lost Screen drawn.");
     }
 
 
