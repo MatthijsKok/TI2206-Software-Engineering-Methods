@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import ui.HUD;
 import ui.UIElement;
 import util.GameCanvasManager;
+import util.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,12 @@ import java.util.List;
  * of players, balls, walls and so on.
  */
 public class Level {
+
+    /**
+     * The logger access point to which everything will be logged.
+     */
+    private static final Logger LOGGER = new Logger();
+
     /**
      * The background image of this level.
      */
@@ -99,6 +106,7 @@ public class Level {
      * Loads a level from a file.
      */
     private void load() {
+        LOGGER.debug("Loading Level...");
         // TODO: implement file reading
         // Set level dimensions
         setSize(1024, 608);
@@ -124,6 +132,7 @@ public class Level {
         addEntity(new Ball(new Vec2d(512, 256), 2));
 
         addEntities();
+        LOGGER.debug("Level loaded.");
     }
 
     /**
@@ -160,6 +169,7 @@ public class Level {
      * @param height the height of the level
      */
     public final void setSize(final double width, final double height) {
+        LOGGER.trace("Setting Level size to (" + size.x + "," + size.y + ").");
         size.x = width;
         size.y = height;
     }
@@ -169,12 +179,15 @@ public class Level {
      * instance list.
      */
     private void setPlayers() {
+        LOGGER.trace("Setting players...");
         players = new ArrayList<>();
         for (Entity entity : entities) {
             if (entity instanceof Player) {
+                LOGGER.trace("Setting player: " + entity.toString());
                 players.add((Player) entity);
             }
         }
+        LOGGER.trace("Players set.");
     }
 
     /**
@@ -189,14 +202,18 @@ public class Level {
      * @param dt time difference between now and last update
      */
     final void update(final double dt) {
+        LOGGER.debug("Updating Entity's...");
         for (Entity entity : entities) {
             entity.update(dt);
         }
+        LOGGER.debug("Updated Entity's");
 
         removeEntities();
         addEntities();
 
+        LOGGER.debug("Handling collisions...");
         handleCollisions();
+        LOGGER.debug("Collisions handled.");
     }
 
     /**
@@ -223,20 +240,28 @@ public class Level {
      * Draws all entities and UIElements in the current level.
      */
     public final void draw() {
+        LOGGER.debug("Drawing Level...");
+
         // Draw background
+        LOGGER.trace("Drawing background.");
         GraphicsContext gc = GameCanvasManager.getInstance().getContext();
         gc.setFill(Color.ALICEBLUE);
         gc.fillRect(0, 0, getWidth(), getHeight());
 
         // Draw entities
+        LOGGER.trace("Drawing entities...");
         for (Entity entity : entities) {
             entity.draw();
         }
+        LOGGER.trace("Entities drawn.");
 
-        // Draw ui elements over entities
+        // Draw UI elements over entities
+        LOGGER.trace("Drawing UI elements...");
         for (UIElement uiElement : uiElements) {
             uiElement.draw();
         }
+        LOGGER.trace("UI elements drawn.");
+        LOGGER.debug("Level drawn.");
     }
 
     /**

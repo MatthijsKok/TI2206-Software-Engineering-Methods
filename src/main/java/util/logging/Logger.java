@@ -17,11 +17,20 @@ public class Logger {
 
 
     /**
+     * This method should only be called at the initialization of the program.
      * Sets the LogLevel of all the Loggers, since logLevel is static.
      * @param logLevel The LogLevel of all Loggers.
      */
     public void setLevel(LogLevel logLevel) {
         Logger.logLevel = logLevel;
+    }
+
+    /**
+     * Gets the LogLevel of all the Loggers, since logLevel is static.
+     * @return The LogLevel of all Loggers.
+     */
+    public LogLevel getLevel() {
+        return logLevel;
     }
 
     /**
