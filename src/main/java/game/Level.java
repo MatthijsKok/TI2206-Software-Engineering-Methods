@@ -117,7 +117,7 @@ public class Level {
         }
 
         // Player
-        addEntity(new Player(512, 512));
+        addEntity(new Player(512, 500));
 
         // Balls
         addEntity(new Ball(new Vec2d(256, 256), 2));
