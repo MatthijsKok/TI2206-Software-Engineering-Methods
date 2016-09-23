@@ -12,6 +12,11 @@ import java.util.List;
 public class Game {
 
     /**
+     * The logger access point to which everything will be logged.
+     */
+    private static final Logger LOGGER = new Logger();
+
+    /**
      * Defines how many nano seconds there are in one second.
      */
     private static final double NANO_SECONDS_IN_SECOND = 1000000000.0;
@@ -37,11 +42,6 @@ public class Game {
     private long lastNanoTime;
 
     /**
-     * The logger of the game.
-     */
-    private static final Logger LOGGER = new Logger();
-
-    /**
      * The keyboard manager of the game.
      */
     private KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
@@ -61,6 +61,7 @@ public class Game {
     public static Game getInstance() {
         if (gameInstance == null) {
             gameInstance = new Game();
+            LOGGER.trace("New game instance created.");
         }
         return gameInstance;
     }
@@ -72,7 +73,9 @@ public class Game {
         lastNanoTime = System.nanoTime();
 
         currentLevel = levels.get(0);
+        LOGGER.info("Starting Level...");
         currentLevel.start();
+        LOGGER.info("Level started.");
     }
 
     /**
@@ -83,16 +86,20 @@ public class Game {
 
         //gives the time difference in seconds
         double dt = (currentNanoTime - lastNanoTime) / NANO_SECONDS_IN_SECOND;
+        LOGGER.trace("Time difference since last update: " + dt + " seconds.");
 
         lastNanoTime = currentNanoTime;
         currentLevel.update(dt);
 
         if (keyboard.keyPressed("R")
                 && (levelWon() || levelLost())) {
+            LOGGER.info("Restarting game...");
             getCurrentLevel().restart();
         }
 
+        LOGGER.trace("Writing LogRecords...");
         LOGGER.writeLogRecords();
+        LOGGER.trace("LogRecords written.");
     }
 
     /**
