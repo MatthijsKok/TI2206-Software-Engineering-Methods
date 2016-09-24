@@ -1,7 +1,9 @@
 package util.logging;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * The Logger class is the entry point for the logging framework and handles its logic.
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Logger {
 
-    private final static File LOG_FILE = new File(System.getProperty("user.home"), "/desktop/log.txt");
+    private final static File LOG_FILE = new File(System.getProperty("user.home"), "/Documents/BubbleTrouble Log " + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".log");
     private static ArrayList<LogRecord> logRecords = new ArrayList<>();
     private static LogLevel logLevel;
 
