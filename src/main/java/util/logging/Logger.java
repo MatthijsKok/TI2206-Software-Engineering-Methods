@@ -43,7 +43,7 @@ public class Logger {
      * @param logLevel The LogLevel this LogRecord is logged at.
      * @param message The String message to be logged.
      */
-    public void log(LogLevel logLevel, String message) {
+    private void log(LogLevel logLevel, String message) {
         if (message != null && logLevel.getValue() >= Logger.logLevel.getValue()) {
             logRecords.add(new LogRecord(logLevel, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
         }
@@ -51,62 +51,57 @@ public class Logger {
 
     /**
      * Logs a FATAL message.
+     * The FATAL LogLevel designates very severe error events that will presumably lead the application to abort.
      * @param message The String message to be logged.
      */
     public void fatal(String message) {
-        if (message != null && LogLevel.FATAL.getValue() >= Logger.logLevel.getValue()) {
-            logRecords.add(new LogRecord(LogLevel.FATAL, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
-        }
+        log(LogLevel.FATAL, message);
     }
 
     /**
      * Logs an ERROR message.
+     * The ERROR LogLevel designates error events that might still allow the application to continue running.
      * @param message The String message to be logged.
      */
     public void error(String message) {
-        if (message != null && LogLevel.ERROR.getValue() >= Logger.logLevel.getValue()) {
-            logRecords.add(new LogRecord(LogLevel.ERROR, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
-        }
+        log(LogLevel.ERROR, message);
     }
 
     /**
      * Logs a WARN message.
+     * The WARN LogLevel designates potentially harmful situations.
      * @param message The String message to be logged.
      */
     public void warn(String message) {
-        if (message != null && LogLevel.WARN.getValue() >= Logger.logLevel.getValue()) {
-            logRecords.add(new LogRecord(LogLevel.WARN, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
-        }
+        log(LogLevel.WARN, message);
     }
 
     /**
      * Logs an INFO message.
+     * The INFO LogLevel designates informational messages that highlight the progress of the application at coarse-grained level.
      * @param message The String message to be logged.
      */
     public void info(String message) {
-        if (message != null && LogLevel.INFO.getValue() >= Logger.logLevel.getValue()) {
-            logRecords.add(new LogRecord(LogLevel.INFO, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
-        }
+        log(LogLevel.INFO, message);
     }
 
     /**
      * Logs a DEBUG message.
+     * The DEBUG LogLevel designates fine-grained informational events that are most useful to debug an application.
      * @param message The String message to be logged.
      */
     public void debug(String message) {
-        if (message != null && LogLevel.DEBUG.getValue() >= Logger.logLevel.getValue()) {
-            logRecords.add(new LogRecord(LogLevel.DEBUG, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
-        }
+        log(LogLevel.DEBUG, message);
     }
 
     /**
      * Logs a TRACE message.
+     * The TRACE LogLevel designates finer-grained informational events than the DEBUG LogLevel.
+     * Mostly used in loops.
      * @param message The String message to be logged.
      */
     public void trace(String message) {
-        if (message != null && LogLevel.TRACE.getValue() >= Logger.logLevel.getValue()) {
-            logRecords.add(new LogRecord(LogLevel.TRACE, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
-        }
+        log(LogLevel.TRACE, message);
     }
 
     /**
@@ -114,7 +109,7 @@ public class Logger {
      * @return The class name of the caller of the Logger.
      */
     private String getCallerClassName() {
-        return Thread.currentThread().getStackTrace()[3].getClassName();
+        return Thread.currentThread().getStackTrace()[4].getClassName();
     }
 
     /**
@@ -122,7 +117,7 @@ public class Logger {
      * @return The method name of the caller of the Logger.
      */
     private String getCallerMethodName() {
-        return Thread.currentThread().getStackTrace()[3].getMethodName();
+        return Thread.currentThread().getStackTrace()[4].getMethodName();
     }
 
     /**
