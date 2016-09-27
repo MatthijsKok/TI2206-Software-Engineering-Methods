@@ -1,9 +1,7 @@
 package util.logging;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * LogRecord class to represent a log message and all it's attributes.
@@ -14,8 +12,7 @@ class LogRecord {
     private final String sourceClassName;
     private final String sourceMethodName;
     private final String message;
-    private final LocalTime localTime;
-    private final LocalDate localDate;
+    private final long milliseconds;
 
     /**
      * Constructor for LogRecord. Should only be called by Logger.log().
@@ -30,8 +27,7 @@ class LogRecord {
         this.sourceClassName = sourceClassName;
         this.sourceMethodName = sourceMethodName;
         this.message = message;
-        this.localDate = Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).toLocalDate();
-        this.localTime = Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).toLocalTime();
+        this.milliseconds = milliseconds;
     }
 
     /**
@@ -44,6 +40,6 @@ class LogRecord {
      * @return a String representing the LogRecord.
      */
     String format() {
-        return "[" + localDate.toString() + "][" + localTime.toString() + "][" + sourceClassName + "][" + sourceMethodName + "]\n" + logLevel.getName() + ": " + message + "\n";
+        return new SimpleDateFormat("[yyyy-MM-dd][HH:mm:ss.SSS][").format(new Date(milliseconds)) + sourceClassName + "][" + sourceMethodName + "]\n" + logLevel.getName() + ": " + message + "\n";
     }
 }
