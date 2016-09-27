@@ -1,22 +1,62 @@
 package util.logging;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * The Logger class is the entry point for the logging framework and handles its logic.
- * Constructor is not needed, compiler provides an empty one by default.
  * All classes that want to log should have the following line in their class:
- * <code>private static final Logger logger = new Logger();</code>
+ * <code>private static final Logger logger = Logger.getInstance();;</code>
  */
-public class Logger {
+public final class Logger {
 
-    private final static File LOG_FILE = new File(System.getProperty("user.home"), "/Documents/BubbleTrouble Log " + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".log");
+    /**
+     * Eagerly create the static unique instance of the Logger.
+     */
+    private static Logger uniqueInstance = new Logger();
+
+    /**
+     * The File in which all logging shall take place this run of the program.
+     */
+    private final File LOG_FILE = new File(System.getProperty("user.home"), "/Documents/BubbleTrouble Log " + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".log");
+
+    /**
+     * An ArrayList which holds all LogRecord's that haven't been written to file.
+     */
     private static ArrayList<LogRecord> logRecords = new ArrayList<>();
-    private static LogLevel logLevel;
 
+    /**
+     * The LogLevel for the unique instance of the Logger.
+     * Set to LogLevel.INFO by default.
+     */
+    private static LogLevel logLevel = LogLevel.INFO;
+
+    /**
+     * The depth of the stack trace where the className and methodName is that called Logger.
+     */
+    private final int STACK_DEPTH = 4;
+
+    /**
+     * Private constructor for Logger class.
+     * This should only be called once, when eagerly creating the unique instance.
+     */
+    private Logger() {
+
+    }
+
+    /**
+     * Returns the only instance of Logger that should exist.
+     * @return An instance of Logger.
+     */
+    public static Logger getInstance() {
+        return uniqueInstance;
+    }
 
     /**
      * This method should only be called at the initialization of the program.
@@ -109,7 +149,7 @@ public class Logger {
      * @return The class name of the caller of the Logger.
      */
     private String getCallerClassName() {
-        return Thread.currentThread().getStackTrace()[4].getClassName();
+        return Thread.currentThread().getStackTrace()[STACK_DEPTH].getClassName();
     }
 
     /**
@@ -117,7 +157,7 @@ public class Logger {
      * @return The method name of the caller of the Logger.
      */
     private String getCallerMethodName() {
-        return Thread.currentThread().getStackTrace()[4].getMethodName();
+        return Thread.currentThread().getStackTrace()[STACK_DEPTH].getMethodName();
     }
 
     /**

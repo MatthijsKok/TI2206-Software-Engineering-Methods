@@ -4,6 +4,7 @@ import com.sun.javafx.geom.Vec2d;
 import geometry.Shape;
 import util.KeyboardInputManager;
 import util.Sprite;
+import util.logging.Logger;
 
 /**
  * Class containing all the functionality shared by all in-game entities.
@@ -13,7 +14,7 @@ public abstract class Entity {
     /**
      * The logger access point to which everything will be logged.
      */
-    private static final util.logging.Logger LOGGER = new util.logging.Logger();
+    private static final util.logging.Logger LOGGER = Logger.getInstance();
 
     /**
      * KeyboardInputMangaer object that manages

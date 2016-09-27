@@ -14,7 +14,7 @@ public class Game {
     /**
      * The logger access point to which everything will be logged.
      */
-    private static final Logger LOGGER = new Logger();
+    private static final Logger LOGGER = Logger.getInstance();
 
     /**
      * Defines how many nano seconds there are in one second.

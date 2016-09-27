@@ -4,6 +4,7 @@ import game.Game;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import util.logging.Logger;
 
 /**
  * HUD is a acronym for Heads Up Display. A common name for the overlay of a game.
@@ -13,7 +14,7 @@ public class HUD extends UIElement {
     /**
      * The logger access point to which everything will be logged.
      */
-    private static final util.logging.Logger LOGGER = new util.logging.Logger();
+    private static final util.logging.Logger LOGGER = Logger.getInstance();
 
     /**
      * Font size used for bigger text.

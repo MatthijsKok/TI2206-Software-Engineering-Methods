@@ -22,7 +22,7 @@ public class Level {
     /**
      * The logger access point to which everything will be logged.
      */
-    private static final Logger LOGGER = new Logger();
+    private static final Logger LOGGER = Logger.getInstance();
 
     /**
      * The background image of this level.
