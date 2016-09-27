@@ -4,7 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import util.GameCanvasManager;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by dana on 27/09/2016.
@@ -14,6 +17,7 @@ public class LoggerTest {
 
     private Logger logger;
     private  LogLevel loglevel;
+    private static ArrayList<LogRecord> logRecords = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -28,4 +32,24 @@ public class LoggerTest {
         Logger.getInstance().setLevel(loglevel);
         assertEquals(Logger.getInstance().getLevel(), loglevel );
     }
+
+    @Test
+    public void fatalTest(){
+    }
+
+    @Test
+    public void errorTest(){
+    }
+
+    @Test
+    public void warnTest(){
+    }
+
+    @Test
+    public void infoTest(){
+        Logger.getInstance().setLevel(loglevel);
+        String test = "TETSSGGDD";
+//        logger.info(test);           DIT GAAT FOUT
+    }
+
 }
