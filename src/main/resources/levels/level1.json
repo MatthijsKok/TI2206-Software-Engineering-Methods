@@ -1,0 +1,34 @@
+{
+  "name": "Level 1",
+  "size": {
+    "x": 1024,
+    "y": 608
+  },
+
+
+  "time": 30,
+
+  "defaultBackgroundImageURI": "backgrounds/background1.png",
+  "defaultBackgroundMusicURI": "",
+
+  "entities": [{
+    "type": "Player",
+    "x": 512,
+    "y": 500,
+    "attributes": {}
+  }, {
+    "type": "Ball",
+    "x": 256,
+    "y": 256,
+    "attributes": {
+      "size": 2
+    }
+  }, {
+    "type": "Ball",
+    "x": 512,
+    "y": 256,
+    "attributes": {
+      "size": 2
+    }
+  }]
+}
