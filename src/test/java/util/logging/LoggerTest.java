@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class LoggerTest {
 
     private Logger logger;
+    private  LogLevel loglevel;
 
     @Before
     public void setUp() {
@@ -21,4 +22,10 @@ public class LoggerTest {
 
     @Test
     public void getInstanceTest(){ assertEquals(logger, Logger.getInstance()); }
+
+    @Test
+    public void setLevelTest(){
+        Logger.getInstance().setLevel(loglevel);
+        assertEquals(Logger.getInstance().getLevel(), loglevel );
+    }
 }
