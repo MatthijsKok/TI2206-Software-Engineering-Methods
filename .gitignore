@@ -58,3 +58,5 @@ buildNumber.properties
 
 /TI2206.iml
 TI2206.iml
+
+*.log

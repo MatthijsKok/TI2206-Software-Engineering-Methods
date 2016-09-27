@@ -24,7 +24,7 @@ public final class Logger {
     /**
      * The File in which all logging shall take place this run of the program.
      */
-    private final File LOG_FILE = new File(System.getProperty("user.home"), "/Documents/BubbleTrouble Log " + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".log");
+    private static final File LOG_FILE = new File("docs/logs/BubbleTrouble Log " + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".log");
 
     /**
      * An ArrayList which holds all LogRecord's that haven't been written to file.
@@ -40,7 +40,7 @@ public final class Logger {
     /**
      * The depth of the stack trace where the className and methodName is that called Logger.
      */
-    private final int STACK_DEPTH = 4;
+    private static final int STACK_DEPTH = 4;
 
     /**
      * Private constructor for Logger class.
