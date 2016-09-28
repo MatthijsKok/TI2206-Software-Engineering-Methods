@@ -48,8 +48,8 @@ public class LoggerTest {
     @Test
     public void infoTest(){
         Logger.getInstance().setLevel(loglevel);
-        String test = "TETSSGGDD";
-//        logger.info(test);           DIT GAAT FOUT
+        //Dit gaat fout. Blijft maar een nullpointer exception geven.
+//        logger.info("test");
     }
 
 }
