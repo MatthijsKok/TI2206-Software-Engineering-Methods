@@ -7,6 +7,7 @@ import geometry.Rectangle;
 import geometry.Shape;
 import util.Sprite;
 
+
 /**
  * The Character class represents a character.
  */

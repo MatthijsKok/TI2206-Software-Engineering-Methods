@@ -60,11 +60,17 @@ public final class KeyboardInputManager extends Observable {
             if (!input.contains(code)) {
                 input.add(code);
             }
+
+            setChanged();
+            notifyObservers();
         });
 
         scene.setOnKeyReleased(e -> {
             String code = e.getCode().toString();
             input.remove(code);
+
+            setChanged();
+            notifyObservers();
         });
     }
 

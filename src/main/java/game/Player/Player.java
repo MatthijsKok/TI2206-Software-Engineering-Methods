@@ -30,7 +30,7 @@ public class Player implements Observer {
     /**
      * The character this Player observes. Changes each level.
      */
-    private Character subject = null;
+    private Character character = null;
 
     /**
      * Creates a new Player instance with the keys.
@@ -49,7 +49,7 @@ public class Player implements Observer {
      * @param character the character to assign.
      */
     public void setCharacter(Character character) {
-        subject = character;
+        this.character = character;
     }
 
     /**
@@ -58,25 +58,24 @@ public class Player implements Observer {
      * @param obj The changes that are observed.
      */
     public void update(Observable observable, Object obj) {
-        if (observable instanceof KeyboardInputManager) {
+        if (character != null && observable instanceof KeyboardInputManager) {
             update((KeyboardInputManager) observable);
         }
-
     }
 
     /**
      * Handles the input and passes it to the character.
      * @param kim KeyboardInputManager to take input from.
      */
-    public void update(KeyboardInputManager kim) {
+    private void update(KeyboardInputManager kim) {
         if (kim.keyPressed(leftKey) && !kim.keyPressed(rightKey)) {
-            subject.moveLeft();
+            character.moveLeft();
         } else if (!kim.keyPressed(leftKey) && kim.keyPressed(rightKey)) {
-            subject.moveRight();
+            character.moveRight();
         } else {
-            subject.stop();
+            character.stop();
         }
 
-        subject.setShooting(kim.keyPressed(shootKey));
+        character.setShooting(kim.keyPressed(shootKey));
     }
 }

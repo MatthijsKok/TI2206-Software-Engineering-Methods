@@ -3,6 +3,7 @@ package Level;
 import com.sun.javafx.geom.Vec2d;
 import entities.*;
 import entities.Character;
+import game.Game;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -126,7 +127,8 @@ public class Level {
         }
 
         // Character
-        addEntity(new Character(512, 500));
+        addEntity(new Character(384, 500));
+        addEntity(new Character(720, 500));
 
         // Balls
         addEntity(new Ball(new Vec2d(256, 256), 2));
@@ -184,8 +186,10 @@ public class Level {
         characters = new ArrayList<>();
         for (Entity entity : entities) {
             if (entity instanceof Character) {
-                LOGGER.trace("Setting player: " + entity.toString());
-                characters.add((Character) entity);
+                Character character = (Character) entity;
+                LOGGER.trace("Setting player: " + character.toString());
+                Game.getInstance().getPlayer(characters.size()).setCharacter(character);
+                characters.add(character);
             }
         }
         LOGGER.trace("Players set.");

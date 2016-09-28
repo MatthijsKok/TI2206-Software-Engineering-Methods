@@ -28,11 +28,6 @@ public class BubbleTrouble extends Application {
      */
     public static void main(final String... args) {
         launch(args);
-        try {
-            Config.load();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
     /**
