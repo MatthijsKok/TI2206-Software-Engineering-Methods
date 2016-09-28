@@ -165,7 +165,7 @@ public final class Logger {
      * and then purges the ArrayList.
      */
     public void writeLogRecords() {
-        try {
+        /*try {
             Writer writer = new BufferedWriter(new FileWriter(LOG_FILE, true));
             for (LogRecord logRecord : logRecords) {
                 writer.write(logRecord.format());
@@ -174,7 +174,7 @@ public final class Logger {
             purgeLogRecords();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     /**

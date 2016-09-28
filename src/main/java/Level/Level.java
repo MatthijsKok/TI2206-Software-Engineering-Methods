@@ -1,7 +1,8 @@
-package game;
+package Level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.*;
+import entities.Character;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -15,7 +16,7 @@ import java.util.List;
 
 /**
  * The level class represents a level, which is loaded from a file and consists
- * of players, balls, walls and so on.
+ * of characters, balls, walls and so on.
  */
 public class Level {
 
@@ -53,7 +54,7 @@ public class Level {
     /**
      * All player instances in the level.
      */
-    private List<Player> players;
+    private List<Character> characters;
 
     /**
      * All ui elements active in the level.
@@ -124,8 +125,8 @@ public class Level {
             //addEntity(new Block(x, 0));    //ceiling
         }
 
-        // Player
-        addEntity(new Player(512, 500));
+        // Character
+        addEntity(new Character(512, 500));
 
         // Balls
         addEntity(new Ball(new Vec2d(256, 256), 2));
@@ -179,12 +180,12 @@ public class Level {
      * instance list.
      */
     private void setPlayers() {
-        LOGGER.trace("Setting players...");
-        players = new ArrayList<>();
+        LOGGER.trace("Setting characters...");
+        characters = new ArrayList<>();
         for (Entity entity : entities) {
-            if (entity instanceof Player) {
+            if (entity instanceof Character) {
                 LOGGER.trace("Setting player: " + entity.toString());
-                players.add((Player) entity);
+                characters.add((Character) entity);
             }
         }
         LOGGER.trace("Players set.");
@@ -201,7 +202,7 @@ public class Level {
      * Updates the state of all entities in the level.
      * @param dt time difference between now and last update
      */
-    final void update(final double dt) {
+    public final void update(final double dt) {
         LOGGER.debug("Updating Entity's...");
         for (Entity entity : entities) {
             entity.update(dt);
@@ -268,15 +269,15 @@ public class Level {
      * @param i the index of the player
      * @return i'th the player in the current level
      */
-    public final Player getPlayer(final int i) {
-        return players.get(i);
+    public final Character getPlayer(final int i) {
+        return characters.get(i);
     }
 
     /**
-     * @return a list of all players in this level
+     * @return a list of all characters in this level
      */
-    public final List<Player> getPlayers() {
-        return players;
+    public final List<Character> getCharacters() {
+        return characters;
     }
 
     /**
@@ -328,7 +329,7 @@ public class Level {
     /**
      * @return true if all balls are destroyed, false otherwise.
      */
-    final boolean won() {
+    public final boolean won() {
         for (Entity entity : entities) {
             if (entity instanceof Ball) {
                 return false;
@@ -341,9 +342,9 @@ public class Level {
     /**
      * @return true if a player died, false otherwise.
      */
-    final boolean lost() {
-        for (Player player : getPlayers()) {
-            if (!player.isAlive()) {
+    public final boolean lost() {
+        for (Character character : getCharacters()) {
+            if (!character.isAlive()) {
                 return true;
             }
         }

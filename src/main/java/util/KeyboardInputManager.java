@@ -4,12 +4,13 @@ import javafx.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * This singleton class manages keyboard input and makes it available
  * everywhere.
  */
-public final class KeyboardInputManager {
+public final class KeyboardInputManager extends Observable {
 
     /**
      * The singleton instance of KeyboardInputManager.

@@ -4,10 +4,13 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import util.Config;
 import util.GameCanvasManager;
 import util.KeyboardInputManager;
 import util.logging.LogLevel;
 import util.logging.Logger;
+
+import java.io.IOException;
 
 /**
  * Bubble Trouble is a game written in JavaFX.
@@ -20,10 +23,16 @@ public class BubbleTrouble extends Application {
 
     /**
      * Entry method of the whole game.
+     * Loads the config file and starts the game.
      * @param args optional arguments to start the game with.
      */
     public static void main(final String... args) {
         launch(args);
+        try {
+            Config.load();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -54,7 +63,7 @@ public class BubbleTrouble extends Application {
                 LOGGER.debug("Game updated.");
 
                 // And redraw
-                LOGGER.debug("Drawin the game...");
+                LOGGER.debug("Drawing the game...");
                 game.draw();
                 LOGGER.debug("Game drawn.");
             }

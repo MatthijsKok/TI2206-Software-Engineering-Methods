@@ -2,7 +2,7 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
-import game.Level;
+import Level.Level;
 import geometry.Circle;
 import geometry.Shape;
 import util.Sprite;

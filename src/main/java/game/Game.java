@@ -1,5 +1,8 @@
 package game;
 
+import Level.Level;
+import game.Player.Player;
+import game.Player.PlayerFactory;
 import util.KeyboardInputManager;
 import util.logging.Logger;
 
@@ -10,6 +13,15 @@ import java.util.List;
  * A class that handles things on a game related level.
  */
 public class Game {
+
+    /**
+     * The list containing the default level files in the game.
+     */
+    private static final List<String> DEFAULT_LEVELS = new ArrayList<>();
+
+    static {
+        DEFAULT_LEVELS.add("level.txt");
+    }
 
     /**
      * The logger access point to which everything will be logged.
@@ -32,6 +44,11 @@ public class Game {
     private static Game gameInstance = null;
 
     /**
+     * A list containing all the players that play the game.
+     */
+    private List<Player> players = new ArrayList<>();
+
+    /**
      * A list containing all the levels in the game.
      */
     private List<Level> levels = new ArrayList<>();
@@ -52,10 +69,15 @@ public class Game {
     private KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
 
     /**
-     * Creates a new game.
+     * Creates a new game with a set of levels.
+     * @param levelFiles The set of level files to play.
      */
-    protected Game() {
-        levels.add(new Level("level.txt"));
+    protected Game(List<String> levelFiles, int players) {
+        for (String levelFile : levelFiles) {
+            levels.add(new Level(levelFile));
+        }
+
+        createPlayers(players);
     }
 
     /**
@@ -65,10 +87,36 @@ public class Game {
      */
     public static Game getInstance() {
         if (gameInstance == null) {
-            gameInstance = new Game();
+            gameInstance = new Game(DEFAULT_LEVELS, 2);
             LOGGER.trace("New game instance created.");
         }
         return gameInstance;
+    }
+
+    /**
+     * Creates the players.
+     * @param players the amount of players.
+     */
+    private void createPlayers(int players) {
+        for (int i = 0; i < players; i++) {
+            this.players.add(PlayerFactory.createPlayer(i));
+        }
+    }
+
+    /**
+     * @return the amount of players in the game.
+     */
+    public int getPlayerCount() {
+        return players.size();
+    }
+
+    /**
+     * Gets the player with id id.
+     * @param id the id specifying the player.
+     * @return The player instance with id id.
+     */
+    public Player getPlayer(int id) {
+        return players.get(id);
     }
 
     /**
@@ -99,7 +147,7 @@ public class Game {
 
         if (keyboard.keyPressed("R")
                 && (levelWon() || levelLost())) {
-            LOGGER.info("Restarting game...");
+            LOGGER.info("Restarting level...");
             getCurrentLevel().restart();
         }
 

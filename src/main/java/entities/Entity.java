@@ -16,14 +16,6 @@ public abstract class Entity {
      */
     private static final util.logging.Logger LOGGER = Logger.getInstance();
 
-    /**
-     * KeyboardInputMangaer object that manages
-     * the keyboard input of the entity.
-     */
-    static KeyboardInputManager
-            keyboard = KeyboardInputManager.getInstance();
-
-
     //TODO: Rethink the use of protected variables
     /**
      * Position of the entity.
@@ -130,14 +122,6 @@ public abstract class Entity {
     }
 
     //GETTERS
-
-    /**
-     * Returns the keyboard manager of the entity.
-     * @return the keyboardmanager
-     */
-    public static KeyboardInputManager getKeyboard() {
-        return keyboard;
-    }
 
     /**
      * Returns the position of the entity.
