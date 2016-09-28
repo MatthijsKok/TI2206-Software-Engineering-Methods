@@ -2,12 +2,10 @@ package util.logging;
 
 import org.junit.Before;
 import org.junit.Test;
-import util.GameCanvasManager;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by dana on 27/09/2016.
@@ -15,9 +13,10 @@ import static org.junit.Assert.assertNotNull;
  */
 public class LoggerTest {
 
+    private static final String LOG_MESSAGE = "hallo hallo, een log berichtje hier.";
+
     private Logger logger;
-    private  LogLevel loglevel;
-    private static ArrayList<LogRecord> logRecords = new ArrayList<>();
+    private ArrayList<LogRecord> logRecords = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -25,31 +24,33 @@ public class LoggerTest {
     }
 
     @Test
-    public void getInstanceTest(){ assertEquals(logger, Logger.getInstance()); }
-
-    @Test
-    public void setLevelTest(){
-        Logger.getInstance().setLevel(loglevel);
-        assertEquals(Logger.getInstance().getLevel(), loglevel );
+    public void getInstanceTest() {
+        assertEquals(logger, Logger.getInstance());
     }
 
     @Test
-    public void fatalTest(){
+    public void setLevelTest() {
+        LogLevel logLevel = LogLevel.DEBUG;
+        logger.setLevel(logLevel);
+        assertEquals(Logger.getInstance().getLevel(), logLevel);
     }
 
     @Test
-    public void errorTest(){
+    public void fatalTest() {
     }
 
     @Test
-    public void warnTest(){
+    public void errorTest() {
     }
 
     @Test
-    public void infoTest(){
-        Logger.getInstance().setLevel(loglevel);
-        //Dit gaat fout. Blijft maar een nullpointer exception geven.
-//        logger.info("test");
+    public void warnTest() {
+    }
+
+    @Test
+    public void infoTest() {
+        logger.setLevel(LogLevel.INFO);
+        logger.info(LOG_MESSAGE);
     }
 
 }
