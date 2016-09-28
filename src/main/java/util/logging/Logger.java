@@ -86,7 +86,7 @@ public final class Logger {
      * Sets the file the logger will write to.
      * @param file The target file.
      */
-    private void setFile(File file) {
+    public void setFile(File file) {
         logFile = file;
     }
 
