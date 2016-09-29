@@ -1,0 +1,35 @@
+{
+  "name": "Level 2",
+  "time": 30,
+
+  "defaultBackgroundImageURI": "backgrounds/background2.png",
+  "defaultBackgroundMusicURI": "",
+
+  "entities": [{
+    "type": "Player",
+    "x": 512,
+    "y": 500,
+    "attributes": {}
+  }, {
+    "type": "Ball",
+    "x": 256,
+    "y": 256,
+    "attributes": {
+      "size": 3
+    }
+  }, {
+    "type": "Ball",
+    "x": 512,
+    "y": 256,
+    "attributes": {
+      "size": 3
+      }
+  }, {
+    "type": "Ball",
+    "x": 224,
+    "y": 256,
+    "attributes": {
+      "size": 3
+    }
+  }]
+}

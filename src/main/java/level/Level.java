@@ -48,7 +48,7 @@ public class Level {
     /**
      * The background image of this level.
      */
-    private Image background;
+    public Image background;
 
     /**
      * The size of the level.
@@ -59,7 +59,7 @@ public class Level {
     /**
      * The entities currently active in the level.
      */
-    private List<Entity> entities = new ArrayList<>();
+    public List<Entity> entities = new ArrayList<>();
 
     /**
      * The entities that will be removed from the level after the update cycle.
