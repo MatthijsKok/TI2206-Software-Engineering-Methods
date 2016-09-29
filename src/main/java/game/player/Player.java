@@ -45,6 +45,20 @@ public class Player implements Observer {
     }
 
     /**
+     * @return The amount of lives the player has left.
+     */
+    public int getLives() {
+        return lives;
+    }
+
+    /**
+     * @return The current score of the player.
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
      * Assigns a character instance to this player.
      * @param character the character to assign.
      */
