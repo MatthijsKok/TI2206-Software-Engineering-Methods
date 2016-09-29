@@ -1,9 +1,10 @@
-package Level;
+package level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.*;
 import entities.Character;
 import game.Game;
+import game.player.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -25,6 +26,13 @@ public class Level {
      * The logger access point to which everything will be logged.
      */
     private static final Logger LOGGER = Logger.getInstance();
+
+    /**
+     * The game instance..
+     */
+    private static final Game GAME = Game.getInstance();
+
+
 
     /**
      * The background image of this level.
@@ -53,11 +61,6 @@ public class Level {
     private List<Entity> entitiesToAdd = new ArrayList<>();
 
     /**
-     * All player instances in the level.
-     */
-    private List<Character> characters;
-
-    /**
      * All ui elements active in the level.
      */
     private List<UIElement> uiElements = new ArrayList<>();
@@ -81,7 +84,6 @@ public class Level {
      */
     public final void start() {
         load();
-        setPlayers();
 
         initUI();
     }
@@ -92,7 +94,6 @@ public class Level {
     public final void restart() {
         unload();
         load();
-        setPlayers();
     }
 
     /**
@@ -127,8 +128,22 @@ public class Level {
         }
 
         // Character
-        addEntity(new Character(384, 500));
-        addEntity(new Character(720, 500));
+        Character character;
+        int characters = 0;
+
+        if (characters < GAME.getPlayerCount()) {
+            character = new Character(720, 500);
+            addEntity(character);
+            GAME.getPlayer(characters).setCharacter(character);
+            characters++;
+        }
+
+        if (characters < GAME.getPlayerCount()) {
+            character = new Character(384, 500);
+            addEntity(character);
+            GAME.getPlayer(characters).setCharacter(character);
+            characters++;
+        }
 
         // Balls
         addEntity(new Ball(new Vec2d(256, 256), 2));
@@ -175,24 +190,6 @@ public class Level {
         LOGGER.trace("Setting Level size to (" + size.x + "," + size.y + ").");
         size.x = width;
         size.y = height;
-    }
-
-    /**
-     * Finds the player objects between all instances and stores them in the
-     * instance list.
-     */
-    private void setPlayers() {
-        LOGGER.trace("Setting characters...");
-        characters = new ArrayList<>();
-        for (Entity entity : entities) {
-            if (entity instanceof Character) {
-                Character character = (Character) entity;
-                LOGGER.trace("Setting player: " + character.toString());
-                Game.getInstance().getPlayer(characters.size()).setCharacter(character);
-                characters.add(character);
-            }
-        }
-        LOGGER.trace("Players set.");
     }
 
     /**
@@ -270,21 +267,6 @@ public class Level {
     }
 
     /**
-     * @param i the index of the player
-     * @return i'th the player in the current level
-     */
-    public final Character getPlayer(final int i) {
-        return characters.get(i);
-    }
-
-    /**
-     * @return a list of all characters in this level
-     */
-    public final List<Character> getCharacters() {
-        return characters;
-    }
-
-    /**
      * @return a list of all entities in the current level.
      */
     public final List<Entity> getEntities() {
@@ -347,8 +329,9 @@ public class Level {
      * @return true if a player died, false otherwise.
      */
     public final boolean lost() {
-        for (Character character : getCharacters()) {
-            if (!character.isAlive()) {
+        for (Player player : GAME.getPlayers()) {
+            Character character = player.getCharacter();
+            if (character != null && !character.isAlive()) {
                 return true;
             }
         }

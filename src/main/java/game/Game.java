@@ -121,6 +121,14 @@ public class Game {
     }
 
     /**
+     * Gets the players in the game.
+     * @return The list of players in the game.
+     */
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    /**
      * Loads and starts the first level.
      */
     public void start() {

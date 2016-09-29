@@ -1,4 +1,4 @@
-package game.Player;
+package game.player;
 
 import util.Config;
 import util.KeyboardInputManager;

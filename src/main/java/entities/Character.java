@@ -1,12 +1,10 @@
 package entities;
 
-import apple.laf.JRSUIConstants;
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import geometry.Rectangle;
 import geometry.Shape;
 import util.Sprite;
-
 
 /**
  * The Character class represents a character.
@@ -56,9 +54,13 @@ public class Character extends Entity {
     private Rectangle shape;
 
     /**
-     * State of the character, indicates which action a character is performing.
+     * Indicates in which direction the character is moving.
      */
     private int direction = 0;
+
+    /**
+     * Indicates whether the character is shooting.
+     */
     private boolean shooting = false;
 
     /**

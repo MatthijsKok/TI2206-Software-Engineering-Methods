@@ -1,4 +1,4 @@
-package game.Player;
+package game.player;
 
 import entities.Character;
 import util.KeyboardInputManager;
@@ -50,6 +50,13 @@ public class Player implements Observer {
      */
     public void setCharacter(Character character) {
         this.character = character;
+    }
+
+    /**
+     * @return The character instance this player controlls.
+     */
+    public Character getCharacter() {
+        return character;
     }
 
     /**
