@@ -12,7 +12,6 @@ public class LevelFactory {
     private static LevelFactory obj = null;
 
     public static void main(String[] args) {
-//        readJSONFile("level1.json");
         parseJSONString("level1.json");
     }
 
