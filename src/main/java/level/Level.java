@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import ui.HUD;
 import ui.UIElement;
+import util.CollisionManager;
 import util.GameCanvasManager;
 import util.logging.Logger;
 
@@ -214,28 +215,8 @@ public class Level {
         addEntities();
 
         LOGGER.debug("Handling collisions...");
-        handleCollisions();
+        CollisionManager.handleCollisions();
         LOGGER.debug("Collisions handled.");
-    }
-
-    /**
-     * Handles collisions between all entities currently in the level.
-     * Both a.collideWith(b) and b.collideWith(a) are called because a
-     * only knows what to do with itself and so does b.
-     */
-    private void handleCollisions() {
-        int n = entities.size();
-        Entity a, b;
-        for (int i = 0; i < n; i++) {
-            a = entities.get(i);
-            for (int j = i + 1; j < n; j++) {
-                b = entities.get(j);
-                if (a.intersects(b)) {
-                    a.collideWith(b);
-                    b.collideWith(a);
-                }
-            }
-        }
     }
 
     /**
