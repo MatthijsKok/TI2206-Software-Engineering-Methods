@@ -109,7 +109,7 @@ public class Level {
      * Loads a level from a file.
      */
     private void load() {
-        LOGGER.debug("Loading Level...");
+        LOGGER.debug("Loading level...");
         // TODO: implement file reading
         // Set level dimensions
         setSize(1024, 608);
@@ -150,7 +150,7 @@ public class Level {
         addEntity(new Ball(new Vec2d(512, 256), 2));
 
         addEntities();
-        LOGGER.debug("Level loaded.");
+        LOGGER.debug("level loaded.");
     }
 
     /**
@@ -187,7 +187,7 @@ public class Level {
      * @param height the height of the level
      */
     public final void setSize(final double width, final double height) {
-        LOGGER.trace("Setting Level size to (" + size.x + "," + size.y + ").");
+        LOGGER.trace("Setting level size to (" + size.x + "," + size.y + ").");
         size.x = width;
         size.y = height;
     }
@@ -242,7 +242,7 @@ public class Level {
      * Draws all entities and UIElements in the current level.
      */
     public final void draw() {
-        LOGGER.debug("Drawing Level...");
+        LOGGER.debug("Drawing level...");
 
         // Draw background
         LOGGER.trace("Drawing background.");
@@ -263,7 +263,7 @@ public class Level {
             uiElement.draw();
         }
         LOGGER.trace("UI elements drawn.");
-        LOGGER.debug("Level drawn.");
+        LOGGER.debug("level drawn.");
     }
 
     /**

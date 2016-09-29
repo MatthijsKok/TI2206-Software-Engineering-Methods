@@ -4,7 +4,7 @@ import util.Config;
 import util.KeyboardInputManager;
 
 /**
- * The factory creating Player objects.
+ * The factory creating player objects.
  */
 public final class PlayerFactory {
 
@@ -13,9 +13,9 @@ public final class PlayerFactory {
     }
 
     /**
-     * Creates a new Player instance with the keyboard mapping corresponding to the id.
+     * Creates a new player instance with the keyboard mapping corresponding to the id.
      * @param id the id of the player.
-     * @return the created Player.
+     * @return the created player.
      */
     public static Player createPlayer(int id) {
         String leftKey, rightKey, shootKey;

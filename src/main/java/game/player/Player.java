@@ -7,7 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * The Player class represents a real life person. It handles input,
+ * The player class represents a real life person. It handles input,
  * scores and lives of one player and controls a Character.
  */
 public class Player implements Observer {
@@ -28,12 +28,12 @@ public class Player implements Observer {
     private int lives = 3;
 
     /**
-     * The character this Player observes. Changes each level.
+     * The character this player observes. Changes each level.
      */
     private Character character = null;
 
     /**
-     * Creates a new Player instance with the keys.
+     * Creates a new player instance with the keys.
      * @param leftKey The keyboard character that makes the player move left.
      * @param rightKey The keyboard character that makes the player move right.
      * @param shootKey The keyboard character that makes the player shoot.
