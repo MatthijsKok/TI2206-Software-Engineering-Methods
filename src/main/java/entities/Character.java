@@ -1,6 +1,5 @@
 package entities;
 
-import apple.laf.JRSUIConstants;
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import geometry.Rectangle;
