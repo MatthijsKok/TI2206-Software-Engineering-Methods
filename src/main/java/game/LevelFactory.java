@@ -1,5 +1,7 @@
 package game;
 import java.io.*;
+import java.util.ArrayList;
+
 import org.json.*;
 
 /**
@@ -10,8 +12,23 @@ public class LevelFactory {
     private static LevelFactory obj = null;
 
     public static void main(String[] args) {
-        readJSONFile("level1.json");
+//        readJSONFile("level1.json");
+        parseJSONString("level1.json");
+    }
 
+    public static void parseJSONString (String filename){
+        filename = readJSONFile(filename);
+
+        JSONObject jObject = new JSONObject(filename);
+        String levelName = jObject.getString("name");
+        int levelTime = jObject.getInt("time");
+        String bgImage = jObject.getString("defaultBackgroundImageURI");
+        String music = jObject.getString("defaultBackgroundMusicURI");
+
+        System.out.println("level name is: "+levelName);
+        System.out.println("time is: "+levelTime);
+        System.out.println("bg is: "+bgImage);
+        System.out.println("music is: "+music);
     }
 
     public static String readJSONFile (String filename) {
