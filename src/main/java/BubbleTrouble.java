@@ -68,4 +68,5 @@ public class BubbleTrouble extends Application {
         stage.show();
         LOGGER.debug("Stage shown.");
     }
+
 }
