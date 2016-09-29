@@ -9,6 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import ui.HUD;
+import ui.MultiPlayerHUD;
+import ui.SinglePlayerHUD;
 import ui.UIElement;
 import util.GameCanvasManager;
 import util.logging.Logger;
@@ -28,11 +30,19 @@ public class Level {
     private static final Logger LOGGER = Logger.getInstance();
 
     /**
-     * The game instance..
+     * The game instance.
      */
     private static final Game GAME = Game.getInstance();
 
+    /**
+     * Duration of the level.
+     */
+    public double duration = 100;
 
+    /**
+     * Time spend on the level.
+     */
+    public double timeSpend = 0;
 
     /**
      * The background image of this level.
@@ -196,7 +206,16 @@ public class Level {
      * Initializes the ui elements in a level.
      */
     private void initUI() {
-        uiElements.add(new HUD());
+        switch (GAME.getPlayerCount()) {
+            case 1:
+                uiElements.add(new SinglePlayerHUD());
+                break;
+            case 2:
+                uiElements.add(new MultiPlayerHUD());
+                break;
+            default:
+                uiElements.add(new HUD());
+        }
     }
 
     /**
@@ -205,6 +224,9 @@ public class Level {
      */
     public final void update(final double dt) {
         LOGGER.debug("Updating Entity's...");
+
+        timeSpend += dt;
+
         for (Entity entity : entities) {
             entity.update(dt);
         }
