@@ -1,11 +1,5 @@
 {
   "name": "Level 1",
-  "size": {
-    "x": 1024,
-    "y": 608
-  },
-
-
   "time": 30,
 
   "defaultBackgroundImageURI": "backgrounds/background1.png",
