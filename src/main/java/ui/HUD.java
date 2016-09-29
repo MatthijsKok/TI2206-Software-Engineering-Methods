@@ -37,7 +37,7 @@ public class HUD extends UIElement {
      */
     public void draw() {
         Canvas canvas = gc().getCanvas();
-        LOGGER.trace("Drawing UI element: " + canvas.toString());
+        LOGGER.trace("Drawing ui element: " + canvas.toString());
         if (Game.getInstance().levelLost()) {
             drawLostScreen(canvas);
         }

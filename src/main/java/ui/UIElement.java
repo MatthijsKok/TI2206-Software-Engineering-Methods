@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import util.GameCanvasManager;
 
 /**
- * Abstract class with functionality used by most UI elements.
+ * Abstract class with functionality used by most ui elements.
  */
 public abstract class UIElement {
     /**

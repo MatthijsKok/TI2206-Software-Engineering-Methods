@@ -255,12 +255,12 @@ public class Level {
         }
         LOGGER.trace("Entities drawn.");
 
-        // Draw UI elements over entities
-        LOGGER.trace("Drawing UI elements...");
+        // Draw ui elements over entities
+        LOGGER.trace("Drawing ui elements...");
         for (UIElement uiElement : uiElements) {
             uiElement.draw();
         }
-        LOGGER.trace("UI elements drawn.");
+        LOGGER.trace("ui elements drawn.");
         LOGGER.debug("Level drawn.");
     }
 
