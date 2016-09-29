@@ -4,13 +4,10 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import util.Config;
 import util.GameCanvasManager;
 import util.KeyboardInputManager;
 import util.logging.LogLevel;
 import util.logging.Logger;
-
-import java.io.IOException;
 
 /**
  * Bubble Trouble is a game written in JavaFX.

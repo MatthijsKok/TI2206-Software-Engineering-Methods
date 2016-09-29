@@ -3,6 +3,7 @@ package game.player;
 import entities.Character;
 import util.KeyboardInputManager;
 
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,6 +12,11 @@ import java.util.Observer;
  * scores and lives of one player and controls a Character.
  */
 public class Player implements Observer {
+
+    /**
+     * The amount of lives the player starts the game with.
+     */
+    private static final int LIVES_AT_START = 3;
 
     /**
      * These Strings represent the keyboard characters this player uses.
@@ -25,7 +31,7 @@ public class Player implements Observer {
     /**
      * Every player starts with 3 lives.
      */
-    private int lives = 3;
+    private int lives = LIVES_AT_START;
 
     /**
      * The character this player observes. Changes each level.
@@ -45,25 +51,14 @@ public class Player implements Observer {
     }
 
     /**
-     * @return The amount of lives the player has left.
-     */
-    public int getLives() {
-        return lives;
-    }
-
-    /**
-     * @return The current score of the player.
-     */
-    public int getScore() {
-        return score;
-    }
-
-    /**
      * Assigns a character instance to this player.
      * @param character the character to assign.
      */
     public void setCharacter(Character character) {
-        this.character = character;
+        if (character != null) {
+            this.character = character;
+            character.addObserver(this);
+        }
     }
 
     /**
@@ -82,6 +77,26 @@ public class Player implements Observer {
         if (character != null && observable instanceof KeyboardInputManager) {
             update((KeyboardInputManager) observable);
         }
+
+        if (observable instanceof Character) {
+            updateFromCharacter((HashMap) obj);
+        }
+
+    }
+
+    /**
+     * Updates the player according to the information in the HashMap the Character supplied.
+     * @param hashMap The hashmap with information about the changed state of the Character object.
+     */
+    private void updateFromCharacter(HashMap hashMap) {
+
+        if (hashMap.get("dead").equals(true)) {
+            if (lives > 0) {
+                lives--;
+            }
+            System.out.println(lives);
+        }
+
     }
 
     /**
@@ -98,5 +113,47 @@ public class Player implements Observer {
         }
 
         character.setShooting(kim.keyPressed(shootKey));
+    }
+
+    /**
+     * @return The amount of lives the player starts with.
+     */
+    public static int getLivesAtStart() {
+        return LIVES_AT_START;
+    }
+
+    /**
+     * @return The amount of lives the player has left.
+     */
+    public int getLives() {
+        return lives;
+    }
+
+    /**
+     * @return The current score of the player.
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * @return The key the player uses to shoot.
+     */
+    public String getShootKey() {
+        return shootKey;
+    }
+
+    /**
+     * @return The key the player uses to move right.
+     */
+    public String getRightKey() {
+        return rightKey;
+    }
+
+    /**
+     * @return The key the player uses to move left.
+     */
+    public String getLeftKey() {
+        return leftKey;
     }
 }

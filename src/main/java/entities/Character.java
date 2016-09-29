@@ -6,6 +6,9 @@ import geometry.Rectangle;
 import geometry.Shape;
 import util.Sprite;
 
+import java.util.HashMap;
+
+
 /**
  * The Character class represents a character.
  */
@@ -54,7 +57,7 @@ public class Character extends Entity {
     private Rectangle shape;
 
     /**
-     * Indicates in which direction the character is moving.
+     * State of the character, indicates which action a character is performing.
      */
     private int direction = 0;
 
@@ -79,17 +82,21 @@ public class Character extends Entity {
         rope = new Rope();
         Game.getInstance().getCurrentLevel().addEntity(rope);
 
-        shape = new Rectangle(
-                runningSprite.getWidth(),
-                runningSprite.getHeight());
+        shape = new Rectangle(runningSprite.getWidth(),
+                              runningSprite.getHeight());
         updatePosition(0);
     }
 
     /**
      * The character dies. Soo sad...
+     * After it dies it tells everybody it has died, but its already dead. How does that even work?
      */
     private void die() {
         alive = false;
+        setChanged();
+        HashMap<String, Boolean> hashMap = new HashMap<>();
+        hashMap.put("dead", !isAlive());
+        notifyObservers(hashMap);
     }
 
     /**
@@ -189,7 +196,7 @@ public class Character extends Entity {
         runningSprite.update(dt);
 
         // Walk
-        speed.x = RUN_SPEED*direction;
+        speed.x = RUN_SPEED * direction;
 
         // Apply gravity
         speed.y += GRAVITY * dt;
