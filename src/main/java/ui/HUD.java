@@ -49,7 +49,7 @@ public class HUD extends UIElement {
     }
 
     private void drawWonScreen(Canvas canvas) {
-        LOGGER.debug("Drawing levelzzz Won Screen...");
+        LOGGER.debug("Drawing level Won Screen...");
         gc().setFill(Color.CORNFLOWERBLUE);
         gc().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc().setFill(Color.WHITE);
@@ -63,11 +63,11 @@ public class HUD extends UIElement {
         gc().fillText("Press R to restart",
                 canvas.getWidth() / 2,
                 canvas.getHeight() / 2 + BIGGER_FONT.getSize());
-        LOGGER.debug("levelzzz Won Screen drawn.");
+        LOGGER.debug("level Won Screen drawn.");
     }
 
     private void drawLostScreen(Canvas canvas) {
-        LOGGER.debug("Drawing levelzzz Lost Screen...");
+        LOGGER.debug("Drawing level Lost Screen...");
         gc().setFill(Color.DARKRED);
         gc().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc().setFill(Color.WHITE);
@@ -81,7 +81,7 @@ public class HUD extends UIElement {
         gc().fillText("Press R to restart",
                 canvas.getWidth() / 2,
                 canvas.getHeight() / 2 + BIGGER_FONT.getSize());
-        LOGGER.debug("levelzzz Lost Screen drawn.");
+        LOGGER.debug("level Lost Screen drawn.");
     }
 
 

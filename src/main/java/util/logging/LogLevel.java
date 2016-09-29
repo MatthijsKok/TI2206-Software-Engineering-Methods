@@ -56,7 +56,7 @@ public final class LogLevel {
     public static final LogLevel TRACE = new LogLevel("TRACE", 500);
 
     /**
-     * The ALL levelzzz has the lowest possible rank and is intended to turn on all logging.
+     * The ALL level has the lowest possible rank and is intended to turn on all logging.
      * Never write logs with this LogLevel.
      */
     public static final LogLevel ALL   = new LogLevel("ALL", Integer.MIN_VALUE);

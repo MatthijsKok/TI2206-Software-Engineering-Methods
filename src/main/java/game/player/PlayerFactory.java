@@ -1,10 +1,10 @@
-package game.playerzzz;
+package game.player;
 
 import util.Config;
 import util.KeyboardInputManager;
 
 /**
- * The factory creating playerzzz objects.
+ * The factory creating player objects.
  */
 public final class PlayerFactory {
 
@@ -13,9 +13,9 @@ public final class PlayerFactory {
     }
 
     /**
-     * Creates a new playerzzz instance with the keyboard mapping corresponding to the id.
+     * Creates a new player instance with the keyboard mapping corresponding to the id.
      * @param id the id of the player.
-     * @return the created playerzzz.
+     * @return the created player.
      */
     public static Player createPlayer(int id) {
         String leftKey, rightKey, shootKey;
