@@ -69,6 +69,11 @@ public class Game {
     private KeyboardInputManager keyboard = KeyboardInputManager.getInstance();
 
     /**
+     * Boolean indicating if the game is in progress.
+     */
+    private boolean inProgress = true;
+
+    /**
      * Creates a new game with a set of levels.
      * @param levelFiles The set of level files to play.
      * @param players Number of players.
@@ -143,26 +148,28 @@ public class Game {
      * Updates the game.
      */
     public void update() {
-        long currentNanoTime = System.nanoTime();
+        if (inProgress) {
+            long currentNanoTime = System.nanoTime();
 
-        //gives the time difference in seconds
-        double dt = Math.min(
-                (currentNanoTime - lastNanoTime) / NANO_SECONDS_IN_SECOND,
-                MAX_FRAME_DURATION);
-        LOGGER.trace("Time difference since last update: " + dt + " seconds.");
+            //gives the time difference in seconds
+            double dt = Math.min(
+                    (currentNanoTime - lastNanoTime) / NANO_SECONDS_IN_SECOND,
+                    MAX_FRAME_DURATION);
+            LOGGER.trace("Time difference since last update: " + dt + " seconds.");
 
-        lastNanoTime = currentNanoTime;
-        currentLevel.update(dt);
+            lastNanoTime = currentNanoTime;
+            currentLevel.update(dt);
 
-        if (keyboard.keyPressed("R")
-                && (levelWon() || levelLost())) {
-            LOGGER.info("Restarting level...");
-            getCurrentLevel().restart();
+            if (keyboard.keyPressed("R")
+                    && (levelWon() || levelLost())) {
+                LOGGER.info("Restarting level...");
+                getCurrentLevel().restart();
+            }
+
+            LOGGER.trace("Writing LogRecords...");
+            LOGGER.writeLogRecords();
+            LOGGER.trace("LogRecords written.");
         }
-
-        LOGGER.trace("Writing LogRecords...");
-        LOGGER.writeLogRecords();
-        LOGGER.trace("LogRecords written.");
     }
 
     /**
@@ -198,5 +205,19 @@ public class Game {
      */
     public boolean levelLost() {
         return getCurrentLevel().lost();
+    }
+
+    /**
+     * Pauses the game.
+     */
+    public void pause() {
+        inProgress = false;
+    }
+
+    /**
+     * Pauses the game.
+     */
+    public void resume() {
+        inProgress = true;
     }
 }
