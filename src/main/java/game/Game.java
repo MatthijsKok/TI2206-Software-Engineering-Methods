@@ -1,8 +1,8 @@
 package game;
 
-import Level.Level;
-import game.Player.Player;
-import game.Player.PlayerFactory;
+import level.Level;
+import game.player.Player;
+import game.player.PlayerFactory;
 import util.KeyboardInputManager;
 import util.logging.Logger;
 
@@ -71,6 +71,7 @@ public class Game {
     /**
      * Creates a new game with a set of levels.
      * @param levelFiles The set of level files to play.
+     * @param players Number of players.
      */
     protected Game(List<String> levelFiles, int players) {
         for (String levelFile : levelFiles) {
@@ -124,9 +125,9 @@ public class Game {
      */
     public void start() {
         currentLevel = levels.get(0);
-        LOGGER.info("Starting Level...");
+        LOGGER.info("Starting level...");
         currentLevel.start();
-        LOGGER.info("Level started.");
+        LOGGER.info("level started.");
         lastNanoTime = System.nanoTime();
     }
 

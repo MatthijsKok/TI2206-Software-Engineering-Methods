@@ -2,7 +2,7 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
-import Level.Level;
+import level.Level;
 import geometry.Circle;
 import geometry.Shape;
 import util.Sprite;
@@ -156,7 +156,7 @@ public class Ball extends Entity {
     }
 
     /**
-     * Removes this ball from the Level and adds two smaller balls on the same
+     * Removes this ball from the level and adds two smaller balls on the same
      * position, moving in different directions. If the ball is already at it's
      * smallest, no new balls will be added.
      */
