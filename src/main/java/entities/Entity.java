@@ -27,7 +27,7 @@ public abstract class Entity {
     /**
      * Position of the entity.
      */
-    protected Vec2d position = new Vec2d(0, 0);
+    public Vec2d position = new Vec2d(0, 0);
 
     /**
      * Speed of the entity.
