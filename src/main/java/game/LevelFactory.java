@@ -1,6 +1,5 @@
 package game;
 import java.io.*;
-import java.util.ArrayList;
 
 import entities.EntityFactory;
 import org.json.*;
@@ -14,7 +13,7 @@ public class LevelFactory {
      * main is temporarly here for testing purposes
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)  throws Exception{
         parseJSONString("level1.json");
     }
 
@@ -22,7 +21,7 @@ public class LevelFactory {
      * Parses a JSONString in level elements
      * @param filename
      */
-    public static void parseJSONString (String filename){
+    public static void parseJSONString (String filename)  throws Exception{
         filename = readJSONFile(filename);
 
         JSONObject jObject = new JSONObject(filename);
@@ -41,7 +40,12 @@ public class LevelFactory {
 
         // entities should be parsed in the EntityFactory
         JSONArray entities = jObject.getJSONArray("entities");
-        EntityFactory.parseJSONString(entities);
+        int n = entities.length();
+        JSONObject entity = null;
+        for (int i = 0; i < n; ++i) {
+            entity = entities.getJSONObject(i);
+            EntityFactory.parseJSONString(entity);
+        }
     }
 
     /**
