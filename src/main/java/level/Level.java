@@ -8,10 +8,6 @@ import game.player.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import ui.HUD;
-import ui.MultiPlayerHUD;
-import ui.SinglePlayerHUD;
-import ui.UIElement;
 import util.CollisionManager;
 import util.GameCanvasManager;
 import util.logging.Logger;
@@ -48,7 +44,22 @@ public class Level {
     /**
      * The background image of this level.
      */
-    private Image background;
+    public Image background;
+
+    /**
+     * Music of the level.
+     */
+    private String music;
+
+    /**
+     * Name of the level
+     */
+    private String levelName;
+
+    /**
+     * Time it takes for the level to end
+     */
+    private int levelTime;
 
     /**
      * The size of the level.
@@ -74,7 +85,7 @@ public class Level {
     /**
      * The file the level is loaded from.
      */
-    private String file;
+    private String filename;
 
     /**
      * Creates a new level instance.
@@ -82,7 +93,7 @@ public class Level {
      * @param uri the file to load the level from.
      */
     public Level(final String uri) {
-        file = uri;
+        filename = uri;
     }
 
     /**
@@ -97,6 +108,10 @@ public class Level {
      * Removes all references to entities in this level.
      */
     public void unload() {
+        for (Player player : Game.getInstance().getPlayers()) {
+            player.clearCharacter();
+        }
+
         entities = new ArrayList<>();
         entitiesToRemove = new ArrayList<>();
         entitiesToAdd = new ArrayList<>();
@@ -106,48 +121,11 @@ public class Level {
      * Loads a level from a file.
      */
     public void load() {
-        LOGGER.debug("Loading level...");
-        // TODO: implement file reading
-        // Set level dimensions
+        LOGGER.debug("Loading Level...");
         setSize(1024, 608);
 
-        // Wall blocks
-        for (int y = 0; y < getHeight(); y += 32) {
-            addEntity(new Wall(0, y));
-            addEntity(new Wall(992, y));
-        }
-
-        // Floor & ceiling blocks
-        for (int x = 0; x < getWidth(); x += 32) {
-            addEntity(new Block(x, 544));    //top floor
-            addEntity(new Block(x, 576));    //lower floor
-            //addEntity(new Block(x, 0));    //ceiling
-        }
-
-        // Character
-        Character character;
-        int characters = 0;
-
-        if (characters < GAME.getPlayerCount()) {
-            character = new Character(720, 500);
-            addEntity(character);
-            GAME.getPlayer(characters).setCharacter(character);
-            characters++;
-        }
-
-        if (characters < GAME.getPlayerCount()) {
-            character = new Character(384, 500);
-            addEntity(character);
-            GAME.getPlayer(characters).setCharacter(character);
-            characters++;
-        }
-
-        // Balls
-        addEntity(new Ball(new Vec2d(256, 256), 2));
-        addEntity(new Ball(new Vec2d(512, 256), 2));
-
+        LevelLoader.load(this);
         addEntities();
-        LOGGER.debug("level loaded.");
     }
 
     /**
@@ -187,6 +165,13 @@ public class Level {
         LOGGER.trace("Setting level size to (" + size.x + "," + size.y + ").");
         size.x = width;
         size.y = height;
+    }
+
+    /**
+     * @return The name of the file this level is loaded from.
+     */
+    final String getFilename() {
+        return filename;
     }
 
     /**

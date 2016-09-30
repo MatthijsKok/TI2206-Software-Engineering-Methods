@@ -36,7 +36,8 @@ public class Game {
     private static Game gameInstance = null;
 
     static {
-        DEFAULT_LEVELS.add("level.txt");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level1.json");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level2.json");
     }
 
     /**
