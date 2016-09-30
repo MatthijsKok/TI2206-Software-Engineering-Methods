@@ -4,7 +4,6 @@ import game.player.Player;
 import game.player.PlayerFactory;
 import level.Level;
 import ui.GameUI;
-import ui.UIElement;
 import util.logging.Logger;
 
 import java.util.ArrayList;
@@ -140,13 +139,6 @@ public class Game {
      */
     public GameState getState() {
         return state;
-    }
-
-    /**
-     * @return Returns the UI elements of this game.
-     */
-    public GameUI getUI() {
-        return ui;
     }
 
     /**

@@ -90,13 +90,13 @@ public class Player implements Observer {
      * @param hashMap The hashmap with information about the changed state of the Character object.
      */
     private void updateFromCharacter(HashMap hashMap) {
-
         if (hashMap.get("dead").equals(true)) {
             if (lives > 0) {
                 lives--;
+                System.out.println(getLives());
+                System.out.println(Game.getInstance().getPlayers());
                 Game.getInstance().getState().pause();
             }
-            System.out.println(lives);
         }
 
     }
