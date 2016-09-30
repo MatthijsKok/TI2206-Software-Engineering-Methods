@@ -4,6 +4,7 @@ import com.sun.javafx.geom.Vec2d;
 import entities.*;
 import entities.Character;
 import game.Game;
+import game.LevelLoader;
 import game.player.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -118,11 +119,15 @@ public class Level {
     /**
      * Loads a level from a file.
      */
-    private void load() {
+    public void load() {
         LOGGER.debug("Loading Level...");
         setSize(1024, 608);
 
-        LevelLoader.parseJSONString("level1.json");
+        try {
+            LevelLoader.parseJSONString("level1.json");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         LOGGER.debug("Level loaded.");
         // Floor & ceiling blocks

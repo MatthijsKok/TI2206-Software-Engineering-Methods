@@ -46,7 +46,7 @@ public class LevelLoader {
         System.out.println("music: " + music);
         System.out.println();
 
-        Level level = new Level(levelName, levelTime, bgImage, music);
+ //       Level level = new Level("JSONLevel.txt")
 
         // entities should be parsed in the EntityFactory
         JSONArray entities = jObject.getJSONArray("entities");
@@ -54,7 +54,7 @@ public class LevelLoader {
         Entity entity;
         for (int i = 0; i < n; ++i) {
             entity = EntityFactory.parseJSONString(entities.getJSONObject(i));
-            level.addEntity(entity);
+ //           level.addEntity(entity);
         }
     }
 
