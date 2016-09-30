@@ -9,8 +9,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import ui.HUD;
-import ui.MultiPlayerHUD;
-import ui.SinglePlayerHUD;
 import ui.UIElement;
 import util.CollisionManager;
 import util.GameCanvasManager;
@@ -51,6 +49,21 @@ public class Level {
     public Image background;
 
     /**
+     * Music of the level.
+     */
+    private String music;
+
+    /**
+     * Name of the level
+     */
+    private String levelName;
+
+    /**
+     * Time it takes for the level to end
+     */
+    private int levelTime;
+
+    /**
      * The size of the level.
      */
 
@@ -59,7 +72,7 @@ public class Level {
     /**
      * The entities currently active in the level.
      */
-    public List<Entity> entities = new ArrayList<>();
+    private List<Entity> entities = new ArrayList<>();
 
     /**
      * The entities that will be removed from the level after the update cycle.
@@ -96,7 +109,7 @@ public class Level {
     /**
      * Removes all references to entities in this level.
      */
-    public void unload() {
+    private void unload() {
         entities = new ArrayList<>();
         entitiesToRemove = new ArrayList<>();
         entitiesToAdd = new ArrayList<>();
@@ -105,18 +118,13 @@ public class Level {
     /**
      * Loads a level from a file.
      */
-    public void load() {
-        LOGGER.debug("Loading level...");
-        // TODO: implement file reading
-        // Set level dimensions
+    private void load() {
+        LOGGER.debug("Loading Level...");
         setSize(1024, 608);
 
-        // Wall blocks
-        for (int y = 0; y < getHeight(); y += 32) {
-            addEntity(new Wall(0, y));
-            addEntity(new Wall(992, y));
-        }
+        LevelLoader.parseJSONString("level1.json");
 
+        LOGGER.debug("Level loaded.");
         // Floor & ceiling blocks
         for (int x = 0; x < getWidth(); x += 32) {
             addEntity(new Block(x, 544));    //top floor
