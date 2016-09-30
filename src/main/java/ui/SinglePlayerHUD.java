@@ -33,7 +33,7 @@ public class SinglePlayerHUD extends HUD {
         int lives = Game.getInstance().getPlayer(0).getLives();
 
         for (int i = 0; i < lives; i++) {
-            HEART.draw(MARGIN.x + SPACE * i, canvas.getHeight() - MARGIN.y);
+            HEART.draw(MARGIN.x + SPACE * i, CANVAS.getHeight() - MARGIN.y);
         }
     }
 }

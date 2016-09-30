@@ -4,9 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
- * The level lost overlay draws the an overlay after a level has been won.
+ * The pause overlay draws the an overlay when the game is paused.
  */
-class LevelWonOverlay extends UIElement {
+class PauseOverlay extends UIElement {
     /**
      * Font size used for bigger text.
      */
@@ -21,17 +21,17 @@ class LevelWonOverlay extends UIElement {
      * Draws the level lost overlay.
      */
     public void draw() {
-        GC.setFill(Color.CORNFLOWERBLUE);
+        GC.setFill(Color.DARKGRAY);
         GC.fillRect(0, 0, CANVAS.getWidth(), CANVAS.getHeight());
         GC.setFill(Color.WHITE);
 
         GC.setFont(BIGGER_FONT);
-        GC.fillText("You won!",
+        GC.fillText("PAUSED...",
                 CANVAS.getWidth() / 2,
                 CANVAS.getHeight() / 2 - BIGGER_FONT.getSize());
 
         GC.setFont(SMALLER_FONT);
-        GC.fillText("Press R to start next level.",
+        GC.fillText("Press P to resume.",
                 CANVAS.getWidth() / 2,
                 CANVAS.getHeight() / 2 + BIGGER_FONT.getSize());
     }

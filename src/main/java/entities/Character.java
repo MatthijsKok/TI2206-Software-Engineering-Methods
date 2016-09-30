@@ -80,7 +80,7 @@ public class Character extends Entity {
 
         // Create rope for the character and add it to the level
         rope = new Rope();
-        Game.getInstance().getCurrentLevel().addEntity(rope);
+        Game.getInstance().getState().getCurrentLevel().addEntity(rope);
 
         shape = new Rectangle(runningSprite.getWidth(),
                               runningSprite.getHeight());

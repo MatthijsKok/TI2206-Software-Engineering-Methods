@@ -4,7 +4,6 @@ import entities.Ball;
 import entities.Character;
 import entities.Rope;
 import util.KeyboardInputManager;
-
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -106,10 +105,10 @@ public class Player implements Observer {
      * @param hashMap The hashmap with information about the changed state of the Character object.
      */
     private void updateFromCharacter(HashMap hashMap) {
-
         if (hashMap.get("dead").equals(true)) {
             if (lives > 0) {
                 lives--;
+                Game.getInstance().getState().pause();
             }
         }
 
