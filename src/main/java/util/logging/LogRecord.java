@@ -10,11 +10,34 @@ import java.time.ZoneId;
  */
 class LogRecord {
 
+    /**
+     * The chosen level of logging. The levels are: fatal, error, warn, info, debug and trace.
+     */
     private final LogLevel logLevel;
+
+    /**
+     * The name of the class the method is from.
+     */
     private final String sourceClassName;
+
+    /**
+     * The name of the method the message is from.
+     */
     private final String sourceMethodName;
+
+    /**
+     * The message of this log record.
+     */
     private final String message;
+
+    /**
+     * The current local time.
+     */
     private final LocalTime localTime;
+
+    /**
+     * The current local date.
+     */
     private final LocalDate localDate;
 
     /**

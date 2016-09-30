@@ -8,9 +8,14 @@ package util.logging;
  */
 public final class LogLevel {
 
-    // Used in the LogRecord output
+    /**
+     * Name of the log level. Used in the LogRecord output.
+     */
     private final String name;
-    // Used in determining if this LogRecord should be logged.
+
+    /**
+     * Value of the log level. Used in determining if this LogRecord should be logged.
+     */
     private final int value;
 
     /**

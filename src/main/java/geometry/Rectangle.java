@@ -142,9 +142,9 @@ public class Rectangle extends Shape {
      * @return whether the rectangle intersects the other rectangle
      */
     private boolean intersects(Rectangle rect) {
-        return (rect.getLeft() < getRight()
+        return rect.getLeft() < getRight()
                 && rect.getRight() > getLeft()
                 && rect.getTop() < getBottom()
-                && rect.getBottom() > getTop());
+                && rect.getBottom() > getTop();
     }
 }

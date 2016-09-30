@@ -1,6 +1,11 @@
 package util.logging;
 
-import java.io.*;
+//import java.io.*;
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 /**
@@ -11,10 +16,20 @@ import java.util.ArrayList;
  */
 public class Logger {
 
+    /**
+     * The file where the log information is stored.
+     */
     private final static File LOG_FILE = new File(System.getProperty("user.home"), "/desktop/log.txt");
-    private static ArrayList<LogRecord> logRecords = new ArrayList<>();
-    private static LogLevel logLevel;
 
+    /**
+     * An arraylist of the log records.
+     */
+    private static ArrayList<LogRecord> logRecords = new ArrayList<>();
+
+    /**
+     * The chosen level of logging. The levels are: fatal, error, warn, info, debug and trace.
+     */
+    private static LogLevel logLevel;
 
     /**
      * This method should only be called at the initialization of the program.

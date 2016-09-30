@@ -1,7 +1,11 @@
 package game;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.*;
+import entities.Ball;
+import entities.Block;
+import entities.Entity;
+import entities.Player;
+import entities.Wall;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
