@@ -1,6 +1,7 @@
 package entities;
 
 import game.LevelFactory;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -8,16 +9,26 @@ import org.json.JSONObject;
  */
 public class EntityFactory {
 
-    public static void main(String[] args) {
-//        readJSONFile("level1.json");
-        parseJSONString("level1.json");
+    public static void parseJSONString (JSONArray entities){
+
+        System.out.println("---- EntityFactory parser: ----");
+
+        final int n = entities.length();
+        for (int i = 0; i < n; ++i) {
+            final JSONObject entitie = entities.getJSONObject(i);
+
+            System.out.println(entitie.getString("type"));
+            System.out.println(entitie.getInt("x"));
+            System.out.println(entitie.getInt("y"));
+
+//            final JSONArray attributes = entitie.getJSONArray("attributes");
+//            final int k = attributes.length();
+//            for (int j = 0; j < k; ++j){
+//                final JSONObject attribute = attributes.getJSONObject(j);
+//
+//                System.out.println("size: "+ entitie.getInt("size"));
+//            }
+            System.out.println();
+        }
     }
-
-    public static void parseJSONString (String filename){
-        filename = LevelFactory.readJSONFile(filename);
-
-        JSONObject jObject = new JSONObject(filename);
-    }
-
-
 }
