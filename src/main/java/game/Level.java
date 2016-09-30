@@ -27,7 +27,22 @@ public class Level {
     /**
      * The background image of this level.
      */
-    public Image background;
+    private Image background;
+
+    /**
+     * Music of the level.
+     */
+    private String music;
+
+    /**
+     * Name of the level
+     */
+    private String levelName;
+
+    /**
+     * Time it takes for the level to end
+     */
+    private int levelTime;
 
     /**
      * The size of the level.
@@ -67,17 +82,18 @@ public class Level {
 
     /**
      * Creates a new level instance.
-     *
-     * @param uri the file to load the level from.
      */
-    public Level(final String uri) {
-        file = uri;
+    public Level(String levelName, int levelTime, Image bgImage, String music) {
+        this.levelName = levelName;
+        this.levelTime = levelTime;
+        this.background = bgImage;
+        this.music = music;
     }
 
     /**
      * Starts the level.
      */
-    public final void start() {
+    public final void start()  throws Exception{
         load();
         setPlayers();
 
@@ -87,7 +103,7 @@ public class Level {
     /**
      * Restarts the level.
      */
-    public final void restart() {
+    public final void restart()  throws Exception{
         unload();
         load();
         setPlayers();
@@ -105,33 +121,36 @@ public class Level {
     /**
      * Loads a level from a file.
      */
-    private void load() {
+    private void load() throws Exception{
         LOGGER.debug("Loading Level...");
-        // TODO: implement file reading
-        // Set level dimensions
-        setSize(1024, 608);
 
-        // Wall blocks
-        for (int y = 0; y < getHeight(); y += 32) {
-            addEntity(new Wall(0, y));
-            addEntity(new Wall(992, y));
-        }
+        LevelLoader.parseJSONString("level1.json");
 
-        // Floor & ceiling blocks
-        for (int x = 0; x < getWidth(); x += 32) {
-            addEntity(new Block(x, 544));    //top floor
-            addEntity(new Block(x, 576));    //lower floor
-            //addEntity(new Block(x, 0));    //ceiling
-        }
-
-        // Player
-        addEntity(new Player(512, 500));
-
-        // Balls
-        addEntity(new Ball(new Vec2d(256, 256), 2));
-        addEntity(new Ball(new Vec2d(512, 256), 2));
-
-        addEntities();
+//        // TODO: implement file reading
+//        // Set level dimensions
+//        setSize(1024, 608);
+//
+//        // Wall blocks
+//        for (int y = 0; y < getHeight(); y += 32) {
+//            addEntity(new Wall(0, y));
+//            addEntity(new Wall(992, y));
+//        }
+//
+//        // Floor & ceiling blocks
+//        for (int x = 0; x < getWidth(); x += 32) {
+//            addEntity(new Block(x, 544));    //top floor
+//            addEntity(new Block(x, 576));    //lower floor
+//            //addEntity(new Block(x, 0));    //ceiling
+//        }
+//
+//        // Player
+//        addEntity(new Player(512, 500));
+//
+//        // Balls
+//        addEntity(new Ball(new Vec2d(256, 256), 2));
+//        addEntity(new Ball(new Vec2d(512, 256), 2));
+//
+//        addEntities();
         LOGGER.debug("Level loaded.");
     }
 
