@@ -283,4 +283,11 @@ public class Character extends Entity {
             runningSprite.draw(position, direction, 1);
         }
     }
+
+    /**
+     * @return The rope of the player.
+     */
+    public Rope getRope() {
+        return rope;
+    }
 }

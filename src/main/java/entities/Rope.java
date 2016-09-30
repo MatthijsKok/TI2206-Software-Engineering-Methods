@@ -130,13 +130,15 @@ public final class Rope extends Entity {
     }
 
     /**
-     * Collision with a ball, the rope should disapear.
+     * Collision with a ball, the rope should disappear and the score should increase.
      *
      * @param ball the ball this rope collides with
      */
     private void collideWith(final Ball ball) {
         if (ball != null) {
             traveling = false;
+            setChanged();
+            notifyObservers(ball);
         }
     }
 
@@ -148,4 +150,6 @@ public final class Rope extends Entity {
             sprite.draw(position, SCALE);
         }
     }
+
+
 }

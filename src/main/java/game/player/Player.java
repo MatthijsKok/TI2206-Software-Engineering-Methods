@@ -1,6 +1,8 @@
 package game.player;
 
+import entities.Ball;
 import entities.Character;
+import entities.Rope;
 import util.KeyboardInputManager;
 
 import java.util.HashMap;
@@ -17,6 +19,11 @@ public class Player implements Observer {
      * The amount of lives the player starts the game with.
      */
     private static final int LIVES_AT_START = 3;
+
+    /**
+     * Score that is multiplied by the size of the ball, and then added to the score.
+     */
+    private static final int BALL_SCORE = 100;
 
     /**
      * These Strings represent the keyboard characters this player uses.
@@ -58,6 +65,7 @@ public class Player implements Observer {
         if (character != null) {
             this.character = character;
             character.addObserver(this);
+            character.getRope().addObserver(this);
         }
     }
 
@@ -82,6 +90,15 @@ public class Player implements Observer {
             updateFromCharacter((HashMap) obj);
         }
 
+        if (observable instanceof Rope) {
+            updateFromRope((Ball) obj);
+        }
+    }
+
+    private void updateFromRope(Ball ball) {
+        int ballSize = ball.getSize();
+        // the smallest balls have size 0
+        score += (ballSize + 1) * BALL_SCORE;
     }
 
     /**
@@ -94,7 +111,6 @@ public class Player implements Observer {
             if (lives > 0) {
                 lives--;
             }
-            System.out.println(lives);
         }
 
     }
