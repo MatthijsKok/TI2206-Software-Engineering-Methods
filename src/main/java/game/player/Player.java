@@ -71,6 +71,13 @@ public class Player implements Observer {
     }
 
     /**
+     * Removes the character instance from this player.
+     */
+    public void clearCharacter() {
+        character = null;
+    }
+
+    /**
      * @return The character instance this player controlls.
      */
     public Character getCharacter() {
