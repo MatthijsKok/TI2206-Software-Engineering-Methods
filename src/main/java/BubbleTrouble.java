@@ -20,6 +20,7 @@ public class BubbleTrouble extends Application {
 
     /**
      * Entry method of the whole game.
+     * Loads the config file and starts the game.
      * @param args optional arguments to start the game with.
      */
     public static void main(final String... args) {
@@ -54,7 +55,7 @@ public class BubbleTrouble extends Application {
                 LOGGER.debug("Game updated.");
 
                 // And redraw
-                LOGGER.debug("Drawin the game...");
+                LOGGER.debug("Drawing the game...");
                 game.draw();
                 LOGGER.debug("Game drawn.");
             }

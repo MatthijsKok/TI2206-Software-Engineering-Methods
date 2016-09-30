@@ -6,115 +6,122 @@ import geometry.Rectangle;
 import geometry.Shape;
 import util.Sprite;
 
+import java.util.HashMap;
+
+
 /**
- * The Player class represents a player.
+ * The Character class represents a character.
  */
-public class Player extends Entity {
+public class Character extends Entity {
 
     /**
-     * The sprite for when a player is standing still.
+     * The sprite for when a character is standing still.
      */
     private static final Sprite IDLE_SPRITE =
             new Sprite("player/idle.png", 1, new Vec2d(8, 32));
 
     /**
-     * The sprite for when a player is running.
+     * The sprite for when a character is running.
      */
     private static final Sprite RUNNING_SPRITE =
             new Sprite("player/running.png", 8, new Vec2d(11, 35));
 
     /**
-     * The running speed of a player. In pixels per second.
+     * The running speed of a character. In pixels per second.
      */
     private static final double RUN_SPEED  = 256; // px/s
 
     /**
-     * The gravity applied to a player. In pixels per second squared.
+     * The gravity applied to a character. In pixels per second squared.
      */
     private static final double GRAVITY    = 300; // px/s^2
 
     /**
-     * Input characters.
-     */
-    private String leftKey, rightKey, shootKey;
-
-    /**
-     * Indicates whether a player is alive or not.
+     * Indicates whether a character is alive or not.
      */
     private boolean alive = true;
 
     /**
-     * Rope of the player.
+     * Rope of the character.
      */
     private Rope rope;
 
     /**
-     * The sprites of the player.
+     * The sprites of the character.
      */
     private Sprite idleSprite, runningSprite;
 
     /**
-     * The bounding box of the player.
+     * The bounding box of the character.
      */
     private Rectangle shape;
 
     /**
-     * Instantiate a new player at position (x, y).
-     * @param x the x position of the player
-     * @param y the y position of the player
+     * State of the character, indicates which action a character is performing.
      */
-    public Player(final double x, final double y) {
+    private int direction = 0;
+
+    /**
+     * Indicates whether the character is shooting.
+     */
+    private boolean shooting = false;
+
+    /**
+     * Instantiate a new character at position (x, y).
+     * @param x the x position of the character
+     * @param y the y position of the character
+     */
+    public Character(final double x, final double y) {
         super(x, y);
 
-        // Set player sprite
-        idleSprite = Player.IDLE_SPRITE.clone();
-        runningSprite = Player.RUNNING_SPRITE.clone();
+        // Set character sprite
+        idleSprite = Character.IDLE_SPRITE.clone();
+        runningSprite = Character.RUNNING_SPRITE.clone();
 
-        // Define player keys
-        leftKey = "LEFT";
-        rightKey = "RIGHT";
-        shootKey = "UP";
-
-        // Create rope for the player and add it to the level
+        // Create rope for the character and add it to the level
         rope = new Rope();
-        Game.getInstance().getCurrentLevel().addEntity(rope);
+        Game.getInstance().getState().getCurrentLevel().addEntity(rope);
 
-        shape = new Rectangle(
-                runningSprite.getWidth(),
-                runningSprite.getHeight());
+        shape = new Rectangle(runningSprite.getWidth(),
+                              runningSprite.getHeight());
         updatePosition(0);
     }
 
     /**
-     * The player dies. Soo sad...
+     * The character dies. Soo sad...
+     * After it dies it tells everybody it has died, but its already dead. How does that even work?
      */
     private void die() {
         alive = false;
+        setChanged();
+        HashMap<String, Boolean> hashMap = new HashMap<>();
+        hashMap.put("dead", !isAlive());
+        notifyObservers(hashMap);
     }
 
     /**
-     * @return whether the player is alive
+     * @return whether the character is alive
      */
     public final boolean isAlive() {
         return alive;
     }
 
     /**
-     * @return the left side of the bounding box of the player.
+     * @return the left side of the bounding box of the character.
      */
     private double getLeft() {
         return shape.getLeft();
     }
 
     /**
-     * @return the right side of the bounding box of the player.
+     * @return the right side of the bounding box of the character.
      */
     private double getRight() {
         return shape.getRight();
     }
 
     /**
-     * Set the left side of the bounding box of the player to equal left.
+     * Set the left side of the bounding box of the character to equal left.
      * @param left the target for the left side of the bounding box.
      */
     private void setLeft(final double left) {
@@ -123,7 +130,7 @@ public class Player extends Entity {
     }
 
     /**
-     * Set the right side of the bounding box of the player to equal right.
+     * Set the right side of the bounding box of the character to equal right.
      * @param right the target for the right side of the bounding box.
      */
     private void setRight(final double right) {
@@ -139,7 +146,7 @@ public class Player extends Entity {
     }
 
     /**
-     * Update the players position and collision shape.
+     * Update the characters position and collision shape.
      * @param dt the time
      */
     private void updatePosition(final double dt) {
@@ -152,28 +159,50 @@ public class Player extends Entity {
     }
 
     /**
-     * Updates the Player object.
+     * Makes the character stop moving.
+     */
+    public void stop() {
+        this.direction = 0;
+    }
+
+    /**
+     * Makes the character move to the left.
+     */
+    public void moveLeft() {
+        this.direction = -1;
+    }
+
+    /**
+     * Makes the character move to the right.
+     */
+    public void moveRight() {
+        this.direction = 1;
+    }
+
+    /**
+     * Makes the player toggle shooting.
+     * @param shooting boolean whether the player is shooting or not.
+     */
+    public void setShooting(boolean shooting) {
+        this.shooting = shooting;
+    }
+
+    /**
+     * Updates the Character object.
      * @param dt The time since the last time the update method was called
      */
     public final void update(final double dt) {
-        // Update the player sprite
+        // Update the character sprite
         runningSprite.update(dt);
 
         // Walk
-        speed.x = 0;
-        if (keyboard.keyPressed(leftKey)) {
-            speed.x -= RUN_SPEED;
-        }
-
-        if (keyboard.keyPressed(rightKey)) {
-            speed.x += RUN_SPEED;
-        }
+        speed.x = RUN_SPEED * direction;
 
         // Apply gravity
         speed.y += GRAVITY * dt;
 
         // Shoot
-        if (keyboard.keyPressed(shootKey)) {
+        if (shooting) {
             rope.shoot(position);
         }
 
@@ -182,7 +211,7 @@ public class Player extends Entity {
     }
 
     /**
-     * @return the player's shape.
+     * @return the character's shape.
      */
     public final Shape getShape() {
         return shape;
@@ -190,7 +219,7 @@ public class Player extends Entity {
 
     /**
      * Entry point for collisions.
-     * @param entity the entity the player collides with
+     * @param entity the entity the character collides with
      */
     public final void collideWith(final Entity entity) {
         if (entity instanceof Ball) {
@@ -207,8 +236,8 @@ public class Player extends Entity {
     }
 
     /**
-     * When a player collides with a ball, the player dies.
-     * @param ball the ball the player collides with
+     * When a character collides with a ball, the character dies.
+     * @param ball the ball the character collides with
      */
     private void collideWith(final Ball ball) {
         if (ball != null) {
@@ -217,9 +246,9 @@ public class Player extends Entity {
     }
 
     /**
-     * If a player collides with a ground block, the player should not sink
+     * If a character collides with a ground block, the character should not sink
      * through it.
-     * @param block the ground block the player collides with
+     * @param block the ground block the character collides with
      */
     private void collideWith(final Block block) {
         position.y = Math.min(position.y, block.getY());
@@ -228,8 +257,8 @@ public class Player extends Entity {
     }
 
     /**
-     * If a player collides with a wall, it should move outside that wall.
-     * @param wall the wall the player collides with
+     * If a character collides with a wall, it should move outside that wall.
+     * @param wall the wall the character collides with
      */
     private void collideWith(final Wall wall) {
         if (getRight() > wall.getLeft() && getRight() < wall.getRight()) {
@@ -244,14 +273,21 @@ public class Player extends Entity {
     }
 
     /**
-     * Draws the running sprite if the player is moving, draws the idle sprite
+     * Draws the running sprite if the character is moving, draws the idle sprite
      * otherwise.
      */
     public final void draw() {
-        if (speed.x == 0) {
+        if (direction == 0) {
             idleSprite.draw(position);
         } else {
-            runningSprite.draw(position, Math.signum(speed.x), 1);
+            runningSprite.draw(position, direction, 1);
         }
+    }
+
+    /**
+     * @return The rope of the player.
+     */
+    public Rope getRope() {
+        return rope;
     }
 }

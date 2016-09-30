@@ -2,27 +2,20 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import geometry.Shape;
-import util.KeyboardInputManager;
 import util.Sprite;
 import util.logging.Logger;
+
+import java.util.Observable;
 
 /**
  * Class containing all the functionality shared by all in-game entities.
  */
-public abstract class Entity {
+public abstract class Entity extends Observable {
 
     /**
      * The logger access point to which everything will be logged.
      */
     private static final util.logging.Logger LOGGER = Logger.getInstance();
-
-    /**
-     * KeyboardInputMangaer object that manages
-     * the keyboard input of the entity.
-     */
-    static KeyboardInputManager
-            keyboard = KeyboardInputManager.getInstance();
-
 
     //TODO: Rethink the use of protected variables
     /**
@@ -102,11 +95,7 @@ public abstract class Entity {
      * @return a boolean indicating if the entity intersects with the other entity
      */
     public boolean intersects(Entity entity) {
-        if (getShape() == null || entity.getShape() == null) {
-            return false;
-        }
-
-        return getShape().intersects(entity.getShape());
+        return !(getShape() == null || entity.getShape() == null) && getShape().intersects(entity.getShape());
     }
 
     /**
@@ -130,14 +119,6 @@ public abstract class Entity {
     }
 
     //GETTERS
-
-    /**
-     * Returns the keyboard manager of the entity.
-     * @return the keyboardmanager
-     */
-    public static KeyboardInputManager getKeyboard() {
-        return keyboard;
-    }
 
     /**
      * Returns the position of the entity.

@@ -1,12 +1,18 @@
-package game;
+package level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.*;
+import entities.Character;
+import game.Game;
+import game.player.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import ui.HUD;
+import ui.MultiPlayerHUD;
+import ui.SinglePlayerHUD;
 import ui.UIElement;
+import util.CollisionManager;
 import util.GameCanvasManager;
 import util.logging.Logger;
 
@@ -15,7 +21,7 @@ import java.util.List;
 
 /**
  * The level class represents a level, which is loaded from a file and consists
- * of players, balls, walls and so on.
+ * of characters, balls, walls and so on.
  */
 public class Level {
 
@@ -23,6 +29,21 @@ public class Level {
      * The logger access point to which everything will be logged.
      */
     private static final Logger LOGGER = Logger.getInstance();
+
+    /**
+     * The game instance.
+     */
+    private static final Game GAME = Game.getInstance();
+
+    /**
+     * Duration of the level.
+     */
+    public double duration = 100;
+
+    /**
+     * Time spend on the level.
+     */
+    public double timeSpend = 0;
 
     /**
      * The background image of this level.
@@ -51,16 +72,6 @@ public class Level {
     private List<Entity> entitiesToAdd = new ArrayList<>();
 
     /**
-     * All player instances in the level.
-     */
-    private List<Player> players;
-
-    /**
-     * All ui elements active in the level.
-     */
-    private List<UIElement> uiElements = new ArrayList<>();
-
-    /**
      * The file the level is loaded from.
      */
     private String file;
@@ -75,28 +86,17 @@ public class Level {
     }
 
     /**
-     * Starts the level.
-     */
-    public final void start() {
-        load();
-        setPlayers();
-
-        initUI();
-    }
-
-    /**
      * Restarts the level.
      */
     public final void restart() {
         unload();
         load();
-        setPlayers();
     }
 
     /**
      * Removes all references to entities in this level.
      */
-    private void unload() {
+    public void unload() {
         entities = new ArrayList<>();
         entitiesToRemove = new ArrayList<>();
         entitiesToAdd = new ArrayList<>();
@@ -105,8 +105,8 @@ public class Level {
     /**
      * Loads a level from a file.
      */
-    private void load() {
-        LOGGER.debug("Loading Level...");
+    public void load() {
+        LOGGER.debug("Loading level...");
         // TODO: implement file reading
         // Set level dimensions
         setSize(1024, 608);
@@ -124,15 +124,30 @@ public class Level {
             //addEntity(new Block(x, 0));    //ceiling
         }
 
-        // Player
-        addEntity(new Player(512, 500));
+        // Character
+        Character character;
+        int characters = 0;
+
+        if (characters < GAME.getPlayerCount()) {
+            character = new Character(720, 500);
+            addEntity(character);
+            GAME.getPlayer(characters).setCharacter(character);
+            characters++;
+        }
+
+        if (characters < GAME.getPlayerCount()) {
+            character = new Character(384, 500);
+            addEntity(character);
+            GAME.getPlayer(characters).setCharacter(character);
+            characters++;
+        }
 
         // Balls
         addEntity(new Ball(new Vec2d(256, 256), 2));
         addEntity(new Ball(new Vec2d(512, 256), 2));
 
         addEntities();
-        LOGGER.debug("Level loaded.");
+        LOGGER.debug("level loaded.");
     }
 
     /**
@@ -169,40 +184,20 @@ public class Level {
      * @param height the height of the level
      */
     public final void setSize(final double width, final double height) {
-        LOGGER.trace("Setting Level size to (" + size.x + "," + size.y + ").");
+        LOGGER.trace("Setting level size to (" + size.x + "," + size.y + ").");
         size.x = width;
         size.y = height;
-    }
-
-    /**
-     * Finds the player objects between all instances and stores them in the
-     * instance list.
-     */
-    private void setPlayers() {
-        LOGGER.trace("Setting players...");
-        players = new ArrayList<>();
-        for (Entity entity : entities) {
-            if (entity instanceof Player) {
-                LOGGER.trace("Setting player: " + entity.toString());
-                players.add((Player) entity);
-            }
-        }
-        LOGGER.trace("Players set.");
-    }
-
-    /**
-     * Initializes the ui elements in a level.
-     */
-    private void initUI() {
-        uiElements.add(new HUD());
     }
 
     /**
      * Updates the state of all entities in the level.
      * @param dt time difference between now and last update
      */
-    final void update(final double dt) {
+    public final void update(final double dt) {
         LOGGER.debug("Updating Entity's...");
+
+        timeSpend += dt;
+
         for (Entity entity : entities) {
             entity.update(dt);
         }
@@ -212,35 +207,15 @@ public class Level {
         addEntities();
 
         LOGGER.debug("Handling collisions...");
-        handleCollisions();
+        CollisionManager.handleCollisions();
         LOGGER.debug("Collisions handled.");
-    }
-
-    /**
-     * Handles collisions between all entities currently in the level.
-     * Both a.collideWith(b) and b.collideWith(a) are called because a
-     * only knows what to do with itself and so does b.
-     */
-    private void handleCollisions() {
-        int n = entities.size();
-        Entity a, b;
-        for (int i = 0; i < n; i++) {
-            a = entities.get(i);
-            for (int j = i + 1; j < n; j++) {
-                b = entities.get(j);
-                if (a.intersects(b)) {
-                    a.collideWith(b);
-                    b.collideWith(a);
-                }
-            }
-        }
     }
 
     /**
      * Draws all entities and UIElements in the current level.
      */
     public final void draw() {
-        LOGGER.debug("Drawing Level...");
+        LOGGER.debug("Drawing level...");
 
         // Draw background
         LOGGER.trace("Drawing background.");
@@ -254,29 +229,6 @@ public class Level {
             entity.draw();
         }
         LOGGER.trace("Entities drawn.");
-
-        // Draw UI elements over entities
-        LOGGER.trace("Drawing UI elements...");
-        for (UIElement uiElement : uiElements) {
-            uiElement.draw();
-        }
-        LOGGER.trace("UI elements drawn.");
-        LOGGER.debug("Level drawn.");
-    }
-
-    /**
-     * @param i the index of the player
-     * @return i'th the player in the current level
-     */
-    public final Player getPlayer(final int i) {
-        return players.get(i);
-    }
-
-    /**
-     * @return a list of all players in this level
-     */
-    public final List<Player> getPlayers() {
-        return players;
     }
 
     /**
@@ -328,7 +280,7 @@ public class Level {
     /**
      * @return true if all balls are destroyed, false otherwise.
      */
-    final boolean won() {
+    public final boolean won() {
         for (Entity entity : entities) {
             if (entity instanceof Ball) {
                 return false;
@@ -341,9 +293,10 @@ public class Level {
     /**
      * @return true if a player died, false otherwise.
      */
-    final boolean lost() {
-        for (Player player : getPlayers()) {
-            if (!player.isAlive()) {
+    public final boolean lost() {
+        for (Player player : GAME.getPlayers()) {
+            Character character = player.getCharacter();
+            if (character != null && !character.isAlive()) {
                 return true;
             }
         }
