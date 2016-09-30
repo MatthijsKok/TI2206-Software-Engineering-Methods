@@ -1,6 +1,7 @@
 package game.player;
 
 import entities.Character;
+import game.Game;
 import util.KeyboardInputManager;
 
 import java.util.HashMap;
@@ -93,6 +94,7 @@ public class Player implements Observer {
         if (hashMap.get("dead").equals(true)) {
             if (lives > 0) {
                 lives--;
+                Game.getInstance().getState().pause();
             }
             System.out.println(lives);
         }

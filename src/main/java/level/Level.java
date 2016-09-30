@@ -72,11 +72,6 @@ public class Level {
     private List<Entity> entitiesToAdd = new ArrayList<>();
 
     /**
-     * All ui elements active in the level.
-     */
-    private List<UIElement> uiElements = new ArrayList<>();
-
-    /**
      * The file the level is loaded from.
      */
     private String file;
@@ -91,15 +86,6 @@ public class Level {
     }
 
     /**
-     * Starts the level.
-     */
-    public final void start() {
-        load();
-
-        initUI();
-    }
-
-    /**
      * Restarts the level.
      */
     public final void restart() {
@@ -110,7 +96,7 @@ public class Level {
     /**
      * Removes all references to entities in this level.
      */
-    private void unload() {
+    public void unload() {
         entities = new ArrayList<>();
         entitiesToRemove = new ArrayList<>();
         entitiesToAdd = new ArrayList<>();
@@ -119,7 +105,7 @@ public class Level {
     /**
      * Loads a level from a file.
      */
-    private void load() {
+    public void load() {
         LOGGER.debug("Loading level...");
         // TODO: implement file reading
         // Set level dimensions
@@ -204,22 +190,6 @@ public class Level {
     }
 
     /**
-     * Initializes the ui elements in a level.
-     */
-    private void initUI() {
-        switch (GAME.getPlayerCount()) {
-            case 1:
-                uiElements.add(new SinglePlayerHUD());
-                break;
-            case 2:
-                uiElements.add(new MultiPlayerHUD());
-                break;
-            default:
-                uiElements.add(new HUD());
-        }
-    }
-
-    /**
      * Updates the state of all entities in the level.
      * @param dt time difference between now and last update
      */
@@ -259,14 +229,6 @@ public class Level {
             entity.draw();
         }
         LOGGER.trace("Entities drawn.");
-
-        // Draw UI elements over entities
-        LOGGER.trace("Drawing UI elements...");
-        for (UIElement uiElement : uiElements) {
-            uiElement.draw();
-        }
-        LOGGER.trace("UI elements drawn.");
-        LOGGER.debug("level drawn.");
     }
 
     /**

@@ -23,7 +23,7 @@ public final class CollisionManager {
      * only knows what to do with itself and so does b.
      */
     public static void handleCollisions() {
-        List<Entity> entities = GAME.getCurrentLevel().getEntities();
+        List<Entity> entities = GAME.getState().getCurrentLevel().getEntities();
         int n = entities.size();
         Entity a, b;
         for (int i = 0; i < n; i++) {

@@ -161,7 +161,7 @@ public class Ball extends Entity {
      * smallest, no new balls will be added.
      */
     private void split() {
-        Level level = Game.getInstance().getCurrentLevel();
+        Level level = Game.getInstance().getState().getCurrentLevel();
 
         if (size > 0) {
             level.addEntity(new Ball(position, getSize() - 1, getColour(),

@@ -11,12 +11,12 @@ public abstract class UIElement {
     /**
      * The graphics context to draw on.
      */
-    protected static final Canvas canvas = GameCanvasManager.getInstance().getCanvas();
+    static final Canvas CANVAS = GameCanvasManager.getInstance().getCanvas();
 
     /**
      * The canvas to draw on.
      */
-    protected static final GraphicsContext gc = GameCanvasManager.getInstance().getContext();
+    static final GraphicsContext GC = GameCanvasManager.getInstance().getContext();
 
     /**
      * Draws the element to the screen.

@@ -29,18 +29,18 @@ public class HUD extends UIElement {
      */
     public void draw() {
         // Outer time bar
-        gc.setFill(Color.BLACK);
-        gc.fillRect(
-                MARGIN, canvas.getHeight() - HEIGHT - MARGIN,
-                canvas.getWidth() - 2 * MARGIN, HEIGHT);
+        GC.setFill(Color.BLACK);
+        GC.fillRect(
+                MARGIN, CANVAS.getHeight() - HEIGHT - MARGIN,
+                CANVAS.getWidth() - 2 * MARGIN, HEIGHT);
 
         // Inner time bar
-        Level level = Game.getInstance().getCurrentLevel();
+        Level level = Game.getInstance().getState().getCurrentLevel();
         double timePart = 1 - level.timeSpend / level.duration;
 
-        gc.setFill(Color.RED);
-        gc.fillRect(
-                MARGIN + PADDING, canvas.getHeight() - HEIGHT - MARGIN + PADDING,
-                (canvas.getWidth() - 2 * (PADDING + MARGIN)) * timePart, HEIGHT - 2 * PADDING);
+        GC.setFill(Color.RED);
+        GC.fillRect(
+                MARGIN + PADDING, CANVAS.getHeight() - HEIGHT - MARGIN + PADDING,
+                (CANVAS.getWidth() - 2 * (PADDING + MARGIN)) * timePart, HEIGHT - 2 * PADDING);
     }
 }
