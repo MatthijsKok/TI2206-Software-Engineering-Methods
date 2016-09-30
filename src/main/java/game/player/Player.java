@@ -3,7 +3,9 @@ package game.player;
 import entities.Ball;
 import entities.Character;
 import entities.Rope;
+import game.Game;
 import util.KeyboardInputManager;
+
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
