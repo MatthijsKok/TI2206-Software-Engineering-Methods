@@ -10,7 +10,6 @@ import static org.mockito.Mockito.mock;
  * Class that tests LogLevel
  */
 public class LogLevelTest {
-    LogLevel mockLogLevel = mock(LogLevel.class);
 
     @Before
     public void setUp(){
