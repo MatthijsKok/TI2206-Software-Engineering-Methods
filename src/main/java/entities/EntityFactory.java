@@ -42,7 +42,7 @@ public final class EntityFactory {
 
     private static Character createCharacter(Vec2d position) {
         for (Player player : Game.getInstance().getPlayers()) {
-            if (player.getCharacter() == null) {
+            if (player.getCharacter() == null && player.getLives() > 0) {
                 Character character = new Character(position.x, position.y);
                 player.setCharacter(character);
                 return character;
@@ -52,7 +52,14 @@ public final class EntityFactory {
     }
 
     private static Ball createBall(Vec2d position, JSONObject attributes) {
-        return new Ball(position, attributes.getInt("size"));
+        int size = attributes.getInt("size");
+
+        if (attributes.has("color")) {
+            Ball.Color color = Ball.getColor(attributes.getString("color"));
+            return new Ball(position, size, color);
+        }
+
+        return new Ball(position, size);
     }
 
     private static Wall createWall(Vec2d position) {

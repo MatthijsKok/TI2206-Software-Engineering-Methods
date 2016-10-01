@@ -140,13 +140,6 @@ public class Player implements Observer {
     }
 
     /**
-     * @return The amount of lives the player starts with.
-     */
-    public static int getLivesAtStart() {
-        return LIVES_AT_START;
-    }
-
-    /**
      * @return The amount of lives the player has left.
      */
     public int getLives() {
@@ -158,26 +151,5 @@ public class Player implements Observer {
      */
     public int getScore() {
         return score;
-    }
-
-    /**
-     * @return The key the player uses to shoot.
-     */
-    public String getShootKey() {
-        return shootKey;
-    }
-
-    /**
-     * @return The key the player uses to move right.
-     */
-    public String getRightKey() {
-        return rightKey;
-    }
-
-    /**
-     * @return The key the player uses to move left.
-     */
-    public String getLeftKey() {
-        return leftKey;
     }
 }

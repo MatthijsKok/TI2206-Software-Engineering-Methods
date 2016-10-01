@@ -140,6 +140,7 @@ public class Level {
 
         LevelLoader.load(this);
         addEntities();
+        timeSpend = 0;
     }
 
     /**

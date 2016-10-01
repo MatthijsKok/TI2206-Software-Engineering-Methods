@@ -7,7 +7,7 @@ import util.Sprite;
 /**
  * Draws a HUD for a game with a single player.
  */
-public class SinglePlayerHUD extends HUD {
+class SinglePlayerHUD extends HUD {
 
     /**
      * The heart sprite.
