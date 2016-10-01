@@ -129,6 +129,15 @@ public class Game {
     }
 
     /**
+     * Gets the game UI.
+     *
+     * @return The ui of the game.
+     */
+    public GameUI getUI() {
+        return ui;
+    }
+
+    /**
      * @return Returns a list of all levels in the game.
      */
     List<Level> getLevels() {

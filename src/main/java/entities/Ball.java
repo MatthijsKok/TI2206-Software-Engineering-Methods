@@ -171,6 +171,18 @@ public class Ball extends Entity {
         }
 
         level.removeEntity(this);
+
+        boolean won = true;
+        for (Entity entity : level.getEntities()) {
+            if (entity instanceof Ball) {
+                won = false;
+                break;
+            }
+        }
+
+        if (won) {
+            level.win();
+        }
     }
 
     /**

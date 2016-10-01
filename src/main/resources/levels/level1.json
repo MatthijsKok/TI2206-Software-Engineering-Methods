@@ -1,6 +1,6 @@
 {
   "name": "Level 1",
-  "duration": 20,
+  "duration": 5,
   "backgroundImageURI": "backgrounds/background1.png",
   "backgroundMusicURI": "",
   "entities": [

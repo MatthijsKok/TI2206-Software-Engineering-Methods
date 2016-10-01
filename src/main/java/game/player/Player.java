@@ -4,6 +4,7 @@ import entities.Ball;
 import entities.Character;
 import entities.Rope;
 import game.Game;
+import game.GameState;
 import util.KeyboardInputManager;
 
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class Player implements Observer {
     /**
      * Score that is multiplied by the size of the ball, and then added to the score.
      */
-    private static final int BALL_SCORE = 100;
+    private static final int SCORE_PER_BALL = 100;
 
     /**
      * These Strings represent the keyboard characters this player uses.
@@ -48,7 +49,8 @@ public class Player implements Observer {
 
     /**
      * Creates a new player instance with the keys.
-     * @param leftKey The keyboard character that makes the player move left.
+     *
+     * @param leftKey  The keyboard character that makes the player move left.
      * @param rightKey The keyboard character that makes the player move right.
      * @param shootKey The keyboard character that makes the player shoot.
      */
@@ -56,18 +58,6 @@ public class Player implements Observer {
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.shootKey = shootKey;
-    }
-
-    /**
-     * Assigns a character instance to this player.
-     * @param character the character to assign.
-     */
-    public void setCharacter(Character character) {
-        if (character != null) {
-            this.character = character;
-            character.addObserver(this);
-            character.getRope().addObserver(this);
-        }
     }
 
     /**
@@ -85,9 +75,23 @@ public class Player implements Observer {
     }
 
     /**
+     * Assigns a character instance to this player.
+     *
+     * @param character the character to assign.
+     */
+    public void setCharacter(Character character) {
+        if (character != null) {
+            this.character = character;
+            character.addObserver(this);
+            character.getRope().addObserver(this);
+        }
+    }
+
+    /**
      * Entry point for observations.
+     *
      * @param observable The observable that is updated.
-     * @param obj The changes that are observed.
+     * @param obj        The changes that are observed.
      */
     public void update(Observable observable, Object obj) {
         if (character != null && observable instanceof KeyboardInputManager) {
@@ -106,18 +110,33 @@ public class Player implements Observer {
     private void updateFromRope(Ball ball) {
         int ballSize = ball.getSize();
         // the smallest balls have size 0
-        score += (ballSize + 1) * BALL_SCORE;
+        score += (ballSize + 1) * SCORE_PER_BALL;
     }
 
     /**
      * Updates the player according to the information in the HashMap the Character supplied.
+     *
      * @param hashMap The hashmap with information about the changed state of the Character object.
      */
     private void updateFromCharacter(HashMap hashMap) {
+        Game game = Game.getInstance();
+
         if (hashMap.get("dead").equals(true)) {
             if (lives > 0) {
                 lives--;
-                Game.getInstance().getState().pause();
+                game.getState().getCurrentLevel().lose();
+            }
+
+            boolean lost = true;
+            for (Player player : game.getPlayers()) {
+                if (player.getLives() > 0) {
+                    lost = false;
+                    break;
+                }
+            }
+
+            if (lost) {
+                game.getState().lose();
             }
         }
 
@@ -125,6 +144,7 @@ public class Player implements Observer {
 
     /**
      * Handles the input and passes it to the character.
+     *
      * @param kim KeyboardInputManager to take input from.
      */
     private void update(KeyboardInputManager kim) {
@@ -144,6 +164,13 @@ public class Player implements Observer {
      */
     public int getLives() {
         return lives;
+    }
+
+    /**
+     * Resets the players lives.
+     */
+    public void resetLives() {
+        lives = LIVES_AT_START;
     }
 
     /**

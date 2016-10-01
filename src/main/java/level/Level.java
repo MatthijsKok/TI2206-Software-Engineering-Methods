@@ -1,10 +1,10 @@
 package level;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.Ball;
 import entities.Character;
 import entities.Entity;
 import game.Game;
+import game.GameState;
 import game.player.Player;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.media.AudioClip;
@@ -105,6 +105,11 @@ public class Level {
     private String filename;
 
     /**
+     * Indicate whether the level is either won, lost or neither.
+     */
+    private boolean won = false, lost = false;
+
+    /**
      * Creates a new level instance.
      *
      * @param uri the file to load the level from.
@@ -141,6 +146,8 @@ public class Level {
         LevelLoader.load(this);
         addEntities();
         timeSpend = 0;
+        won = false;
+        lost = false;
     }
 
     /**
@@ -180,6 +187,12 @@ public class Level {
      * @return a list of all entities in the current level.
      */
     public final List<Entity> getEntities() {
+        List<Entity> entities = new ArrayList<>();
+
+        entities.addAll(this.entities);
+        entities.addAll(entitiesToAdd);
+        entities.removeAll(entitiesToRemove);
+
         return entities;
     }
 
@@ -221,45 +234,6 @@ public class Level {
     private void addEntities() {
         entities.addAll(entitiesToAdd);
         entitiesToAdd = new ArrayList<>();
-    }
-
-    /**
-     * @return true if all balls are destroyed, false otherwise.
-     */
-    public final boolean won() {
-        for (Entity entity : entities) {
-            if (entity instanceof Ball) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @return true if a player died, false otherwise.
-     */
-    public final boolean lost() {
-        for (Player player : Game.getInstance().getPlayers()) {
-            Character character = player.getCharacter();
-            if (character != null && !character.isAlive()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * This method kills each character because the time is up.
-     */
-    private void timeUp() {
-        for (Player player: Game.getInstance().getPlayers()) {
-            Character character = player.getCharacter();
-            if (character != null) {
-                character.die();
-            }
-        }
     }
 
     /**
@@ -362,5 +336,54 @@ public class Level {
      */
     public double getDuration() {
         return duration;
+    }
+
+    /**
+     * @return Boolean indicating whether the level is won.
+     */
+    public boolean isWon() {
+        return won;
+    }
+
+    /**
+     * @return Boolean indicating whether the level is lost.
+     */
+    public boolean isLost() {
+        return lost;
+    }
+
+    /**
+     * Win the level.
+     */
+    public final void win() {
+        GameState gameState = Game.getInstance().getState();
+        gameState.pause();
+        won = true;
+
+        if (!gameState.hasNextLevel()) {
+            gameState.win();
+        }
+    }
+
+    /**
+     * Lose the level.
+     */
+    public final void lose() {
+        Game.getInstance().getState().pause();
+        lost = true;
+    }
+
+    /**
+     * This method kills each character because the time is up.
+     */
+    private void timeUp() {
+        for (Player player: Game.getInstance().getPlayers()) {
+            Character character = player.getCharacter();
+            if (character != null) {
+                character.die();
+            }
+        }
+
+        lose();
     }
 }
