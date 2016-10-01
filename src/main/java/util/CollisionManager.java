@@ -6,7 +6,7 @@ import game.Game;
 import java.util.List;
 
 /**
- * Class used for handling colission between entities.
+ * Class used for handling collision between entities.
  */
 public final class CollisionManager {
 

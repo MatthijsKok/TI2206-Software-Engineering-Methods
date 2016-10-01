@@ -1,15 +1,16 @@
 package level;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.*;
+import entities.Ball;
 import entities.Character;
+import entities.Entity;
 import game.Game;
 import game.player.Player;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.media.AudioClip;
 import util.CollisionManager;
 import util.GameCanvasManager;
+import util.Sprite;
 import util.logging.Logger;
 
 import java.util.ArrayList;
@@ -27,56 +28,72 @@ public class Level {
     private static final Logger LOGGER = Logger.getInstance();
 
     /**
-     * The game instance.
+     * The graphics context to draw on.
      */
-    private static final Game GAME = Game.getInstance();
+    private static final Canvas CANVAS = GameCanvasManager.getInstance().getCanvas();
 
     /**
-     * Duration of the level.
+     * The default size of a level.
      */
-    public double duration = 100;
+    private static final Vec2d DEFAULT_SIZE = new Vec2d(1024, 608);
 
     /**
-     * Time spend on the level.
+     * The default duration of a level.
      */
-    public double timeSpend = 0;
+    private static final double DEFAULT_DURATION = 30;
 
     /**
-     * The background image of this level.
+     * The default background image of a level.
      */
-    public Image background;
+    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("background.jpg");
 
     /**
-     * Music of the level.
+     * The default background music of a level.
      */
-    private String music;
-
-    /**
-     * Name of the level
-     */
-    private String levelName;
-
-    /**
-     * Time it takes for the level to end
-     */
-    private int levelTime;
+    private static final AudioClip DEFAULT_BACKGROUND_MUSIC = null;
 
     /**
      * The size of the level.
      */
+    private Vec2d size = DEFAULT_SIZE;
 
-    private Vec2d size = new Vec2d(0, 0);
+    /**
+     * Duration of the level.
+     */
+    private double duration = DEFAULT_DURATION;
 
+    /**
+     * Name of the level.
+     */
+    private String name = "";
+
+    /**
+     * The background image of this level.
+     */
+    private Sprite backgroundImage = DEFAULT_BACKGROUND_IMAGE;
+
+    /**
+     * The scale at which the background image is drawn.
+     */
+    private double backgroundImageScale = 1;
+
+    /**
+     * Music of the level.
+     */
+    private AudioClip backgroundMusic = DEFAULT_BACKGROUND_MUSIC;
+
+    /**
+     * Time spend on the level.
+     */
+    private double timeSpend = 0;
     /**
      * The entities currently active in the level.
      */
     private List<Entity> entities = new ArrayList<>();
-
     /**
      * The entities that will be removed from the level after the update cycle.
      */
     private List<Entity> entitiesToRemove = new ArrayList<>();
-
     /**
      * The entities that will be added to the level after the update cycle.
      */
@@ -108,9 +125,7 @@ public class Level {
      * Removes all references to entities in this level.
      */
     public void unload() {
-        for (Player player : Game.getInstance().getPlayers()) {
-            player.clearCharacter();
-        }
+        Game.getInstance().getPlayers().forEach(Player::clearCharacter);
 
         entities = new ArrayList<>();
         entitiesToRemove = new ArrayList<>();
@@ -122,7 +137,6 @@ public class Level {
      */
     public void load() {
         LOGGER.debug("Loading Level...");
-        setSize(1024, 608);
 
         LevelLoader.load(this);
         addEntities();
@@ -136,13 +150,6 @@ public class Level {
     }
 
     /**
-     * @param width the width to set the levels width to
-     */
-    public final void setWidth(final double width) {
-        setSize(width, getHeight());
-    }
-
-    /**
      * @return the level height
      */
     public final double getHeight() {
@@ -150,18 +157,12 @@ public class Level {
     }
 
     /**
-     * @param height the height to set the levels height to
-     */
-    public final void setHeight(final double height) {
-        setSize(getWidth(), height);
-    }
-
-    /**
      * Set the level size.
-     * @param width the width of the level
+     *
+     * @param width  the width of the level
      * @param height the height of the level
      */
-    public final void setSize(final double width, final double height) {
+    final void setSize(final double width, final double height) {
         LOGGER.trace("Setting level size to (" + size.x + "," + size.y + ").");
         size.x = width;
         size.y = height;
@@ -175,48 +176,6 @@ public class Level {
     }
 
     /**
-     * Updates the state of all entities in the level.
-     * @param dt time difference between now and last update
-     */
-    public final void update(final double dt) {
-        LOGGER.debug("Updating Entity's...");
-
-        timeSpend += dt;
-
-        for (Entity entity : entities) {
-            entity.update(dt);
-        }
-        LOGGER.debug("Updated Entity's");
-
-        removeEntities();
-        addEntities();
-
-        LOGGER.debug("Handling collisions...");
-        CollisionManager.handleCollisions();
-        LOGGER.debug("Collisions handled.");
-    }
-
-    /**
-     * Draws all entities and UIElements in the current level.
-     */
-    public final void draw() {
-        LOGGER.debug("Drawing level...");
-
-        // Draw background
-        LOGGER.trace("Drawing background.");
-        GraphicsContext gc = GameCanvasManager.getInstance().getContext();
-        gc.setFill(Color.ALICEBLUE);
-        gc.fillRect(0, 0, getWidth(), getHeight());
-
-        // Draw entities
-        LOGGER.trace("Drawing entities...");
-        for (Entity entity : entities) {
-            entity.draw();
-        }
-        LOGGER.trace("Entities drawn.");
-    }
-
-    /**
      * @return a list of all entities in the current level.
      */
     public final List<Entity> getEntities() {
@@ -225,6 +184,7 @@ public class Level {
 
     /**
      * Register that an entity has to be added.
+     *
      * @param e entity to add
      */
     public final void addEntity(final Entity e) {
@@ -279,7 +239,7 @@ public class Level {
      * @return true if a player died, false otherwise.
      */
     public final boolean lost() {
-        for (Player player : GAME.getPlayers()) {
+        for (Player player : Game.getInstance().getPlayers()) {
             Character character = player.getCharacter();
             if (character != null && !character.isAlive()) {
                 return true;
@@ -287,5 +247,119 @@ public class Level {
         }
 
         return false;
+    }
+
+    /**
+     * This method kills each character because the time is up.
+     */
+    private void timeUp() {
+        for (Player player: Game.getInstance().getPlayers()) {
+            Character character = player.getCharacter();
+            if (character != null) {
+                character.die();
+            }
+        }
+    }
+
+    /**
+     * Updates the state of all entities in the level.
+     *
+     * @param dt time difference between now and last update
+     */
+    public final void update(final double dt) {
+        LOGGER.debug("Updating Entity's...");
+
+        timeSpend += dt;
+
+        if (timeSpend > duration) {
+            timeUp();
+        }
+
+        for (Entity entity : entities) {
+            entity.update(dt);
+        }
+
+        LOGGER.debug("Updated Entity's");
+
+        removeEntities();
+        addEntities();
+
+        LOGGER.debug("Handling collisions...");
+        CollisionManager.handleCollisions();
+        LOGGER.debug("Collisions handled.");
+    }
+
+    /**
+     * Draws all entities and UIElements in the current level.
+     */
+    public final void draw() {
+        LOGGER.debug("Drawing level...");
+
+        // Draw background
+        LOGGER.trace("Drawing background.");
+        backgroundImage.draw(CANVAS.getWidth() / 2, CANVAS.getHeight() / 2, backgroundImageScale);
+
+        // Draw entities
+        LOGGER.trace("Drawing entities...");
+        for (Entity entity : entities) {
+            entity.draw();
+        }
+        LOGGER.trace("Entities drawn.");
+    }
+
+    /**
+     * Sets the levels name.
+     * @param name The name of this level.
+     */
+    void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets the levels duration.
+     * @param duration The duration in seconds (must be positive).
+     */
+    void setDuration(double duration) {
+        if (duration > 0) {
+            this.duration = duration;
+        }
+    }
+
+    /**
+     * Sets the levels background image.
+     * @param backgroundImage URI of the image file.
+     */
+    void setBackgroundImage(String backgroundImage) {
+        if (backgroundImage != null && !backgroundImage.equals("")) {
+            this.backgroundImage = new Sprite(backgroundImage);
+            this.backgroundImage.setOffsetToCenter();
+            this.backgroundImageScale = Math.max(
+                    CANVAS.getWidth() / this.backgroundImage.getWidth(),
+                    CANVAS.getHeight() / this.backgroundImage.getHeight());
+        }
+    }
+
+    /**
+     * Sets the levels background music.
+     * @param backgroundMusic The URI of the music file.
+     */
+    void setBackgroundMusic(String backgroundMusic) {
+        if (backgroundMusic != null && !backgroundMusic.equals("")) {
+            this.backgroundMusic = new AudioClip(backgroundMusic);
+        }
+    }
+
+    /**
+     * @return The amount of seconds there is left to complete the level.
+     */
+    public double getTimeLeft() {
+        return duration - timeSpend;
+    }
+
+    /**
+     * @return The total amount of seconds a players has to complete the level.
+     */
+    public double getDuration() {
+        return duration;
     }
 }

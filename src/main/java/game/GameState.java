@@ -24,7 +24,7 @@ public class GameState implements Observer {
     /**
      * The game this instance handles the state for.
      */
-    private final Game game;
+    private Game game;
 
     /**
      * Indicates whether the game is in progress.

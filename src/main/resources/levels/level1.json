@@ -1,8 +1,8 @@
 {
   "name": "Level 1",
-  "time": 30,
-  "defaultBackgroundImageURI": "backgrounds/background1.png",
-  "defaultBackgroundMusicURI": "",
+  "duration": 30,
+  "backgroundImageURI": "backgrounds/background1.png",
+  "backgroundMusicURI": "",
   "entities": [
     {
       "type": "Player",

@@ -36,7 +36,7 @@ public class HUD extends UIElement {
 
         // Inner time bar
         Level level = Game.getInstance().getState().getCurrentLevel();
-        double timePart = 1 - level.timeSpend / level.duration;
+        double timePart = 1 - level.getTimeLeft() / level.getDuration();
 
         GC.setFill(Color.RED);
         GC.fillRect(
