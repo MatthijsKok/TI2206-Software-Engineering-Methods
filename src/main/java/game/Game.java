@@ -43,7 +43,7 @@ public class Game {
     /**
      * The state of the game.
      */
-    private final GameState state;
+    private GameState state;
     /**
      * The UI of the game.
      */
@@ -126,6 +126,15 @@ public class Game {
      */
     public List<Player> getPlayers() {
         return players;
+    }
+
+    /**
+     * Gets the game UI.
+     *
+     * @return The ui of the game.
+     */
+    public GameUI getUI() {
+        return ui;
     }
 
     /**

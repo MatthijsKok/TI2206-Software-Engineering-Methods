@@ -7,7 +7,7 @@ import util.GameCanvasManager;
 /**
  * Abstract class with functionality used by most ui elements.
  */
-public abstract class UIElement {
+abstract class UIElement {
     /**
      * The graphics context to draw on.
      */

@@ -1,10 +1,9 @@
 package entities;
+
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import game.player.Player;
 import org.json.JSONObject;
-
-import java.util.List;
 
 /**
  * The entityFactory class creates entities from JSON objects.
@@ -43,8 +42,7 @@ public final class EntityFactory {
 
     private static Character createCharacter(Vec2d position) {
         for (Player player : Game.getInstance().getPlayers()) {
-            System.out.println(player.getCharacter());
-            if (player.getCharacter() == null) {
+            if (player.getCharacter() == null && player.getLives() > 0) {
                 Character character = new Character(position.x, position.y);
                 player.setCharacter(character);
                 return character;
@@ -53,8 +51,15 @@ public final class EntityFactory {
         return null;
     }
 
-    private static Ball createBall(Vec2d postion, JSONObject attributes) {
-        return new Ball(postion, attributes.getInt("size"));
+    private static Ball createBall(Vec2d position, JSONObject attributes) {
+        int size = attributes.getInt("size");
+
+        if (attributes.has("color")) {
+            Ball.Color color = Ball.getColor(attributes.getString("color"));
+            return new Ball(position, size, color);
+        }
+
+        return new Ball(position, size);
     }
 
     private static Wall createWall(Vec2d position) {

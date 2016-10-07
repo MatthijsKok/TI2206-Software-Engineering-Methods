@@ -91,7 +91,7 @@ public class Character extends Entity {
      * The character dies. Soo sad...
      * After it dies it tells everybody it has died, but its already dead. How does that even work?
      */
-    private void die() {
+    public void die() {
         alive = false;
         setChanged();
         HashMap<String, Boolean> hashMap = new HashMap<>();

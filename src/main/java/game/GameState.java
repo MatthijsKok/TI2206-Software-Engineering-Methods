@@ -1,5 +1,6 @@
 package game;
 
+import game.player.Player;
 import level.Level;
 import util.KeyboardInputManager;
 
@@ -24,7 +25,7 @@ public class GameState implements Observer {
     /**
      * The game this instance handles the state for.
      */
-    private final Game game;
+    private Game game;
 
     /**
      * Indicates whether the game is in progress.
@@ -37,8 +38,13 @@ public class GameState implements Observer {
     private int currentLevel = 0;
 
     /**
+     * Indicate whether the game has been won or lost.
+     */
+    private boolean won = false, lost = false;
+
+    /**
      * Creates a new GameState handler.
-     * @param game The game to handle the gamestate for.
+     * @param game The game to handle the gameState for.
      */
     GameState(Game game) {
         this.game = game;
@@ -63,7 +69,7 @@ public class GameState implements Observer {
     private void updateKeyboardInput(KeyboardInputManager kim) {
         Level level = getCurrentLevel();
 
-        if (!level.won() && !level.lost()) {
+        if (!level.isWon() && !level.isLost()) {
             if (kim.keyPressed(PAUSE_KEY)) {
                 if (inProgress) {
                     pause();
@@ -74,10 +80,13 @@ public class GameState implements Observer {
         }
 
         if (kim.keyPressed(RESTART_KEY)) {
-            if (level.won()) {
+            if (won || lost) {
+                restart();
+                resume();
+            } else if (level.isWon()) {
                 nextLevel();
                 resume();
-            } else if (level.lost()) {
+            } else if (level.isLost()) {
                 level.restart();
                 resume();
             }
@@ -106,14 +115,34 @@ public class GameState implements Observer {
     }
 
     /**
+     * Restart the game.
+     */
+    private void restart() {
+        getCurrentLevel().unload();
+        currentLevel = 0;
+        won = false;
+        lost = false;
+        game.getPlayers().forEach(Player::resetLives);
+        getCurrentLevel().load();
+    }
+
+    /**
      * Progresses to the next level.
      */
     private void nextLevel() {
-        if (currentLevel < game.getLevels().size() - 1) {
-            getCurrentLevel().unload();
+        getCurrentLevel().unload();
+
+        if (hasNextLevel()) {
             currentLevel++;
             getCurrentLevel().load();
         }
+    }
+
+    /**
+     * @return indicates whether the game has a next level.
+     */
+    public boolean hasNextLevel() {
+        return currentLevel < game.getLevels().size() - 1;
     }
 
     /**
@@ -121,5 +150,39 @@ public class GameState implements Observer {
      */
     public Level getCurrentLevel() {
         return game.getLevels().get(currentLevel);
+    }
+
+    /**
+     * Win the game.
+     */
+    public void win() {
+        if (!lost) {
+            won = true;
+        }
+        pause();
+    }
+
+    /**
+     * Lose the game.
+     */
+    public void lose() {
+        if (!won) {
+            lost = true;
+        }
+        pause();
+    }
+
+    /**
+     * @return Boolean indicating whether the game is won.
+     */
+    public boolean isWon() {
+        return won;
+    }
+
+    /**
+     * @return Boolean indicating whether the game is lost.
+     */
+    public boolean isLost() {
+        return lost;
     }
 }

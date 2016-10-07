@@ -4,9 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
- * The level lost overlay draws the an overlay after a level has been lost.
+ * The level time up overlay draws the an overlay after a level has run out of time.
  */
-class LevelLostOverlay extends UIElement {
+class GameWonOverlay extends UIElement {
 
     /**
      * Font size used for bigger text.
@@ -27,12 +27,12 @@ class LevelLostOverlay extends UIElement {
         GC.setFill(Color.WHITE);
 
         GC.setFont(BIGGER_FONT);
-        GC.fillText("You died...",
+        GC.fillText("You beat the last level!",
                 CANVAS.getWidth() / 2,
                 CANVAS.getHeight() / 2 - BIGGER_FONT.getSize());
 
         GC.setFont(SMALLER_FONT);
-        GC.fillText("Press R to restart level",
+        GC.fillText("Press R to restart game",
                 CANVAS.getWidth() / 2,
                 CANVAS.getHeight() / 2 + BIGGER_FONT.getSize());
     }

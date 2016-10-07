@@ -16,9 +16,13 @@ public class GameUI extends UIElement {
     private static final Logger LOGGER = Logger.getInstance();
 
     /**
-     * The game to draw the ui for.
+     * The overlay for when the game is won.
      */
-    private Game game;
+    private GameWonOverlay gameWonOverlay = new GameWonOverlay();
+    /**
+     * The overlay for when the game is lost.
+     */
+    private GameLostOverlay gameLostOverlay = new GameLostOverlay();
     /**
      * The overlay for when a level is won.
      */
@@ -27,6 +31,10 @@ public class GameUI extends UIElement {
      * The overlay for when a level is lost.
      */
     private LevelLostOverlay levelLostOverlay = new LevelLostOverlay();
+    /**
+     * The overlay for when a level is lost by timeout.
+     */
+    private LevelTimeUpOverlay levelTimeUpOverlay = new LevelTimeUpOverlay();
     /**
      * The overlay for when the game is paused.
      */
@@ -42,15 +50,16 @@ public class GameUI extends UIElement {
      * @param game the game to draw the ui for.
      */
     public GameUI(Game game) {
-        this.game = game;
 
-        init();
+        init(game);
     }
 
     /**
      * Initializes the ui elements in a level.
+     *
+     * @param game the game to init the hud for.
      */
-    private void init() {
+    private void init(Game game) {
         switch (game.getPlayerCount()) {
             case 1:
                 hud = new SinglePlayerHUD();
@@ -69,13 +78,21 @@ public class GameUI extends UIElement {
     public void draw() {
         LOGGER.trace("Drawing UI elements...");
 
-        GameState state = game.getState();
+        GameState state = Game.getInstance().getState();
         Level level = state.getCurrentLevel();
 
-        if (level.won()) {
+        if (state.isWon()) {
+            gameWonOverlay.draw();
+        } else if (state.isLost()) {
+            gameLostOverlay.draw();
+        } else if (level.isWon()) {
             levelWonOverlay.draw();
-        } else if (level.lost()) {
-            levelLostOverlay.draw();
+        } else if (level.isLost()) {
+            if (level.getTimeLeft() <= 0) {
+                levelTimeUpOverlay.draw();
+            } else {
+                levelLostOverlay.draw();
+            }
         } else if (state.isInProgress()) {
             hud.draw();
         } else {

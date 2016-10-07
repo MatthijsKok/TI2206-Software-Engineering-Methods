@@ -7,7 +7,7 @@ import level.Level;
 /**
  * HUD is a acronym for Heads Up Display. A common name for the overlay of a game.
  */
-public class HUD extends UIElement {
+class HUD extends UIElement {
 
     /**
      * Height of the time bar.
@@ -36,7 +36,7 @@ public class HUD extends UIElement {
 
         // Inner time bar
         Level level = Game.getInstance().getState().getCurrentLevel();
-        double timePart = 1 - level.timeSpend / level.duration;
+        double timePart = level.getTimeLeft() / level.getDuration();
 
         GC.setFill(Color.RED);
         GC.fillRect(
