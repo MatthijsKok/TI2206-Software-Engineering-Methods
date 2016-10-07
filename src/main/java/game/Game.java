@@ -53,6 +53,10 @@ public class Game {
      */
     private List<Player> players = new ArrayList<>();
     /**
+     * The amount of players in the game.
+     */
+    private static int numberOfPlayers = 1;
+    /**
      * A list containing all the levels in the game.
      */
     private List<Level> levels = new ArrayList<>();
@@ -85,7 +89,7 @@ public class Game {
      */
     public static Game getInstance() {
         if (gameInstance == null) {
-            gameInstance = new Game(DEFAULT_LEVELS, 2);
+            gameInstance = new Game(DEFAULT_LEVELS, numberOfPlayers);
             LOGGER.trace("New game instance created.");
         }
         return gameInstance;
