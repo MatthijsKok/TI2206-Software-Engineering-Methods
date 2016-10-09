@@ -1,11 +1,7 @@
-import game.Game;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import util.GameCanvasManager;
-import util.KeyboardInputManager;
+import menu.BubbleTroubleMenu;
+import util.StageManager;
 import util.logging.LogLevel;
 import util.logging.Logger;
 
@@ -32,42 +28,11 @@ public class BubbleTrouble extends Application {
      * @param stage the window in which the game will be displayed.
      */
     public final void start(final Stage stage) {
-        LOGGER.setLevel(LogLevel.INFO); // Sets the LogLevel of all Loggers.
-        LOGGER.info("LogLevel set to: " + LOGGER.getLevel());
-        stage.setTitle("Bubble Trouble");
-        Group root = new Group();
-        Scene scene = new Scene(root);
+        LOGGER.setLevel(LogLevel.INFO);
+        StageManager.init(stage);
+        LOGGER.info("App started");
 
-        LOGGER.debug("Adding Scene to the Stage.");
-        stage.setScene(scene);
-
-        KeyboardInputManager.getInstance().addScene(scene);
-        root.getChildren().add(GameCanvasManager.getInstance().getCanvas());
-
-        final Game game = Game.getInstance();
-        LOGGER.debug("Created new Game.");
-
-        new AnimationTimer() {
-            public void handle(final long currentNanoTime) {
-                // Update the game
-                LOGGER.debug("Updating the game...");
-                game.update();
-                LOGGER.debug("Game updated.");
-
-                // And redraw
-                LOGGER.debug("Drawing the game...");
-                game.draw();
-                LOGGER.debug("Game drawn.");
-            }
-        }.start();
-
-        LOGGER.debug("Starting Game...");
-        game.start();
-        LOGGER.debug("Game started!");
-
-        LOGGER.debug("Showing Stage...");
-        stage.show();
-        LOGGER.debug("Stage shown.");
+        StageManager.getRoot().getChildren().add(new BubbleTroubleMenu());
     }
 
 }

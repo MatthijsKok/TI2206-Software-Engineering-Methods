@@ -1,3 +1,4 @@
+
 package game;
 
 import game.player.Player;
@@ -42,6 +43,7 @@ public class GameState implements Observer {
      */
     private boolean won = false, lost = false;
 
+
     /**
      * Creates a new GameState handler.
      * @param game The game to handle the gameState for.
@@ -81,8 +83,7 @@ public class GameState implements Observer {
 
         if (kim.keyPressed(RESTART_KEY)) {
             if (won || lost) {
-                restart();
-                resume();
+                game.stop();
             } else if (level.isWon()) {
                 nextLevel();
                 resume();
@@ -118,12 +119,19 @@ public class GameState implements Observer {
      * Restart the game.
      */
     private void restart() {
+        reset();
+        getCurrentLevel().load();
+    }
+
+    /**
+     * Resets the game state.
+     */
+    void reset() {
         getCurrentLevel().unload();
         currentLevel = 0;
         won = false;
         lost = false;
         game.getPlayers().forEach(Player::resetLives);
-        getCurrentLevel().load();
     }
 
     /**

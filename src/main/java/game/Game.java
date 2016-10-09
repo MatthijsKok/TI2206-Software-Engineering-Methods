@@ -2,22 +2,21 @@ package game;
 
 import game.player.Player;
 import game.player.PlayerFactory;
+import javafx.animation.AnimationTimer;
 import level.Level;
 import ui.GameUI;
+import util.GameCanvasManager;
 import util.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A class that handles things on a game related level.
  */
 public class Game {
 
-    /**
-     * The list containing the default level files in the game.
-     */
-    private static final List<String> DEFAULT_LEVELS = new ArrayList<>();
     /**
      * The logger access point to which everything will be logged.
      */
@@ -33,12 +32,7 @@ public class Game {
     /**
      * The one and only instance of the game object.
      */
-    private static Game gameInstance = null;
-
-    static {
-        DEFAULT_LEVELS.add("src/main/resources/levels/level1.json");
-        DEFAULT_LEVELS.add("src/main/resources/levels/level2.json");
-    }
+    private static Game instance = null;
 
     /**
      * The state of the game.
@@ -47,7 +41,7 @@ public class Game {
     /**
      * The UI of the game.
      */
-    private final GameUI ui;
+    private GameUI ui;
     /**
      * A list containing all the players that play the game.
      */
@@ -60,22 +54,17 @@ public class Game {
      * The last time recorded.
      */
     private long lastNanoTime;
+    /**
+     * The timer that handles the main update loop.
+     */
+    private AnimationTimer timer;
 
     /**
-     * Creates a new game with a set of levels.
-     *
-     * @param levelFiles The set of level files to play.
-     * @param players    Number of players.
+     * Creates an empty new game.
      */
-    protected Game(List<String> levelFiles, int players) {
-        createPlayers(players);
-
-        for (String levelFile : levelFiles) {
-            levels.add(new Level(levelFile));
-        }
-
+    public Game() {
         state = new GameState(this);
-        ui = new GameUI(this);
+        setUpAnimationLoop();
     }
 
     /**
@@ -84,22 +73,36 @@ public class Game {
      * @return a Game instance.
      */
     public static Game getInstance() {
-        if (gameInstance == null) {
-            gameInstance = new Game(DEFAULT_LEVELS, 2);
+        if (instance == null) {
+            instance = new Game();
             LOGGER.trace("New game instance created.");
         }
-        return gameInstance;
+        return instance;
+    }
+
+    private void setUpAnimationLoop() {
+        timer = new AnimationTimer() {
+            public void handle(final long currentNanoTime) {
+                update();
+                draw();
+            }
+        };
     }
 
     /**
-     * Creates the players.
+     * Removes the old players and creates new ones.
      *
-     * @param players the amount of players.
+     * @param count the amount of players.
      */
-    private void createPlayers(int players) {
-        for (int i = 0; i < players; i++) {
+    public void setPlayerCount(int count) {
+        players.forEach(Player::clearCharacter);
+        players.clear();
+
+        for (int i = 0; i < count; i++) {
             this.players.add(PlayerFactory.createPlayer(i));
         }
+
+        ui = new GameUI(this);
     }
 
     /**
@@ -129,12 +132,12 @@ public class Game {
     }
 
     /**
-     * Gets the game UI.
-     *
-     * @return The ui of the game.
+     * Creates new levels from a list of level files.
+     * @param levelFiles the list of files to create levels from.
      */
-    public GameUI getUI() {
-        return ui;
+    public void setLevels(List<String> levelFiles) {
+        levels.clear();
+        levels.addAll(levelFiles.stream().map(Level::new).collect(Collectors.toList()));
     }
 
     /**
@@ -157,15 +160,27 @@ public class Game {
     public void start() {
         LOGGER.info("Starting level...");
         state.getCurrentLevel().load();
+        timer.start();
         state.resume();
         LOGGER.info("level started.");
         lastNanoTime = System.nanoTime();
+        GameCanvasManager.getInstance().getCanvas().setVisible(true);
+    }
+
+    /**
+     * Stops the game and returns to the main menu.
+     */
+    void stop() {
+        state.reset();
+        timer.stop();
+        GameCanvasManager.getInstance().getCanvas().setVisible(false);
     }
 
     /**
      * Updates the game.
      */
-    public void update() {
+    private void update() {
+        LOGGER.debug("Updating the game...");
         long currentNanoTime = System.nanoTime();
 
         //gives the time difference in seconds
@@ -180,15 +195,14 @@ public class Game {
             state.getCurrentLevel().update(dt);
         }
 
-        LOGGER.trace("Writing LogRecords...");
         LOGGER.writeLogRecords();
-        LOGGER.trace("LogRecords written.");
     }
 
     /**
      * Draws the current level.
      */
-    public void draw() {
+    private void draw() {
+        LOGGER.debug("Drawing the game...");
         state.getCurrentLevel().draw();
 
         ui.draw();
