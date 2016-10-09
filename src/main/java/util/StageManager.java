@@ -39,7 +39,9 @@ public final class StageManager {
      * Initializes the stage.
      * @param stage the stage instance to initialize for.
      */
-    public static void init(Stage stage) {
+    public static synchronized void init(Stage stage) {
+        if (StageManager.stage != null) { return; }
+
         StageManager.stage = stage;
         root = new Group();
         Scene scene = new Scene(root);

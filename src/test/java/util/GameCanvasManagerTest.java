@@ -1,7 +1,11 @@
 package util;
 
+import javafx.application.Platform;
+import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -9,32 +13,37 @@ import static org.junit.Assert.assertNotNull;
 /**
  * This class tests the GameCanvasManger test.
  */
-public class GameCanvasManagerTest {
+public class GameCanvasManagerTest extends ApplicationTest {
 
-    private GameCanvasManager gcm;
+    private static GameCanvasManager gcm;
+
+    @Override
+    public void start(Stage stage) {
+        StageManager.init(stage);
+    }
 
     @Before
     public void setUp() {
-        gcm = GameCanvasManager.getInstance();
+        Platform.runLater(() -> gcm = GameCanvasManager.getInstance());
     }
 
     @Test
     public void testGetInstance() {
-        assertEquals(gcm, GameCanvasManager.getInstance());
+        Platform.runLater(() -> assertEquals(gcm, GameCanvasManager.getInstance()));
     }
 
     @Test
     public void testGetCanvas() {
-        assertNotNull(gcm.getCanvas());
+        Platform.runLater(() -> assertNotNull(gcm.getCanvas()));
     }
 
     @Test
     public void testGetContext() {
-        assertNotNull(gcm.getContext());
+        Platform.runLater(() -> assertNotNull(gcm.getContext()));
     }
 
     @Test
     public void testContextEqualsCanvasContext() {
-        assertEquals(gcm.getCanvas().getGraphicsContext2D(), gcm.getContext());
+        Platform.runLater(() -> assertEquals(gcm.getCanvas().getGraphicsContext2D(), gcm.getContext()));
     }
 }
