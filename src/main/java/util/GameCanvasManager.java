@@ -2,6 +2,7 @@ package util;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
 
 /**
  * Singleton class which manages the game canvas and makes it available
@@ -13,16 +14,6 @@ public final class GameCanvasManager {
      * The singleton instance of KeyboardInputManager.
      */
     private static GameCanvasManager instance = null;
-
-    /**
-     * The default width of the game canvas.
-     */
-    private static final double DEFAULT_WIDTH = 1024;
-
-    /**
-     * The default height of the game canvas.
-     */
-    private static final double DEFAULT_HEIGHT = 608;
 
     /**
      * The canvas of this game.
@@ -38,8 +29,11 @@ public final class GameCanvasManager {
      * Private constructor to instantiate the singleton class.
      */
     private GameCanvasManager() {
-        canvas = new Canvas(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        Stage stage = StageManager.getStage();
+        canvas = new Canvas(stage.getWidth(), stage.getHeight());
         gc = canvas.getGraphicsContext2D();
+
+        StageManager.getRoot().getChildren().add(canvas);
     }
 
     /**

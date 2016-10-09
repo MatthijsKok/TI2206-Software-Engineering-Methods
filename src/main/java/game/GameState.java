@@ -17,14 +17,7 @@ public class GameState implements Observer {
      * Key which toggles the pause state of the game.
      */
     private static final String PAUSE_KEY = "P";
-    /**
-     * Key which toggles the start of a multi player game.
-     */
-    private static final String STARTMULTIPLAYER_KEY = "M";
-    /**
-     * Key which toggles the start of a single player game.
-     */
-    private static final String STARTSINGLEPLAYER_KEY = "S";
+
     /**
      * Key which restarts the game.
      */
@@ -49,16 +42,6 @@ public class GameState implements Observer {
      * Indicate whether the game has been won or lost.
      */
     private boolean won = false, lost = false;
-
-    /**
-     * Start a single player game.
-     */
-    private boolean startSinglePlayerGame = false;
-
-    /**
-     * Start a multi player game.
-     */
-    private boolean startMultiPlayerGame = false;
 
 
     /**
@@ -88,18 +71,6 @@ public class GameState implements Observer {
     private void updateKeyboardInput(KeyboardInputManager kim) {
         Level level = getCurrentLevel();
 
-        if (!startSinglePlayerGame() && !startMultiPlayerGame()) {
-            if (kim.keyPressed(STARTSINGLEPLAYER_KEY)) {
-                startSinglePlayerGame = true;
-                restart();
-                resume();
-            } else if (kim.keyPressed(STARTMULTIPLAYER_KEY)) {
-                startMultiPlayerGame = true;
-                restart();
-                resume();
-            }
-        }
-
         if (!level.isWon() && !level.isLost()) {
             if (kim.keyPressed(PAUSE_KEY)) {
                 if (inProgress) {
@@ -112,8 +83,7 @@ public class GameState implements Observer {
 
         if (kim.keyPressed(RESTART_KEY)) {
             if (won || lost) {
-                restart();
-                resume();
+                game.stop();
             } else if (level.isWon()) {
                 nextLevel();
                 resume();
@@ -130,20 +100,6 @@ public class GameState implements Observer {
     public boolean isInProgress() {
         return inProgress;
     }
-
-    /**
-     * starts a SinglePlayerGame.
-     * @return a single player game
-     */
-    public boolean startSinglePlayerGame() {
-        return startSinglePlayerGame; }
-
-    /**
-     * starts a MultiPlayerGame.
-     * @return a multi player game
-     */
-    public boolean startMultiPlayerGame() {
-        return startMultiPlayerGame; }
 
     /**
      * Pauses the game.
@@ -163,12 +119,19 @@ public class GameState implements Observer {
      * Restart the game.
      */
     private void restart() {
+        reset();
+        getCurrentLevel().load();
+    }
+
+    /**
+     * Resets the game state.
+     */
+    void reset() {
         getCurrentLevel().unload();
         currentLevel = 0;
         won = false;
         lost = false;
         game.getPlayers().forEach(Player::resetLives);
-        getCurrentLevel().load();
     }
 
     /**

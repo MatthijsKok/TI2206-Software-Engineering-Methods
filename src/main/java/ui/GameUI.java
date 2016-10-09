@@ -40,10 +40,6 @@ public class GameUI extends UIElement {
      */
     private PauseOverlay pauseOverlay = new PauseOverlay();
     /**
-     * The overlay for when the game starts.
-     */
-    private StartMenu startMenu = new StartMenu();
-    /**
      * The hud for when playing the game.
      */
     private HUD hud;
@@ -87,8 +83,6 @@ public class GameUI extends UIElement {
 
         if (state.isWon()) {
             gameWonOverlay.draw();
-        } else if (!state.startSinglePlayerGame() && !state.startMultiPlayerGame()) {
-            startMenu.draw();
         } else if (state.isLost()) {
             gameLostOverlay.draw();
         } else if (level.isWon()) {
