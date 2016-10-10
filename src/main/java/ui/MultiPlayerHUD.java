@@ -2,6 +2,8 @@ package ui;
 
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
+import game.player.Player;
+import javafx.scene.text.TextAlignment;
 import util.Sprite;
 
 /**
@@ -34,18 +36,22 @@ class MultiPlayerHUD extends HUD {
         super.draw();
 
         // Player one lives
-        int lives;
-        lives = Game.getInstance().getPlayer(0).getLives();
+        Player player;
+        player = Game.getInstance().getPlayer(0);
 
-        for (int i = 0; i < lives; i++) {
+        for (int i = 0; i < player.getLives(); i++) {
             HEART.draw(MARGIN.x + SPACE * i, CANVAS.getHeight() - MARGIN.y);
         }
+        GC.fillText(String.valueOf(player.getScore()), MARGIN.x, CANVAS.getHeight() - 2 * MARGIN.y);
 
         // Player two lives
-        lives = Game.getInstance().getPlayer(1).getLives();
+        player = Game.getInstance().getPlayer(1);
 
-        for (int i = 0; i < lives; i++) {
+        for (int i = 0; i < player.getLives(); i++) {
             HEART.draw(CANVAS.getWidth() - (MARGIN.x + SPACE * i), CANVAS.getHeight() - MARGIN.y);
         }
+        GC.setTextAlign(TextAlignment.RIGHT);
+        GC.fillText(String.valueOf(player.getScore()), CANVAS.getWidth() - MARGIN.x, CANVAS.getHeight() - 2 * MARGIN.y);
+        GC.setTextAlign(TextAlignment.LEFT);
     }
 }

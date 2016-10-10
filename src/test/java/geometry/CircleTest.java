@@ -6,7 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by dana on 13/09/2016.
+ * Test suite for the Circle class.
  */
 public class CircleTest {
 
@@ -34,7 +34,7 @@ public class CircleTest {
      */
     @Test
     public void emptyCircle(){
-        Circle circle = new Circle();
+        Circle circle = new Circle(1);
         assertTrue(circle.getRadius()==1);
     }
 
@@ -89,8 +89,8 @@ public class CircleTest {
      */
     @Test
     public void intersectsShape(){
-        Circle circle = new Circle();
-        Shape shape = new Circle();
+        Circle circle = new Circle(1);
+        Shape shape = new Circle(1);
         assertTrue(circle.intersects(shape));
     }
 
@@ -99,8 +99,8 @@ public class CircleTest {
      */
     @Test
     public void intersectsShape2(){
-        Circle circle = new Circle();
-        Shape shape = new Rectangle();
+        Circle circle = new Circle(1);
+        Shape shape = new Rectangle(1, 1);
         assertTrue(circle.intersects(shape));
     }
 
@@ -109,7 +109,7 @@ public class CircleTest {
      */
     @Test
     public void intersectsShape3(){
-        Circle circle = new Circle();
+        Circle circle = new Circle(1);
         Shape shape = new Shape() {
             @Override
             public boolean intersects(Shape shape) {

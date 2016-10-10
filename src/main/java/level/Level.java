@@ -11,6 +11,7 @@ import javafx.scene.media.AudioClip;
 import util.CollisionManager;
 import util.GameCanvasManager;
 import util.Sprite;
+import util.StageManager;
 import util.logging.Logger;
 
 import java.util.ArrayList;
@@ -148,6 +149,12 @@ public class Level {
         timeSpend = 0;
         won = false;
         lost = false;
+
+        StageManager.getStage().setTitle(name);
+
+        if (this.backgroundMusic != null) {
+            this.backgroundMusic.play();
+        }
     }
 
     /**

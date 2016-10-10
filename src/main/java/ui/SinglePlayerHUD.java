@@ -2,6 +2,7 @@ package ui;
 
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
+import game.player.Player;
 import util.Sprite;
 
 /**
@@ -25,15 +26,16 @@ class SinglePlayerHUD extends HUD {
     private static final double SPACE = 48;
 
     /**
-     * Draws amount of lives of the first player.
+     * Draws amount of lives and score of the first player.
      */
     public void draw() {
         super.draw();
 
-        int lives = Game.getInstance().getPlayer(0).getLives();
+        Player player = Game.getInstance().getPlayer(0);
 
-        for (int i = 0; i < lives; i++) {
+        for (int i = 0; i < player.getLives(); i++) {
             HEART.draw(MARGIN.x + SPACE * i, CANVAS.getHeight() - MARGIN.y);
         }
+        GC.fillText(String.valueOf(player.getScore()), MARGIN.x, CANVAS.getHeight() - 2 * MARGIN.y);
     }
 }

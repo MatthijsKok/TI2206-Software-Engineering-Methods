@@ -13,13 +13,6 @@ public class Rectangle extends Shape {
     private Vec2d size, offset;
 
     /**
-     * Creates a new rectangle at position (0, 0) with size (1, 1).
-     */
-    public Rectangle() {
-        this(1, 1);
-    }
-
-    /**
      * Creates a new rectangle at position (0, 0) with size (width, height).
      * @param width rectangle width
      * @param height rectangle height
@@ -35,7 +28,7 @@ public class Rectangle extends Shape {
      * @param width width
      * @param height height
      */
-    public Rectangle(final double x, final double y, final double width, final double height) {
+    private Rectangle(final double x, final double y, final double width, final double height) {
         super(x, y);
         setOffset(0, 0);
         setSize(width, height);
@@ -47,7 +40,7 @@ public class Rectangle extends Shape {
      * @param width target width
      * @param height target height
      */
-    public void setSize(double width, double height) {
+    private void setSize(double width, double height) {
         setSize(new Vec2d(width, height));
     }
 
@@ -79,7 +72,7 @@ public class Rectangle extends Shape {
      * @param x x coordinate
      * @param y y coordinate
      */
-    public void setOffset(double x, double y) {
+    void setOffset(double x, double y) {
         setOffset(new Vec2d(x, y));
     }
 
@@ -87,7 +80,7 @@ public class Rectangle extends Shape {
      * Sets the rectangle offset.
      * @param offset target offset
      */
-    public void setOffset(Vec2d offset) {
+    private void setOffset(Vec2d offset) {
         this.offset = offset;
     }
 
@@ -101,7 +94,7 @@ public class Rectangle extends Shape {
     /**
      * @return top most y coordinate.
      */
-    public double getTop() {
+    double getTop() {
         return getY() - offset.y;
     }
 
@@ -115,7 +108,7 @@ public class Rectangle extends Shape {
     /**
      * @return bottom most y coordinate.
      */
-    public double getBottom() {
+    double getBottom() {
         return getY() + size.y - offset.y;
     }
 
@@ -129,11 +122,7 @@ public class Rectangle extends Shape {
             return intersects((Rectangle) shape);
         }
 
-        if (shape instanceof Circle) {
-            return ((Circle) shape).intersects(this);
-        }
-
-        return false;
+        return shape instanceof Circle && shape.intersects(this);
     }
 
     /**
@@ -142,9 +131,9 @@ public class Rectangle extends Shape {
      * @return whether the rectangle intersects the other rectangle
      */
     private boolean intersects(Rectangle rect) {
-        return (rect.getLeft() < getRight()
+        return rect.getLeft() < getRight()
                 && rect.getRight() > getLeft()
                 && rect.getTop() < getBottom()
-                && rect.getBottom() > getTop());
+                && rect.getBottom() > getTop();
     }
 }
