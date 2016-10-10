@@ -39,7 +39,7 @@ public final class Rope extends Entity {
     /**
      * Creates a new rope at position (0,0).
      */
-    public Rope() {
+    Rope() {
         this(0, 0);
     }
 
@@ -49,7 +49,7 @@ public final class Rope extends Entity {
      * @param x the x postiton of the rope
      * @param y the y position of the rope
      */
-    public Rope(final double x, final double y) {
+    private Rope(final double x, final double y) {
         super(x, y);
         // Set sprite
         setSprite();
@@ -62,7 +62,7 @@ public final class Rope extends Entity {
      */
     private void setSprite() {
         sprite = SPRITE.clone();
-        sprite.setOffset(0.5 * sprite.getWidth(), 0);
+        sprite.setOffset(sprite.getWidth() / 2, 0);
     }
 
     /**
@@ -79,7 +79,7 @@ public final class Rope extends Entity {
      *
      * @param position The position where the rope will be spawned.
      */
-    public void shoot(final Vec2d position) {
+    void shoot(final Vec2d position) {
         if (!traveling) {
             traveling = true;
             setPosition(position);

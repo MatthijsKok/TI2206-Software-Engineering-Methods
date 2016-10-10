@@ -6,13 +6,22 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Utility class that parses JSON strings and files.
  */
-public class JSONParser {
+public final class JSONParser {
 
+    private JSONParser() {
 
+    }
+
+    /**
+     * Takes the name of a JSON file and returns the content as a JSON object.
+     * @param filename The name of the file to read.
+     * @return The JSONObject resulting from the file content.
+     */
     public static JSONObject parseJSONFile(String filename) {
         return new JSONObject(fileToString(filename));
     }
@@ -29,7 +38,7 @@ public class JSONParser {
                 line = bufferedReader.readLine();
             }
             result = stringBuilder.toString();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

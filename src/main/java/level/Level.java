@@ -151,6 +151,10 @@ public class Level {
         lost = false;
 
         StageManager.getStage().setTitle(name);
+
+        if (this.backgroundMusic != null) {
+            this.backgroundMusic.play();
+        }
     }
 
     /**

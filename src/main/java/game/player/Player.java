@@ -4,7 +4,6 @@ import entities.Ball;
 import entities.Character;
 import entities.Rope;
 import game.Game;
-import game.GameState;
 import util.KeyboardInputManager;
 
 import java.util.HashMap;

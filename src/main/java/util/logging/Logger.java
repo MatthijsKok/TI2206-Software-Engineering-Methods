@@ -24,7 +24,9 @@ public final class Logger {
     /**
      * The File in which all logging shall take place this run of the program.
      */
-    private static final File LOG_FILE = new File("docs/logs/BubbleTrouble Log " + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".log");
+    private static final File LOG_FILE = new File(
+            "docs/logs/BubbleTrouble Log "
+                    + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".log");
 
     /**
      * An ArrayList which holds all LogRecord's that haven't been written to file.
@@ -85,7 +87,12 @@ public final class Logger {
      */
     private void log(LogLevel logLevel, String message) {
         if (message != null && logLevel.getValue() >= Logger.logLevel.getValue()) {
-            logRecords.add(new LogRecord(logLevel, getCallerClassName(), getCallerMethodName(), message, System.currentTimeMillis()));
+            logRecords.add(new LogRecord(
+                    logLevel,
+                    getCallerClassName(),
+                    getCallerMethodName(),
+                    message,
+                    System.currentTimeMillis()));
         }
     }
 
@@ -100,7 +107,8 @@ public final class Logger {
 
     /**
      * Logs an ERROR message.
-     * The ERROR LogLevel designates error events that might still allow the application to continue running.
+     * The ERROR LogLevel designates error events that might still allow
+     * the application to continue running.
      * @param message The String message to be logged.
      */
     public void error(String message) {
@@ -118,7 +126,8 @@ public final class Logger {
 
     /**
      * Logs an INFO message.
-     * The INFO LogLevel designates informational messages that highlight the progress of the application at coarse-grained level.
+     * The INFO LogLevel designates informational messages that highlight
+     * the progress of the application at coarse-grained level.
      * @param message The String message to be logged.
      */
     public void info(String message) {
@@ -127,7 +136,8 @@ public final class Logger {
 
     /**
      * Logs a DEBUG message.
-     * The DEBUG LogLevel designates fine-grained informational events that are most useful to debug an application.
+     * The DEBUG LogLevel designates fine-grained informational events
+     * that are most useful to debug an application.
      * @param message The String message to be logged.
      */
     public void debug(String message) {
@@ -136,7 +146,8 @@ public final class Logger {
 
     /**
      * Logs a TRACE message.
-     * The TRACE LogLevel designates finer-grained informational events than the DEBUG LogLevel.
+     * The TRACE LogLevel designates finer-grained informational events
+     * than the DEBUG LogLevel.
      * Mostly used in loops.
      * @param message The String message to be logged.
      */

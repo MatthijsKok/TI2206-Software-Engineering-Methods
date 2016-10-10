@@ -1,6 +1,5 @@
 package util;
 
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import org.junit.Before;
 import org.junit.Test;

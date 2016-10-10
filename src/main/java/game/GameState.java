@@ -115,13 +115,6 @@ public class GameState implements Observer {
         inProgress = true;
     }
 
-    /**
-     * Restart the game.
-     */
-    private void restart() {
-        reset();
-        getCurrentLevel().load();
-    }
 
     /**
      * Resets the game state.

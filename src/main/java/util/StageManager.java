@@ -40,7 +40,9 @@ public final class StageManager {
      * @param stage the stage instance to initialize for.
      */
     public static synchronized void init(Stage stage) {
-        if (StageManager.stage != null) { return; }
+        if (StageManager.stage != null) {
+            return;
+        }
 
         StageManager.stage = stage;
         root = new Group();
