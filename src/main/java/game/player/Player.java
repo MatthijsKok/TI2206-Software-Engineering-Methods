@@ -2,7 +2,7 @@ package game.player;
 
 import entities.Ball;
 import entities.Character;
-import entities.Rope;
+import entities.Harpoon;
 import game.Game;
 import util.KeyboardInputManager;
 
@@ -82,7 +82,7 @@ public class Player implements Observer {
         if (character != null) {
             this.character = character;
             character.addObserver(this);
-            character.getRope().addObserver(this);
+            character.getHarpoon().addObserver(this);
         }
     }
 
@@ -101,7 +101,7 @@ public class Player implements Observer {
             updateFromCharacter((HashMap) obj);
         }
 
-        if (observable instanceof Rope) {
+        if (observable instanceof Harpoon) {
             updateFromRope((Ball) obj);
         }
     }

@@ -20,7 +20,7 @@ public final class EntityFactory {
      * @param entity JSONObject representing the entity.
      * @return The created entity.
      */
-    public static Entity createEntity(JSONObject entity) {
+    public static AbstractEntity createEntity(JSONObject entity) {
         String type = entity.getString("type");
         double x = entity.getDouble("x");
         double y = entity.getDouble("y");
@@ -33,7 +33,7 @@ public final class EntityFactory {
                 return createBall(position, entity.getJSONObject("attributes"));
             case "Wall":
                 return createWall(position);
-            case "Block":
+            case "Floor":
                 return createBlock(position);
             default:
                 return null;
@@ -43,7 +43,7 @@ public final class EntityFactory {
     private static Character createCharacter(Vec2d position) {
         for (Player player : Game.getInstance().getPlayers()) {
             if (player.getCharacter() == null && player.getLives() > 0) {
-                Character character = new Character(position.x, position.y);
+                Character character = new Character(position);
                 player.setCharacter(character);
                 return character;
             }
@@ -62,11 +62,11 @@ public final class EntityFactory {
         return new Ball(position, size);
     }
 
-    private static Wall createWall(Vec2d position) {
-        return new Wall(position.x, position.y);
+    private static WallBlock createWall(Vec2d position) {
+        return new WallBlock(position);
     }
 
-    private static Block createBlock(Vec2d position) {
-        return new Block(position.x, position.y);
+    private static FloorBlock createBlock(Vec2d position) {
+        return new FloorBlock(position);
     }
 }

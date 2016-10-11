@@ -19,6 +19,14 @@ public class Circle extends Shape {
     }
 
     /**
+     * Creates a new Circle with the same dimensions as the original.
+     * @param circle the circle to copy.
+     */
+    public Circle(Circle circle) {
+        this(circle.getX(), circle.getY(), circle.getRadius());
+    }
+
+    /**
      * Create a new circle at position (x, y) with radius radius.
      * @param x x coordinate
      * @param y y coordinate

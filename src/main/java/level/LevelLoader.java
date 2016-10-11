@@ -1,6 +1,6 @@
 package level;
 
-import entities.Entity;
+import entities.AbstractEntity;
 import entities.EntityFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -58,7 +58,7 @@ final class LevelLoader {
         for (Object obj : entities) {
             JSONObject json = (JSONObject) obj;
 
-            Entity entity = EntityFactory.createEntity(json);
+            AbstractEntity entity = EntityFactory.createEntity(json);
 
             if (entity != null) {
                 level.addEntity(entity);
