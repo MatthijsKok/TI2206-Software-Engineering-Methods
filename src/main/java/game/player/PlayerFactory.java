@@ -38,7 +38,7 @@ public final class PlayerFactory {
                 break;
         }
 
-        Player player = new Player(leftKey, rightKey, shootKey);
+        Player player = new Player(id, leftKey, rightKey, shootKey);
 
         KeyboardInputManager.getInstance().addObserver(player);
 
