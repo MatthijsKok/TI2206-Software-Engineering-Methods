@@ -50,7 +50,6 @@
                 <executions>
                     <execution>
                         <configuration>
-                            <targetDirectory>pmd-rules.xml</targetDirectory>
                             <verbose>true</verbose>
                         </configuration>
                         <goals>
