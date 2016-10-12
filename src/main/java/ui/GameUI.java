@@ -2,6 +2,8 @@ package ui;
 
 import game.Game;
 import game.GameState;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import level.Level;
 import util.logging.Logger;
 
@@ -74,29 +76,31 @@ public class GameUI extends UIElement {
 
     /**
      * Draws all ui elements in the game.
+     * @param canvas The Canvas to draw on
+     * @param graphicsContext The GraphicsContext to draw on
      */
-    public void draw() {
+    public void draw(Canvas canvas, GraphicsContext graphicsContext) {
         LOGGER.trace("Drawing UI elements...");
 
-        GameState state = Game.getInstance().getState();
-        Level level = state.getCurrentLevel();
+        final GameState state = Game.getInstance().getState();
+        final Level level = state.getCurrentLevel();
 
         if (state.isWon()) {
-            gameWonOverlay.draw();
+            gameWonOverlay.draw(canvas, graphicsContext);
         } else if (state.isLost()) {
-            gameLostOverlay.draw();
+            gameLostOverlay.draw(canvas, graphicsContext);
         } else if (level.isWon()) {
-            levelWonOverlay.draw();
+            levelWonOverlay.draw(canvas, graphicsContext);
         } else if (level.isLost()) {
             if (level.getTimeLeft() <= 0) {
-                levelTimeUpOverlay.draw();
+                levelTimeUpOverlay.draw(canvas, graphicsContext);
             } else {
-                levelLostOverlay.draw();
+                levelLostOverlay.draw(canvas, graphicsContext);
             }
         } else if (state.isInProgress()) {
-            hud.draw();
+            hud.draw(canvas, graphicsContext);
         } else {
-            pauseOverlay.draw();
+            pauseOverlay.draw(canvas, graphicsContext);
         }
 
         LOGGER.trace("UI elements drawn.");

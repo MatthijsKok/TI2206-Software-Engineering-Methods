@@ -5,7 +5,7 @@ import game.Game;
 import geometry.Rectangle;
 import level.Level;
 import geometry.Circle;
-import util.Sprite;
+import graphics.Sprite;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -137,6 +137,14 @@ public class Ball extends AbstractEntity {
     }
 
     /**
+     * Gets the ball's radius.
+     * @return The radius of the ball.
+     */
+    double getRadius() {
+        return radius;
+    }
+
+    /**
      * Sets the ball color. Method only used internally.
      * @param color One color from Ball.Color.
      */
@@ -149,7 +157,7 @@ public class Ball extends AbstractEntity {
      * Gets the ball color.
      * @return Enum with options BLUE, GREEN, ORANGE, PURPLE, RED and YELLOW.
      */
-    private Color getColor() {
+    Color getColor() {
         return color;
     }
 
@@ -169,19 +177,8 @@ public class Ball extends AbstractEntity {
         }
 
         level.removeEntity(this);
-
-        boolean won = true;
-        for (AbstractEntity entity : level.getEntities()) {
-            if (entity instanceof Ball) {
-                won = false;
-                break;
-            }
-        }
-
-        if (won) {
-            level.win();
-        }
     }
+
     /**
      * Set the vertical speed to up at the speed for that balls bounce height.
      */
@@ -194,7 +191,6 @@ public class Ball extends AbstractEntity {
      * @param dt Time difference from previous update in seconds.
      */
     public void update(double dt) {
-        // Apply gravity
         getSpeed().y += GRAVITY * dt;
     }
 
@@ -215,7 +211,7 @@ public class Ball extends AbstractEntity {
         }
 
         if (entity instanceof Harpoon) {
-            collideWith((Harpoon) entity);
+            collideWithHarpoon();
         }
     }
 
@@ -255,12 +251,9 @@ public class Ball extends AbstractEntity {
 
     /**
      * The behaviour of the Ball when it collides with a Harpoon AbstractEntity.
-     * @param harpoon The Harpoon AbstractEntity this Ball collides with.
      */
-    private void collideWith(Harpoon harpoon) {
-        if (harpoon != null) {
-            split();
-        }
+    private void collideWithHarpoon() {
+        split();
     }
 
     /**
@@ -268,14 +261,14 @@ public class Ball extends AbstractEntity {
      * on the ball size.
      */
     public void draw() {
-        getSprite().draw(getPosition(), radius * 2 / getSprite().getWidth());
+        getSprite().draw(getPosition(), getRadius() * 2 / getSprite().getWidth());
     }
 
     /**
      * Picks a random Color from the Ball.Color options and returns it.
      * @return a random Ball.Color.
      */
-    private static Color randomColor() {
+    static Color randomColor() {
         Color[] values = Color.values();
         return values[(int) Math.floor(Math.random() * values.length)];
     }
@@ -288,4 +281,5 @@ public class Ball extends AbstractEntity {
     static Color getColor(String color) {
         return Ball.Color.valueOf(color.toUpperCase());
     }
+
 }

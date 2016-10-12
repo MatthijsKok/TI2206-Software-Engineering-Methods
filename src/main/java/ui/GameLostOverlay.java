@@ -1,5 +1,7 @@
 package ui;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -20,20 +22,22 @@ class GameLostOverlay extends UIElement {
 
     /**
      * Draws the game lost overlay.
+     * @param canvas the canvas to draw on
+     * @param graphicsContext the graphicsContext to draw on
      */
-    public void draw() {
-        GC.setFill(Color.DARKRED);
-        GC.fillRect(0, 0, CANVAS.getWidth(), CANVAS.getHeight());
-        GC.setFill(Color.WHITE);
+    public void draw(Canvas canvas, GraphicsContext graphicsContext) {
+        graphicsContext.setFill(Color.DARKRED);
+        graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        graphicsContext.setFill(Color.WHITE);
 
-        GC.setFont(BIGGER_FONT);
-        GC.fillText("GAME OVER",
-                CANVAS.getWidth() / 2,
-                CANVAS.getHeight() / 2 - BIGGER_FONT.getSize());
+        graphicsContext.setFont(BIGGER_FONT);
+        graphicsContext.fillText("GAME OVER",
+                canvas.getWidth() / 2,
+                canvas.getHeight() / 2 - BIGGER_FONT.getSize());
 
-        GC.setFont(SMALLER_FONT);
-        GC.fillText("Press R to restart game",
-                CANVAS.getWidth() / 2,
-                CANVAS.getHeight() / 2 + BIGGER_FONT.getSize());
+        graphicsContext.setFont(SMALLER_FONT);
+        graphicsContext.fillText("Press R to return to the main menu",
+                canvas.getWidth() / 2,
+                canvas.getHeight() / 2 + BIGGER_FONT.getSize());
     }
 }

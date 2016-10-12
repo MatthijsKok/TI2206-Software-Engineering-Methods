@@ -1,7 +1,7 @@
 package geometry;
 
 import com.sun.javafx.geom.Vec2d;
-import util.Sprite;
+import graphics.Sprite;
 
 /**
  * Class representing a rectangle.
@@ -18,7 +18,7 @@ public class Rectangle extends Shape {
      * @param width rectangle width
      * @param height rectangle height
      */
-    Rectangle(final double width, final double height) {
+    public Rectangle(final double width, final double height) {
         this(0, 0, width, height);
     }
 
@@ -194,5 +194,35 @@ public class Rectangle extends Shape {
                 && rect.getRight() > getLeft()
                 && rect.getTop() < getBottom()
                 && rect.getBottom() > getTop();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        if (!super.equals(o)) {
+            return false;
+        }
+
+        Rectangle rectangle = (Rectangle) o;
+
+        return getPosition().equals(rectangle.getPosition())
+                && getSize().equals(rectangle.getSize())
+                && getOffset().equals(rectangle.getOffset());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + getSize().hashCode();
+        result = 31 * result + getOffset().hashCode();
+        return result;
     }
 }

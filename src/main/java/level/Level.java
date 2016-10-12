@@ -2,6 +2,7 @@ package level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
+import entities.Ball;
 import entities.Character;
 import game.Game;
 import game.GameState;
@@ -9,8 +10,8 @@ import game.player.Player;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.media.AudioClip;
 import util.CollisionManager;
-import util.GameCanvasManager;
-import util.Sprite;
+import util.CanvasManager;
+import graphics.Sprite;
 import util.StageManager;
 import util.logging.Logger;
 
@@ -27,11 +28,6 @@ public class Level {
      * The logger access point to which everything will be logged.
      */
     private static final Logger LOGGER = Logger.getInstance();
-
-    /**
-     * The graphics context to draw on.
-     */
-    private static final Canvas CANVAS = GameCanvasManager.getInstance().getCanvas();
 
     /**
      * The default size of a level.
@@ -235,6 +231,12 @@ public class Level {
         entitiesToRemove = new ArrayList<>();
     }
 
+    private long countBalls() {
+        return entities.stream()
+                .filter(e -> e instanceof Ball)
+                .count();
+    }
+
     /**
      * Really add all entities that need to be removed to the entity list.
      */
@@ -268,6 +270,10 @@ public class Level {
         removeEntities();
         addEntities();
 
+        if (countBalls() == 0) {
+            win();
+        }
+
         LOGGER.debug("Handling collisions...");
         CollisionManager.handleCollisions();
         LOGGER.debug("Collisions handled.");
@@ -281,12 +287,14 @@ public class Level {
 
         // Draw background
         LOGGER.trace("Drawing background.");
-        backgroundImage.draw(CANVAS.getWidth() / 2, CANVAS.getHeight() / 2, backgroundImageScale);
+
+
+        final Canvas canvas = CanvasManager.getCanvas();
+        backgroundImage.draw(canvas.getWidth() / 2, canvas.getHeight() / 2, backgroundImageScale);
 
         // Draw entities
         LOGGER.trace("Drawing entities...");
         entities.forEach(AbstractEntity::draw);
-        LOGGER.trace("Entities drawn.");
     }
 
     /**
@@ -312,12 +320,13 @@ public class Level {
      * @param backgroundImage URI of the image file.
      */
     void setBackgroundImage(String backgroundImage) {
+        Canvas canvas = CanvasManager.getCanvas();
         if (backgroundImage != null && !backgroundImage.equals("")) {
             this.backgroundImage = new Sprite(backgroundImage);
             this.backgroundImage.setOffsetToCenter();
             this.backgroundImageScale = Math.max(
-                    CANVAS.getWidth() / this.backgroundImage.getWidth(),
-                    CANVAS.getHeight() / this.backgroundImage.getHeight());
+                    canvas.getWidth() / this.backgroundImage.getWidth(),
+                    canvas.getHeight() / this.backgroundImage.getHeight());
         }
     }
 
@@ -362,7 +371,7 @@ public class Level {
     /**
      * Win the level.
      */
-    public final void win() {
+    private void win() {
         GameState gameState = Game.getInstance().getState();
         gameState.pause();
         won = true;

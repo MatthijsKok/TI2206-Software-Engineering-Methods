@@ -1,20 +1,14 @@
-package util;
+package graphics;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import util.CanvasManager;
 
 /**
  * Class that handles the creation of sprites.
  */
 public class Sprite implements Cloneable {
-
-    /**
-     * The context this sprite is drawn to.
-     */
-    private static GraphicsContext gc =
-            GameCanvasManager.getInstance().getContext();
-
     /**
      * The default frame speed of any sprite.
      */
@@ -117,10 +111,10 @@ public class Sprite implements Cloneable {
      * Clones a sprite using the same Image instance.
      * Use this when you want two sprites with the same image moving independently.
      *
-     * @return the new sprite.
+     * @param sprite the sprite to copy.
      */
-    public final Sprite clone() {
-        return new Sprite(image, frames, new Vec2d(getOffsetX(), getOffsetY()));
+    public Sprite(final Sprite sprite) {
+        this(sprite.getImage(), sprite.getFrames(), sprite.getOffset());
     }
 
     /**
@@ -128,7 +122,7 @@ public class Sprite implements Cloneable {
      *
      * @param image a image object containing the desired image.
      */
-    public final void setImage(final Image image) {
+    private void setImage(final Image image) {
         this.image = image;
         width = (int) image.getWidth() / frames;
         height = (int) image.getHeight();
@@ -144,11 +138,20 @@ public class Sprite implements Cloneable {
     }
 
     /**
+     * Gets the sprite's image.
+     *
+     * @return the image of the sprite.
+     */
+    private Image getImage() {
+        return image;
+    }
+
+    /**
      * Sets the sprite's amount of frames.
      *
      * @param frames amount of frames
      */
-    public final void setFrames(final int frames) {
+    private void setFrames(final int frames) {
         if (frames > 0) {
             this.frames = frames;
         } else {
@@ -157,11 +160,20 @@ public class Sprite implements Cloneable {
     }
 
     /**
+     * Gets the sprite's amount of frames.
+     *
+     * @return the frame amount of the sprite.
+     */
+    private int getFrames() {
+        return frames;
+    }
+
+    /**
      * Sets the sprite's frame speed.
      *
      * @param speed frame speed in frames per second.
      */
-    public final void setFrameSpeed(final double speed) {
+    private void setFrameSpeed(final double speed) {
         frameSpeed = speed;
     }
 
@@ -187,7 +199,7 @@ public class Sprite implements Cloneable {
      *
      * @param offset A Vec2d containing the x and y values of the offset.
      */
-    public final void setOffset(final Vec2d offset) {
+    private void setOffset(final Vec2d offset) {
         this.offset = offset;
     }
 
@@ -266,11 +278,13 @@ public class Sprite implements Cloneable {
      */
     public final void draw(final double x, final double y,
                            final double xScale, final double yScale) {
-        gc.drawImage(image,
-                currentFrame * width, 0,
-                width, height,
-                x - offset.x * xScale, y - offset.y * yScale,
-                width * xScale, height * yScale);
+        GraphicsContext gc = CanvasManager.getContext();
+        if (gc != null) {
+            gc.drawImage(image, currentFrame * width,
+                         0, width, height,
+                         x - offset.x * xScale, y - offset.y * yScale,
+                         width * xScale, height * yScale);
+        }
     }
 
     // GETTERS
@@ -288,7 +302,7 @@ public class Sprite implements Cloneable {
      *
      * @return the x offset of the sprite
      */
-    public double getOffsetX() {
+    private double getOffsetX() {
         return offset.x;
     }
 
@@ -297,7 +311,7 @@ public class Sprite implements Cloneable {
      *
      * @return the y offset of the sprite
      */
-    public double getOffsetY() {
+    private double getOffsetY() {
         return offset.y;
     }
 

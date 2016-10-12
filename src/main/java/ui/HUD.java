@@ -1,6 +1,8 @@
 package ui;
 
 import game.Game;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import level.Level;
 
@@ -26,21 +28,23 @@ class HUD extends UIElement {
 
     /**
      * Draws the lives that the first player of a level has left.
+     * @param canvas The Canvas to draw on
+     * @param graphicsContext The GraphicsContext to draw on
      */
-    public void draw() {
+    void draw(Canvas canvas, GraphicsContext graphicsContext) {
         // Outer time bar
-        GC.setFill(Color.BLACK);
-        GC.fillRect(
-                MARGIN, CANVAS.getHeight() - HEIGHT - MARGIN,
-                CANVAS.getWidth() - 2 * MARGIN, HEIGHT);
+        graphicsContext.setFill(Color.BLACK);
+        graphicsContext.fillRect(
+                MARGIN, canvas.getHeight() - HEIGHT - MARGIN,
+                canvas.getWidth() - 2 * MARGIN, HEIGHT);
 
         // Inner time bar
-        Level level = Game.getInstance().getState().getCurrentLevel();
-        double timePart = level.getTimeLeft() / level.getDuration();
+        final Level level = Game.getInstance().getState().getCurrentLevel();
+        final double timePart = level.getTimeLeft() / level.getDuration();
 
-        GC.setFill(Color.RED);
-        GC.fillRect(
-                MARGIN + PADDING, CANVAS.getHeight() - HEIGHT - MARGIN + PADDING,
-                (CANVAS.getWidth() - 2 * (PADDING + MARGIN)) * timePart, HEIGHT - 2 * PADDING);
+        graphicsContext.setFill(Color.RED);
+        graphicsContext.fillRect(
+                MARGIN + PADDING, canvas.getHeight() - HEIGHT - MARGIN + PADDING,
+                (canvas.getWidth() - 2 * (PADDING + MARGIN)) * timePart, HEIGHT - 2 * PADDING);
     }
 }

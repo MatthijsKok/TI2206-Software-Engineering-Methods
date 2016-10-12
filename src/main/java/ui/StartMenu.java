@@ -1,5 +1,7 @@
 package ui;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -20,20 +22,22 @@ class StartMenu extends UIElement {
 
     /**
      * Draws the level lost overlay.
+     * @param canvas The Canvas to draw on
+     * @param graphicsContext The GraphicsContext to draw on
      */
-    public void draw() {
-        GC.setFill(Color.CORNFLOWERBLUE);
-        GC.fillRect(0, 0, CANVAS.getWidth(), CANVAS.getHeight());
-        GC.setFill(Color.WHITE);
+    void draw(Canvas canvas, GraphicsContext graphicsContext) {
+        graphicsContext.setFill(Color.CORNFLOWERBLUE);
+        graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        graphicsContext.setFill(Color.WHITE);
 
-        GC.setFont(BIGGER_FONT);
-        GC.fillText("Start menu",
-                CANVAS.getWidth() / 2,
-                CANVAS.getHeight() / 2 - BIGGER_FONT.getSize());
+        graphicsContext.setFont(BIGGER_FONT);
+        graphicsContext.fillText("Start menu",
+                canvas.getWidth() / 2,
+                canvas.getHeight() / 2 - BIGGER_FONT.getSize());
 
-        GC.setFont(SMALLER_FONT);
-        GC.fillText("Press S for Singleplayer, and M for multiplayer",
-                CANVAS.getWidth() / 2,
-                CANVAS.getHeight() / 2 + BIGGER_FONT.getSize());
+        graphicsContext.setFont(SMALLER_FONT);
+        graphicsContext.fillText("Press S for Singleplayer, and M for multiplayer",
+                canvas.getWidth() / 2,
+                canvas.getHeight() / 2 + BIGGER_FONT.getSize());
     }
 }

@@ -34,7 +34,7 @@ public final class EntityFactory {
             case "Wall":
                 return createWall(position);
             case "Floor":
-                return createBlock(position);
+                return createFloor(position);
             default:
                 return null;
         }
@@ -66,7 +66,7 @@ public final class EntityFactory {
         return new WallBlock(position);
     }
 
-    private static FloorBlock createBlock(Vec2d position) {
+    private static FloorBlock createFloor(Vec2d position) {
         return new FloorBlock(position);
     }
 }

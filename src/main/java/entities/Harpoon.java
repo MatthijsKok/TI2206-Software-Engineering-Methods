@@ -2,7 +2,7 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import geometry.Rectangle;
-import util.Sprite;
+import graphics.Sprite;
 
 /**
  * Harpoon class, controlling the rope in the game.
@@ -12,12 +12,12 @@ public final class Harpoon extends AbstractEntity {
     /**
      * Sprite of the rope.
      */
-    private static final Sprite ROPE_SPRITE = new Sprite("rope.png", new Vec2d(5, 0));
+    private static final Sprite HARPOON_SPRITE = new Sprite("rope.png", new Vec2d(5, 0));
 
     /**
      * collision shape of the rope. Created around the original sprite.
      */
-    private static final Rectangle ROPE_SHAPE = new Rectangle(ROPE_SPRITE);
+    private static final Rectangle HARPOON_SHAPE = new Rectangle(HARPOON_SPRITE);
 
     /**
      * Constant upward speed of the rope in px/s.
@@ -38,8 +38,8 @@ public final class Harpoon extends AbstractEntity {
      */
     private Harpoon(final Vec2d position) {
         super(position);
-        setSprite(ROPE_SPRITE);
-        setShape(new Rectangle(ROPE_SHAPE));
+        setSprite(HARPOON_SPRITE);
+        setShape(new Rectangle(HARPOON_SHAPE));
         setSpeed(0, -TRAVEL_SPEED);
         setVisibility(false);
     }

@@ -2,7 +2,7 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import geometry.Rectangle;
-import util.Sprite;
+import graphics.Sprite;
 
 /**
  * Represents a FloorBlock entity used for walls in the game.

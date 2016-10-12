@@ -2,7 +2,7 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import geometry.Shape;
-import util.Sprite;
+import graphics.Sprite;
 
 import java.util.Observable;
 

@@ -73,4 +73,25 @@ public abstract class Shape {
      * @return whether the shapes intersect
      */
     public abstract boolean intersects(Shape shape);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Shape shape = (Shape) o;
+
+        return getPosition().equals(shape.getPosition());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getPosition().hashCode();
+    }
 }

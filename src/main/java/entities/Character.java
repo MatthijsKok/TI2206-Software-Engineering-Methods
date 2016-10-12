@@ -3,7 +3,7 @@ package entities;
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import geometry.Rectangle;
-import util.Sprite;
+import graphics.Sprite;
 
 import java.util.HashMap;
 
@@ -24,12 +24,15 @@ public class Character extends AbstractEntity {
      */
     private static final Sprite RUNNING_SPRITE =
             new Sprite("player/running.png", 8, new Vec2d(11, 35));
-
+    /**
+     * The bounding box of the player.
+     */
+    private static final Rectangle BOUNDING_BOX =
+            new Rectangle(IDLE_SPRITE);
     /**
      * The running speed of a character. In pixels per second.
      */
     private static final double RUN_SPEED = 256; // px/s
-
     /**
      * The gravity applied to a character. In pixels per second squared.
      */
@@ -68,14 +71,14 @@ public class Character extends AbstractEntity {
         super(position);
 
         // Set character sprite
-        idleSprite = IDLE_SPRITE.clone();
-        runningSprite = RUNNING_SPRITE.clone();
+        idleSprite = new Sprite(IDLE_SPRITE);
+        runningSprite = new Sprite(RUNNING_SPRITE);
 
         // Create harpoon for the character and add it to the level
         harpoon = new Harpoon();
         Game.getInstance().getState().getCurrentLevel().addEntity(harpoon);
 
-        setShape(new Rectangle(runningSprite));
+        setShape(new Rectangle(BOUNDING_BOX));
     }
 
     /**
@@ -93,7 +96,7 @@ public class Character extends AbstractEntity {
     /**
      * @return whether the character is alive
      */
-    private boolean isAlive() {
+    boolean isAlive() {
         return alive;
     }
 
@@ -135,11 +138,11 @@ public class Character extends AbstractEntity {
 
     /**
      * Updates the Character object.
-     * @param dt The time since the last time the update method was called
+     * @param timeDifference The time since the last time the update method was called
      */
-    public final void update(final double dt) {
+    public final void update(final double timeDifference) {
         // Walk
-        setSpeed(RUN_SPEED * direction, getYSpeed() + GRAVITY * dt);
+        setSpeed(RUN_SPEED * direction, getYSpeed() + GRAVITY * timeDifference);
 
         // Set the character sprite
         if (direction == 0) {
@@ -160,7 +163,7 @@ public class Character extends AbstractEntity {
      */
     public final void collideWith(final AbstractEntity entity) {
         if (entity instanceof Ball) {
-            collideWith((Ball) entity);
+            collideWithBall();
         }
 
         if (entity instanceof FloorBlock) {
@@ -174,12 +177,9 @@ public class Character extends AbstractEntity {
 
     /**
      * When a character collides with a ball, the character dies.
-     * @param ball the ball the character collides with
      */
-    private void collideWith(final Ball ball) {
-        if (ball != null) {
-            die();
-        }
+    private void collideWithBall() {
+        die();
     }
 
     /**
