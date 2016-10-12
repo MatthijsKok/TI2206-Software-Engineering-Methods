@@ -2,19 +2,29 @@ package menu;
 
 import game.Game;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import util.Sprite;
 import util.StageManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static javafx.scene.layout.BackgroundRepeat.REPEAT;
+import static javafx.scene.layout.BackgroundSize.DEFAULT;
+import static javax.accessibility.AccessibleRole.CANVAS;
 
 /**
  * The menu.BubbleTroubleMenu class is an javafx element which displays the main game menu.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
+
+
 
     /**
      * The list containing the default level files in the game.
@@ -34,6 +44,21 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
         getChildren().add(createMultiPlayerButton());
         getChildren().add(createSettingsButton());
         getChildren().add(createQuitButton());
+
+//        Scene scene = new Scene(grid, 300, 275);
+//        scene.getStylesheets().add
+//                (BubbleTroubleMenu.class.getResource("layOut.css").toExternalForm());
+//
+
+        Image image = new Image("background.jpg");
+        BackgroundImage background = new BackgroundImage(image, REPEAT, REPEAT, null, DEFAULT);
+
+    }
+
+    private BackgroundImage createBackgroundImage() {
+        Image image = new Image("background.jpg");
+        BackgroundImage background = new BackgroundImage(image, REPEAT, REPEAT, null, DEFAULT);
+        return background;
     }
 
     private Text createTitle() {
