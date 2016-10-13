@@ -60,15 +60,14 @@ public class GameState implements Observer {
      */
     public void update(Observable observable, Object obj) {
         if (observable instanceof KeyboardInputManager) {
-            updateKeyboardInput((KeyboardInputManager) observable);
+            updateKeyboardInput();
         }
     }
 
     /**
      * Handles keyboard input.
-     * @param kim the
      */
-    private void updateKeyboardInput(KeyboardInputManager kim) {
+    private void updateKeyboardInput() {
         Level level = getCurrentLevel();
 
         if (!level.isWon() && !level.isLost()) {
