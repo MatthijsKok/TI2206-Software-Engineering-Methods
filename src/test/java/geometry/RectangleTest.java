@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by dana on 13/09/2016.
+ * Test suite for the Rectangle class.
  */
 public class RectangleTest {
 
@@ -62,8 +62,8 @@ public class RectangleTest {
      */
     @Test
     public void intersectShape(){
-        Rectangle rect = new Rectangle();
-        Shape shape = new Rectangle();
+        Rectangle rect = new Rectangle(1, 1);
+        Shape shape = new Rectangle(1, 1);
         assertTrue(rect.intersects(shape));
     }
 
@@ -73,8 +73,8 @@ public class RectangleTest {
      */
     @Test
     public void intersectShape2(){
-        Rectangle rect = new Rectangle();
-        Shape shape = new Circle();
+        Rectangle rect = new Rectangle(1, 1);
+        Shape shape = new Circle(1);
         assertTrue(rect.intersects(shape));
     }
 
@@ -84,7 +84,7 @@ public class RectangleTest {
      */
     @Test
     public void intersectShape3(){
-        Rectangle rect = new Rectangle();
+        Rectangle rect = new Rectangle(1, 1);
         Shape shape = new Shape() {
             @Override
             public boolean intersects(Shape shape) {

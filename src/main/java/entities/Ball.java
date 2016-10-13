@@ -2,7 +2,7 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
-import game.Level;
+import level.Level;
 import geometry.Circle;
 import geometry.Shape;
 import util.Sprite;
@@ -16,22 +16,22 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Ball extends Entity {
 
     /**
-     * Enum that represents the colour of the ball.
+     * Enum that represents the color of the ball.
      */
-    private enum Colour { BLUE, GREEN, ORANGE, PURPLE, RED, YELLOW }
+    enum Color { BLUE, GREEN, ORANGE, PURPLE, RED, YELLOW }
 
     /**
-     * HashMap that contains the ball's sprites by colour.
+     * HashMap that contains the ball's sprites by color.
      */
-    private static final Map<Colour, Sprite> BALL_SPRITES = new ConcurrentHashMap<>();
+    private static final Map<Color, Sprite> BALL_SPRITES = new ConcurrentHashMap<>();
 
     static {
-        BALL_SPRITES.put(Colour.BLUE,   new Sprite("balls/blue_ball.png"));
-        BALL_SPRITES.put(Colour.GREEN,  new Sprite("balls/green_ball.png"));
-        BALL_SPRITES.put(Colour.ORANGE, new Sprite("balls/orange_ball.png"));
-        BALL_SPRITES.put(Colour.PURPLE, new Sprite("balls/purple_ball.png"));
-        BALL_SPRITES.put(Colour.RED,    new Sprite("balls/red_ball.png"));
-        BALL_SPRITES.put(Colour.YELLOW, new Sprite("balls/yellow_ball.png"));
+        BALL_SPRITES.put(Color.BLUE,   new Sprite("balls/blue_ball.png"));
+        BALL_SPRITES.put(Color.GREEN,  new Sprite("balls/green_ball.png"));
+        BALL_SPRITES.put(Color.ORANGE, new Sprite("balls/orange_ball.png"));
+        BALL_SPRITES.put(Color.PURPLE, new Sprite("balls/purple_ball.png"));
+        BALL_SPRITES.put(Color.RED,    new Sprite("balls/red_ball.png"));
+        BALL_SPRITES.put(Color.YELLOW, new Sprite("balls/yellow_ball.png"));
 
         BALL_SPRITES.values().forEach(Sprite::setOffsetToCenter);
     }
@@ -67,9 +67,9 @@ public class Ball extends Entity {
     private int size;
 
     /**
-     * Colour of a ball.
+     * Color of a ball.
      */
-    private Colour colour;
+    private Color color;
 
     /**
      * Radius of a ball.
@@ -82,38 +82,38 @@ public class Ball extends Entity {
     private Circle shape;
 
     /**
-     * Creates a new Ball at position position, with size size and a random colour.
+     * Creates a new Ball at position position, with size size and a random color.
      * @param position ball position
      * @param size ball size
      */
-    public Ball(final Vec2d position, final int size) {
-        this(position, size, randomColour());
+    Ball(final Vec2d position, final int size) {
+        this(position, size, randomColor());
     }
 
     /**
-     * Creates a new Ball at position position, with size size and colour colour.
+     * Creates a new Ball at position position, with size size and color color.
      * @param position ball position
      * @param size ball size
-     * @param colour ball colour
+     * @param color ball color
      */
-    public Ball(final Vec2d position, final int size, final Colour colour) {
-        this(position, size, colour, new Vec2d(HORIZONTAL_SPEED, 0));
+    Ball(final Vec2d position, final int size, final Color color) {
+        this(position, size, color, new Vec2d(HORIZONTAL_SPEED, 0));
     }
 
     /**
      * Constructor for the bouncing balls in our game.
      * @param position Vec2d of the starting position of the ball.
-     * @param colour Enum representing the colour of the ball.
+     * @param color Enum representing the color of the ball.
      * @param size Integer ranging 0-4 representing the ball size.
      * @param speed Vec2d initial speed of the bal.
      */
-    public Ball(final Vec2d position, final int size, final Ball.Colour colour, final Vec2d speed) {
+     private Ball(final Vec2d position, final int size, final Color color, final Vec2d speed) {
         super(position);
 
         // Ball collision box
         shape = new Circle(0);
 
-        setColour(colour);
+        setColor(color);
         setSize(size);
         setSpeed(speed);
 
@@ -139,38 +139,50 @@ public class Ball extends Entity {
     }
 
     /**
-     * Sets the ball colour. Method only used internally.
-     * @param colour One colour from Ball.Colour.
+     * Sets the ball color. Method only used internally.
+     * @param color One color from Ball.Color.
      */
-    private void setColour(Colour colour) {
-        this.colour = colour;
-        sprite = BALL_SPRITES.get(colour);
+    private void setColor(Color color) {
+        this.color = color;
+        sprite = BALL_SPRITES.get(color);
     }
 
     /**
-     * Gets the ball colour.
+     * Gets the ball color.
      * @return Enum with options BLUE, GREEN, ORANGE, PURPLE, RED and YELLOW.
      */
-    public Colour getColour() {
-        return colour;
+    private Color getColor() {
+        return color;
     }
 
     /**
-     * Removes this ball from the Level and adds two smaller balls on the same
+     * Removes this ball from the level and adds two smaller balls on the same
      * position, moving in different directions. If the ball is already at it's
      * smallest, no new balls will be added.
      */
     private void split() {
-        Level level = Game.getInstance().getCurrentLevel();
+        Level level = Game.getInstance().getState().getCurrentLevel();
 
         if (size > 0) {
-            level.addEntity(new Ball(position, getSize() - 1, getColour(),
+            level.addEntity(new Ball(position, getSize() - 1, getColor(),
                     new Vec2d(speed.x, -BOUNCE_SPEEDS[size - 1])));
-            level.addEntity(new Ball(position, getSize() - 1, getColour(),
+            level.addEntity(new Ball(position, getSize() - 1, getColor(),
                     new Vec2d(-speed.x, -BOUNCE_SPEEDS[size - 1])));
         }
 
         level.removeEntity(this);
+
+        boolean won = true;
+        for (Entity entity : level.getEntities()) {
+            if (entity instanceof Ball) {
+                won = false;
+                break;
+            }
+        }
+
+        if (won) {
+            level.win();
+        }
     }
 
     /**
@@ -286,11 +298,20 @@ public class Ball extends Entity {
     }
 
     /**
-     * Picks a random Colour from the Ball.Colour options and returns it.
-     * @return a random Ball.Colour.
+     * Picks a random Color from the Ball.Color options and returns it.
+     * @return a random Ball.Color.
      */
-    private static Colour randomColour() {
-        Colour[] values = Colour.values();
+    private static Color randomColor() {
+        Color[] values = Color.values();
         return values[(int) Math.floor(Math.random() * values.length)];
+    }
+
+    /**
+     * Gets a color from the Ball.Color enum by name.
+     * @param color Name of the color.
+     * @return The color from Ball.Color.
+     */
+    static Color getColor(String color) {
+        return Ball.Color.valueOf(color.toUpperCase());
     }
 }

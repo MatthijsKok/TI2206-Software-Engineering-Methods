@@ -11,13 +11,6 @@ public class Circle extends Shape {
     private double radius = 1;
 
     /**
-     * Create a new circle at position (0, 0) with radius 1.
-     */
-    public Circle() {
-        this(1);
-    }
-
-    /**
      * Create a new circle at position (x, y) with radius r.
      * @param r radius
      */
@@ -31,7 +24,7 @@ public class Circle extends Shape {
      * @param y y coordinate
      * @param r radius
      */
-    public Circle(final double x, final double y, final double r) {
+    private Circle(final double x, final double y, final double r) {
         super(x, y);
         setRadius(r);
     }
@@ -49,7 +42,7 @@ public class Circle extends Shape {
     /**
      * @return the radius of the circle
      */
-    public final double getRadius() {
+    final double getRadius() {
         return this.radius;
     }
 
@@ -63,11 +56,8 @@ public class Circle extends Shape {
             return intersects((Circle) shape);
         }
 
-        if (shape instanceof Rectangle) {
-            return intersects((Rectangle) shape);
-        }
+        return shape instanceof Rectangle && intersects((Rectangle) shape);
 
-        return false;
     }
 
     /**

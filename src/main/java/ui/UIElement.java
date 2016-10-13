@@ -1,23 +1,22 @@
 package ui;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import util.GameCanvasManager;
 
 /**
- * Abstract class with functionality used by most UI elements.
+ * Abstract class with functionality used by most ui elements.
  */
-public abstract class UIElement {
+abstract class UIElement {
     /**
-     * The graphics context of the canvas manager.
+     * The graphics context to draw on.
      */
-    private static GraphicsContext gc = GameCanvasManager.getInstance().getContext();
+    static final Canvas CANVAS = GameCanvasManager.getInstance().getCanvas();
 
     /**
-     * @return the grapics context.
+     * The canvas to draw on.
      */
-    protected final GraphicsContext gc() {
-        return gc;
-    }
+    static final GraphicsContext GC = GameCanvasManager.getInstance().getContext();
 
     /**
      * Draws the element to the screen.
