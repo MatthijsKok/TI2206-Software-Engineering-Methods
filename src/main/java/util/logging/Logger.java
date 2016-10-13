@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The Logger class is the entry point for the logging framework and handles its logic.
@@ -17,27 +18,25 @@ import java.util.Date;
 public final class Logger {
 
     /**
-     * Eagerly create the static unique instance of the Logger.
+     * The static unique instance of Logger.
      */
-    private static Logger uniqueInstance = new Logger();
+    private static Logger uniqueInstance;
 
     /**
      * The File in which all logging shall take place this run of the program.
      */
-    private static final File LOG_FILE = new File(
-            "docs/logs/BubbleTrouble Log "
-                    + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".log");
+    private File logFile;
 
     /**
-     * An ArrayList which holds all LogRecord's that haven't been written to file.
+     * An List which holds all LogRecord's that haven't been written to the log file.
      */
-    private static ArrayList<LogRecord> logRecords = new ArrayList<>();
+    private List<LogRecord> logRecords = new ArrayList<>();
 
     /**
      * The LogLevel for the unique instance of the Logger.
      * Set to LogLevel.INFO by default.
      */
-    private static LogLevel logLevel = LogLevel.INFO;
+    private LogLevel logLevel;
 
     /**
      * The depth of the stack trace where the className and methodName is that called Logger.
@@ -48,45 +47,66 @@ public final class Logger {
      * Private constructor for Logger class.
      * This should only be called once, when eagerly creating the unique instance.
      */
-    private Logger() {
-
+    private Logger(String file) {
+        setFile(new File(file));
+        setLevel(LogLevel.INFO);
     }
 
     /**
      * Returns the only instance of Logger that should exist.
      * @return An instance of Logger.
      */
-    public static Logger getInstance() {
+    public static synchronized Logger getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new Logger("docs/logs/BubbleTrouble Log "
+                    + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())
+                    + ".log");
+        }
+
         return uniqueInstance;
     }
 
     /**
-     * This method should only be called at the initialization of the program.
-     * Sets the LogLevel of all the Loggers, since logLevel is static.
-     * @param logLevel The LogLevel of all Loggers.
+     * Sets the logLevel of the logger.
+     * @param logLevel The LogLevel.
      */
     public void setLevel(LogLevel logLevel) {
-        Logger.logLevel = logLevel;
+        this.logLevel = logLevel;
     }
 
     /**
-     * Gets the LogLevel of all the Loggers, since logLevel is static.
-     * @return The LogLevel of all Loggers.
+     * Gets the LogLevel of the logger.
+     * @return The LogLevel.
      */
     public LogLevel getLevel() {
         return logLevel;
     }
 
     /**
+     * Sets the file the logger will write to.
+     * @param file The target file.
+     */
+    public void setFile(File file) {
+        logFile = file;
+    }
+
+    /**
+     * Gets the file the logger will write to.
+     * @return The target file.
+     */
+    public File getFile() {
+        return logFile;
+    }
+
+    /**
      * Entry point for the logging framework.
-     * This method should be called by classes that want something logged.
      * Checks if the message exists and if its LogLevel is important enough to be logged.
-     * If so it adds a new LogRecord to the ArrayList.
+     * If so it adds a new LogRecord to the logRecords ArrayList.
      * @param logLevel The LogLevel this LogRecord is logged at.
      * @param message The String message to be logged.
      */
     private void log(LogLevel logLevel, String message) {
-        if (message != null && logLevel.getValue() >= Logger.logLevel.getValue()) {
+        if (message != null && logLevel.getValue() >= logLevel.getValue()) {
             logRecords.add(new LogRecord(
                     logLevel,
                     getCallerClassName(),
@@ -172,26 +192,39 @@ public final class Logger {
     }
 
     /**
+     * Gets all the log records of the Logger.
+     * @return A list containing all the log records.
+     */
+    List<LogRecord> getLogRecords() {
+        return logRecords;
+    }
+
+    /**
      * Write all LogRecords in the ArrayList to the log file,
      * and then purges the ArrayList.
      */
     public void writeLogRecords() {
         try {
-            Writer writer = new BufferedWriter(new FileWriter(LOG_FILE, true));
-            for (LogRecord logRecord : logRecords) {
+            Writer writer = new BufferedWriter(new FileWriter(logFile, true));
+
+            for (LogRecord logRecord : getLogRecords()) {
                 writer.write(logRecord.format());
             }
             writer.close();
             purgeLogRecords();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("IOException! Probable cause:");
+            System.err.println("Two instances of Logger exist in different threads. /");
+            System.err.println("This was thrown during testing of Logger");
         }
     }
 
     /**
-     * Empties the ArrayList which holds the LogRecords.
+     * Clears the logRecords ArrayList.
+     * This method is private because any method but writeLogRecords() calling this
+     * would result in the destruction of information.
      */
     private void purgeLogRecords() {
-        logRecords = new ArrayList<>();
+        logRecords.clear();
     }
 }
