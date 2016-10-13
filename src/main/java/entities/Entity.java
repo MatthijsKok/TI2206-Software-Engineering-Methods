@@ -15,7 +15,7 @@ public abstract class Entity extends Observable {
     /**
      * The logger access point to which everything will be logged.
      */
-    private static final util.logging.Logger LOGGER = Logger.getInstance();
+    private static final Logger LOGGER = Logger.getInstance();
 
     //TODO: Rethink the use of protected variables
     /**
