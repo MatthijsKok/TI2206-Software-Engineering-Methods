@@ -58,7 +58,7 @@ public final class Logger {
      */
     public static synchronized Logger getInstance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new Logger("docs/logs/debug"
+            uniqueInstance = new Logger("docs/logs/BubbleTrouble Log "
                     + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())
                     + ".log");
         }
