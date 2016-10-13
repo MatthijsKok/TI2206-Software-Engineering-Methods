@@ -27,6 +27,11 @@ public class Player implements Observer {
     private static final int SCORE_PER_BALL = 100;
 
     /**
+     * The player ID of the player.
+     */
+    private int id = 0;
+
+    /**
      * These Strings represent the keyboard characters this player uses.
      */
     private final String leftKey, rightKey, shootKey;
@@ -52,8 +57,10 @@ public class Player implements Observer {
      * @param leftKey  The keyboard character that makes the player move left.
      * @param rightKey The keyboard character that makes the player move right.
      * @param shootKey The keyboard character that makes the player shoot.
+     * @param id The player id of the player.
      */
-    public Player(String leftKey, String rightKey, String shootKey) {
+    public Player(int id, String leftKey, String rightKey, String shootKey) {
+        this.id = id;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.shootKey = shootKey;
@@ -177,5 +184,19 @@ public class Player implements Observer {
      */
     public int getScore() {
         return score;
+    }
+
+    /**
+     * @return The lives the player has at the start.
+     */
+    public static int getLivesAtStart() {
+        return LIVES_AT_START;
+    }
+
+    /**
+     * @return The id of the player.
+     */
+    public int getId() {
+        return id;
     }
 }

@@ -43,7 +43,7 @@ public final class EntityFactory {
     private static Character createCharacter(Vec2d position) {
         for (Player player : Game.getInstance().getPlayers()) {
             if (player.getCharacter() == null && player.getLives() > 0) {
-                Character character = new Character(position.x, position.y);
+                Character character = new Character(player.getId(), position.x, position.y);
                 player.setCharacter(character);
                 return character;
             }
