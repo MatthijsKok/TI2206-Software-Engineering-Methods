@@ -1,4 +1,13 @@
 package entities.powerups;
 
-public class PowerUpDecorator {
+abstract class PowerUpDecorator implements DynamicPowerUp {
+
+    protected DynamicPowerUp tempDynamicPowerUp;
+
+    public PowerUpDecorator(DynamicPowerUp newDynamicPowerUp) {
+
+        tempDynamicPowerUp = newDynamicPowerUp;
+
+    }
+
 }

@@ -1,6 +1,6 @@
 package entities.powerups;
 
-public class EmptyPowerUp implements DynamicPowerUp{
+public class ExtraRope implements DynamicPowerUp {
 
     /**
      * Time the power up lasts.
