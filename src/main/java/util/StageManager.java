@@ -47,12 +47,15 @@ public final class StageManager {
         StageManager.stage = stage;
         root = new Group();
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("stylesheets/layOut.css");
         KeyboardInputManager.getInstance().addScene(scene);
 
         stage.setScene(scene);
-        stage.setResizable(false);
         stage.setMinWidth(DEFAULT_WIDTH);
         stage.setMinHeight(DEFAULT_HEIGHT);
+        stage.setMaxWidth(DEFAULT_WIDTH);
+        stage.setMaxHeight(DEFAULT_HEIGHT);
+        stage.setResizable(false);
         stage.getIcons().add(new Image("logo.png"));
         stage.initStyle(StageStyle.UNDECORATED);
 
