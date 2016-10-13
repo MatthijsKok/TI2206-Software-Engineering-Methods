@@ -15,9 +15,9 @@ public class LogRecordTest {
 
     @Test
     public void formatTest(){
-        LogRecord logRecord = new LogRecord(LogLevel.INFO, sourceClassName, sourceMethodName, logMessage, 1);
+        LogRecord logRecord = new LogRecord(LogLevel.INFO, sourceClassName, sourceMethodName, logMessage, 10000000);
         assertEquals(logRecord.format(),
-                "[1970-01-01][01:00:00.001][TestClass][TestMethod]\n" +
+                "[1970-01-01][03:46:40.000][TestClass][TestMethod]\n" +
                 "INFO: TestMessage\n");
     }
 }
