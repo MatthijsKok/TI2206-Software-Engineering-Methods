@@ -1,12 +1,17 @@
 package util.logging;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 
+import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -25,7 +30,7 @@ public class LoggerTest {
 
     @Before
     public void setUp() {
-        logger.writeLogRecords();
+        logger.purgeLogRecords();
     }
 
     @Test
@@ -96,14 +101,18 @@ public class LoggerTest {
         logger.setLevel(LogLevel.INFO);
         logger.info(LOG_MESSAGE);
 
-        logger.writeLogRecords();
+        try {
+            logger.writeLogRecords();
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
         assertEquals(logger.getLogRecords().size(), 0);
     }
 
-    @Test
-    public void logWriterExceptionTest() {
+    @Test(expected = IOException.class)
+    public void logWriterExceptionTest() throws IOException {
         logger.setFile(new File("doesntexist/fake.log"));
         logger.writeLogRecords();
-        assertTrue(true);
     }
 }
