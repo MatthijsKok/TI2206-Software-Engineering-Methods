@@ -1,12 +1,15 @@
 package util.logging;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
 
 import java.io.File;
+import java.io.IOException;
 
+import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -100,10 +103,17 @@ public class LoggerTest {
         assertEquals(logger.getLogRecords().size(), 0);
     }
 
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
     @Test
-    public void logWriterExceptionTest() {
+    public void logWriterExceptionTest(){
+//        exception.expect(Exception.class);
+//        exception.expectMessage("IOException! Probable cause:\n" +
+//                "Two instances of Logger exist in different threads. /\n" +
+//                "This was thrown during testing of Logger");
+
         logger.setFile(new File("doesntexist/fake.log"));
         logger.writeLogRecords();
-        assertTrue(true);
     }
 }

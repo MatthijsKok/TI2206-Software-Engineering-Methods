@@ -3,7 +3,6 @@ package util.logging;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -212,10 +211,10 @@ public final class Logger {
             }
             writer.close();
             purgeLogRecords();
-        } catch (IOException e) {
-            System.err.println("IOException! Probable cause:");
-            System.err.println("Two instances of Logger exist in different threads. /");
-            System.err.println("This was thrown during testing of Logger");
+        } catch (Exception e) {
+            System.err.println("IOException! Probable cause:\n"
+                    + "Two instances of Logger exist in different threads. /\n"
+                    + "This was thrown during testing of Logger");
         }
     }
 
