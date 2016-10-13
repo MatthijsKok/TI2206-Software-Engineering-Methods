@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 /**
  * Abstract class with functionality used by most ui elements.
  */
-abstract class UIElement {
+abstract class AbstractUIElement {
     /**
      * Draws the element to the canvas.
      * @param canvas The Canvas to draw on

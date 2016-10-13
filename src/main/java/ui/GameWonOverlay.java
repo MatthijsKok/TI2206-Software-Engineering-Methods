@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 /**
  * The level time up overlay draws the an overlay after a level has run out of time.
  */
-class GameWonOverlay extends UIElement {
+class GameWonOverlay extends AbstractUIElement {
 
     /**
      * Font size used for bigger text.
@@ -25,7 +25,7 @@ class GameWonOverlay extends UIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(Canvas canvas, GraphicsContext graphicsContext) {
+    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         graphicsContext.setFill(Color.DARKRED);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graphicsContext.setFill(Color.WHITE);

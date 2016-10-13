@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 /**
  * The level lost overlay draws the an overlay after a level has been lost.
  */
-class LevelLostOverlay extends UIElement {
+class LevelLostOverlay extends AbstractUIElement {
 
     /**
      * Font size used for bigger text.
@@ -25,7 +25,7 @@ class LevelLostOverlay extends UIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(Canvas canvas, GraphicsContext graphicsContext) {
+    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         graphicsContext.setFill(Color.DARKRED);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graphicsContext.setFill(Color.WHITE);

@@ -50,7 +50,7 @@ public class GameState implements Observer {
      */
     GameState(Game game) {
         this.game = game;
-        KeyboardInputManager.getInstance().addObserver(this);
+        KeyboardInputManager.addListener(this);
     }
 
     /**
@@ -72,7 +72,7 @@ public class GameState implements Observer {
         Level level = getCurrentLevel();
 
         if (!level.isWon() && !level.isLost()) {
-            if (kim.keyPressed(PAUSE_KEY)) {
+            if (KeyboardInputManager.keyPressed(PAUSE_KEY)) {
                 if (inProgress) {
                     pause();
                 } else {
@@ -81,7 +81,7 @@ public class GameState implements Observer {
             }
         }
 
-        if (kim.keyPressed(RESTART_KEY)) {
+        if (KeyboardInputManager.keyPressed(RESTART_KEY)) {
             if (won || lost) {
                 game.stop();
             } else if (level.isWon()) {

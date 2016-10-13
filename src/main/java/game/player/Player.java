@@ -57,6 +57,8 @@ public class Player implements Observer {
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.shootKey = shootKey;
+
+        KeyboardInputManager.addListener(this);
     }
 
     /**
@@ -94,7 +96,7 @@ public class Player implements Observer {
      */
     public void update(Observable observable, Object obj) {
         if (character != null && observable instanceof KeyboardInputManager) {
-            update((KeyboardInputManager) observable);
+            updateKeyboardInput();
         }
 
         if (observable instanceof Character) {
@@ -142,20 +144,18 @@ public class Player implements Observer {
     }
 
     /**
-     * Handles the input and passes it to the character.
-     *
-     * @param kim KeyboardInputManager to take input from.
+     * Handles keyboard input and passes it to the character.
      */
-    private void update(KeyboardInputManager kim) {
-        if (kim.keyPressed(leftKey) && !kim.keyPressed(rightKey)) {
+    private void updateKeyboardInput() {
+        if (KeyboardInputManager.keyPressed(leftKey) && !KeyboardInputManager.keyPressed(rightKey)) {
             character.moveLeft();
-        } else if (!kim.keyPressed(leftKey) && kim.keyPressed(rightKey)) {
+        } else if (!KeyboardInputManager.keyPressed(leftKey) && KeyboardInputManager.keyPressed(rightKey)) {
             character.moveRight();
         } else {
             character.stop();
         }
 
-        character.setShooting(kim.keyPressed(shootKey));
+        character.setShooting(KeyboardInputManager.keyPressed(shootKey));
     }
 
     /**

@@ -67,7 +67,7 @@ public final class LogLevel {
      * @param name The name is used in the log message.
      * @param value The value is used to determine if this LogRecord should be logged.
      */
-    private LogLevel(String name, int value) {
+    private LogLevel(final String name, final int value) {
         this.name = name;
         this.value = value;
     }

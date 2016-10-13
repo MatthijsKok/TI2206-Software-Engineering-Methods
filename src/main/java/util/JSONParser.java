@@ -1,12 +1,11 @@
 package util;
 
-
-
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Utility class that parses JSON strings and files.
@@ -19,30 +18,17 @@ public final class JSONParser {
 
     /**
      * Takes the name of a JSON file and returns the content as a JSON object.
-     * @param filename The name of the file to read.
+     * @param path The path to the file to read.
      * @return The JSONObject resulting from the file content.
+     * @throws IOException if the file is not found.
      */
-    public static JSONObject parseJSONFile(String filename) {
-        return new JSONObject(fileToString(filename));
+    public static JSONObject parseJSONFile(final String path) throws IOException {
+        return new JSONObject(readFile(path));
     }
 
-    private static String fileToString(String filename) {
-        String result = "";
-
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line = bufferedReader.readLine();
-            while (line != null) {
-                stringBuilder.append(line);
-                line = bufferedReader.readLine();
-            }
-            result = stringBuilder.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result;
+    private static String readFile(final String path) throws IOException {
+            final byte[] encoded = Files.readAllBytes(Paths.get(path));
+            return new String(encoded, StandardCharsets.UTF_8);
     }
 
 }

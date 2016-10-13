@@ -37,7 +37,9 @@ class LogRecord {
      * @param message The message of this LogRecord.
      * @param milliseconds The amount of milliseconds since epoch in POSIX time.
      */
-    LogRecord(LogLevel logLevel, String sourceClassName, String sourceMethodName, String message, long milliseconds) {
+    LogRecord(
+            final LogLevel logLevel, final String sourceClassName,
+            final String sourceMethodName, final String message, final long milliseconds) {
         this.logLevel = logLevel;
         this.sourceClassName = sourceClassName;
         this.sourceMethodName = sourceMethodName;

@@ -10,7 +10,7 @@ import util.logging.Logger;
 /**
  * Takes care of the total UI of a game instance.
  */
-public class GameUI extends UIElement {
+public class GameUI extends AbstractUIElement {
 
     /**
      * The logger.
@@ -36,7 +36,7 @@ public class GameUI extends UIElement {
     /**
      * The overlay for when a level is lost by timeout.
      */
-    private LevelTimeUpOverlay levelTimeUpOverlay = new LevelTimeUpOverlay();
+    private LevelTimeUpOverlay timeUpOverlay = new LevelTimeUpOverlay();
     /**
      * The overlay for when the game is paused.
      */
@@ -44,14 +44,14 @@ public class GameUI extends UIElement {
     /**
      * The hud for when playing the game.
      */
-    private HUD hud;
+    private HeadsUpDisplay hud;
 
     /**
      * Creates a new GameUI instance handling the UI of Game game.
      *
      * @param game the game to draw the ui for.
      */
-    public GameUI(Game game) {
+    public GameUI(final Game game) {
 
         init(game);
     }
@@ -61,7 +61,7 @@ public class GameUI extends UIElement {
      *
      * @param game the game to init the hud for.
      */
-    private void init(Game game) {
+    private void init(final Game game) {
         switch (game.getPlayerCount()) {
             case 1:
                 hud = new SinglePlayerHUD();
@@ -70,7 +70,7 @@ public class GameUI extends UIElement {
                 hud = new MultiPlayerHUD();
                 break;
             default:
-                hud = new HUD();
+                hud = new HeadsUpDisplay();
         }
     }
 
@@ -79,7 +79,7 @@ public class GameUI extends UIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    public void draw(Canvas canvas, GraphicsContext graphicsContext) {
+    public void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         LOGGER.trace("Drawing UI elements...");
 
         final GameState state = Game.getInstance().getState();
@@ -93,7 +93,7 @@ public class GameUI extends UIElement {
             levelWonOverlay.draw(canvas, graphicsContext);
         } else if (level.isLost()) {
             if (level.getTimeLeft() <= 0) {
-                levelTimeUpOverlay.draw(canvas, graphicsContext);
+                timeUpOverlay.draw(canvas, graphicsContext);
             } else {
                 levelLostOverlay.draw(canvas, graphicsContext);
             }

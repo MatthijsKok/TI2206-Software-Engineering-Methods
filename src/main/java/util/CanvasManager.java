@@ -29,7 +29,7 @@ public final class CanvasManager {
      * @param stage Stage to create a canvas for.
      * @return Canvas the created canvas.
      */
-    public static Canvas createCanvas(Stage stage) {
+    public static Canvas createCanvas(final Stage stage) {
         return new Canvas(stage.getWidth(), stage.getHeight());
     }
 
@@ -37,7 +37,7 @@ public final class CanvasManager {
      * Sets the canvas target for drawing operations.
      * @param canvas Canvas to draw on.
      */
-    public static void setCanvas(Canvas canvas) {
+    public static void setCanvas(final Canvas canvas) {
         targetCanvas = canvas;
         targetGC = canvas.getGraphicsContext2D();
     }

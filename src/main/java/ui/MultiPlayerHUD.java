@@ -1,17 +1,15 @@
 package ui;
 
 import com.sun.javafx.geom.Vec2d;
-import game.Game;
-import game.player.Player;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.TextAlignment;
 import graphics.Sprite;
 
 /**
- * Draws a HUD for a game with a single player.
+ * Draws a HeadsUpDisplay for a game with a single player.
  */
-class MultiPlayerHUD extends HUD {
+class MultiPlayerHUD extends HeadsUpDisplay {
 
     /**
      * The heart sprite.
@@ -35,28 +33,23 @@ class MultiPlayerHUD extends HUD {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(Canvas canvas, GraphicsContext graphicsContext) {
+    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         // Time bar
         super.draw(canvas, graphicsContext);
 
         // Player one lives
-        Player player;
-        player = Game.getInstance().getPlayer(0);
-
-        for (int i = 0; i < player.getLives(); i++) {
+        for (int i = getPlayerLives(0) - 1; i >= 0; i--) {
             HEART.draw(MARGIN.x + SPACE * i, canvas.getHeight() - MARGIN.y);
         }
-        graphicsContext.fillText(String.valueOf(player.getScore()),
+        graphicsContext.fillText(String.valueOf(getPlayerScore(0)),
                 MARGIN.x, canvas.getHeight() - 2 * MARGIN.y);
 
         // Player two lives
-        player = Game.getInstance().getPlayer(1);
-
-        for (int i = 0; i < player.getLives(); i++) {
+        for (int i = getPlayerLives(1); i >= 0; i--) {
             HEART.draw(canvas.getWidth() - (MARGIN.x + SPACE * i), canvas.getHeight() - MARGIN.y);
         }
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
-        graphicsContext.fillText(String.valueOf(player.getScore()),
+        graphicsContext.fillText(String.valueOf(getPlayerScore(1)),
                 canvas.getWidth() - MARGIN.x, canvas.getHeight() - 2 * MARGIN.y);
         graphicsContext.setTextAlign(TextAlignment.LEFT);
     }

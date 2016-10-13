@@ -10,9 +10,9 @@ import util.CanvasManager;
  */
 public class Sprite implements Cloneable {
     /**
-     * The default frame speed of any sprite.
+     * The default frame per second rate of any sprite.
      */
-    private static final double DEFAULT_FRAME_SPEED = 15; // f / s
+    private static final double DEFAULT_FPS = 15; // f / s
 
     /**
      * Image of the sprite.
@@ -102,7 +102,7 @@ public class Sprite implements Cloneable {
         setFrames(frames);
         setOffset(offset);
         setImage(image);
-        setFrameSpeed(DEFAULT_FRAME_SPEED);
+        setFrameSpeed(DEFAULT_FPS);
         currentFrame = 0;
         framePart = 0;
     }
@@ -126,15 +126,6 @@ public class Sprite implements Cloneable {
         this.image = image;
         width = (int) image.getWidth() / frames;
         height = (int) image.getHeight();
-    }
-
-    /**
-     * Sets the sprite image.
-     *
-     * @param uri the universal resource identifier (filename) of the object.
-     */
-    public final void setImage(final String uri) {
-        setImage(new Image(uri));
     }
 
     /**
@@ -181,17 +172,17 @@ public class Sprite implements Cloneable {
      * Sets the offset so it is in the middle of the sprite.
      */
     public final void setOffsetToCenter() {
-        setOffset(new Vec2d(image.getWidth() / 2, image.getHeight() / 2));
+        setOffset(image.getWidth() / 2, image.getHeight() / 2);
     }
 
     /**
      * Moves the center of the sprite to the x and y locations.
      *
-     * @param x offset on the x axis.
-     * @param y offset on the y axis.
+     * @param xOffset offset on the x axis.
+     * @param yOffset offset on the y axis.
      */
-    public final void setOffset(final double x, final double y) {
-        setOffset(new Vec2d(x, y));
+    private void setOffset(final double xOffset, final double yOffset) {
+        setOffset(new Vec2d(xOffset, yOffset));
     }
 
     /**
@@ -206,10 +197,10 @@ public class Sprite implements Cloneable {
     /**
      * Updates the sprite.
      *
-     * @param dt time expired since the last time the method was called.
+     * @param timeDifference time expired since the last time the method was called.
      */
-    public final void update(final double dt) {
-        framePart = (framePart + dt * frameSpeed) % frames;
+    public final void update(final double timeDifference) {
+        framePart = (framePart + timeDifference * frameSpeed) % frames;
         currentFrame = (int) Math.floor(framePart);
     }
 
@@ -248,42 +239,43 @@ public class Sprite implements Cloneable {
     /**
      * Draws the Sprite to the screen.
      *
-     * @param x the x position where the sprite should be drawn.
-     * @param y the y position where the sprite should be drawn.
+     * @param xPosition the x position where the sprite should be drawn.
+     * @param yPosition the y position where the sprite should be drawn.
      */
-    public final void draw(final double x, final double y) {
-        draw(x, y, 1);
+    public final void draw(final double xPosition, final double yPosition) {
+        draw(xPosition, yPosition, 1);
     }
 
     /**
      * Draws the Sprite to the screen.
      *
-     * @param x the x position where the sprite should be drawn.
-     * @param y the y position where the sprite should be drawn.
+     * @param xPosition the x position where the sprite should be drawn.
+     * @param yPosition the y position where the sprite should be drawn.
      * @param scale the scale at which the Sprite should be drawn.
      */
-    public final void draw(final double x, final double y, final double scale) {
-        draw(x, y, scale, scale);
+    public final void draw(final double xPosition, final double yPosition, final double scale) {
+        draw(xPosition, yPosition, scale, scale);
     }
 
     /**
      * Draws the Sprite to the screen.
      *
-     * @param x the x position where the sprite should be drawn.
-     * @param y the y position where the sprite should be drawn.
+     * @param xPosition the x position where the sprite should be drawn.
+     * @param yPosition the y position where the sprite should be drawn.
      * @param xScale a double used to scale the sprite in x direction upon drawing
      *               e.g. 0,5 for half the size.
      * @param yScale a double used to scale the sprite in y direction upon drawing
      *               e.g. 0,5 for half the size.
      */
-    public final void draw(final double x, final double y,
+    public final void draw(final double xPosition, final double yPosition,
                            final double xScale, final double yScale) {
-        GraphicsContext gc = CanvasManager.getContext();
-        if (gc != null) {
-            gc.drawImage(image, currentFrame * width,
-                         0, width, height,
-                         x - offset.x * xScale, y - offset.y * yScale,
-                         width * xScale, height * yScale);
+        final GraphicsContext graphicsContext = CanvasManager.getContext();
+        if (graphicsContext != null) {
+            graphicsContext.drawImage(
+                    image, currentFrame * width,
+                    0, width, height,
+                    xPosition - offset.x * xScale, yPosition - offset.y * yScale,
+                    width * xScale, height * yScale);
         }
     }
 
@@ -295,24 +287,6 @@ public class Sprite implements Cloneable {
      */
     public Vec2d getOffset() {
         return offset;
-    }
-
-    /**
-     * Returns the x offset of the sprite.
-     *
-     * @return the x offset of the sprite
-     */
-    private double getOffsetX() {
-        return offset.x;
-    }
-
-    /**
-     * Returns the y offset of the sprite.
-     *
-     * @return the y offset of the sprite
-     */
-    private double getOffsetY() {
-        return offset.y;
     }
 
     /**
@@ -333,12 +307,4 @@ public class Sprite implements Cloneable {
         return height;
     }
 
-    /**
-     * Sets the frame of the sprite to be currently displayed, starting at 0.
-     *
-     * @param currentFrame the frame to set this sprite's current frame to.
-     */
-    public final void setCurrentFrame(final int currentFrame) {
-        this.currentFrame = currentFrame;
-    }
 }

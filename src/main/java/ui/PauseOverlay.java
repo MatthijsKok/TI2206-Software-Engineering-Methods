@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 /**
  * The pause overlay draws the an overlay when the game is paused.
  */
-class PauseOverlay extends UIElement {
+class PauseOverlay extends AbstractUIElement {
     /**
      * Font size used for bigger text.
      */
@@ -24,7 +24,7 @@ class PauseOverlay extends UIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(Canvas canvas, GraphicsContext graphicsContext) {
+    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         graphicsContext.setFill(Color.DARKGRAY);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graphicsContext.setFill(Color.WHITE);

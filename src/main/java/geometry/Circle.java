@@ -12,36 +12,36 @@ public class Circle extends Shape {
 
     /**
      * Create a new circle at position (x, y) with radius r.
-     * @param r radius
+     * @param radius radius
      */
-    public Circle(double r) {
-        this(0, 0, r);
+    public Circle(final double radius) {
+        this(0, 0, radius);
     }
 
     /**
      * Creates a new Circle with the same dimensions as the original.
      * @param circle the circle to copy.
      */
-    public Circle(Circle circle) {
+    public Circle(final Circle circle) {
         this(circle.getX(), circle.getY(), circle.getRadius());
     }
 
     /**
      * Create a new circle at position (x, y) with radius radius.
-     * @param x x coordinate
-     * @param y y coordinate
-     * @param r radius
+     * @param xPosition x coordinate
+     * @param yPosition y coordinate
+     * @param radius radius
      */
-    private Circle(final double x, final double y, final double r) {
-        super(x, y);
-        setRadius(r);
+    private Circle(final double xPosition, final double yPosition, final double radius) {
+        super(xPosition, yPosition);
+        setRadius(radius);
     }
 
     /**
      * Set the radius of the circle. Should be bigger than zero.
      * @param radius the target radius.
      */
-    public void setRadius(double radius) {
+    public void setRadius(final double radius) {
         if (radius > 0) {
             this.radius = radius;
         }
@@ -59,7 +59,7 @@ public class Circle extends Shape {
      * @param shape the shape to check intersection with
      * @return whether the circle intersects with shape
      */
-    public boolean intersects(Shape shape) {
+    public boolean intersects(final Shape shape) {
         if (shape instanceof Circle) {
             return intersects((Circle) shape);
         }
@@ -73,10 +73,10 @@ public class Circle extends Shape {
      * @param rect the rectangle to check intersection with
      * @return whether the circle intersects the rectangle
      */
-    private boolean intersects(Rectangle rect) {
-        double dx = getX() - Math.max(rect.getLeft(), Math.min(getX(), rect.getRight()));
-        double dy = getY() - Math.max(rect.getTop(), Math.min(getY(), rect.getBottom()));
-        return (dx * dx + dy * dy) < (radius * radius);
+    private boolean intersects(final Rectangle rect) {
+        final double xDiff = getX() - Math.max(rect.getLeft(), Math.min(getX(), rect.getRight()));
+        final double yDiff = getY() - Math.max(rect.getTop(), Math.min(getY(), rect.getBottom()));
+        return Math.pow(xDiff, 2) + Math.pow(yDiff, 2) < Math.pow(radius, 2);
     }
 
     /**
@@ -84,7 +84,7 @@ public class Circle extends Shape {
      * @param circle the circle to check intersection with
      * @return whether the circle intersects the circle
      */
-    private boolean intersects(Circle circle) {
+    private boolean intersects(final Circle circle) {
         return getPosition().distance(circle.getPosition()) < getRadius() + circle.getRadius();
     }
 }

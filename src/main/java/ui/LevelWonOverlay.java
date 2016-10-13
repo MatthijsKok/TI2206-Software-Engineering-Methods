@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 /**
  * The level lost overlay draws the an overlay after a level has been won.
  */
-class LevelWonOverlay extends UIElement {
+class LevelWonOverlay extends AbstractUIElement {
     /**
      * Font size used for bigger text.
      */
@@ -24,7 +24,7 @@ class LevelWonOverlay extends UIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(Canvas canvas, GraphicsContext graphicsContext) {
+    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         graphicsContext.setFill(Color.CORNFLOWERBLUE);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graphicsContext.setFill(Color.WHITE);

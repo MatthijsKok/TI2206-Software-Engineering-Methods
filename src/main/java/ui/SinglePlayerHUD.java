@@ -1,16 +1,14 @@
 package ui;
 
 import com.sun.javafx.geom.Vec2d;
-import game.Game;
-import game.player.Player;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import graphics.Sprite;
 
 /**
- * Draws a HUD for a game with a single player.
+ * Draws a HeadsUpDisplay for a game with a single player.
  */
-class SinglePlayerHUD extends HUD {
+class SinglePlayerHUD extends HeadsUpDisplay {
 
     /**
      * The heart sprite.
@@ -32,14 +30,13 @@ class SinglePlayerHUD extends HUD {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(Canvas canvas, GraphicsContext graphicsContext) {
+    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         super.draw(canvas, graphicsContext);
 
-        final Player player = Game.getInstance().getPlayer(0);
-
-        for (int i = 0; i < player.getLives(); i++) {
+        for (int i = getPlayerLives(0); i >= 0; i--) {
             HEART.draw(MARGIN.x + SPACE * i, canvas.getHeight() - MARGIN.y);
         }
-        graphicsContext.fillText(String.valueOf(player.getScore()), MARGIN.x, canvas.getHeight() - 2 * MARGIN.y);
+
+        graphicsContext.fillText(String.valueOf(getPlayerScore(0)), MARGIN.x, canvas.getHeight() - 2 * MARGIN.y);
     }
 }

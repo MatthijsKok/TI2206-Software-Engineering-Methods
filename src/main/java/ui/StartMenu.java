@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 /**
  * This is the start menu before the game starts, where you can choose how many players you want to play with.
  */
-class StartMenu extends UIElement {
+class StartMenu extends AbstractUIElement {
 
     /**
      * Font size used for bigger text.
@@ -25,7 +25,7 @@ class StartMenu extends UIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(Canvas canvas, GraphicsContext graphicsContext) {
+    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         graphicsContext.setFill(Color.CORNFLOWERBLUE);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graphicsContext.setFill(Color.WHITE);
