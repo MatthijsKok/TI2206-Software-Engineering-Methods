@@ -2,18 +2,22 @@ package util.logging;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 /**
- * Created by dana on 28/09/2016.
+ * Class that tests LogRecord.
  */
 public class LogRecordTest {
 
-    @Test
-    public void FormatTest(){
-//        Dit kan weer niet, want LogLevel is private en ik kan geen loglevel object aanmaken.
-//        Loglevel loglevel = new LogLevel();
-//        LogRecord(loglevel, "sourceClassName", "sourceMethodName", "message", 0.001);
-    }
+    private String sourceClassName = "TestClass";
+    private String sourceMethodName = "TestMethod";
+    private String logMessage = "TestMessage";
+
     @Test
     public void formatTest(){
+        LogRecord logRecord = new LogRecord(LogLevel.INFO, sourceClassName, sourceMethodName, logMessage, 1);
+        assertEquals(logRecord.format(),
+                "[1970-01-01][01:00:00.001][TestClass][TestMethod]\n" +
+                "INFO: TestMessage\n");
     }
 }
