@@ -85,8 +85,8 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
     private Button createSettingsButton() {
         Stage stage = StageManager.getStage();
         Button button = new Button("Settings");
-        button.setLayoutX(1024);
-        button.setLayoutY(600);
+        button.setLayoutX(1000);
+        button.setLayoutY(550);
         button.getStyleClass().add("green");
         return button;
     }
@@ -95,7 +95,7 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
         Stage stage = StageManager.getStage();
         Button button = new Button("Quit");
         button.setLayoutX(64);
-        button.setLayoutY(600);
+        button.setLayoutY(550);
         button.getStyleClass().add("green");
 
         button.setOnMouseClicked(e -> Platform.exit());
