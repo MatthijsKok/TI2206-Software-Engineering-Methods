@@ -215,7 +215,7 @@ public final class Logger {
         } catch (IOException e) {
             System.err.println("IOException! Probable cause:");
             System.err.println("Two instances of Logger exist in different threads. /");
-            System.err.println("This was thrown during testing of Logger");;
+            System.err.println("This was thrown during testing of Logger");
         }
     }
 
