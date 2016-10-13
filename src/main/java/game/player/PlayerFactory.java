@@ -12,7 +12,8 @@ public final class PlayerFactory {
     }
 
     /**
-     * Creates a new player instance with the keyboard mapping corresponding to the playerId.
+     * Creates a new player instance with the keyboard mapping
+     * corresponding to the playerId.
      * @param playerId the id of the player.
      * @return the created player.
      */

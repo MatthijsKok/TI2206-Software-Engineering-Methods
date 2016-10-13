@@ -8,7 +8,8 @@ import javafx.scene.paint.Color;
 import level.Level;
 
 /**
- * HeadsUpDisplay is a acronym for Heads Up Display. A common name for the overlay of a game.
+ * HeadsUpDisplay is a acronym for Heads Up Display. A common name
+ * for the overlay of a game.
  */
 class HeadsUpDisplay extends AbstractUIElement {
 
@@ -41,7 +42,7 @@ class HeadsUpDisplay extends AbstractUIElement {
      * @param playerId the id of the player.
      * @return the lives of a player.
      */
-    int getPlayerLives(final int playerId) {
+    /* default */ int getPlayerLives(final int playerId) {
         return getPlayer(playerId).getLives();
     }
 
@@ -50,7 +51,7 @@ class HeadsUpDisplay extends AbstractUIElement {
      * @param playerId the id of the player.
      * @return the score of a player.
      */
-    int getPlayerScore(final int playerId) {
+    /* default */ int getPlayerScore(final int playerId) {
         return getPlayer(playerId).getScore();
     }
 
@@ -59,7 +60,7 @@ class HeadsUpDisplay extends AbstractUIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
+    /* default */ void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         // Outer time bar
         graphicsContext.setFill(Color.BLACK);
         graphicsContext.fillRect(

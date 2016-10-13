@@ -50,7 +50,7 @@ public class Circle extends Shape {
     /**
      * @return the radius of the circle
      */
-    final double getRadius() {
+    final /* default */ double getRadius() {
         return this.radius;
     }
 

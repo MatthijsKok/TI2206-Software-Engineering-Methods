@@ -20,27 +20,27 @@ public class GameUI extends AbstractUIElement {
     /**
      * The overlay for when the game is won.
      */
-    private GameWonOverlay gameWonOverlay = new GameWonOverlay();
+    private final GameWonOverlay gameWonOverlay = new GameWonOverlay();
     /**
      * The overlay for when the game is lost.
      */
-    private GameLostOverlay gameLostOverlay = new GameLostOverlay();
+    private final GameLostOverlay gameLostOverlay = new GameLostOverlay();
     /**
      * The overlay for when a level is won.
      */
-    private LevelWonOverlay levelWonOverlay = new LevelWonOverlay();
+    private final LevelWonOverlay levelWonOverlay = new LevelWonOverlay();
     /**
      * The overlay for when a level is lost.
      */
-    private LevelLostOverlay levelLostOverlay = new LevelLostOverlay();
+    private final LevelLostOverlay levelLostOverlay = new LevelLostOverlay();
     /**
      * The overlay for when a level is lost by timeout.
      */
-    private LevelTimeUpOverlay timeUpOverlay = new LevelTimeUpOverlay();
+    private final LevelTimeUpOverlay timeUpOverlay = new LevelTimeUpOverlay();
     /**
      * The overlay for when the game is paused.
      */
-    private PauseOverlay pauseOverlay = new PauseOverlay();
+    private final PauseOverlay pauseOverlay = new PauseOverlay();
     /**
      * The hud for when playing the game.
      */
@@ -71,6 +71,7 @@ public class GameUI extends AbstractUIElement {
                 break;
             default:
                 hud = new HeadsUpDisplay();
+                break;
         }
     }
 

@@ -30,7 +30,7 @@ class SinglePlayerHUD extends HeadsUpDisplay {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
+    /* default */ void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         super.draw(canvas, graphicsContext);
 
         for (int i = getPlayerLives(0); i >= 0; i--) {

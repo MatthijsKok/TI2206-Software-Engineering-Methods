@@ -6,7 +6,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
- * The level time up overlay draws the an overlay after a level has run out of time.
+ * The level time up overlay draws the an overlay after a level
+ * has run out of time.
  */
 class LevelTimeUpOverlay extends AbstractUIElement {
 
@@ -25,7 +26,7 @@ class LevelTimeUpOverlay extends AbstractUIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
+    /* default */ void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         graphicsContext.setFill(Color.DARKRED);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graphicsContext.setFill(Color.WHITE);

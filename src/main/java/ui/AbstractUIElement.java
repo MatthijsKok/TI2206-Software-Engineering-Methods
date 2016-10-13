@@ -12,5 +12,5 @@ abstract class AbstractUIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    abstract void draw(Canvas canvas, GraphicsContext graphicsContext);
+    abstract /* default */ void draw(Canvas canvas, GraphicsContext graphicsContext);
 }

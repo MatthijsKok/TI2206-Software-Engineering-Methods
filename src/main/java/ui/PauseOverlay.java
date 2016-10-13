@@ -24,7 +24,7 @@ class PauseOverlay extends AbstractUIElement {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
+    /* default */ void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         graphicsContext.setFill(Color.DARKGRAY);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graphicsContext.setFill(Color.WHITE);

@@ -51,7 +51,7 @@ public final class Harpoon extends AbstractEntity {
      * @param position The position where the rope will be
      *                 spawned.
      */
-    void shoot(final Vec2d position) {
+    /* default */ void shoot(final Vec2d position) {
         if (!isVisible()) {
             setVisibility(true);
             setPosition(position.x, position.y);

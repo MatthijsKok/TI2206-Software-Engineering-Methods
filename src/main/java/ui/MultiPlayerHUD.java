@@ -33,7 +33,7 @@ class MultiPlayerHUD extends HeadsUpDisplay {
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */
-    void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
+    /* default */ void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         // Time bar
         super.draw(canvas, graphicsContext);
 
