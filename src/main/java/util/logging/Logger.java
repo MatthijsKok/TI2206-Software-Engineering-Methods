@@ -198,21 +198,16 @@ public final class Logger {
     /**
      * Write all LogRecords in the ArrayList to the log file,
      * and then purges the ArrayList.
+     * @throws IOException if you make an invalid logfile.
      */
-    public void writeLogRecords(){
-        try {
-            Writer writer = new BufferedWriter(new FileWriter(logFile, true));
+    public void writeLogRecords() throws IOException {
+        Writer writer = new BufferedWriter(new FileWriter(logFile, true));
 
-            for (LogRecord logRecord : getLogRecords()) {
-                writer.write(logRecord.format());
-            }
-            writer.close();
-            purgeLogRecords();
-        } catch (IOException e) {
-            System.err.println("IOException! Probable cause:\n"
-                    + "Two instances of Logger exist in different threads. /\n"
-                    + "This was thrown during testing of Logger");
+        for (LogRecord logRecord : getLogRecords()) {
+            writer.write(logRecord.format());
         }
+        purgeLogRecords();
+        writer.close();
     }
 
     /**
@@ -220,7 +215,7 @@ public final class Logger {
      * This method is private because any method but writeLogRecords() calling this
      * would result in the destruction of information.
      */
-    private void purgeLogRecords() {
+    void purgeLogRecords() {
         logRecords.clear();
     }
 }

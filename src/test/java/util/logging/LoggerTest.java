@@ -30,7 +30,7 @@ public class LoggerTest {
 
     @Before
     public void setUp() {
-        logger.writeLogRecords();
+        logger.purgeLogRecords();
     }
 
     @Test
@@ -101,34 +101,18 @@ public class LoggerTest {
         logger.setLevel(LogLevel.INFO);
         logger.info(LOG_MESSAGE);
 
-        logger.writeLogRecords();
+        try {
+            logger.writeLogRecords();
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
         assertEquals(logger.getLogRecords().size(), 0);
     }
 
-//    @Rule
-//    public ExpectedException exception = ExpectedException.none();
-
-    @Test
-    public void logWriterExceptionTest(){
-        // MANIER 1
-//        exception.expect(IOException.class);
-//        exception.expectMessage("IOException! Probable cause:\n"
-//                + "Two instances of Logger exist in different threads. /\n"
-//                + "This was thrown during testing of Logger");
-
-
-        //MANIER 2
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        //redirect the System-output (normaly the console) to a variable
-        System.setErr(new PrintStream(outContent));
-
-        //call your method here
+    @Test(expected = IOException.class)
+    public void logWriterExceptionTest() throws IOException {
         logger.setFile(new File("doesntexist/fake.log"));
         logger.writeLogRecords();
-
-        //check if your error message is in the output variable
-//        assertEquals("IOException! Probable cause:\n"
-//                + "Two instances of Logger exist in different threads. /\n"
-//                + "This was thrown during testing of Logger\n", outContent.toString());
     }
 }
