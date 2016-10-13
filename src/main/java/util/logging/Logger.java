@@ -1,9 +1,6 @@
 package util.logging;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -202,7 +199,7 @@ public final class Logger {
      * Write all LogRecords in the ArrayList to the log file,
      * and then purges the ArrayList.
      */
-    public void writeLogRecords() {
+    public void writeLogRecords(){
         try {
             Writer writer = new BufferedWriter(new FileWriter(logFile, true));
 
@@ -211,7 +208,7 @@ public final class Logger {
             }
             writer.close();
             purgeLogRecords();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("IOException! Probable cause:\n"
                     + "Two instances of Logger exist in different threads. /\n"
                     + "This was thrown during testing of Logger");

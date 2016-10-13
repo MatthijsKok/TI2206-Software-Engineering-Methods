@@ -3,8 +3,10 @@ package util.logging;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 import static junit.framework.TestCase.fail;
@@ -103,17 +105,30 @@ public class LoggerTest {
         assertEquals(logger.getLogRecords().size(), 0);
     }
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+//    @Rule
+//    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void logWriterExceptionTest(){
-//        exception.expect(Exception.class);
-//        exception.expectMessage("IOException! Probable cause:\n" +
-//                "Two instances of Logger exist in different threads. /\n" +
-//                "This was thrown during testing of Logger");
+        // MANIER 1
+//        exception.expect(IOException.class);
+//        exception.expectMessage("IOException! Probable cause:\n"
+//                + "Two instances of Logger exist in different threads. /\n"
+//                + "This was thrown during testing of Logger");
 
+
+        //MANIER 2
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        //redirect the System-output (normaly the console) to a variable
+        System.setErr(new PrintStream(outContent));
+
+        //call your method here
         logger.setFile(new File("doesntexist/fake.log"));
         logger.writeLogRecords();
+
+        //check if your error message is in the output variable
+//        assertEquals("IOException! Probable cause:\n"
+//                + "Two instances of Logger exist in different threads. /\n"
+//                + "This was thrown during testing of Logger\n", outContent.toString());
     }
 }
