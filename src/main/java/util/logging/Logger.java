@@ -101,7 +101,7 @@ public final class Logger {
     /**
      * Entry point for the logging framework.
      * Checks if the message exists and if its LogLevel is important enough to be logged.
-     * If so it adds a new log record to the log records list.
+     * If so it adds a new LogRecord to the logRecords ArrayList.
      * @param logLevel The LogLevel this LogRecord is logged at.
      * @param message The String message to be logged.
      */
@@ -200,7 +200,8 @@ public final class Logger {
     }
 
     /**
-     * Write all log records to the log file, and then clears the records.
+     * Write all LogRecords in the ArrayList to the log file,
+     * and then purges the ArrayList.
      */
     public void writeLogRecords() {
         try {
@@ -212,14 +213,18 @@ public final class Logger {
             writer.close();
             purgeLogRecords();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("IOException! Probable cause:");
+            System.err.println("Two instances of Logger exist in different threads. /");
+            System.err.println("This was thrown during testing of Logger");;
         }
     }
 
     /**
-     * Empties the LogRecords.
+     * Clears the logRecords ArrayList.
+     * This method is private because any method but writeLogRecords() calling this
+     * would result in the destruction of information.
      */
-    void purgeLogRecords() {
+    private void purgeLogRecords() {
         logRecords.clear();
     }
 }

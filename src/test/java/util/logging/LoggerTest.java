@@ -7,16 +7,16 @@ import org.junit.Test;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
- * Created by dana on 27/09/2016.
- * This tests test the Logger class.
+ * Class that tests Logger.
  */
 public class LoggerTest {
 
     private static final String LOG_MESSAGE = "hello hello, check out this BEAUTIFUL logger!";
     private static Logger logger;
-    private File logFile = new File("docs/logs/testLog.log");
+    private File logFile = new File("docs/logs/LoggerTestLog.log");
 
     @BeforeClass
     public static void setUpClass() {
@@ -25,7 +25,7 @@ public class LoggerTest {
 
     @Before
     public void setUp() {
-        logger.purgeLogRecords();
+        logger.writeLogRecords();
     }
 
     @Test
@@ -38,6 +38,12 @@ public class LoggerTest {
         LogLevel logLevel = LogLevel.DEBUG;
         logger.setLevel(logLevel);
         assertEquals(Logger.getInstance().getLevel(), logLevel);
+    }
+
+    @Test
+    public void getFileTest() {
+        logger.setFile(logFile);
+        assertEquals(logger.getFile(), logFile);
     }
 
     @Test
@@ -94,4 +100,10 @@ public class LoggerTest {
         assertEquals(logger.getLogRecords().size(), 0);
     }
 
+    @Test
+    public void logWriterExceptionTest() {
+        logger.setFile(new File("doesntexist/fake.log"));
+        logger.writeLogRecords();
+        assertTrue(true);
+    }
 }
