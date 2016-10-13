@@ -14,6 +14,14 @@ import java.util.HashMap;
 public class Character extends AbstractEntity {
 
     /**
+     * The offset of the bounding box of a character.
+     */
+    private static final Vec2d OFFSET = new Vec2d(8, 32);
+    /**
+     * The bounding box of a character.
+     */
+    private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
+    /**
      * The running speed of a character. In pixels per second.
      */
     private static final double RUN_SPEED = 256; // px/s
@@ -21,6 +29,10 @@ public class Character extends AbstractEntity {
      * The gravity applied to a character. In pixels per second squared.
      */
     private static final double GRAVITY = 300; // px/s^2
+
+    static {
+        BOUNDING_BOX.setOffset(OFFSET.x, OFFSET.y);
+    }
 
     /**
      * Indicates whether a character is alive or not.
@@ -218,7 +230,7 @@ public class Character extends AbstractEntity {
      * @param id The player id.
      */
     @SuppressWarnings("magicnumber") //useless too make new fields for the offsets.
-    public void setId(int id) {
+    void setId(int id) {
         switch (id) {
             case 0:
                 //Set Mario as player 1

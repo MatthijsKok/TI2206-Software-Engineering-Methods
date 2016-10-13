@@ -92,7 +92,7 @@ public class Rectangle extends Shape {
      * @param x x coordinate
      * @param y y coordinate
      */
-    void setOffset(double x, double y) {
+    public void setOffset(double x, double y) {
         setOffset(new Vec2d(x, y));
     }
 
