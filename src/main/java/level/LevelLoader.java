@@ -1,10 +1,13 @@
 package level;
 
-import entities.Entity;
+import entities.AbstractEntity;
 import entities.EntityFactory;
+import javafx.application.Platform;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.JSONParser;
+
+import java.io.IOException;
 
 /**
  * This utility class loads entities into a level.
@@ -20,12 +23,15 @@ final class LevelLoader {
      * @param level The level to load.
      */
     static void load(Level level) {
-        JSONObject json = JSONParser.parseJSONFile(level.getFilename());
+        try {
+            JSONObject json = JSONParser.parseJSONFile(level.getFilename());
+            JSONArray entities = json.getJSONArray("entities");
 
-        JSONArray entities = json.getJSONArray("entities");
-
-        loadMetaData(level, json);
-        loadEntities(level, entities);
+            loadMetaData(level, json);
+            loadEntities(level, entities);
+        } catch (IOException e) {
+            Platform.exit();
+        }
     }
 
     private static void loadMetaData(Level level, JSONObject metaData) {
@@ -58,7 +64,7 @@ final class LevelLoader {
         for (Object obj : entities) {
             JSONObject json = (JSONObject) obj;
 
-            Entity entity = EntityFactory.createEntity(json);
+            AbstractEntity entity = EntityFactory.createEntity(json);
 
             if (entity != null) {
                 level.addEntity(entity);

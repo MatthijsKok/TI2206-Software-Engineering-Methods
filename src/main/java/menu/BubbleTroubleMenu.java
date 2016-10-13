@@ -51,7 +51,7 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
         button.setOnMouseClicked(e -> {
             Game game = Game.getInstance();
             game.setPlayerCount(1);
-            game.setLevels(DEFAULT_LEVELS);
+            game.setLevelsFromFiles(DEFAULT_LEVELS);
             game.start();
         });
 
@@ -66,7 +66,7 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
         button.setOnMouseClicked(e -> {
             Game game = Game.getInstance();
             game.setPlayerCount(2);
-            game.setLevels(DEFAULT_LEVELS);
+            game.setLevelsFromFiles(DEFAULT_LEVELS);
             game.start();
         });
 

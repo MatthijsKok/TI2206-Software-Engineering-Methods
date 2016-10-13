@@ -1,6 +1,6 @@
 package util;
 
-import entities.Entity;
+import entities.AbstractEntity;
 import game.Game;
 
 import java.util.List;
@@ -23,9 +23,9 @@ public final class CollisionManager {
      * only knows what to do with itself and so does b.
      */
     public static void handleCollisions() {
-        List<Entity> entities = GAME.getState().getCurrentLevel().getEntities();
+        List<AbstractEntity> entities = GAME.getState().getCurrentLevel().getEntities();
         int n = entities.size();
-        Entity a, b;
+        AbstractEntity a, b;
         for (int i = 0; i < n; i++) {
             a = entities.get(i);
             for (int j = i + 1; j < n; j++) {

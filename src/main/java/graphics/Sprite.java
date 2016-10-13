@@ -1,24 +1,18 @@
-package util;
+package graphics;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import util.CanvasManager;
 
 /**
  * Class that handles the creation of sprites.
  */
 public class Sprite implements Cloneable {
-
     /**
-     * The context this sprite is drawn to.
+     * The default frame per second rate of any sprite.
      */
-    private static GraphicsContext gc =
-            GameCanvasManager.getInstance().getContext();
-
-    /**
-     * The default frame speed of any sprite.
-     */
-    private static final double DEFAULT_FRAME_SPEED = 15; // f / s
+    private static final double DEFAULT_FPS = 15; // f / s
 
     /**
      * Image of the sprite.
@@ -108,7 +102,7 @@ public class Sprite implements Cloneable {
         setFrames(frames);
         setOffset(offset);
         setImage(image);
-        setFrameSpeed(DEFAULT_FRAME_SPEED);
+        setFrameSpeed(DEFAULT_FPS);
         currentFrame = 0;
         framePart = 0;
     }
@@ -117,10 +111,10 @@ public class Sprite implements Cloneable {
      * Clones a sprite using the same Image instance.
      * Use this when you want two sprites with the same image moving independently.
      *
-     * @return the new sprite.
+     * @param sprite the sprite to copy.
      */
-    public final Sprite clone() {
-        return new Sprite(image, frames, new Vec2d(getOffsetX(), getOffsetY()));
+    public Sprite(final Sprite sprite) {
+        this(sprite.getImage(), sprite.getFrames(), sprite.getOffset());
     }
 
     /**
@@ -128,19 +122,19 @@ public class Sprite implements Cloneable {
      *
      * @param image a image object containing the desired image.
      */
-    public final void setImage(final Image image) {
+    private void setImage(final Image image) {
         this.image = image;
         width = (int) image.getWidth() / frames;
         height = (int) image.getHeight();
     }
 
     /**
-     * Sets the sprite image.
+     * Gets the sprite's image.
      *
-     * @param uri the universal resource identifier (filename) of the object.
+     * @return the image of the sprite.
      */
-    public final void setImage(final String uri) {
-        setImage(new Image(uri));
+    private Image getImage() {
+        return image;
     }
 
     /**
@@ -148,7 +142,7 @@ public class Sprite implements Cloneable {
      *
      * @param frames amount of frames
      */
-    public final void setFrames(final int frames) {
+    private void setFrames(final int frames) {
         if (frames > 0) {
             this.frames = frames;
         } else {
@@ -157,11 +151,20 @@ public class Sprite implements Cloneable {
     }
 
     /**
+     * Gets the sprite's amount of frames.
+     *
+     * @return the frame amount of the sprite.
+     */
+    private int getFrames() {
+        return frames;
+    }
+
+    /**
      * Sets the sprite's frame speed.
      *
      * @param speed frame speed in frames per second.
      */
-    public final void setFrameSpeed(final double speed) {
+    private void setFrameSpeed(final double speed) {
         frameSpeed = speed;
     }
 
@@ -169,17 +172,17 @@ public class Sprite implements Cloneable {
      * Sets the offset so it is in the middle of the sprite.
      */
     public final void setOffsetToCenter() {
-        setOffset(new Vec2d(image.getWidth() / 2, image.getHeight() / 2));
+        setOffset(image.getWidth() / 2, image.getHeight() / 2);
     }
 
     /**
      * Moves the center of the sprite to the x and y locations.
      *
-     * @param x offset on the x axis.
-     * @param y offset on the y axis.
+     * @param xOffset offset on the x axis.
+     * @param yOffset offset on the y axis.
      */
-    public final void setOffset(final double x, final double y) {
-        setOffset(new Vec2d(x, y));
+    private void setOffset(final double xOffset, final double yOffset) {
+        setOffset(new Vec2d(xOffset, yOffset));
     }
 
     /**
@@ -187,17 +190,17 @@ public class Sprite implements Cloneable {
      *
      * @param offset A Vec2d containing the x and y values of the offset.
      */
-    public final void setOffset(final Vec2d offset) {
+    private void setOffset(final Vec2d offset) {
         this.offset = offset;
     }
 
     /**
      * Updates the sprite.
      *
-     * @param dt time expired since the last time the method was called.
+     * @param timeDifference time expired since the last time the method was called.
      */
-    public final void update(final double dt) {
-        framePart = (framePart + dt * frameSpeed) % frames;
+    public final void update(final double timeDifference) {
+        framePart = (framePart + timeDifference * frameSpeed) % frames;
         currentFrame = (int) Math.floor(framePart);
     }
 
@@ -214,7 +217,8 @@ public class Sprite implements Cloneable {
      * Draws the Sprite to the screen.
      *
      * @param position a Vec2D containing the x and y coordinates of the sprite.
-     * @param scale a double used to scale the sprite upon drawing e.g. 0,5 for half the size.
+     * @param scale a double used to scale the sprite upon drawing e.g. 0,5 for
+     *              half the size.
      */
     public final void draw(final Vec2d position, final double scale) {
         draw(position.x, position.y, scale);
@@ -236,41 +240,44 @@ public class Sprite implements Cloneable {
     /**
      * Draws the Sprite to the screen.
      *
-     * @param x the x position where the sprite should be drawn.
-     * @param y the y position where the sprite should be drawn.
+     * @param xPosition the x position where the sprite should be drawn.
+     * @param yPosition the y position where the sprite should be drawn.
      */
-    public final void draw(final double x, final double y) {
-        draw(x, y, 1);
+    public final void draw(final double xPosition, final double yPosition) {
+        draw(xPosition, yPosition, 1);
     }
 
     /**
      * Draws the Sprite to the screen.
      *
-     * @param x the x position where the sprite should be drawn.
-     * @param y the y position where the sprite should be drawn.
+     * @param xPosition the x position where the sprite should be drawn.
+     * @param yPosition the y position where the sprite should be drawn.
      * @param scale the scale at which the Sprite should be drawn.
      */
-    public final void draw(final double x, final double y, final double scale) {
-        draw(x, y, scale, scale);
+    public final void draw(final double xPosition, final double yPosition, final double scale) {
+        draw(xPosition, yPosition, scale, scale);
     }
 
     /**
      * Draws the Sprite to the screen.
      *
-     * @param x the x position where the sprite should be drawn.
-     * @param y the y position where the sprite should be drawn.
+     * @param xPosition the x position where the sprite should be drawn.
+     * @param yPosition the y position where the sprite should be drawn.
      * @param xScale a double used to scale the sprite in x direction upon drawing
      *               e.g. 0,5 for half the size.
      * @param yScale a double used to scale the sprite in y direction upon drawing
      *               e.g. 0,5 for half the size.
      */
-    public final void draw(final double x, final double y,
+    public final void draw(final double xPosition, final double yPosition,
                            final double xScale, final double yScale) {
-        gc.drawImage(image,
-                currentFrame * width, 0,
-                width, height,
-                x - offset.x * xScale, y - offset.y * yScale,
-                width * xScale, height * yScale);
+        final GraphicsContext graphicsContext = CanvasManager.getContext();
+        if (graphicsContext != null) {
+            graphicsContext.drawImage(
+                    image, currentFrame * width,
+                    0, width, height,
+                    xPosition - offset.x * xScale, yPosition - offset.y * yScale,
+                    width * xScale, height * yScale);
+        }
     }
 
     // GETTERS
@@ -281,24 +288,6 @@ public class Sprite implements Cloneable {
      */
     public Vec2d getOffset() {
         return offset;
-    }
-
-    /**
-     * Returns the x offset of the sprite.
-     *
-     * @return the x offset of the sprite
-     */
-    public double getOffsetX() {
-        return offset.x;
-    }
-
-    /**
-     * Returns the y offset of the sprite.
-     *
-     * @return the y offset of the sprite
-     */
-    public double getOffsetY() {
-        return offset.y;
     }
 
     /**
@@ -319,12 +308,4 @@ public class Sprite implements Cloneable {
         return height;
     }
 
-    /**
-     * Sets the frame of the sprite to be currently displayed, starting at 0.
-     *
-     * @param currentFrame the frame to set this sprite's current frame to.
-     */
-    public final void setCurrentFrame(final int currentFrame) {
-        this.currentFrame = currentFrame;
-    }
 }
