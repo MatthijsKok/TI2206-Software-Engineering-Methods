@@ -90,12 +90,6 @@
             <artifactId>json</artifactId>
             <version>20160810</version>
         </dependency>
-        <dependency>
-            <groupId>42</groupId>
-            <artifactId>TI2206</artifactId>
-            <version>0.0.1</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <reporting>
