@@ -38,6 +38,6 @@ public final class PlayerFactory {
                 break;
         }
 
-        return new Player(leftKey, rightKey, shootKey);
+        return new Player(playerId, leftKey, rightKey, shootKey);
     }
 }

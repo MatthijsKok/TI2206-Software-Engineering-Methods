@@ -14,22 +14,6 @@ import java.util.HashMap;
 public class Character extends AbstractEntity {
 
     /**
-     * The sprite for when a character is standing still.
-     */
-    private static final Sprite IDLE_SPRITE =
-            new Sprite("player/idle.png", 1, new Vec2d(8, 32));
-
-    /**
-     * The sprite for when a character is running.
-     */
-    private static final Sprite RUNNING_SPRITE =
-            new Sprite("player/running.png", 8, new Vec2d(11, 35));
-    /**
-     * The bounding box of the player.
-     */
-    private static final Rectangle BOUNDING_BOX =
-            new Rectangle(IDLE_SPRITE);
-    /**
      * The running speed of a character. In pixels per second.
      */
     private static final double RUN_SPEED = 256; // px/s
@@ -69,10 +53,6 @@ public class Character extends AbstractEntity {
      */
     Character(final Vec2d position) {
         super(position);
-
-        // Set character sprite
-        idleSprite = new Sprite(IDLE_SPRITE);
-        runningSprite = new Sprite(RUNNING_SPRITE);
 
         // Create harpoon for the character and add it to the level
         harpoon = new Harpoon();
@@ -230,6 +210,30 @@ public class Character extends AbstractEntity {
             getSprite().draw(getPosition());
         } else {
             getSprite().draw(getPosition(), direction, 1);
+        }
+    }
+
+    /**
+     * Sets the correct sprites according to the player id.
+     * @param id The player id.
+     */
+    @SuppressWarnings("magicnumber") //useless too make new fields for the offsets.
+    public void setId(int id) {
+        switch (id) {
+            case 0:
+                //Set Mario as player 1
+                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32));
+                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
+                break;
+            case 1:
+                //Set Yoshi as player 2
+                idleSprite = new Sprite("player/yoshi_idle.png", 1, new Vec2d(8, 32));
+                runningSprite = new Sprite("player/yoshi_running.png", 8, new Vec2d(11, 37));
+                break;
+            default:
+                //Set Mario for any other players
+                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32));
+                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
         }
     }
 }

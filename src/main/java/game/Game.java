@@ -202,7 +202,11 @@ public class Game {
             state.getCurrentLevel().update(dt);
         }
 
-        LOGGER.writeLogRecords();
+        try {
+            LOGGER.writeLogRecords();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
