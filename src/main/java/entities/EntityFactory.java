@@ -44,8 +44,9 @@ public final class EntityFactory {
         for (Player player : Game.getInstance().getPlayers()) {
             if (player.getCharacter() == null && player.getLives() > 0) {
                 Character character = new Character(position);
-                character.setId(player.getId());
+                character.determineSprite(player.getId());
                 player.setCharacter(character);
+                character.setPlayer(player);
                 return character;
             }
         }

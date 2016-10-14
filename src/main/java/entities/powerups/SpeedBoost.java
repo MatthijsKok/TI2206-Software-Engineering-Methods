@@ -1,27 +1,31 @@
 package entities.powerups;
 import entities.Character;
 
+/**
+ * Speeds up the players movements.
+ */
 public class SpeedBoost implements PowerUp {
 
+
     /**
-     * Character of the game.
+     * The applied speed boost in px/s.
      */
-    Character character;
+    private static final double SPEED_BOOST = 10;
 
     /**
      * Enables the effect of the specific power up.
      */
     @Override
-    public void enableEffect() {
-        character.setRunSpeed(character.getRunSpeed() + 10.0);
+    public void enableEffect(Character character) {
+        System.out.println("Speed boost");
+        character.setRunSpeed(character.getRunSpeed() + SPEED_BOOST);
     }
 
     /**
      * Disables the effect of the specific power up.
      */
     @Override
-    public void disableEffect() {
-        character.setRunSpeed(character.getRunSpeed() - 10.0);
+    public void disableEffect(Character character) {
+        character.setRunSpeed(character.getRunSpeed() - SPEED_BOOST);
     }
-
 }

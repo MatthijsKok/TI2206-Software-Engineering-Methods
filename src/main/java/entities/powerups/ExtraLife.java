@@ -1,33 +1,25 @@
 package entities.powerups;
 import entities.Character;
-import game.Game;
-import game.player.Player;
 
+/**
+ * Adds a life to the players total.
+ */
 public class ExtraLife implements PowerUp {
-
-    /**
-     * Character of the game.
-     */
-    Character character;
-
-    /**
-     * Player of the game.
-     */
-    Player player;
 
     /**
      * Enables the effect of the specific power up.
      */
     @Override
-    public void enableEffect() {
-        player.setLives(player.getLives() + 1);
+    public void enableEffect(Character character) {
+        System.out.println("Extra life");
+        character.getPlayer().setLives(character.getPlayer().getLives() + 1);
     }
 
     /**
      * Disables the effect of the specific power up.
      */
     @Override
-    public void disableEffect() {
+    public void disableEffect(Character character) {
 
     }
 

@@ -47,7 +47,6 @@ public class Pickup extends AbstractEntity {
         pickUpSprite.setOffsetToCenter();
         this.setSprite(pickUpSprite);
         this.powerUp = powerUp;
-
         setShape(new Rectangle(pickUpSprite));
     }
 
@@ -98,9 +97,9 @@ public class Pickup extends AbstractEntity {
      */
     private void collideWith(Character character) {
         Level level = Game.getInstance().getState().getCurrentLevel();
+        powerUp.enableEffect(character);
+
         level.removeEntity(this);
-
-
     }
 
     /**

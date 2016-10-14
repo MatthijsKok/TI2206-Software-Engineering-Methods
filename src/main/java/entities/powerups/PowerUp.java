@@ -1,26 +1,21 @@
 package entities.powerups;
-import game.player.Player;
+import entities.Character;
 
+/**
+ * Interface that all power-ups should implement.
+ */
 public interface PowerUp {
 
     /**
-     * Character of the game
-     */
-    Character character = null;
-
-    /**
-     * Player of the game
-     */
-    Player player = null;
-
-    /**
      * Enables the effect of the specific power up.
+     * @param character The character that picked up the powerup
      */
-    public void enableEffect();
+    void enableEffect(Character character);
 
     /**
      * Disables the effect of the specific power up.
+     * @param character The character that picked up the powerup
      */
-    public void disableEffect();
+   void disableEffect(Character character);
 
 }
