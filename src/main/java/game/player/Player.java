@@ -197,7 +197,7 @@ public class Player implements Observer {
     /**
      * @return The lives the player has at the start.
      */
-    public static int getLivesAtStart() {
+    static int getLivesAtStart() {
         return LIVES_AT_START;
     }
 
