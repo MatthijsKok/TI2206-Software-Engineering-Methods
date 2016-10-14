@@ -1,6 +1,7 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.powerups.PickupFactory;
 import game.Game;
 import level.Level;
 import geometry.Circle;
@@ -170,8 +171,13 @@ public class Ball extends Entity {
                     new Vec2d(-speed.x, -BOUNCE_SPEEDS[size - 1])));
         }
 
+        // Remove the bigger ball
         level.removeEntity(this);
 
+        // Randomly spawn a power-up
+        PickupFactory.spawn(position);
+
+        // Check if the level is won
         boolean won = true;
         for (Entity entity : level.getEntities()) {
             if (entity instanceof Ball) {
