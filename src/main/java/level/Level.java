@@ -376,7 +376,7 @@ public class Level {
     /**
      * Win the level.
      */
-    private void win() {
+    public void win() {
         GameState gameState = Game.getInstance().getState();
         gameState.pause();
         won = true;

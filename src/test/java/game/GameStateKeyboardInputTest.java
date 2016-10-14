@@ -13,6 +13,7 @@ import util.StageManager;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
 
 /**
  * Test suite for the KeyboardInput on GameState.
@@ -28,6 +29,7 @@ public class GameStateKeyboardInputTest extends BubbleTroubleApplicationTest {
     public void setUp() {
         StageManager.getStage().getScene();
         gameState = new GameState(Game.getInstance());
+        gameState.reset();
     }
 
     @Test
@@ -59,7 +61,7 @@ public class GameStateKeyboardInputTest extends BubbleTroubleApplicationTest {
         PowerMockito.mockStatic(KeyboardInputManager.class);
         PowerMockito.when(KeyboardInputManager.keyPressed("R")).thenReturn(true);
 
-        assertThat(CanvasManager.getCanvas().isVisible(), is(false));
+        assertThat(gameState.isInProgress(), is(false));
     }
 
     @Test
@@ -69,17 +71,27 @@ public class GameStateKeyboardInputTest extends BubbleTroubleApplicationTest {
         PowerMockito.mockStatic(KeyboardInputManager.class);
         PowerMockito.when(KeyboardInputManager.keyPressed("R")).thenReturn(true);
 
-        assertThat(CanvasManager.getCanvas().isVisible(), is(false));
+        assertThat(gameState.isInProgress(), is(false));
     }
 
     @Test
     public void testLevelWon() {
-        gameState.lose();
+        gameState.getCurrentLevel().win();
 
         PowerMockito.mockStatic(KeyboardInputManager.class);
         PowerMockito.when(KeyboardInputManager.keyPressed("R")).thenReturn(true);
 
-        assertThat(CanvasManager.getCanvas().isVisible(), is(false));
+        assertThat(gameState.isInProgress(), is(false));
+    }
+
+    @Test
+    public void testLevelLost() {
+        gameState.getCurrentLevel().lose();
+
+        PowerMockito.mockStatic(KeyboardInputManager.class);
+        PowerMockito.when(KeyboardInputManager.keyPressed("R")).thenReturn(true);
+
+        assertThat(gameState.getCurrentLevel().getFilename(), is("src/main/resources/levels/level1.json"));
     }
 
 }
