@@ -7,7 +7,7 @@ import graphics.Sprite;
 /**
  * Represents a FloorBlock entity used for floors in the game.
  */
-class FloorBlock extends AbstractEntity {
+public class FloorBlock extends AbstractEntity {
 
     /**
      * The sprite used for the block object in the game.

@@ -1,6 +1,7 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.powerups.PickupFactory;
 import game.Game;
 import geometry.Rectangle;
 import level.Level;
@@ -177,6 +178,9 @@ public class Ball extends AbstractEntity {
         }
 
         level.removeEntity(this);
+
+        // Randomly spawn a powerup
+        PickupFactory.spawn(getPosition());
     }
 
     /**

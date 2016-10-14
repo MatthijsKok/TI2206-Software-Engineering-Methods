@@ -2,6 +2,7 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
+import game.player.Player;
 import geometry.Rectangle;
 import graphics.Sprite;
 
@@ -21,10 +22,11 @@ public class Character extends AbstractEntity {
      * The bounding box of a character.
      */
     private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
+
     /**
      * The running speed of a character. In pixels per second.
      */
-    private static final double RUN_SPEED = 256; // px/s
+    private double runSpeed = 226;
     /**
      * The gravity applied to a character. In pixels per second squared.
      */
@@ -60,7 +62,13 @@ public class Character extends AbstractEntity {
     private boolean shooting = false;
 
     /**
+     * The Player that is controlling this Character.
+     */
+    private Player player;
+
+    /**
      * Instantiate a new character at position (x, y).
+     *
      * @param position position of the character
      */
     Character(final Vec2d position) {
@@ -115,6 +123,7 @@ public class Character extends AbstractEntity {
 
     /**
      * Makes the player toggle shooting.
+     *
      * @param shooting boolean whether the player is shooting or not.
      */
     public void setShooting(boolean shooting) {
@@ -130,11 +139,12 @@ public class Character extends AbstractEntity {
 
     /**
      * Updates the Character object.
+     *
      * @param timeDifference The time since the last time the update method was called
      */
     public final void update(final double timeDifference) {
         // Walk
-        setSpeed(RUN_SPEED * direction, getYSpeed() + GRAVITY * timeDifference);
+        setSpeed(runSpeed * direction, getYSpeed() + GRAVITY * timeDifference);
 
         // Set the character sprite
         if (direction == 0) {
@@ -151,6 +161,7 @@ public class Character extends AbstractEntity {
 
     /**
      * Entry point for collisions.
+     *
      * @param entity the entity the character collides with
      */
     public final void collideWith(final AbstractEntity entity) {
@@ -177,6 +188,7 @@ public class Character extends AbstractEntity {
     /**
      * If a character collides with a ground floor, the character should not sink
      * through it.
+     *
      * @param floor the ground floor the character collides with
      */
     private void collideWith(final FloorBlock floor) {
@@ -196,6 +208,7 @@ public class Character extends AbstractEntity {
 
     /**
      * If a character collides with a wall, it should move outside that wall.
+     *
      * @param wall the wall the character collides with
      */
     private void collideWith(final WallBlock wall) {
@@ -227,10 +240,12 @@ public class Character extends AbstractEntity {
 
     /**
      * Sets the correct sprites according to the player id.
+     *
      * @param id The player id.
      */
-    @SuppressWarnings("magicnumber") //useless too make new fields for the offsets.
-    void setId(int id) {
+    @SuppressWarnings("magicnumber")
+    //useless too make new fields for the offsets.
+    void determineSprite(int id) {
         switch (id) {
             case 0:
                 //Set Mario as player 1
@@ -247,5 +262,35 @@ public class Character extends AbstractEntity {
                 idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32));
                 runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
         }
+    }
+
+    /**
+     * @return the speed at which the character runs in px/s
+     */
+    public double getRunSpeed() {
+        return runSpeed;
+    }
+
+    /**
+     * Sets the speed at which the character runs.
+     * @param runSpeed The speed at which the Character should
+     */
+    public void setRunSpeed(double runSpeed) {
+        this.runSpeed = runSpeed;
+    }
+
+    /**
+     * @return The Player object that is controlling this Character object
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * Set the player that controls this Character.
+     * @param player The Player object that controls this Character.
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

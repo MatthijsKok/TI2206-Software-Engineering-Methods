@@ -113,21 +113,21 @@ public abstract class AbstractEntity extends Observable {
      * Returns the position of the entity.
      * @return the position
      */
-    /* default */ Vec2d getPosition() {
+    /* default */ protected Vec2d getPosition() {
         return position;
     }
 
     /**
      * @return The x position of the entity.
      */
-    /* default */ double getX() {
+    /* default */ protected double getX() {
         return position.x;
     }
 
     /**
      * @return The y position of the entity.
      */
-    /* default */ double getY() {
+    /* default */ public double getY() {
         return position.y;
     }
 
@@ -149,7 +149,7 @@ public abstract class AbstractEntity extends Observable {
     /**
      * @return The y position of the entity.
      */
-    /* default */ double getYSpeed() {
+    /* default */ protected double getYSpeed() {
         return speed.y;
     }
 
@@ -157,7 +157,7 @@ public abstract class AbstractEntity extends Observable {
      * Returns the sprite of the entity.
      * @return the sprite of the entity
      */
-    /* default */ Sprite getSprite() {
+    /* default */ public Sprite getSprite() {
         return sprite;
     }
 
@@ -173,7 +173,7 @@ public abstract class AbstractEntity extends Observable {
      * Returns the boolean indicating if the sprite is visible.
      * @return the boolean indicating if the sprite is visible
      */
-    /* default */ boolean isVisible() {
+    /* default */ protected boolean isVisible() {
         return visible && sprite != null;
     }
 
@@ -184,7 +184,7 @@ public abstract class AbstractEntity extends Observable {
      * @param xPosition The x coordinate of the entity
      * @param yPosition The y coordinate of the entity
      */
-    /* default */ final void setPosition(final double xPosition, final double yPosition) {
+    /* default */ protected final void setPosition(final double xPosition, final double yPosition) {
         this.position.x = xPosition;
         this.position.y = yPosition;
     }
@@ -194,7 +194,7 @@ public abstract class AbstractEntity extends Observable {
      * @param xSpeed The horizontal speed
      * @param ySpeed The vertical speed
      */
-    /* default */ void setSpeed(final double xSpeed, final double ySpeed) {
+    /* default */ protected void setSpeed(final double xSpeed, final double ySpeed) {
         speed.x = xSpeed;
         speed.y = ySpeed;
     }
@@ -203,7 +203,7 @@ public abstract class AbstractEntity extends Observable {
      * Sets the sprite of the entity.
      * @param sprite a Sprite object for the entity
      */
-    /* default */ void setSprite(final Sprite sprite) {
+    /* default */ protected void setSprite(final Sprite sprite) {
         this.sprite = sprite;
     }
 
@@ -212,7 +212,7 @@ public abstract class AbstractEntity extends Observable {
      * entity's position.
      * @param shape Sprite object for the entity.
      */
-    /* default */ void setShape(final Shape shape) {
+    /* default */ protected void setShape(final Shape shape) {
         shape.bindPosition(position);
         this.shape = shape;
     }

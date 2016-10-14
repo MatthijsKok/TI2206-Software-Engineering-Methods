@@ -314,7 +314,7 @@ public class Level {
      * Sets the levels duration.
      * @param duration The duration in seconds (must be positive).
      */
-    void setDuration(double duration) {
+    public void setDuration(double duration) {
         if (duration > 0) {
             this.duration = duration;
         }
