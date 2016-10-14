@@ -60,17 +60,15 @@
                 <configuration>
                     <verbose>true</verbose>
                     <rulesets>
-                        <ruleset>
-                            <rule ref="rulesets/java/basic.xml"/>
-                            <rule ref="rulesets/java/braces.xml"/>
-                            <rule ref="rulesets/java/codesize.xml"/>
-                            <rule ref="rulesets/java/comments.xml"/>
-                            <rule ref="rulesets/java/imports.xml"/>
-                            <rule ref="rulesets/java/junit.xml"/>
-                            <rule ref="rulesets/java/naming.xml"/>
-                            <rule ref="rulesets/java/optimizations.xml"/>
-                            <rule ref="rulesets/java/unusedcode.xml"/>
-                        </ruleset>
+                        <ruleset ref="rulesets/java/basic.xml"/>
+                        <ruleset ref="rulesets/java/braces.xml"/>
+                        <ruleset ref="rulesets/java/codesize.xml"/>
+                        <ruleset ref="rulesets/java/comments.xml"/>
+                        <ruleset ref="rulesets/java/imports.xml"/>
+                        <ruleset ref="rulesets/java/junit.xml"/>
+                        <ruleset ref="rulesets/java/naming.xml"/>
+                        <ruleset ref="rulesets/java/optimizations.xml"/>
+                        <ruleset ref="rulesets/java/unusedcode.xml"/>
                     </rulesets>
                 </configuration>
             </plugin>
