@@ -7,6 +7,7 @@ import entities.Character;
 import game.Game;
 import game.GameState;
 import game.player.Player;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.media.AudioClip;
 import util.CollisionManager;
@@ -15,6 +16,7 @@ import graphics.Sprite;
 import util.StageManager;
 import util.logging.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,8 +119,9 @@ public class Level {
 
     /**
      * Restarts the level.
+     * @throws IOException if the level file is not found.
      */
-    public final void restart() {
+    public final void restart() throws IOException {
         unload();
         load();
     }
@@ -136,8 +139,9 @@ public class Level {
 
     /**
      * Loads a level from a file.
+     * @throws IOException when the file is not found.
      */
-    public void load() {
+    public void load() throws IOException {
         LOGGER.debug("Loading Level...");
 
         LevelLoader.load(this);
@@ -146,7 +150,8 @@ public class Level {
         won = false;
         lost = false;
 
-        StageManager.getStage().setTitle(name);
+        Platform.runLater(() ->
+                StageManager.getStage().setTitle(name));
 
         if (this.backgroundMusic != null) {
             this.backgroundMusic.play();

@@ -28,7 +28,7 @@ public class BubbleTroubleApplicationTest extends ApplicationTest {
 
     private void setUpGame() {
         List<Level> levelList = new ArrayList<>();
-        levelList.add(new Level("levelFileName"));
+        levelList.add(new Level("src/main/resources/levels/level1.json"));
         Game.getInstance().setLevels(levelList);
         Game.getInstance().setPlayerCount(1);
     }

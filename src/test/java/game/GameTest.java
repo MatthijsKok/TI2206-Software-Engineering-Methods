@@ -5,6 +5,7 @@ import game.player.Player;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Test suite for the game class.
@@ -59,13 +62,16 @@ public class GameTest extends BubbleTroubleApplicationTest {
         assertNotNull(game.getState());
     }
 
-//    @Test
-//    public void testStart() {
-//        Platform.runLater(() -> {
-//            game.start();
-//            assertTrue(game.getState().isInProgress());
-//            game.stop();
-//        });
-//    }
+    @Test
+    public void testStart() {
+        try {
+            game.start();
+        } catch (IOException e) {
+            fail();
+        }
+
+        assertTrue(game.getState().isInProgress());
+        game.stop();
+    }
 
 }

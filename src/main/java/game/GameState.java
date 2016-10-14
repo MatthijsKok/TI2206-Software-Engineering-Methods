@@ -5,6 +5,7 @@ import game.player.Player;
 import level.Level;
 import util.KeyboardInputManager;
 
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -85,7 +86,11 @@ public class GameState implements Observer {
                 nextLevel();
                 resume();
             } else if (level.isLost()) {
-                level.restart();
+                try {
+                    level.restart();
+                } catch (IOException e) {
+                    game.stop();
+                }
                 resume();
             }
         }
@@ -132,7 +137,11 @@ public class GameState implements Observer {
 
         if (hasNextLevel()) {
             currentLevel++;
-            getCurrentLevel().load();
+            try {
+                getCurrentLevel().load();
+            } catch (IOException e) {
+                game.stop();
+            }
         }
     }
 

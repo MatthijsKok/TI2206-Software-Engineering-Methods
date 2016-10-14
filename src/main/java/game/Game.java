@@ -8,6 +8,7 @@ import ui.GameUI;
 import util.CanvasManager;
 import util.logging.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -165,8 +166,9 @@ public class Game {
 
     /**
      * Loads and starts the first level.
+     * @throws IOException when the first level's file is not found.
      */
-    public void start() {
+    public void start() throws IOException {
         state.getCurrentLevel().load();
         timer.start();
         state.resume();
