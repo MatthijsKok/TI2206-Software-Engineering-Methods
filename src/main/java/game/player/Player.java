@@ -2,7 +2,7 @@ package game.player;
 
 import entities.Ball;
 import entities.Character;
-import entities.Rope;
+import entities.Harpoon;
 import game.Game;
 import util.KeyboardInputManager;
 
@@ -25,6 +25,11 @@ public class Player implements Observer {
      * Score that is multiplied by the size of the ball, and then added to the score.
      */
     private static final int SCORE_PER_BALL = 100;
+
+    /**
+     * The player ID of the player.
+     */
+    private int id = 0;
 
     /**
      * These Strings represent the keyboard characters this player uses.
@@ -52,11 +57,15 @@ public class Player implements Observer {
      * @param leftKey  The keyboard character that makes the player move left.
      * @param rightKey The keyboard character that makes the player move right.
      * @param shootKey The keyboard character that makes the player shoot.
+     * @param id The player id of the player.
      */
-    public Player(String leftKey, String rightKey, String shootKey) {
+    public Player(int id, String leftKey, String rightKey, String shootKey) {
+        this.id = id;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.shootKey = shootKey;
+
+        KeyboardInputManager.addListener(this);
     }
 
     /**
@@ -82,7 +91,7 @@ public class Player implements Observer {
         if (character != null) {
             this.character = character;
             character.addObserver(this);
-            character.getRope().addObserver(this);
+            character.getHarpoon().addObserver(this);
         }
     }
 
@@ -94,14 +103,14 @@ public class Player implements Observer {
      */
     public void update(Observable observable, Object obj) {
         if (character != null && observable instanceof KeyboardInputManager) {
-            update((KeyboardInputManager) observable);
+            updateKeyboardInput();
         }
 
         if (observable instanceof Character) {
             updateFromCharacter((HashMap) obj);
         }
 
-        if (observable instanceof Rope) {
+        if (observable instanceof Harpoon) {
             updateFromRope((Ball) obj);
         }
     }
@@ -142,20 +151,18 @@ public class Player implements Observer {
     }
 
     /**
-     * Handles the input and passes it to the character.
-     *
-     * @param kim KeyboardInputManager to take input from.
+     * Handles keyboard input and passes it to the character.
      */
-    private void update(KeyboardInputManager kim) {
-        if (kim.keyPressed(leftKey) && !kim.keyPressed(rightKey)) {
+    private void updateKeyboardInput() {
+        if (KeyboardInputManager.keyPressed(leftKey) && !KeyboardInputManager.keyPressed(rightKey)) {
             character.moveLeft();
-        } else if (!kim.keyPressed(leftKey) && kim.keyPressed(rightKey)) {
+        } else if (!KeyboardInputManager.keyPressed(leftKey) && KeyboardInputManager.keyPressed(rightKey)) {
             character.moveRight();
         } else {
             character.stop();
         }
 
-        character.setShooting(kim.keyPressed(shootKey));
+        character.setShooting(KeyboardInputManager.keyPressed(shootKey));
     }
 
     /**
@@ -177,5 +184,19 @@ public class Player implements Observer {
      */
     public int getScore() {
         return score;
+    }
+
+    /**
+     * @return The lives the player has at the start.
+     */
+    public static int getLivesAtStart() {
+        return LIVES_AT_START;
+    }
+
+    /**
+     * @return The id of the player.
+     */
+    public int getId() {
+        return id;
     }
 }

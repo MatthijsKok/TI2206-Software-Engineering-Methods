@@ -5,7 +5,7 @@ import game.player.PlayerFactory;
 import javafx.animation.AnimationTimer;
 import level.Level;
 import ui.GameUI;
-import util.GameCanvasManager;
+import util.CanvasManager;
 import util.logging.Logger;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class Game {
      */
     private static final double NANO_SECONDS_IN_SECOND = 1000000000.0;
     /**
-     * Defines the maximum timespan a frame can simulate.
+     * Defines the maximum time span a frame can simulate.
      */
     private static final double MAX_FRAME_DURATION = 0.033333333;
     /**
@@ -135,9 +135,16 @@ public class Game {
      * Creates new levels from a list of level files.
      * @param levelFiles the list of files to create levels from.
      */
-    public void setLevels(List<String> levelFiles) {
-        levels.clear();
-        levels.addAll(levelFiles.stream().map(Level::new).collect(Collectors.toList()));
+    public void setLevelsFromFiles(List<String> levelFiles) {
+        setLevels(levelFiles.stream().map(Level::new).collect(Collectors.toList()));
+    }
+
+    /**
+     * Sets the game's levels to these levels.
+     * @param levels the list of levels.
+     */
+    public void setLevels(List<Level> levels) {
+        this.levels = levels;
     }
 
     /**
@@ -164,7 +171,7 @@ public class Game {
         state.resume();
         LOGGER.info("level started.");
         lastNanoTime = System.nanoTime();
-        GameCanvasManager.getInstance().getCanvas().setVisible(true);
+        CanvasManager.getCanvas().setVisible(true);
     }
 
     /**
@@ -173,7 +180,7 @@ public class Game {
     void stop() {
         state.reset();
         timer.stop();
-        GameCanvasManager.getInstance().getCanvas().setVisible(false);
+        CanvasManager.getCanvas().setVisible(false);
     }
 
     /**
@@ -195,7 +202,11 @@ public class Game {
             state.getCurrentLevel().update(dt);
         }
 
-        LOGGER.writeLogRecords();
+        try {
+            LOGGER.writeLogRecords();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -205,6 +216,6 @@ public class Game {
         LOGGER.debug("Drawing the game...");
         state.getCurrentLevel().draw();
 
-        ui.draw();
+        ui.draw(CanvasManager.getCanvas(), CanvasManager.getContext());
     }
 }

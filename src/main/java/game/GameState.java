@@ -50,7 +50,7 @@ public class GameState implements Observer {
      */
     GameState(Game game) {
         this.game = game;
-        KeyboardInputManager.getInstance().addObserver(this);
+        KeyboardInputManager.addListener(this);
     }
 
     /**
@@ -60,18 +60,17 @@ public class GameState implements Observer {
      */
     public void update(Observable observable, Object obj) {
         if (observable instanceof KeyboardInputManager) {
-            updateKeyboardInput((KeyboardInputManager) observable);
+            updateKeyboardInput();
         }
     }
 
     /**
      * Handles keyboard input.
-     * @param kim the
      */
-    private void updateKeyboardInput(KeyboardInputManager kim) {
+    private void updateKeyboardInput() {
         Level level = getCurrentLevel();
 
-        if (!level.isWon() && !level.isLost() && kim.keyPressed(PAUSE_KEY)) {
+        if (!level.isWon() && !level.isLost() && KeyboardInputManager.keyPressed(PAUSE_KEY)) {
             if (inProgress) {
                 pause();
             } else {
@@ -79,7 +78,7 @@ public class GameState implements Observer {
             }
         }
 
-        if (kim.keyPressed(RESTART_KEY)) {
+        if (KeyboardInputManager.keyPressed(RESTART_KEY)) {
             if (won || lost) {
                 game.stop();
             } else if (level.isWon()) {

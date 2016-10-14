@@ -10,7 +10,7 @@ public abstract class Shape {
     /**
      * The central position of the shape.
      */
-    private Vec2d position;
+    private Vec2d position = new Vec2d(0, 0);
 
     /**
      * Creates a new shape instance at position (0, 0).
@@ -33,15 +33,16 @@ public abstract class Shape {
      * @param x x position
      * @param y y position
      */
-    public void setPosition(double x, double y) {
-        setPosition(new Vec2d(x, y));
+    void setPosition(double x, double y) {
+        position.x = x;
+        position.y = y;
     }
 
     /**
-     * Sets the position of the shape.
+     * Binds the position of the shape to an existing Vec2d instance.
      * @param position vector of position
      */
-    public void setPosition(Vec2d position) {
+    public void bindPosition(Vec2d position) {
         this.position = position;
     }
 
@@ -67,9 +68,30 @@ public abstract class Shape {
     }
 
     /**
-     * This method checks if a shape intersects with a certain other shape.
+     * Check if a shape intersects with a certain other shape.
      * @param shape the shape to check with
      * @return whether the shapes intersect
      */
     public abstract boolean intersects(Shape shape);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Shape shape = (Shape) o;
+
+        return getPosition().equals(shape.getPosition());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getPosition().hashCode();
+    }
 }

@@ -2,6 +2,7 @@ package util.logging;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * LogRecord class to represent a log message and all it's attributes.
@@ -37,7 +38,9 @@ class LogRecord {
      * @param message The message of this LogRecord.
      * @param milliseconds The amount of milliseconds since epoch in POSIX time.
      */
-    LogRecord(LogLevel logLevel, String sourceClassName, String sourceMethodName, String message, long milliseconds) {
+    LogRecord(
+            final LogLevel logLevel, final String sourceClassName,
+            final String sourceMethodName, final String message, final long milliseconds) {
         this.logLevel = logLevel;
         this.sourceClassName = sourceClassName;
         this.sourceMethodName = sourceMethodName;
@@ -48,14 +51,13 @@ class LogRecord {
     /**
      * Formats the LogRecord as a String to be written to the log file.
      * Example:
-     *
      * [2016-09-21][13:17:45.980][BubbleTrouble][start]
      * DEBUG: Testing Logging....
      *
      * @return a String representing the LogRecord.
      */
-    String format() {
-        return new SimpleDateFormat("[yyyy-MM-dd][HH:mm:ss.SSS][").format(new Date(milliseconds))
+    /* default */ String format() {
+        return new SimpleDateFormat("[yyyy-MM-dd][HH:mm:ss.SSS][", Locale.ENGLISH).format(new Date(milliseconds))
                 + sourceClassName + "][" + sourceMethodName + "]\n" + logLevel.getName() + ": " + message + "\n";
     }
 }

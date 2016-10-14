@@ -51,11 +51,12 @@ public class BubbleTroubleMenu extends Pane {
         button.setOnMouseClicked(e -> {
             Game game = Game.getInstance();
             game.setPlayerCount(1);
-            game.setLevels(DEFAULT_LEVELS);
+            game.setLevelsFromFiles(DEFAULT_LEVELS);
             game.start();
         });
 
         return button;
+
     }
 
     private Button createMultiPlayerButton() {
@@ -67,7 +68,7 @@ public class BubbleTroubleMenu extends Pane {
         button.setOnMouseClicked(e -> {
             Game game = Game.getInstance();
             game.setPlayerCount(2);
-            game.setLevels(DEFAULT_LEVELS);
+            game.setLevelsFromFiles(DEFAULT_LEVELS);
             game.start();
         });
 

@@ -2,13 +2,15 @@ package ui;
 
 import game.Game;
 import game.GameState;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import level.Level;
 import util.logging.Logger;
 
 /**
  * Takes care of the total UI of a game instance.
  */
-public class GameUI extends UIElement {
+public class GameUI extends AbstractUIElement {
 
     /**
      * The logger.
@@ -18,38 +20,38 @@ public class GameUI extends UIElement {
     /**
      * The overlay for when the game is won.
      */
-    private GameWonOverlay gameWonOverlay = new GameWonOverlay();
+    private final GameWonOverlay gameWonOverlay = new GameWonOverlay();
     /**
      * The overlay for when the game is lost.
      */
-    private GameLostOverlay gameLostOverlay = new GameLostOverlay();
+    private final GameLostOverlay gameLostOverlay = new GameLostOverlay();
     /**
      * The overlay for when a level is won.
      */
-    private LevelWonOverlay levelWonOverlay = new LevelWonOverlay();
+    private final LevelWonOverlay levelWonOverlay = new LevelWonOverlay();
     /**
      * The overlay for when a level is lost.
      */
-    private LevelLostOverlay levelLostOverlay = new LevelLostOverlay();
+    private final LevelLostOverlay levelLostOverlay = new LevelLostOverlay();
     /**
      * The overlay for when a level is lost by timeout.
      */
-    private LevelTimeUpOverlay levelTimeUpOverlay = new LevelTimeUpOverlay();
+    private final LevelTimeUpOverlay timeUpOverlay = new LevelTimeUpOverlay();
     /**
      * The overlay for when the game is paused.
      */
-    private PauseOverlay pauseOverlay = new PauseOverlay();
+    private final PauseOverlay pauseOverlay = new PauseOverlay();
     /**
      * The hud for when playing the game.
      */
-    private HUD hud;
+    private HeadsUpDisplay hud;
 
     /**
      * Creates a new GameUI instance handling the UI of Game game.
      *
      * @param game the game to draw the ui for.
      */
-    public GameUI(Game game) {
+    public GameUI(final Game game) {
 
         init(game);
     }
@@ -59,7 +61,7 @@ public class GameUI extends UIElement {
      *
      * @param game the game to init the hud for.
      */
-    private void init(Game game) {
+    private void init(final Game game) {
         switch (game.getPlayerCount()) {
             case 1:
                 hud = new SinglePlayerHUD();
@@ -68,35 +70,38 @@ public class GameUI extends UIElement {
                 hud = new MultiPlayerHUD();
                 break;
             default:
-                hud = new HUD();
+                hud = new HeadsUpDisplay();
+                break;
         }
     }
 
     /**
      * Draws all ui elements in the game.
+     * @param canvas The Canvas to draw on
+     * @param graphicsContext The GraphicsContext to draw on
      */
-    public void draw() {
+    public void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         LOGGER.trace("Drawing UI elements...");
 
-        GameState state = Game.getInstance().getState();
-        Level level = state.getCurrentLevel();
+        final GameState state = Game.getInstance().getState();
+        final Level level = state.getCurrentLevel();
 
         if (state.isWon()) {
-            gameWonOverlay.draw();
+            gameWonOverlay.draw(canvas, graphicsContext);
         } else if (state.isLost()) {
-            gameLostOverlay.draw();
+            gameLostOverlay.draw(canvas, graphicsContext);
         } else if (level.isWon()) {
-            levelWonOverlay.draw();
+            levelWonOverlay.draw(canvas, graphicsContext);
         } else if (level.isLost()) {
             if (level.getTimeLeft() <= 0) {
-                levelTimeUpOverlay.draw();
+                timeUpOverlay.draw(canvas, graphicsContext);
             } else {
-                levelLostOverlay.draw();
+                levelLostOverlay.draw(canvas, graphicsContext);
             }
         } else if (state.isInProgress()) {
-            hud.draw();
+            hud.draw(canvas, graphicsContext);
         } else {
-            pauseOverlay.draw();
+            pauseOverlay.draw(canvas, graphicsContext);
         }
 
         LOGGER.trace("UI elements drawn.");

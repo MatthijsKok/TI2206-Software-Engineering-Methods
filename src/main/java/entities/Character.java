@@ -3,8 +3,7 @@ package entities;
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
 import geometry.Rectangle;
-import geometry.Shape;
-import util.Sprite;
+import graphics.Sprite;
 
 import java.util.HashMap;
 
@@ -12,29 +11,28 @@ import java.util.HashMap;
 /**
  * The Character class represents a character.
  */
-public class Character extends Entity {
+public class Character extends AbstractEntity {
 
     /**
-     * The sprite for when a character is standing still.
+     * The offset of the bounding box of a character.
      */
-    private static final Sprite IDLE_SPRITE =
-            new Sprite("player/idle.png", 1, new Vec2d(8, 32));
-
+    private static final Vec2d OFFSET = new Vec2d(8, 32);
     /**
-     * The sprite for when a character is running.
+     * The bounding box of a character.
      */
-    private static final Sprite RUNNING_SPRITE =
-            new Sprite("player/running.png", 8, new Vec2d(11, 35));
-
+    private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
     /**
      * The running speed of a character. In pixels per second.
      */
-    private static final double RUN_SPEED  = 256; // px/s
-
+    private static final double RUN_SPEED = 256; // px/s
     /**
      * The gravity applied to a character. In pixels per second squared.
      */
-    private static final double GRAVITY    = 300; // px/s^2
+    private static final double GRAVITY = 300; // px/s^2
+
+    static {
+        BOUNDING_BOX.setOffset(OFFSET.x, OFFSET.y);
+    }
 
     /**
      * Indicates whether a character is alive or not.
@@ -42,19 +40,14 @@ public class Character extends Entity {
     private boolean alive = true;
 
     /**
-     * Rope of the character.
+     * Harpoon of the character.
      */
-    private Rope rope;
+    private Harpoon harpoon;
 
     /**
      * The sprites of the character.
      */
     private Sprite idleSprite, runningSprite;
-
-    /**
-     * The bounding box of the character.
-     */
-    private Rectangle shape;
 
     /**
      * State of the character, indicates which action a character is performing.
@@ -68,23 +61,16 @@ public class Character extends Entity {
 
     /**
      * Instantiate a new character at position (x, y).
-     * @param x the x position of the character
-     * @param y the y position of the character
+     * @param position position of the character
      */
-    public Character(final double x, final double y) {
-        super(x, y);
+    Character(final Vec2d position) {
+        super(position);
 
-        // Set character sprite
-        idleSprite = Character.IDLE_SPRITE.clone();
-        runningSprite = Character.RUNNING_SPRITE.clone();
+        // Create harpoon for the character and add it to the level
+        harpoon = new Harpoon();
+        Game.getInstance().getState().getCurrentLevel().addEntity(harpoon);
 
-        // Create rope for the character and add it to the level
-        rope = new Rope();
-        Game.getInstance().getState().getCurrentLevel().addEntity(rope);
-
-        shape = new Rectangle(runningSprite.getWidth(),
-                              runningSprite.getHeight());
-        updatePosition(0);
+        setShape(new Rectangle(BOUNDING_BOX));
     }
 
     /**
@@ -102,60 +88,8 @@ public class Character extends Entity {
     /**
      * @return whether the character is alive
      */
-    public final boolean isAlive() {
+    boolean isAlive() {
         return alive;
-    }
-
-    /**
-     * @return the left side of the bounding box of the character.
-     */
-    private double getLeft() {
-        return shape.getLeft();
-    }
-
-    /**
-     * @return the right side of the bounding box of the character.
-     */
-    private double getRight() {
-        return shape.getRight();
-    }
-
-    /**
-     * Set the left side of the bounding box of the character to equal left.
-     * @param left the target for the left side of the bounding box.
-     */
-    private void setLeft(final double left) {
-        position.x += left - shape.getLeft();
-        updatePosition();
-    }
-
-    /**
-     * Set the right side of the bounding box of the character to equal right.
-     * @param right the target for the right side of the bounding box.
-     */
-    private void setRight(final double right) {
-        position.x += right - shape.getRight();
-        updatePosition();
-    }
-
-    /**
-     * Updates only the position of the bounding box.
-     */
-    private void updatePosition() {
-        updatePosition(0);
-    }
-
-    /**
-     * Update the characters position and collision shape.
-     * @param dt the time
-     */
-    private void updatePosition(final double dt) {
-        position.x += speed.x * dt;
-        position.y += speed.y * dt;
-        shape.setPosition(
-                position.x - runningSprite.getOffsetX(),
-                position.y - runningSprite.getOffsetY()
-        );
     }
 
     /**
@@ -188,87 +122,94 @@ public class Character extends Entity {
     }
 
     /**
-     * Updates the Character object.
-     * @param dt The time since the last time the update method was called
+     * @return The harpoon of the player.
      */
-    public final void update(final double dt) {
-        // Update the character sprite
-        runningSprite.update(dt);
-
-        // Walk
-        speed.x = RUN_SPEED * direction;
-
-        // Apply gravity
-        speed.y += GRAVITY * dt;
-
-        // Shoot
-        if (shooting) {
-            rope.shoot(position);
-        }
-
-        // Move
-        updatePosition(dt);
+    public Harpoon getHarpoon() {
+        return harpoon;
     }
 
     /**
-     * @return the character's shape.
+     * Updates the Character object.
+     * @param timeDifference The time since the last time the update method was called
      */
-    public final Shape getShape() {
-        return shape;
+    public final void update(final double timeDifference) {
+        // Walk
+        setSpeed(RUN_SPEED * direction, getYSpeed() + GRAVITY * timeDifference);
+
+        // Set the character sprite
+        if (direction == 0) {
+            setSprite(idleSprite);
+        } else {
+            setSprite(runningSprite);
+        }
+
+        // Shoot
+        if (shooting) {
+            harpoon.shoot(getPosition());
+        }
     }
 
     /**
      * Entry point for collisions.
      * @param entity the entity the character collides with
      */
-    public final void collideWith(final Entity entity) {
+    public final void collideWith(final AbstractEntity entity) {
         if (entity instanceof Ball) {
-            collideWith((Ball) entity);
+            collideWithBall();
         }
 
-        if (entity instanceof Block) {
-            collideWith((Block) entity);
+        if (entity instanceof FloorBlock) {
+            collideWith((FloorBlock) entity);
         }
 
-        if (entity instanceof Wall) {
-            collideWith((Wall) entity);
+        if (entity instanceof WallBlock) {
+            collideWith((WallBlock) entity);
         }
     }
 
     /**
      * When a character collides with a ball, the character dies.
-     * @param ball the ball the character collides with
      */
-    private void collideWith(final Ball ball) {
-        if (ball != null) {
-            die();
-        }
+    private void collideWithBall() {
+        die();
     }
 
     /**
-     * If a character collides with a ground block, the character should not sink
+     * If a character collides with a ground floor, the character should not sink
      * through it.
-     * @param block the ground block the character collides with
+     * @param floor the ground floor the character collides with
      */
-    private void collideWith(final Block block) {
-        position.y = Math.min(position.y, block.getY());
-        speed.y = Math.min(speed.y, 0);
-        updatePosition();
+    private void collideWith(final FloorBlock floor) {
+        Rectangle shape = (Rectangle) getShape();
+        Rectangle blockShape = (Rectangle) floor.getShape();
+
+        if (shape.getBottom() > blockShape.getTop() && shape.getBottom() < blockShape.getBottom()) {
+            // Hit the floor from above
+            shape.setBottom(blockShape.getTop());
+            getSpeed().y = Math.min(getYSpeed(), 0);
+        } else if (shape.getTop() > blockShape.getTop() && shape.getTop() < blockShape.getBottom()) {
+            // Hit the floor from below
+            shape.setTop(blockShape.getBottom());
+            getSpeed().y = Math.max(0, getYSpeed());
+        }
     }
 
     /**
      * If a character collides with a wall, it should move outside that wall.
      * @param wall the wall the character collides with
      */
-    private void collideWith(final Wall wall) {
-        if (getRight() > wall.getLeft() && getRight() < wall.getRight()) {
-            // Hit the wall from the right
-            setRight(wall.getLeft());
-            speed.x = Math.min(speed.x, 0);
-        } else if (getLeft() > wall.getLeft() && getLeft() < wall.getRight()) {
-            // Hit the wall from the left
-            setLeft(wall.getRight());
-            speed.x = Math.max(0, speed.x);
+    private void collideWith(final WallBlock wall) {
+        Rectangle shape = (Rectangle) getShape();
+        Rectangle blockShape = (Rectangle) wall.getShape();
+
+        if (shape.getRight() > blockShape.getLeft() && shape.getRight() < blockShape.getRight()) {
+            // Hit the block from above
+            shape.setRight(blockShape.getLeft());
+            getSpeed().x = Math.min(getXSpeed(), 0);
+        } else if (shape.getLeft() > blockShape.getLeft() && shape.getLeft() < blockShape.getRight()) {
+            // Hit the block from below
+            shape.setLeft(blockShape.getRight());
+            getSpeed().x = Math.max(0, getXSpeed());
         }
     }
 
@@ -278,16 +219,33 @@ public class Character extends Entity {
      */
     public final void draw() {
         if (direction == 0) {
-            idleSprite.draw(position);
+            getSprite().draw(getPosition());
         } else {
-            runningSprite.draw(position, direction, 1);
+            getSprite().draw(getPosition(), direction, 1);
         }
     }
 
     /**
-     * @return The rope of the player.
+     * Sets the correct sprites according to the player id.
+     * @param id The player id.
      */
-    public Rope getRope() {
-        return rope;
+    @SuppressWarnings("magicnumber") //useless too make new fields for the offsets.
+    void setId(int id) {
+        switch (id) {
+            case 0:
+                //Set Mario as player 1
+                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32));
+                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
+                break;
+            case 1:
+                //Set Yoshi as player 2
+                idleSprite = new Sprite("player/yoshi_idle.png", 1, new Vec2d(8, 32));
+                runningSprite = new Sprite("player/yoshi_running.png", 8, new Vec2d(11, 37));
+                break;
+            default:
+                //Set Mario for any other players
+                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32));
+                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
+        }
     }
 }
