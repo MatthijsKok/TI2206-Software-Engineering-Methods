@@ -37,11 +37,19 @@ public class BubbleTroubleMenu extends Pane {
         setBackground(new Background(createBackgroundImage()));
     }
 
+    /**
+     * Creates the background.
+     * @return backgroundImage
+     */
     private BackgroundImage createBackgroundImage() {
         Image image = new Image("background.jpg");
         return new BackgroundImage(image, null, null, null, null);
     }
 
+    /**
+     * Button to start a singlePlayerGame.
+     * @return singlePlayerGame
+     */
     private Button createSinglePlayerButton() {
         Button button = new Button("Start single player game.");
         button.setLayoutX(190);
@@ -54,11 +62,13 @@ public class BubbleTroubleMenu extends Pane {
             game.setLevelsFromFiles(DEFAULT_LEVELS);
             game.start();
         });
-
         return button;
-
     }
 
+    /**
+     * Button to start a multiPlayerGame.
+     * @return multiPlayerGame
+     */
     private Button createMultiPlayerButton() {
         Button button = new Button("Start multi player game.");
         button.setLayoutX(220);
@@ -75,6 +85,10 @@ public class BubbleTroubleMenu extends Pane {
         return button;
     }
 
+    /**
+     * Creates a settings button.
+     * @return settings button
+     */
     private Button createSettingsButton() {
         Button button = new Button("Settings");
         button.setLayoutX(920);
@@ -83,6 +97,10 @@ public class BubbleTroubleMenu extends Pane {
         return button;
     }
 
+    /**
+     * Button to quit the game.
+     * @return Quit
+     */
     private Button createQuitButton() {
         Button button = new Button("Quit");
         button.setLayoutX(64);
