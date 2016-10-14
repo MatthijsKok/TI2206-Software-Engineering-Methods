@@ -22,30 +22,7 @@ public final class PickupFactory {
      */
     private static final double SPAWN_CHANCE = 0.5;
 
-    /**
-     * Number that incicates how often a power-up spawns in comparison to other powerups.
-     */
-    private static final int EXTRA_LIFE_WEIGHT = 1;
 
-    /**
-     * Number that incicates how often a power-up spawns in comparison to other powerups.
-     */
-    private static final int EXTRA_ROPE_WEIGHT = 1;
-
-    /**
-     * Number that incicates how often a power-up spawns in comparison to other powerups.
-     */
-    private static final int EXTRA_TIME_WEIGHT = 1;
-
-    /**
-     * Number that incicates how often a power-up spawns in comparison to other powerups.
-     */
-    private static final int SPEEDBOOST_WEIGHT = 1;
-
-    /**
-     * Number that incicates how often a power-up sp2awns in comparison to other powerups.
-     */
-    private static final int SHIELD_WEIGHT = 1;
 
     /**
      * Returns a boolean indicating if a pickup should be spawned.
@@ -61,16 +38,12 @@ public final class PickupFactory {
      */
     private static PowerUp determinePowerUp() {
         List<String> powerUpList = new ArrayList<>();
-        List<Integer> powerUpWeights = new ArrayList<>();
 
         powerUpList.add("ExtraLife");
         powerUpList.add("ExtraRope");
         powerUpList.add("ExtraTime");
         powerUpList.add("SpeedBoost");
         powerUpList.add("Shield");
-
-
-        int totalWeight = 0;
 
         Long randomNumber = Math.round(Math.random() * powerUpList.size());
 
