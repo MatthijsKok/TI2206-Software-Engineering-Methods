@@ -7,6 +7,7 @@ import entities.Character;
 import game.Game;
 import game.GameState;
 import game.player.Player;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.media.AudioClip;
 import util.CollisionManager;
@@ -146,7 +147,7 @@ public class Level {
         won = false;
         lost = false;
 
-        StageManager.getStage().setTitle(name);
+        Platform.runLater(() -> StageManager.getStage().setTitle(name));
 
         if (this.backgroundMusic != null) {
             this.backgroundMusic.play();
@@ -399,7 +400,6 @@ public class Level {
                 character.die();
             }
         }
-
         lose();
     }
 }

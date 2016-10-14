@@ -56,6 +56,7 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
         });
 
         return button;
+
     }
 
     private Button createMultiPlayerButton() {
