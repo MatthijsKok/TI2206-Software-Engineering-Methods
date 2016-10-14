@@ -3,9 +3,10 @@ package menu;
 import game.Game;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import util.StageManager;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * The menu.BubbleTroubleMenu class is an javafx element which displays the main game menu.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
+public class BubbleTroubleMenu extends Pane {
 
     /**
      * The list containing the default level files in the game.
@@ -29,24 +30,31 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
      * Create a new menu element with all sub nodes.
      */
     public BubbleTroubleMenu() {
-        getChildren().add(createTitle());
         getChildren().add(createSinglePlayerButton());
         getChildren().add(createMultiPlayerButton());
         getChildren().add(createSettingsButton());
         getChildren().add(createQuitButton());
+        setBackground(new Background(createBackgroundImage()));
     }
 
-    private Text createTitle() {
-        Text text = new Text("Bubble Trouble");
-        text.setX(32);
-        text.setY(32);
-        return text;
+    /**
+     * Creates the background.
+     * @return backgroundImage
+     */
+    private BackgroundImage createBackgroundImage() {
+        Image image = new Image("background.jpg");
+        return new BackgroundImage(image, null, null, null, null);
     }
 
+    /**
+     * Button to start a singlePlayerGame.
+     * @return singlePlayerGame
+     */
     private Button createSinglePlayerButton() {
         Button button = new Button("Start single player game.");
-        button.setLayoutX(32);
-        button.setLayoutY(128);
+        button.setLayoutX(190);
+        button.setLayoutY(420);
+        button.getStyleClass().add("green");
 
         button.setOnMouseClicked(e -> {
             Game game = Game.getInstance();
@@ -54,15 +62,18 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
             game.setLevelsFromFiles(DEFAULT_LEVELS);
             game.start();
         });
-
         return button;
-
     }
 
+    /**
+     * Button to start a multiPlayerGame.
+     * @return multiPlayerGame
+     */
     private Button createMultiPlayerButton() {
         Button button = new Button("Start multi player game.");
-        button.setLayoutX(32);
-        button.setLayoutY(256);
+        button.setLayoutX(220);
+        button.setLayoutY(480);
+        button.getStyleClass().add("green");
 
         button.setOnMouseClicked(e -> {
             Game game = Game.getInstance();
@@ -74,19 +85,27 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
         return button;
     }
 
+    /**
+     * Creates a settings button.
+     * @return settings button
+     */
     private Button createSettingsButton() {
-        Stage stage = StageManager.getStage();
         Button button = new Button("Settings");
-        button.setLayoutX(stage.getWidth() - 64);
-        button.setLayoutY(stage.getHeight() - 64);
+        button.setLayoutX(920);
+        button.setLayoutY(550);
+        button.getStyleClass().add("green");
         return button;
     }
 
+    /**
+     * Button to quit the game.
+     * @return Quit
+     */
     private Button createQuitButton() {
-        Stage stage = StageManager.getStage();
         Button button = new Button("Quit");
         button.setLayoutX(64);
-        button.setLayoutY(stage.getHeight() - 64);
+        button.setLayoutY(550);
+        button.getStyleClass().add("green");
 
         button.setOnMouseClicked(e -> Platform.exit());
 
