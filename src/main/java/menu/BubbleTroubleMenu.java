@@ -4,10 +4,9 @@ import game.Game;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import util.StageManager;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
  * The menu.BubbleTroubleMenu class is an javafx element which displays the main game menu.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
+public class BubbleTroubleMenu extends Pane {
 
     /**
      * The list containing the default level files in the game.
@@ -41,13 +40,6 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
     private BackgroundImage createBackgroundImage() {
         Image image = new Image("background.jpg");
         return new BackgroundImage(image, null, null, null, null);
-    }
-
-    private Text createTitle() {
-        Text text = new Text("Bubble Trouble");
-        text.setX(32);
-        text.setY(32);
-        return text;
     }
 
     private Button createSinglePlayerButton() {
@@ -83,7 +75,6 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
     }
 
     private Button createSettingsButton() {
-        Stage stage = StageManager.getStage();
         Button button = new Button("Settings");
         button.setLayoutX(920);
         button.setLayoutY(550);
@@ -92,7 +83,6 @@ public class BubbleTroubleMenu extends javafx.scene.layout.Pane {
     }
 
     private Button createQuitButton() {
-        Stage stage = StageManager.getStage();
         Button button = new Button("Quit");
         button.setLayoutX(64);
         button.setLayoutY(550);
