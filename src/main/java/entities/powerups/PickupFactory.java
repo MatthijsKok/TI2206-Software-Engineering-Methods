@@ -43,7 +43,7 @@ public final class PickupFactory {
     private static final int SPEEDBOOST_WEIGHT = 1;
 
     /**
-     * Number that incicates how often a power-up spawns in comparison to other powerups.
+     * Number that incicates how often a power-up sp2awns in comparison to other powerups.
      */
     private static final int SHIELD_WEIGHT = 1;
 
@@ -69,43 +69,32 @@ public final class PickupFactory {
         powerUpList.add("SpeedBoost");
         powerUpList.add("Shield");
 
-        powerUpWeights.add(EXTRA_LIFE_WEIGHT);
-        powerUpWeights.add(EXTRA_ROPE_WEIGHT);
-        powerUpWeights.add(EXTRA_TIME_WEIGHT);
-        powerUpWeights.add(SPEEDBOOST_WEIGHT);
-        powerUpWeights.add(SHIELD_WEIGHT);
 
         int totalWeight = 0;
 
-        for (Integer weight : powerUpWeights) {
-            totalWeight += weight;
-        }
+        Long randomNumber = Math.round(Math.random() * powerUpList.size());
 
-        double randomNumber = Math.random() * totalWeight;
 
-        int i = 0, currentWeight = 0;
-        while (i < powerUpWeights.size() - 1 && randomNumber > currentWeight + powerUpWeights.get(i)) {
-            i++;
-        }
-        return createPowerUp(powerUpList.get(i));
+        return createPowerUp(randomNumber.intValue());
     }
 
     /**
      * Returns the correct PowerUp Object from a String.
-     * @param powerUpName The name of the PowerUp
+     * @param randomNumber A random number between 0 and the amount of powerup
      * @return A new PowerUp object.
      */
-    public static PowerUp createPowerUp(String powerUpName) {
-        switch (powerUpName) {
-            case "ExtraLife":
+    @SuppressWarnings("magicnumber")
+    public static PowerUp createPowerUp(int randomNumber) {
+        switch (randomNumber) {
+            case 0:
                 return new ExtraLife();
-            case "ExtraRope":
+            case 1:
                 return new ExtraRope();
-            case "ExtraTime":
+            case 2:
                 return new ExtraTime();
-            case "SpeedBoost":
+            case 3:
                 return new SpeedBoost();
-            case "Shield":
+            case 4:
                 return new Shield();
             default: return new ExtraTime();
         }
