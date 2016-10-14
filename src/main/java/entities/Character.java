@@ -24,7 +24,7 @@ public class Character extends AbstractEntity {
     /**
      * The running speed of a character. In pixels per second.
      */
-    private static final double RUN_SPEED = 256; // px/s
+    private static double RUN_SPEED = 256; // px/s
     /**
      * The gravity applied to a character. In pixels per second squared.
      */
@@ -248,4 +248,15 @@ public class Character extends AbstractEntity {
                 runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
         }
     }
+
+    /**
+     * Gets the speed at which the character runs.
+     */
+    public double getRunSpeed() { return RUN_SPEED; }
+
+    /**
+     * Sets the speed at which the character runs.
+     */
+    public void setRunSpeed(double runSpeed) { this.RUN_SPEED = runSpeed; }
+
 }

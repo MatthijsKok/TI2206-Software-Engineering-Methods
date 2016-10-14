@@ -173,6 +173,13 @@ public class Player implements Observer {
     }
 
     /**
+     * Sets the players lives.
+     */
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    /**
      * Resets the players lives.
      */
     public void resetLives() {
