@@ -249,8 +249,14 @@ public class Character extends AbstractEntity {
         }
     }
 
-
+    /**
+     * Gets the speed at which the character runs.
+     */
     public double getRunSpeed() { return RUN_SPEED; }
+
+    /**
+     * Sets the speed at which the character runs.
+     */
     public void setRunSpeed(double runSpeed) { this.RUN_SPEED = runSpeed; }
 
 }

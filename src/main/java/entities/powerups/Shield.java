@@ -9,6 +9,9 @@ public class Shield implements PowerUp {
     public void enableEffect() {
     }
 
+    /**
+     * Disables the effect of the specific power up.
+     */
     @Override
     public void disableEffect() {
 

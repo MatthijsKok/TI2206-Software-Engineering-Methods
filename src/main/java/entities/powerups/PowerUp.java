@@ -1,9 +1,17 @@
 package entities.powerups;
-import level.Level;
+import game.player.Player;
 
 public interface PowerUp {
 
+    /**
+     * Character of the game
+     */
     Character character = null;
+
+    /**
+     * Player of the game
+     */
+    Player player = null;
 
     /**
      * Enables the effect of the specific power up.
@@ -11,7 +19,7 @@ public interface PowerUp {
     public void enableEffect();
 
     /**
-     * Applies the effect of the specific power up.
+     * Disables the effect of the specific power up.
      */
     public void disableEffect();
 
