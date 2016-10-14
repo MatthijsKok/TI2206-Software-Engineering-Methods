@@ -30,9 +30,9 @@ public class Game {
      */
     private static final double MAX_FRAME_DURATION = 0.033333333;
     /**
-     * The one and only instance of the game object.
+     * The only instance of the game object.
      */
-    private static Game instance = null;
+    private static Game uniqueInstance = null;
 
     /**
      * The state of the game.
@@ -72,12 +72,12 @@ public class Game {
      *
      * @return a Game instance.
      */
-    public static Game getInstance() {
-        if (instance == null) {
-            instance = new Game();
+    public static synchronized Game getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new Game();
             LOGGER.trace("New game instance created.");
         }
-        return instance;
+        return uniqueInstance;
     }
 
     private void setUpAnimationLoop() {
