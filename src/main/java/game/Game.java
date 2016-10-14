@@ -136,7 +136,9 @@ public class Game {
      * @param levelFiles the list of files to create levels from.
      */
     public void setLevelsFromFiles(List<String> levelFiles) {
-        setLevels(levelFiles.stream().map(Level::new).collect(Collectors.toList()));
+        setLevels(levelFiles.stream()
+                .map(Level::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -165,11 +167,9 @@ public class Game {
      * Loads and starts the first level.
      */
     public void start() {
-        LOGGER.info("Starting level...");
         state.getCurrentLevel().load();
         timer.start();
         state.resume();
-        LOGGER.info("level started.");
         lastNanoTime = System.nanoTime();
         CanvasManager.getCanvas().setVisible(true);
     }

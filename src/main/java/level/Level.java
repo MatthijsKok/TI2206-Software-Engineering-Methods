@@ -182,7 +182,7 @@ public class Level {
     /**
      * @return The name of the file this level is loaded from.
      */
-    final String getFilename() {
+    public final String getFilename() {
         return filename;
     }
 
