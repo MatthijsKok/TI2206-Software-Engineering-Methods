@@ -1,19 +1,18 @@
 package entities.powerups;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.Block;
+import entities.AbstractEntity;
 import entities.Character;
-import entities.Entity;
+import entities.FloorBlock;
 import game.Game;
 import geometry.Rectangle;
-import geometry.Shape;
+import graphics.Sprite;
 import level.Level;
-import util.Sprite;
 
 /**
  * Pickup that contains a power-up effect that will be applied to the player.
  */
-public class Pickup extends Entity {
+public class Pickup extends AbstractEntity {
     
     /**
      * Gravity applied to a power-up, in pixels per second squared.
@@ -24,11 +23,6 @@ public class Pickup extends Entity {
      * The standard time before the pickup despawns in seconds.
      */
     private static final double DESPAWN_TIME = 5;
-
-    /**
-     * The bounding box of the pickup.
-     */
-    private Rectangle shape;
 
     /**
      * the amount of time remaining before the pick-up the pickup despawns.
@@ -47,9 +41,7 @@ public class Pickup extends Entity {
         pickUpSprite.setOffsetToCenter();
         this.setSprite(pickUpSprite);
 
-        // Set the hitbox of the Pickup
-        shape = new Rectangle(sprite.getWidth(), sprite.getHeight());
-        updatePosition(0);
+        setShape(new Rectangle(pickUpSprite));
     }
 
     /**
@@ -58,7 +50,7 @@ public class Pickup extends Entity {
      */
     public void update(double dt) {
         // Apply gravity
-        speed.y += GRAVITY * dt;
+        getSpeed().y += GRAVITY * dt;
 
         // Move
         updatePosition(dt);
@@ -69,28 +61,15 @@ public class Pickup extends Entity {
     }
 
     /**
-     * Update the characters position and collision shape.
-     * @param dt the time
-     */
-    private void updatePosition(final double dt) {
-        position.x += speed.x * dt;
-        position.y += speed.y * dt;
-        shape.setPosition(
-                position.x - sprite.getOffsetX(),
-                position.y - sprite.getOffsetY()
-        );
-    }
-
-    /**
      * Entry point for all collisions.
      * This method should only change the behaviour of the pickup, not the Entity it is
      * colliding with. The colliding Entity should handle that itself in it's own
      * "collideWith" method.
      * @param entity the Entity this pickup collides with.
      */
-    public void collideWith(Entity entity) {
-        if (entity instanceof Block) {
-            collideWith((Block) entity);
+    public void collideWith(AbstractEntity entity) {
+        if (entity instanceof FloorBlock) {
+            collideWith((FloorBlock) entity);
         }
         if (entity instanceof Character) {
             collideWith((Character) entity);
@@ -101,8 +80,8 @@ public class Pickup extends Entity {
      * The behaviour of the Ball when it collides with a Block Entity.
      * @param block The Block Entity this Ball collides with.
      */
-    private void collideWith(Block block) {
-        position.y = Math.min(block.getY() - sprite.getOffsetY(), position.y);
+    private void collideWith(FloorBlock block) {
+        getPosition().y = Math.min(block.getY() - getSprite().getOffset().y, getPosition().y);
         updatePosition(0);
     }
 
@@ -128,12 +107,4 @@ public class Pickup extends Entity {
             level.removeEntity(this);
         }
     }
-
-    /**
-     * @return this pickup's shape.
-     */
-    public Shape getShape() {
-        return shape;
-    }
-
 }

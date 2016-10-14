@@ -14,7 +14,7 @@ public final class PickupFactory {
     /**
      * A number between 0 and 1, where 0 is no chance and 1 is 100% chance of dropping a pickup on a split.
      */
-    private static final double SPAWN_CHANCE = 0.08;
+    private static final double SPAWN_CHANCE = 0.5;
 
     /**
      * Returns a boolean indicating if a pickup should be spawned.
