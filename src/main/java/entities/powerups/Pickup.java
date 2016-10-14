@@ -99,6 +99,8 @@ public class Pickup extends AbstractEntity {
     private void collideWith(Character character) {
         Level level = Game.getInstance().getState().getCurrentLevel();
         level.removeEntity(this);
+
+
     }
 
     /**

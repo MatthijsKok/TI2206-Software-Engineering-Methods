@@ -3,10 +3,10 @@ package entities.powerups;
 public class ExtraRope implements PowerUp {
 
     /**
-     * Applies the effect of the specific power up.
+     * Enables the effect of the specific power up.
      */
     @Override
-    public void applyEffect() {
+    public void enableEffect() {
     }
 
     @Override
