@@ -70,7 +70,7 @@ public class GameStateTest extends BubbleTroubleApplicationTest {
     @Test
     public void testHasNextLevel() {
         // Current game has 1 level only
-        assertThat(gameState.hasNextLevel(), is(true));
+        assertThat(gameState.hasNextLevel(), is(false));
     }
 
     @Test
