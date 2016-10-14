@@ -57,6 +57,22 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <rulesets>
+                        <ruleset>
+                            <rule ref="rulesets/java/basic.xml"/>
+                            <rule ref="rulesets/java/braces.xml"/>
+                            <rule ref="rulesets/java/codesize.xml"/>
+                            <rule ref="rulesets/java/comments.xml"/>
+                            <rule ref="rulesets/java/imports.xml"/>
+                            <rule ref="rulesets/java/junit.xml"/>
+                            <rule ref="rulesets/java/naming.xml"/>
+                            <rule ref="rulesets/java/optimizations.xml"/>
+                            <rule ref="rulesets/java/unusedcode.xml"/>
+                        </ruleset>
+                    </rulesets>
+                </configuration>
             </plugin>
         </plugins>
     </build>

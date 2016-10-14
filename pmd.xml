@@ -11,7 +11,7 @@
     <rule ref="rulesets/java/basic.xml"/>
     <rule ref="rulesets/java/braces.xml"/>
     <rule ref="rulesets/java/codesize.xml"/>
-    <rule ref="rulesets/java/coupling.xml"/>
+    <rule ref="rulesets/java/comments.xml"/>
     <rule ref="rulesets/java/imports.xml"/>
     <rule ref="rulesets/java/junit.xml"/>
     <rule ref="rulesets/java/naming.xml"/>
