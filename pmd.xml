@@ -23,6 +23,7 @@
     <rule ref="rulesets/java/optimizations.xml">
         <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="RedundantFieldInitializer"/>
     </rule>
     <rule ref="rulesets/java/unusedcode.xml"/>
 
