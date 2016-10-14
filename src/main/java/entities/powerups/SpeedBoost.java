@@ -1,7 +1,5 @@
 package entities.powerups;
 
-import com.apple.laf.AquaButtonBorder;
-
 public class SpeedBoost implements DynamicPowerUp {
 
     /**
