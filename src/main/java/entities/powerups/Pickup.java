@@ -13,7 +13,7 @@ import level.Level;
  * Pickup that contains a power-up effect that will be applied to the player.
  */
 public class Pickup extends AbstractEntity {
-    
+
     /**
      * Gravity applied to a power-up, in pixels per second squared.
      */
@@ -30,16 +30,23 @@ public class Pickup extends AbstractEntity {
     private double timeRemaining = DESPAWN_TIME;
 
     /**
+     * The power-up that this pickup activates.
+     */
+    private PowerUp powerUp;
+
+    /**
      * Constructor for Pickup.
      * @param position The position of the powerup.
+     * @param powerUp The powerUp that the pickup contains.
      */
-    public Pickup(Vec2d position) {
+    public Pickup(Vec2d position, PowerUp powerUp) {
         super(position);
 
         // Create sprite and set its offset to the center.
         Sprite pickUpSprite = new Sprite("pickup.png");
         pickUpSprite.setOffsetToCenter();
         this.setSprite(pickUpSprite);
+        this.powerUp = powerUp;
 
         setShape(new Rectangle(pickUpSprite));
     }
@@ -91,7 +98,6 @@ public class Pickup extends AbstractEntity {
      */
     private void collideWith(Character character) {
         Level level = Game.getInstance().getState().getCurrentLevel();
-
         level.removeEntity(this);
     }
 
@@ -106,5 +112,20 @@ public class Pickup extends AbstractEntity {
         if (timeRemaining <= 0) {
             level.removeEntity(this);
         }
+    }
+
+    /**
+     * @return The power-up this pickup contains.
+     */
+    public PowerUp getPowerUp() {
+        return powerUp;
+    }
+
+    /**
+     * Sets the power-up of the pickup.
+     * @param powerUp The power-up you want the pickup to contain.
+     */
+    public void setPowerUp(PowerUp powerUp) {
+        this.powerUp = powerUp;
     }
 }
