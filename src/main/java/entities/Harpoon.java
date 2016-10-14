@@ -7,7 +7,7 @@ import graphics.Sprite;
 /**
  * Harpoon class, controlling the rope in the game.
  */
-public final class Harpoon extends AbstractEntity {
+public class Harpoon extends AbstractEntity {
 
     /**
      * Sprite of the rope.

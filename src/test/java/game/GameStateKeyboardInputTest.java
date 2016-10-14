@@ -7,13 +7,11 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import util.CanvasManager;
 import util.KeyboardInputManager;
 import util.StageManager;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsNot.not;
 
 /**
  * Test suite for the KeyboardInput on GameState.

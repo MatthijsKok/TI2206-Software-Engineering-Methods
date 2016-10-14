@@ -135,7 +135,7 @@ public abstract class AbstractEntity extends Observable {
      * Returns the speed of the entity.
      * @return the speed of the entity
      */
-    /* default */ Vec2d getSpeed() {
+    /* default */ public Vec2d getSpeed() {
         return speed;
     }
 
