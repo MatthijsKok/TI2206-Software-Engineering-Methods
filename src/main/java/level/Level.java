@@ -404,7 +404,6 @@ public class Level {
                 character.die();
             }
         }
-
         lose();
     }
 }

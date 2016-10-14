@@ -14,7 +14,6 @@ import java.io.IOException;
 final class LevelLoader {
 
     private LevelLoader() {
-
     }
 
     /**
