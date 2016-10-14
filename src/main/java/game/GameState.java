@@ -71,13 +71,11 @@ public class GameState implements Observer {
     private void updateKeyboardInput(KeyboardInputManager kim) {
         Level level = getCurrentLevel();
 
-        if (!level.isWon() && !level.isLost()) {
-            if (kim.keyPressed(PAUSE_KEY)) {
-                if (inProgress) {
-                    pause();
-                } else {
-                    resume();
-                }
+        if (!level.isWon() && !level.isLost() && kim.keyPressed(PAUSE_KEY)) {
+            if (inProgress) {
+                pause();
+            } else {
+                resume();
             }
         }
 
