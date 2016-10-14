@@ -52,14 +52,6 @@ public class LevelTest extends BubbleTroubleApplicationTest {
     }
 
     @Test
-    public void testDraw(){
-        level1.load();
-        level1.update(40);
-        level1.draw();
-        assertTrue(level1.isLost());
-    }
-
-    @Test
     public void testSetSize(){
         level1.load();
         level1.setSize(6,8);
