@@ -5,9 +5,9 @@ import entities.AbstractEntity;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.io.IOException;
+
+import static org.junit.Assert.*;
 
 /**
  * Test class to test Level.
@@ -34,33 +34,53 @@ public class LevelTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testLevelLoadIsWon(){
-        level1.load();
+        try {
+            level1.load();
+        } catch (IOException e) {
+            fail();
+        }
         assertFalse(level1.isWon());
     }
 
     @Test
     public void testLevelLoadIsLost(){
-        level1.load();
+        try {
+            level1.load();
+        } catch (IOException e) {
+            fail();
+        }
         assertFalse(level1.isLost());
     }
 
     @Test
     public void testCountBalls(){
-        noBall.load();
+        try {
+            noBall.load();
+        } catch (IOException e) {
+            fail();
+        }
         noBall.update(2);
         assertTrue(noBall.isWon());
     }
 
     @Test
     public void testSetSize(){
-        level1.load();
+        try {
+            level1.load();
+        } catch (IOException e) {
+            fail();
+        }
         level1.setSize(6,8);
         assertTrue(level1.getWidth() == 6 && level1.getHeight() == 8);
     }
 
     @Test
     public void testRemoveEntities(){
-        level2.load();
+        try {
+            level2.load();
+        } catch (IOException e) {
+            fail();
+        }
         AbstractEntity removeThisBall = level2.getEntities().get(3);
         level2.removeEntity(removeThisBall);
         assertEquals(111, level2.getEntities().size());
@@ -68,7 +88,11 @@ public class LevelTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testRemoveEntity(){
-        level2.load();
+        try {
+            level2.load();
+        } catch (IOException e) {
+            fail();
+        }
         AbstractEntity removeThisBall = level2.getEntities().get(3);
         assertTrue(level2.removeEntity(removeThisBall));
     }
@@ -78,7 +102,11 @@ public class LevelTest extends BubbleTroubleApplicationTest {
      */
     @Test
     public void testRemoveEntityFalse(){
-        level2.load();
+        try {
+            level2.load();
+        } catch (IOException e) {
+            fail();
+        }
         AbstractEntity removeThisBall = level2.getEntities().get(3);
         level2.removeEntity(removeThisBall);
         assertFalse(level2.removeEntity(removeThisBall));
@@ -86,7 +114,11 @@ public class LevelTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testLost(){
-        level1.load();
+        try {
+            level1.load();
+        } catch (IOException e) {
+            fail();
+        }
         level1.lose();
         assertTrue(level1.isLost());
     }
@@ -96,22 +128,34 @@ public class LevelTest extends BubbleTroubleApplicationTest {
      */
     @Test
     public void testTimeUp(){
-        timeUp.load();
+        try {
+            timeUp.load();
+        } catch (IOException e) {
+            fail();
+        }
         timeUp.update(6);
         assertTrue(timeUp.isLost());
     }
 
     @Test
     public void testRestart(){
-        timeUp.load();
-        timeUp.setDuration(60000);
-        timeUp.restart();
+        try {
+            timeUp.load();
+            timeUp.setDuration(60000);
+            timeUp.restart();
+        } catch (IOException e) {
+            fail();
+        }
         assertTrue(5 == timeUp.getDuration());
     }
 
     @Test
     public void testGetTimeLeft(){
-        level2.load();
+        try {
+            level2.load();
+        } catch (IOException e) {
+            fail();
+        }
         level2.update(20);
         assertTrue(10 == level2.getTimeLeft());
     }

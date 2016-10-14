@@ -8,6 +8,7 @@ import ui.GameUI;
 import util.CanvasManager;
 import util.logging.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,9 +31,9 @@ public class Game {
      */
     private static final double MAX_FRAME_DURATION = 0.033333333;
     /**
-     * The one and only instance of the game object.
+     * The only instance of the game object.
      */
-    private static Game instance = null;
+    private static Game uniqueInstance = null;
 
     /**
      * The state of the game.
@@ -72,12 +73,12 @@ public class Game {
      *
      * @return a Game instance.
      */
-    public static Game getInstance() {
-        if (instance == null) {
-            instance = new Game();
+    public static synchronized Game getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new Game();
             LOGGER.trace("New game instance created.");
         }
-        return instance;
+        return uniqueInstance;
     }
 
     private void setUpAnimationLoop() {
@@ -136,7 +137,9 @@ public class Game {
      * @param levelFiles the list of files to create levels from.
      */
     public void setLevelsFromFiles(List<String> levelFiles) {
-        setLevels(levelFiles.stream().map(Level::new).collect(Collectors.toList()));
+        setLevels(levelFiles.stream()
+                .map(Level::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -163,13 +166,12 @@ public class Game {
 
     /**
      * Loads and starts the first level.
+     * @throws IOException when the first level's file is not found.
      */
-    public void start() {
-        LOGGER.info("Starting level...");
+    public void start() throws IOException {
         state.getCurrentLevel().load();
         timer.start();
         state.resume();
-        LOGGER.info("level started.");
         lastNanoTime = System.nanoTime();
         CanvasManager.getCanvas().setVisible(true);
     }

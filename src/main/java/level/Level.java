@@ -16,6 +16,7 @@ import graphics.Sprite;
 import util.StageManager;
 import util.logging.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,8 +119,9 @@ public class Level {
 
     /**
      * Restarts the level.
+     * @throws IOException if the level file is not found.
      */
-    public final void restart() {
+    public final void restart() throws IOException {
         unload();
         load();
     }
@@ -137,8 +139,9 @@ public class Level {
 
     /**
      * Loads a level from a file.
+     * @throws IOException when the file is not found.
      */
-    public void load() {
+    public void load() throws IOException {
         LOGGER.debug("Loading Level...");
 
         LevelLoader.load(this);
@@ -147,7 +150,8 @@ public class Level {
         won = false;
         lost = false;
 
-        Platform.runLater(() -> StageManager.getStage().setTitle(name));
+        Platform.runLater(() ->
+                StageManager.getStage().setTitle(name));
 
         if (this.backgroundMusic != null) {
             this.backgroundMusic.play();
@@ -183,7 +187,7 @@ public class Level {
     /**
      * @return The name of the file this level is loaded from.
      */
-    final String getFilename() {
+    public final String getFilename() {
         return filename;
     }
 
@@ -372,7 +376,7 @@ public class Level {
     /**
      * Win the level.
      */
-    private void win() {
+    public void win() {
         GameState gameState = Game.getInstance().getState();
         gameState.pause();
         won = true;

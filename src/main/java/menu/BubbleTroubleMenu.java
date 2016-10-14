@@ -8,6 +8,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +62,7 @@ public class BubbleTroubleMenu extends Pane {
             Game game = Game.getInstance();
             game.setPlayerCount(1);
             game.setLevelsFromFiles(DEFAULT_LEVELS);
-            game.start();
+            startGame(game);
         });
         return button;
     }
@@ -79,7 +81,7 @@ public class BubbleTroubleMenu extends Pane {
             Game game = Game.getInstance();
             game.setPlayerCount(2);
             game.setLevelsFromFiles(DEFAULT_LEVELS);
-            game.start();
+            startGame(game);
         });
 
         return button;
@@ -110,5 +112,13 @@ public class BubbleTroubleMenu extends Pane {
         button.setOnMouseClicked(e -> Platform.exit());
 
         return button;
+    }
+
+    private void startGame(Game game) {
+        try {
+            game.start();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 }

@@ -31,7 +31,7 @@ public final class KeyboardInputManager extends Observable {
     /**
      * This overrides the default public constructor.
      */
-    private KeyboardInputManager() { }
+    public KeyboardInputManager() { }
 
     /**
      * Adds an observer to the keyboard.
