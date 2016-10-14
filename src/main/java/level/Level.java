@@ -1,16 +1,17 @@
 package level;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.AbstractEntity;
+import entities.Ball;
 import entities.Character;
-import entities.Entity;
 import game.Game;
 import game.GameState;
 import game.player.Player;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.media.AudioClip;
 import util.CollisionManager;
-import util.GameCanvasManager;
-import util.Sprite;
+import util.CanvasManager;
+import graphics.Sprite;
 import util.StageManager;
 import util.logging.Logger;
 
@@ -27,11 +28,6 @@ public class Level {
      * The logger access point to which everything will be logged.
      */
     private static final Logger LOGGER = Logger.getInstance();
-
-    /**
-     * The graphics context to draw on.
-     */
-    private static final Canvas CANVAS = GameCanvasManager.getInstance().getCanvas();
 
     /**
      * The default size of a level.
@@ -90,15 +86,15 @@ public class Level {
     /**
      * The entities currently active in the level.
      */
-    private List<Entity> entities = new ArrayList<>();
+    private List<AbstractEntity> entities = new ArrayList<>();
     /**
      * The entities that will be removed from the level after the update cycle.
      */
-    private List<Entity> entitiesToRemove = new ArrayList<>();
+    private List<AbstractEntity> entitiesToRemove = new ArrayList<>();
     /**
      * The entities that will be added to the level after the update cycle.
      */
-    private List<Entity> entitiesToAdd = new ArrayList<>();
+    private List<AbstractEntity> entitiesToAdd = new ArrayList<>();
 
     /**
      * The file the level is loaded from.
@@ -193,8 +189,8 @@ public class Level {
     /**
      * @return a list of all entities in the current level.
      */
-    public final List<Entity> getEntities() {
-        List<Entity> entities = new ArrayList<>();
+    public final List<AbstractEntity> getEntities() {
+        List<AbstractEntity> entities = new ArrayList<>();
 
         entities.addAll(this.entities);
         entities.addAll(entitiesToAdd);
@@ -208,7 +204,7 @@ public class Level {
      *
      * @param e entity to add
      */
-    public final void addEntity(final Entity e) {
+    public final void addEntity(final AbstractEntity e) {
         entitiesToAdd.add(e);
     }
 
@@ -218,7 +214,7 @@ public class Level {
      * @param e The entity to remove
      * @return true if e is not already removed, false otherwise
      */
-    public final boolean removeEntity(final Entity e) {
+    public final boolean removeEntity(final AbstractEntity e) {
         if (entities.contains(e) && !entitiesToRemove.contains(e)) {
             entitiesToRemove.add(e);
             return true;
@@ -235,6 +231,12 @@ public class Level {
         entitiesToRemove = new ArrayList<>();
     }
 
+    private long countBalls() {
+        return entities.stream()
+                .filter(e -> e instanceof Ball)
+                .count();
+    }
+
     /**
      * Really add all entities that need to be removed to the entity list.
      */
@@ -246,25 +248,31 @@ public class Level {
     /**
      * Updates the state of all entities in the level.
      *
-     * @param dt time difference between now and last update
+     * @param timeDifference time difference between now and last update
      */
-    public final void update(final double dt) {
-        LOGGER.debug("Updating Entity's...");
+    public final void update(final double timeDifference) {
+        LOGGER.debug("Updating AbstractEntity's...");
 
-        timeSpend += dt;
+        timeSpend += timeDifference;
 
         if (timeSpend > duration) {
             timeUp();
         }
 
-        for (Entity entity : entities) {
-            entity.update(dt);
+        for (AbstractEntity entity : entities) {
+            entity.update(timeDifference);
+            entity.updatePosition(timeDifference);
+            entity.updateSprite(timeDifference);
         }
 
-        LOGGER.debug("Updated Entity's");
+        LOGGER.debug("Updated AbstractEntity's");
 
         removeEntities();
         addEntities();
+
+        if (countBalls() == 0) {
+            win();
+        }
 
         LOGGER.debug("Handling collisions...");
         CollisionManager.handleCollisions();
@@ -279,14 +287,14 @@ public class Level {
 
         // Draw background
         LOGGER.trace("Drawing background.");
-        backgroundImage.draw(CANVAS.getWidth() / 2, CANVAS.getHeight() / 2, backgroundImageScale);
+
+
+        final Canvas canvas = CanvasManager.getCanvas();
+        backgroundImage.draw(canvas.getWidth() / 2, canvas.getHeight() / 2, backgroundImageScale);
 
         // Draw entities
         LOGGER.trace("Drawing entities...");
-        for (Entity entity : entities) {
-            entity.draw();
-        }
-        LOGGER.trace("Entities drawn.");
+        entities.forEach(AbstractEntity::draw);
     }
 
     /**
@@ -312,12 +320,13 @@ public class Level {
      * @param backgroundImage URI of the image file.
      */
     void setBackgroundImage(String backgroundImage) {
+        Canvas canvas = CanvasManager.getCanvas();
         if (backgroundImage != null && !backgroundImage.equals("")) {
             this.backgroundImage = new Sprite(backgroundImage);
             this.backgroundImage.setOffsetToCenter();
             this.backgroundImageScale = Math.max(
-                    CANVAS.getWidth() / this.backgroundImage.getWidth(),
-                    CANVAS.getHeight() / this.backgroundImage.getHeight());
+                    canvas.getWidth() / this.backgroundImage.getWidth(),
+                    canvas.getHeight() / this.backgroundImage.getHeight());
         }
     }
 
@@ -362,7 +371,7 @@ public class Level {
     /**
      * Win the level.
      */
-    public final void win() {
+    private void win() {
         GameState gameState = Game.getInstance().getState();
         gameState.pause();
         won = true;

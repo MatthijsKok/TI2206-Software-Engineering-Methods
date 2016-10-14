@@ -39,23 +39,24 @@ public final class StageManager {
      * Initializes the stage.
      * @param stage the stage instance to initialize for.
      */
-    public static synchronized void init(Stage stage) {
+    public static void init(final Stage stage) {
         if (StageManager.stage != null) {
             return;
         }
 
-        StageManager.stage = stage;
-        root = new Group();
-        Scene scene = new Scene(root);
-        KeyboardInputManager.getInstance().addScene(scene);
+        synchronized (new Object()) {
+            StageManager.stage = stage;
+            root = new Group();
+            final Scene scene = new Scene(root);
+            KeyboardInputManager.addScene(scene);
 
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setMinWidth(DEFAULT_WIDTH);
-        stage.setMinHeight(DEFAULT_HEIGHT);
-        stage.getIcons().add(new Image("logo.png"));
-        stage.initStyle(StageStyle.UNDECORATED);
-
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setMinWidth(DEFAULT_WIDTH);
+            stage.setMinHeight(DEFAULT_HEIGHT);
+            stage.getIcons().add(new Image("logo.png"));
+            stage.initStyle(StageStyle.UNDECORATED);
+        }
         stage.show();
     }
 

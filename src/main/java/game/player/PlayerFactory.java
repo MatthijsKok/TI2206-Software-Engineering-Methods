@@ -1,7 +1,6 @@
 package game.player;
 
 import util.Config;
-import util.KeyboardInputManager;
 
 /**
  * The factory creating player objects.
@@ -13,14 +12,15 @@ public final class PlayerFactory {
     }
 
     /**
-     * Creates a new player instance with the keyboard mapping corresponding to the id.
-     * @param id the id of the player.
+     * Creates a new player instance with the keyboard mapping
+     * corresponding to the playerId.
+     * @param playerId the id of the player.
      * @return the created player.
      */
-    public static Player createPlayer(int id) {
+    public static Player createPlayer(final int playerId) {
         String leftKey, rightKey, shootKey;
 
-        switch (id) {
+        switch (playerId) {
             case 0:
                 leftKey = Config.get("playerOneLeftKey");
                 rightKey = Config.get("playerOneRightKey");
@@ -38,10 +38,6 @@ public final class PlayerFactory {
                 break;
         }
 
-        Player player = new Player(leftKey, rightKey, shootKey);
-
-        KeyboardInputManager.getInstance().addObserver(player);
-
-        return player;
+        return new Player(playerId, leftKey, rightKey, shootKey);
     }
 }

@@ -1,6 +1,10 @@
 import javafx.application.Application;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import menu.BubbleTroubleMenu;
+import util.CanvasManager;
 import util.StageManager;
 import util.logging.LogLevel;
 import util.logging.Logger;
@@ -30,9 +34,16 @@ public class BubbleTrouble extends Application {
     public final void start(final Stage stage) {
         LOGGER.setLevel(LogLevel.INFO);
         StageManager.init(stage);
-        LOGGER.info("App started");
+        ObservableList<Node> children = StageManager.getRoot().getChildren();
 
-        StageManager.getRoot().getChildren().add(new BubbleTroubleMenu());
+        Canvas canvas = CanvasManager.createCanvas(stage);
+        canvas.setVisible(false);
+
+        children.add(new BubbleTroubleMenu());
+        children.add(canvas);
+
+        CanvasManager.setCanvas(canvas);
+        LOGGER.info("App started");
     }
 
 }
