@@ -311,16 +311,6 @@ public class Level {
     }
 
     /**
-     * Sets the levels duration.
-     * @param duration The duration in seconds (must be positive).
-     */
-    public void setDuration(double duration) {
-        if (duration > 0) {
-            this.duration = duration;
-        }
-    }
-
-    /**
      * Sets the levels background image.
      * @param backgroundImage URI of the image file.
      */
@@ -357,6 +347,14 @@ public class Level {
      */
     public double getDuration() {
         return duration;
+    }
+
+    /**
+     * Sets the duration of the level.
+     * @param duration the duration of the level.
+     */
+    void setDuration(double duration) {
+        this.duration = duration;
     }
 
     /**
@@ -405,5 +403,13 @@ public class Level {
             }
         }
         lose();
+    }
+
+    /**
+     * Increases the amount of time left in the level.
+     * @param extraTime The amount of time extra.
+     */
+    public void increaseTime(final double extraTime) {
+        timeSpend = Math.max(0, extraTime);
     }
 }

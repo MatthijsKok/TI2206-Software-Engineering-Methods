@@ -29,7 +29,6 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
     public void setUp() {
         harpoon = Mockito.mock(Harpoon.class);
         character = Mockito.mock(Character.class);
-        when(character.getHarpoon()).thenReturn(harpoon);
         player = PlayerFactory.createPlayer(0);
     }
 

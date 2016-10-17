@@ -25,47 +25,43 @@ public class Harpoon extends AbstractEntity {
     private static final double TRAVEL_SPEED = 300; // px/s
 
     /**
-     * Creates a new rope at position (0,0).
+     * Score that is multiplied by the size of the ball, and then added to the score.
      */
-    Harpoon() {
-        this(new Vec2d(0, 0));
-    }
+    private static final int SCORE_PER_BALL = 100;
 
     /**
-     * Creates a new rope.
-     *
-     * @param position position of the rope
+     * The character that shot this harpoon.
      */
-    private Harpoon(final Vec2d position) {
+    private final Character character;
+
+    /**
+     * Creates a new harpoon.
+     *
+     * @param position spawn position of the harpoon.
+     * @param character character which shot the harpoon.
+     */
+    Harpoon(final Vec2d position, final Character character) {
         super(position);
         setSprite(HARPOON_SPRITE);
         setShape(new Rectangle(HARPOON_SHAPE));
         setSpeed(0, -TRAVEL_SPEED);
-        setVisibility(false);
+
+        this.character = character;
+    }
+
+    private void die() {
+        getLevel().removeEntity(this);
+        character.harpoonRemoved();
     }
 
     /**
-     * If the rope is not yet traveling,
-     * a rope will spawn at the indicated position.
-     *
-     * @param position The position where the rope will be
-     *                 spawned.
-     */
-    /* default */ void shoot(final Vec2d position) {
-        if (!isVisible()) {
-            setVisibility(true);
-            setPosition(position.x, position.y);
-        }
-    }
-
-    /**
-     * Updates the state of the rope.
+     * Updates the state of the harpoon.
      *
      * @param timeDifference delta time
      */
     public void update(final double timeDifference) {
         if (getY() <= 0) {
-            setVisibility(false);
+            die();
         }
     }
 
@@ -87,9 +83,10 @@ public class Harpoon extends AbstractEntity {
      */
     private void collideWith(final Ball ball) {
         if (ball != null) {
-            setVisibility(false);
-            setChanged();
-            notifyObservers(ball);
+            die();
+
+            int score = (ball.getSize() + 1) * SCORE_PER_BALL;
+            character.increaseScore(score);
         }
     }
 }
