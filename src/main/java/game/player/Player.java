@@ -173,11 +173,11 @@ public class Player implements Observer {
     }
 
     /**
-     * Sets the players lives.
-     * @param lives The amount of lives you want to set.
+     * Increases the players amount of lives.
+     * @param amount The amount of lives you want to get.
      */
-    public void setLives(int lives) {
-        this.lives = lives;
+    public void increaseLives(int amount) {
+        lives = Math.min(lives + amount, LIVES_AT_START);
     }
 
     /**

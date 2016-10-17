@@ -1,26 +1,21 @@
 package entities.powerups;
 
-import entities.Character;
-
 /**
  * Gives the player a shield that allows it to be hit one time.
  */
-public class Shield implements PowerUp {
+class Shield extends DuringPowerUp {
 
-    /**
-     * Enables the effect of the specific power up.
-     */
     @Override
-    public void enableEffect(Character character) {
-        System.out.println("Shield");
+    void enableEffect() {
+        //getTarget().setInvincible(true);
     }
 
     /**
      * Disables the effect of the specific power up.
      */
     @Override
-    public void disableEffect(Character character) {
-
+    void disableEffect() {
+        //getTarget().setInvincible(false);
     }
 
 }

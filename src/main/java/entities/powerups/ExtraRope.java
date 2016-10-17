@@ -1,26 +1,22 @@
 package entities.powerups;
 
-import entities.Character;
-
 /**
  * Gives the player a extra rope to shoot.
  */
-public class ExtraRope implements PowerUp {
+class ExtraRope extends DuringPowerUp {
 
     /**
-     * Enables the effect of the specific power up.
+     * Increase the amount of ropes the character can shoot.
      */
-    @Override
-    public void enableEffect(Character character) {
-        System.out.println("Extra rope");
+    void enableEffect() {
+        //getTarget().increaseRopes();
     }
 
     /**
      * Disables the effect of the specific power up.
      */
-    @Override
-    public void disableEffect(Character character) {
-
+    void disableEffect() {
+        //getTarget().decreaseRopes();
     }
 
 }

@@ -22,20 +22,23 @@ public class Character extends AbstractEntity {
      * The bounding box of a character.
      */
     private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
-
-    /**
-     * The running speed of a character. In pixels per second.
-     */
-    private double runSpeed = 226;
     /**
      * The gravity applied to a character. In pixels per second squared.
      */
     private static final double GRAVITY = 300; // px/s^2
+    /**
+     * The default run speed of a character.
+     */
+    private static final double DEFAULT_RUN_SPEED = 230; // px/s
 
     static {
         BOUNDING_BOX.setOffset(OFFSET.x, OFFSET.y);
     }
 
+    /**
+     * The running speed of a character. In pixels per second.
+     */
+    private double runSpeed = DEFAULT_RUN_SPEED;
     /**
      * Indicates whether a character is alive or not.
      */
@@ -91,6 +94,13 @@ public class Character extends AbstractEntity {
         HashMap<String, Boolean> hashMap = new HashMap<>();
         hashMap.put("dead", !isAlive());
         notifyObservers(hashMap);
+    }
+
+    /**
+     * Adds a life to this character.
+     */
+    public void increaseLife() {
+        getPlayer().increaseLives(1);
     }
 
     /**
@@ -273,6 +283,7 @@ public class Character extends AbstractEntity {
 
     /**
      * Sets the speed at which the character runs.
+     *
      * @param runSpeed The speed at which the Character should
      */
     public void setRunSpeed(double runSpeed) {
@@ -288,6 +299,7 @@ public class Character extends AbstractEntity {
 
     /**
      * Set the player that controls this Character.
+     *
      * @param player The Player object that controls this Character.
      */
     public void setPlayer(Player player) {

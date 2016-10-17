@@ -1,39 +1,24 @@
 package entities.powerups;
-import entities.Character;
 import game.Game;
 import level.Level;
 
 /**
  * Power-up that adds extra time to the level time.
  */
-public class ExtraTime implements PowerUp {
-
+class ExtraTime extends InstantPowerUp {
 
     /**
      * The amount of time in seconds that is added on picking up this powerup.
      */
     private static final double EXTRA_TIME = 10;
 
-    /**
-     * Enables the effect of the specific power up.
-     */
-    @Override
-    public void enableEffect(Character character) {
-        System.out.println("Extra time");
-
-        Level level = Game.getInstance().getState().getCurrentLevel();
-        if (level.getTimeLeft() + EXTRA_TIME < level.getDuration()) {
-            level.setDuration(level.getTimeLeft() + EXTRA_TIME);
-        }
-        else {
-            level.setDuration(level.getDuration());
-        }
+    private Level getLevel() {
+        return Game.getInstance().getState().getCurrentLevel();
     }
 
-    /**
-     * Disables the effect of the specific power up.
-     */
     @Override
-    public void disableEffect(Character character) { }
-
+    void applyEffect() {
+        Level level = getLevel();
+        //level.increaseTime(EXTRA_TIME);
+    }
 }
