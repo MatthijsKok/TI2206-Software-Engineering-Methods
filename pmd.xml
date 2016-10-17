@@ -11,11 +11,20 @@
     <rule ref="rulesets/java/basic.xml"/>
     <rule ref="rulesets/java/braces.xml"/>
     <rule ref="rulesets/java/codesize.xml"/>
-    <rule ref="rulesets/java/coupling.xml"/>
+    <rule ref="rulesets/java/comments.xml">
+        <exclude name="CommentSize"/>
+    </rule>
     <rule ref="rulesets/java/imports.xml"/>
     <rule ref="rulesets/java/junit.xml"/>
-    <rule ref="rulesets/java/naming.xml"/>
-    <rule ref="rulesets/java/optimizations.xml"/>
+    <rule ref="rulesets/java/naming.xml">
+        <exclude name="ShortVariable"/>
+        <exclude name="LongVariable"/>
+    </rule>
+    <rule ref="rulesets/java/optimizations.xml">
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="RedundantFieldInitializer"/>
+    </rule>
     <rule ref="rulesets/java/unusedcode.xml"/>
 
 </ruleset>
