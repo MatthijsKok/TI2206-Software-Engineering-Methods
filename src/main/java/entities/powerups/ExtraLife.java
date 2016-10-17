@@ -12,7 +12,10 @@ class ExtraLife extends InstantPowerUp {
      */
     private static final Sprite EXTRA_LIFE_SPRITE = new Sprite("powerUps/1-up.png");
 
-    public ExtraLife() {
+    /**
+     * Creates a new ExtraLife power-up.
+     */
+    ExtraLife() {
         setSprite(EXTRA_LIFE_SPRITE);
     }
 

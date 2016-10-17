@@ -5,23 +5,11 @@ import entities.AbstractEntity;
 import entities.Character;
 import entities.FloorBlock;
 import geometry.Rectangle;
-import graphics.Sprite;
 
 /**
  * Pickup that contains a power-up effect that will be applied to the player.
  */
 class Pickup extends AbstractEntity {
-
-    /**
-     * The sprite of a pickup.
-     */
-    private static final Sprite PICKUP_SPRITE = new Sprite("powerUps/1-up.png", 1, new Vec2d(16, 15));
-
-    /**
-     * The shape of a pickup.
-     */
-    private static final Rectangle PICKUP_SHAPE = new Rectangle(PICKUP_SPRITE);
-
     /**
      * Gravity applied to a power-up, in pixels per second squared.
      */
@@ -52,8 +40,8 @@ class Pickup extends AbstractEntity {
 
         this.powerUp = powerUp;
 
-        setSprite(PICKUP_SPRITE);
-        setShape(new Rectangle(PICKUP_SHAPE));
+        setSprite(powerUp.getSprite());
+        setShape(new Rectangle(getSprite()));
     }
 
     /**
@@ -104,12 +92,5 @@ class Pickup extends AbstractEntity {
     private void collideWith(Character character) {
         powerUp.setTarget(character);
         getLevel().removeEntity(this);
-    }
-
-    /**
-     * Draws the power-up.
-     */
-    public void draw() {
-        powerUp.draw(getPosition());
     }
 }

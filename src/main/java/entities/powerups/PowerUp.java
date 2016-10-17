@@ -1,5 +1,4 @@
 package entities.powerups;
-import com.sun.javafx.geom.Vec2d;
 import entities.Character;
 import graphics.Sprite;
 
@@ -37,17 +36,14 @@ abstract class PowerUp {
      * Sets the sprite of this power-up.
      * @param sprite The sprite to set.
      */
-    void setSprite(Sprite sprite) {
+    void setSprite(final Sprite sprite) {
         this.sprite = sprite;
     }
 
     /**
-     * Draws the sprite of the power-up.
-     * @param position The position to draw the sprite on.
+     * @return The sprite of the power-up.
      */
-    public void draw(final Vec2d position) {
-        if (sprite != null) {
-            sprite.draw(position);
-        }
+    Sprite getSprite() {
+        return sprite;
     }
 }

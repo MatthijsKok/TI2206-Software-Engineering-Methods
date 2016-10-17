@@ -13,7 +13,7 @@ abstract class DuringPowerUp extends PowerUp {
     /**
      * The default duration of a during power-up.
      */
-    private static final long DEFAULT_DURATION = 30;
+    private static final long DEFAULT_DURATION = 30000;
     /**
      * the duration of this power-up.
      */

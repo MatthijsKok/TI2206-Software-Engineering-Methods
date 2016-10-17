@@ -18,7 +18,10 @@ class ExtraTime extends InstantPowerUp {
      */
     private static final Sprite EXTRA_TIME_SPRITE = new Sprite("powerUps/extra_time.png");
 
-    public ExtraTime() {
+    /**
+     * Creates a new ExtraTime power-up.
+     */
+    ExtraTime() {
         setSprite(EXTRA_TIME_SPRITE);
     }
 

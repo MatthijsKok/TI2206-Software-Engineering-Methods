@@ -374,7 +374,7 @@ public class Level {
     /**
      * Win the level.
      */
-    public void win() {
+    private void win() {
         GameState gameState = Game.getInstance().getState();
         gameState.pause();
         won = true;
@@ -410,6 +410,6 @@ public class Level {
      * @param extraTime The amount of time extra.
      */
     public void increaseTime(final double extraTime) {
-        timeSpend = Math.max(0, extraTime);
+        timeSpend = Math.max(0, timeSpend - extraTime);
     }
 }
