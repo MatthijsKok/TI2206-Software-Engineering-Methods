@@ -6,7 +6,7 @@ import level.Level;
 /**
  * Power-up that adds extra time to the level time.
  */
-class ExtraTime extends InstantPowerUp {
+class ExtraTime extends AbstractInstantPowerUp {
 
     /**
      * The amount of time in seconds that is added on picking up this powerup.

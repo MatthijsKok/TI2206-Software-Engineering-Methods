@@ -28,14 +28,14 @@ class Pickup extends AbstractEntity {
     /**
      * The power-up that this pickup activates.
      */
-    private final PowerUp powerUp;
+    private final AbstractPowerUp powerUp;
 
     /**
      * Constructor for Pickup.
      * @param position The position of the power-up.
      * @param powerUp The power-up that the pickup contains.
      */
-    Pickup(Vec2d position, PowerUp powerUp) {
+    Pickup(final Vec2d position, final AbstractPowerUp powerUp) {
         super(position);
 
         this.powerUp = powerUp;
@@ -48,7 +48,7 @@ class Pickup extends AbstractEntity {
      * Update the speed and position of the ball.
      * @param timeDifference Time difference from previous update in seconds.
      */
-    public void update(double timeDifference) {
+    public void update(final double timeDifference) {
         // Apply gravity
         getSpeed().y += GRAVITY * timeDifference;
 
@@ -60,14 +60,8 @@ class Pickup extends AbstractEntity {
         }
     }
 
-    /**
-     * Entry point for all collisions.
-     * This method should only change the behaviour of the pickup, not the Entity it is
-     * colliding with. The colliding Entity should handle that itself in it's own
-     * "collideWith" method.
-     * @param entity the Entity this pickup collides with.
-     */
-    public void collideWith(AbstractEntity entity) {
+    @Override
+    public void collideWith(final AbstractEntity entity) {
         if (entity instanceof FloorBlock) {
             collideWith((FloorBlock) entity);
         }
@@ -80,7 +74,7 @@ class Pickup extends AbstractEntity {
      * The behaviour of the Ball when it collides with a Block Entity.
      * @param floor The Block Entity this Ball collides with.
      */
-    private void collideWith(FloorBlock floor) {
+    private void collideWith(final FloorBlock floor) {
         ((Rectangle) getShape()).setBottom(((Rectangle) floor.getShape()).getTop());
         getSpeed().y = 0;
     }
@@ -89,7 +83,7 @@ class Pickup extends AbstractEntity {
      * The behaviour of the pickup when it collides with a Block Entity.
      * @param character The Character Entity this Ball collides with.
      */
-    private void collideWith(Character character) {
+    private void collideWith(final Character character) {
         powerUp.setTarget(character);
         getLevel().removeEntity(this);
     }

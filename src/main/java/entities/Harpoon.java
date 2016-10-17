@@ -84,7 +84,7 @@ public class Harpoon extends AbstractEntity {
     private void collideWith(final Ball ball) {
         die();
 
-        int score = (ball.getSize() + 1) * SCORE_PER_BALL;
+        final int score = (ball.getSize() + 1) * SCORE_PER_BALL;
         character.increaseScore(score);
     }
 }

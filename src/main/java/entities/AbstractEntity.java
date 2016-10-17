@@ -176,7 +176,7 @@ public abstract class AbstractEntity extends Observable {
      * @return the boolean indicating if the sprite is visible
      */
     /* default */ boolean isVisible() {
-        return visible && sprite != null;
+        return visible;
     }
 
     /**
@@ -194,9 +194,17 @@ public abstract class AbstractEntity extends Observable {
      * @param xPosition The x coordinate of the entity
      * @param yPosition The y coordinate of the entity
      */
-    /* default */ final void setPosition(final double xPosition, final double yPosition) {
+    /* default */ private void setPosition(final double xPosition, final double yPosition) {
         this.position.x = xPosition;
         this.position.y = yPosition;
+    }
+
+    /**
+     * Binds the position of this entity to position.
+     * @param position the position to bind to.
+     */
+    final /* default */ void bindPosition(final Vec2d position) {
+        this.position = position;
     }
 
     /**

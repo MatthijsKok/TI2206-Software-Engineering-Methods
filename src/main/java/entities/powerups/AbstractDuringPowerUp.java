@@ -6,9 +6,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Represents a PowerUp which effect is lasting some time.
+ * Represents a AbstractPowerUp which effect is lasting some time.
  */
-abstract class DuringPowerUp extends PowerUp {
+abstract class AbstractDuringPowerUp extends AbstractPowerUp {
 
     /**
      * The default duration of a during power-up.

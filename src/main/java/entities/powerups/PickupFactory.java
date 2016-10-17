@@ -35,7 +35,7 @@ public final class PickupFactory {
      * Power-ups are spawned.
      * @return the new power-up.
      */
-    private static PowerUp createRandomPowerUp() {
+    private static AbstractPowerUp createRandomPowerUp() {
         int totalProbability = powerUpProbabilities.stream()
                 .map(Pair::getL)
                 .reduce(0, (a, b) -> a + b);
@@ -47,7 +47,7 @@ public final class PickupFactory {
         }
 
         try {
-            return (PowerUp) powerUpProbabilities.get(i).getR().newInstance();
+            return (AbstractPowerUp) powerUpProbabilities.get(i).getR().newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }
@@ -58,7 +58,7 @@ public final class PickupFactory {
      * a randomly chosen Power-up.
      * @param position Vec2d spawn position of this pickup.
      */
-    private static Pickup createPickUp(PowerUp powerUp, Vec2d position) {
+    private static Pickup createPickUp(AbstractPowerUp powerUp, Vec2d position) {
         return new Pickup(position, powerUp);
     }
 
@@ -68,7 +68,7 @@ public final class PickupFactory {
      * @param position the spawn position of this pickup.
      */
     public static void spawnRandomPickUp(Level level, Vec2d position) {
-        PowerUp powerUp = createRandomPowerUp();
+        AbstractPowerUp powerUp = createRandomPowerUp();
         level.addEntity(createPickUp(powerUp, position));
     }
 }

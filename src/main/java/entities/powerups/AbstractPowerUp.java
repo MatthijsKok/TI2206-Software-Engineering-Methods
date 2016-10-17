@@ -5,7 +5,7 @@ import graphics.Sprite;
 /**
  * Interface that all power-ups should implement.
  */
-abstract class PowerUp {
+abstract class AbstractPowerUp {
 
     /**
      * The character which picked up the power-up.
@@ -21,14 +21,14 @@ abstract class PowerUp {
      * Enables the effect of the specific power-up.
      * @param character The character that picked up the power-up.
      */
-    void setTarget(Character character) {
+    /* default */ void setTarget(final Character character) {
         target = character;
     }
 
     /**
      * @return The character which picked up the power-up.
      */
-    Character getTarget() {
+    /* default */ Character getTarget() {
         return target;
     }
 
@@ -36,14 +36,14 @@ abstract class PowerUp {
      * Sets the sprite of this power-up.
      * @param sprite The sprite to set.
      */
-    void setSprite(final Sprite sprite) {
+    /* default */ void setSprite(final Sprite sprite) {
         this.sprite = sprite;
     }
 
     /**
      * @return The sprite of the power-up.
      */
-    Sprite getSprite() {
+    /* default */ Sprite getSprite() {
         return sprite;
     }
 }

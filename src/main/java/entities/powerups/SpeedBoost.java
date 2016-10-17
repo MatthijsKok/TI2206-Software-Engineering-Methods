@@ -5,7 +5,7 @@ import graphics.Sprite;
 /**
  * Speeds up the players movements.
  */
-class SpeedBoost extends DuringPowerUp {
+class SpeedBoost extends AbstractDuringPowerUp {
 
     /**
      * The applied speed boost in px/s.

@@ -4,10 +4,6 @@ import com.sun.javafx.geom.Vec2d;
 import game.player.Player;
 import geometry.Rectangle;
 import graphics.Sprite;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-import util.CanvasManager;
 import util.Pair;
 
 /**
@@ -18,7 +14,7 @@ public class Character extends AbstractEntity {
     /**
      * The offset of the bounding box of a character.
      */
-    private static final Vec2d OFFSET = new Vec2d(8, 32);
+    private static final Vec2d OFFSET = new Vec2d(8, 16);
     /**
      * The bounding box of a character.
      */
@@ -77,7 +73,7 @@ public class Character extends AbstractEntity {
     /**
      * Boolean indicating whether the character is invincible.
      */
-    private boolean invincible = false;
+    private Shield shield = new Shield(this);
 
     /**
      * Boolean indicating whether the character can shoot.
@@ -93,6 +89,7 @@ public class Character extends AbstractEntity {
         super(position);
 
         setShape(new Rectangle(BOUNDING_BOX));
+        getLevel().addEntity(shield);
     }
 
     /**
@@ -197,9 +194,7 @@ public class Character extends AbstractEntity {
      * When a character collides with a ball, the character dies.
      */
     private void collideWithBall() {
-        if (!invincible) {
-            die();
-        }
+        die();
     }
 
     /**
@@ -248,24 +243,11 @@ public class Character extends AbstractEntity {
      * otherwise.
      */
     public final void draw() {
-        if (invincible) {
-            drawShield();
-        }
-
         if (direction == 0) {
             getSprite().draw(getPosition());
         } else {
             getSprite().draw(getPosition(), direction, 1);
         }
-    }
-
-    @SuppressWarnings("magicnumber")
-    private void drawShield() {
-        GraphicsContext gc = CanvasManager.getContext();
-        gc.setFill(Color.GOLD);
-        gc.setGlobalAlpha(0.4);
-        gc.fillArc(getX() - 32, getY() - 48, 64, 64, 0, 360, ArcType.ROUND);
-        gc.setGlobalAlpha(1);
     }
 
     /**
@@ -279,18 +261,18 @@ public class Character extends AbstractEntity {
         switch (id) {
             case 0:
                 //Set Mario as player 1
-                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32));
-                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
+                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32 - 16));
+                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35 - 16));
                 break;
             case 1:
                 //Set Yoshi as player 2
-                idleSprite = new Sprite("player/yoshi_idle.png", 1, new Vec2d(8, 32));
-                runningSprite = new Sprite("player/yoshi_running.png", 8, new Vec2d(11, 37));
+                idleSprite = new Sprite("player/yoshi_idle.png", 1, new Vec2d(8, 32 - 16));
+                runningSprite = new Sprite("player/yoshi_running.png", 8, new Vec2d(11, 37 - 16));
                 break;
             default:
                 //Set Mario for any other players
-                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32));
-                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
+                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32 - 16));
+                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35 - 16));
         }
     }
 
@@ -336,13 +318,10 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * Sets whether the character is invincible.
-     *
-     * @param invincible boolean indicating whether the character is
-     *                   invisible or not.
+     * Activates a shield around this character.
      */
-    public void setInvincible(boolean invincible) {
-        this.invincible = invincible;
+    public void activateShield() {
+        shield.activate();
     }
 
     /**

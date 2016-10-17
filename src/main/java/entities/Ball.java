@@ -242,12 +242,16 @@ public class Ball extends AbstractEntity {
         if (entity instanceof Harpoon) {
             collideWithHarpoon();
         }
+
+        if (entity instanceof Shield) {
+            collideWith((Shield) entity);
+        }
     }
 
     /**
-     * The behaviour of the Ball when it collides with a FloorBlock AbstractEntity.
+     * The behaviour of the Ball when it collides with a FloorBlock.
      *
-     * @param floor The FloorBlock AbstractEntity this Ball collides with.
+     * @param floor The FloorBlock this Ball collides with.
      */
     private void collideWith(FloorBlock floor) {
         getPosition().y = Math.min(floor.getY() - radius, getY());
@@ -255,7 +259,17 @@ public class Ball extends AbstractEntity {
     }
 
     /**
-     * The behaviour of the Ball when it collides with a WallBlock AbstractEntity.
+     * The behaviour of the Ball when it collides with a Shield.
+     *
+     * @param shield Shield this Ball collides with.
+     */
+    private void collideWith(Shield shield) {
+        getPosition().y = Math.min(shield.getY() - radius, getY());
+        bounce();
+    }
+
+    /**
+     * The behaviour of the Ball when it collides with a WallBlock.
      *
      * @param wall The WallBlock AbstractEntity this Ball collides with.
      */

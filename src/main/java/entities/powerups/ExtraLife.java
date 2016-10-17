@@ -5,7 +5,7 @@ import graphics.Sprite;
 /**
  * Adds a life to the players total.
  */
-class ExtraLife extends InstantPowerUp {
+class ExtraLife extends AbstractInstantPowerUp {
 
     /**
      * The sprite of the extra life power-up.
