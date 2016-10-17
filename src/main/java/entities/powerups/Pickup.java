@@ -15,7 +15,7 @@ class Pickup extends AbstractEntity {
     /**
      * The sprite of a pickup.
      */
-    private static final Sprite PICKUP_SPRITE = new Sprite("pickup.png", 1, new Vec2d(16, 15));
+    private static final Sprite PICKUP_SPRITE = new Sprite("powerUps/1-up.png", 1, new Vec2d(16, 15));
 
     /**
      * The shape of a pickup.

@@ -1,5 +1,6 @@
 package entities.powerups;
 import game.Game;
+import graphics.Sprite;
 import level.Level;
 
 /**
@@ -11,6 +12,15 @@ class ExtraTime extends InstantPowerUp {
      * The amount of time in seconds that is added on picking up this powerup.
      */
     private static final double EXTRA_TIME = 10;
+
+    /**
+     * The sprite of the extra time power-up.
+     */
+    private static final Sprite EXTRA_TIME_SPRITE = new Sprite("powerUps/extra_time.png");
+
+    public ExtraTime() {
+        setSprite(EXTRA_TIME_SPRITE);
+    }
 
     private Level getLevel() {
         return Game.getInstance().getState().getCurrentLevel();
