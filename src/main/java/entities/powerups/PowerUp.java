@@ -46,6 +46,8 @@ abstract class PowerUp {
      * @param position The position to draw the sprite on.
      */
     public void draw(final Vec2d position) {
-        sprite.draw(position);
+        if (sprite != null) {
+            sprite.draw(position);
+        }
     }
 }

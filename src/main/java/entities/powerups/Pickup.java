@@ -94,6 +94,7 @@ class Pickup extends AbstractEntity {
      */
     private void collideWith(FloorBlock floor) {
         ((Rectangle) getShape()).setBottom(((Rectangle) floor.getShape()).getTop());
+        getSpeed().y = 0;
     }
 
     /**

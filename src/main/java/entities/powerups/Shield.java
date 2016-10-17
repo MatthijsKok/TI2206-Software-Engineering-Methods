@@ -5,9 +5,11 @@ package entities.powerups;
  */
 class Shield extends DuringPowerUp {
 
+
+
     @Override
     void enableEffect() {
-        //getTarget().setInvincible(true);
+        getTarget().setInvincible(true);
     }
 
     /**
@@ -15,7 +17,7 @@ class Shield extends DuringPowerUp {
      */
     @Override
     void disableEffect() {
-        //getTarget().setInvincible(false);
+        getTarget().setInvincible(false);
     }
 
 }

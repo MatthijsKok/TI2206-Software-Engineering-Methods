@@ -11,11 +11,11 @@ class SpeedBoost extends DuringPowerUp {
 
     @Override
     void enableEffect() {
-        getTarget().setRunSpeed(getTarget().getRunSpeed() + SPEED_BOOST);
+        getTarget().increaseRunSpeed(SPEED_BOOST);
     }
 
     @Override
     void disableEffect() {
-        getTarget().setRunSpeed(getTarget().getRunSpeed() - SPEED_BOOST);
+        getTarget().increaseRunSpeed(-SPEED_BOOST);
     }
 }

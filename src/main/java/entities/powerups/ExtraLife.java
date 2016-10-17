@@ -5,9 +5,7 @@ package entities.powerups;
  */
 class ExtraLife extends InstantPowerUp {
 
-    /**
-     * Increases the characters life.
-     */
+    @Override
     void applyEffect() {
         getTarget().increaseLife();
     }

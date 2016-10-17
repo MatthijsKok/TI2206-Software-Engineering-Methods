@@ -45,8 +45,10 @@ public class Character extends AbstractEntity {
     private boolean alive = true;
 
     /**
-     * Harpoon of the character.
+     * The amount of harpoons this character can shoot.
      */
+    private int harpoonCount = 1;
+
     private Harpoon harpoon;
 
     /**
@@ -68,6 +70,11 @@ public class Character extends AbstractEntity {
      * The Player that is controlling this Character.
      */
     private Player player;
+
+    /**
+     * Boolean indicating whether the character is invincible.
+     */
+    private boolean invincible = false;
 
     /**
      * Instantiate a new character at position (x, y).
@@ -192,7 +199,9 @@ public class Character extends AbstractEntity {
      * When a character collides with a ball, the character dies.
      */
     private void collideWithBall() {
-        die();
+        if (!invincible) {
+            die();
+        }
     }
 
     /**
@@ -275,19 +284,12 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * @return the speed at which the character runs in px/s
-     */
-    public double getRunSpeed() {
-        return runSpeed;
-    }
-
-    /**
-     * Sets the speed at which the character runs.
+     * Increases the speed at which the character runs.
      *
-     * @param runSpeed The speed at which the Character should
+     * @param amount The speed boost.
      */
-    public void setRunSpeed(double runSpeed) {
-        this.runSpeed = runSpeed;
+    public void increaseRunSpeed(final double amount) {
+        this.runSpeed += amount;
     }
 
     /**
@@ -302,7 +304,24 @@ public class Character extends AbstractEntity {
      *
      * @param player The Player object that controls this Character.
      */
-    public void setPlayer(Player player) {
+    public void setPlayer(final Player player) {
         this.player = player;
+    }
+
+    /**
+     * Increases the amount of harpoons this character can shoot.
+     * @param amount the amount of harpoons a character can shoot extra.
+     */
+    public void increaseHarpoonCount(int amount) {
+        harpoonCount = Math.max(1, harpoonCount + amount);
+    }
+
+    /**
+     * Sets whether the character is invincible.
+     * @param invincible boolean indicating whether the character is
+     *                   invisible or not.
+     */
+    public void setInvincible(boolean invincible) {
+        this.invincible = invincible;
     }
 }

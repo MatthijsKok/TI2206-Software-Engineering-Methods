@@ -19,6 +19,6 @@ class ExtraTime extends InstantPowerUp {
     @Override
     void applyEffect() {
         Level level = getLevel();
-        //level.increaseTime(EXTRA_TIME);
+        level.increaseTime(EXTRA_TIME);
     }
 }
