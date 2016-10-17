@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
  * Basic test suite for the Entity factory.
  */
 @RunWith(Parameterized.class)
-public class EntityFactoryClassNameTest extends EntityFactoryTest {
+public class EntityFactoryClassNameTest extends AbstractEntityFactoryTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         JSONObject ballParams = new JSONObject();
