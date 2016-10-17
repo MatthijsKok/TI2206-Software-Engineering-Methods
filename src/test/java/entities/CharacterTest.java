@@ -24,10 +24,6 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         character = new Character(spawnPosition);
     }
 
-    @Test
-    public void testCharacterHasHarpoon() {
-        assertNotNull("Each character should have a harpoon", character.getHarpoon());
-    }
 
     @Test
     public void testDie() {
@@ -62,12 +58,12 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         assertThat("A character should move to the left if its direction is -1", character.getX(), lessThan(x));
     }
 
-    @Test
+    /*@Test
     public void testSetShooting() {
         character.setShooting(true);
         character.update(1);
         assertThat("A character should shoot when told to.", character.getHarpoon().isVisible(), is(true));
-    }
+    }*/
 
     @Test
     public void testCollideWithBall() {

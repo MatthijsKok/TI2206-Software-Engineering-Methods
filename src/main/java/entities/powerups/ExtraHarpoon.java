@@ -23,14 +23,14 @@ class ExtraHarpoon extends DuringPowerUp {
      * Increase the amount of ropes the character can shoot.
      */
     void enableEffect() {
-        getTarget().increaseHarpoonCount(1);
+        getTarget().increaseMaxHarpoonCount(1);
     }
 
     /**
      * Disables the effect of the specific power up.
      */
     void disableEffect() {
-        getTarget().increaseHarpoonCount(-1);
+        getTarget().increaseMaxHarpoonCount(-1);
     }
 
 }

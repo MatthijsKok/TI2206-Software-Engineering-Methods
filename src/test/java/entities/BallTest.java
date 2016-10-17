@@ -7,6 +7,7 @@ import level.Level;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
         level.addEntity(ball);
         level.update(0);
 
-        harpoon = new Harpoon();
+        harpoon = new Harpoon(new Vec2d(0, 0), Mockito.mock(Character.class));
     }
 
     @After

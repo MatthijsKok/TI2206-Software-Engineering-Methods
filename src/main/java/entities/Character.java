@@ -1,13 +1,14 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
-import game.Game;
 import game.player.Player;
 import geometry.Rectangle;
 import graphics.Sprite;
-
-import java.util.HashMap;
-
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
+import util.CanvasManager;
+import util.Pair;
 
 /**
  * The Character class represents a character.
@@ -47,9 +48,11 @@ public class Character extends AbstractEntity {
     /**
      * The amount of harpoons this character can shoot.
      */
-    private int harpoonCount = 1;
-
-    private Harpoon harpoon;
+    private int maxHarpoonCount = 1;
+    /**
+     * The amount of harpoons this character has currently shot.
+     */
+    private int currentHarpoonCount = 0;
 
     /**
      * The sprites of the character.
@@ -77,16 +80,17 @@ public class Character extends AbstractEntity {
     private boolean invincible = false;
 
     /**
+     * Boolean indicating whether the character can shoot.
+     */
+    private boolean canShoot;
+
+    /**
      * Instantiate a new character at position (x, y).
      *
      * @param position position of the character
      */
     Character(final Vec2d position) {
         super(position);
-
-        // Create harpoon for the character and add it to the level
-        harpoon = new Harpoon();
-        Game.getInstance().getState().getCurrentLevel().addEntity(harpoon);
 
         setShape(new Rectangle(BOUNDING_BOX));
     }
@@ -98,9 +102,7 @@ public class Character extends AbstractEntity {
     public void die() {
         alive = false;
         setChanged();
-        HashMap<String, Boolean> hashMap = new HashMap<>();
-        hashMap.put("dead", !isAlive());
-        notifyObservers(hashMap);
+        notifyObservers(new Pair<>("die", true));
     }
 
     /**
@@ -148,13 +150,6 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * @return The harpoon of the player.
-     */
-    public Harpoon getHarpoon() {
-        return harpoon;
-    }
-
-    /**
      * Updates the Character object.
      *
      * @param timeDifference The time since the last time the update method was called
@@ -171,9 +166,12 @@ public class Character extends AbstractEntity {
         }
 
         // Shoot
-        if (shooting) {
-            harpoon.shoot(getPosition());
+        if (shooting && canShoot && currentHarpoonCount < maxHarpoonCount) {
+            currentHarpoonCount++;
+            getLevel().addEntity(new Harpoon(getPosition(), this));
         }
+
+        canShoot = !shooting;
     }
 
     /**
@@ -250,11 +248,24 @@ public class Character extends AbstractEntity {
      * otherwise.
      */
     public final void draw() {
+        if (invincible) {
+            drawShield();
+        }
+
         if (direction == 0) {
             getSprite().draw(getPosition());
         } else {
             getSprite().draw(getPosition(), direction, 1);
         }
+    }
+
+    @SuppressWarnings("magicnumber")
+    private void drawShield() {
+        GraphicsContext gc = CanvasManager.getContext();
+        gc.setFill(Color.GOLD);
+        gc.setGlobalAlpha(0.4);
+        gc.fillArc(getX() - 32, getY() - 48, 64, 64, 0, 360, ArcType.ROUND);
+        gc.setGlobalAlpha(1);
     }
 
     /**
@@ -310,18 +321,35 @@ public class Character extends AbstractEntity {
 
     /**
      * Increases the amount of harpoons this character can shoot.
+     *
      * @param amount the amount of harpoons a character can shoot extra.
      */
-    public void increaseHarpoonCount(int amount) {
-        harpoonCount = Math.max(1, harpoonCount + amount);
+    public void increaseMaxHarpoonCount(int amount) {
+        maxHarpoonCount = Math.max(1, maxHarpoonCount + amount);
+    }
+
+    /**
+     * Called when a harpoon is removed from the level.
+     */
+    void harpoonRemoved() {
+        currentHarpoonCount = Math.max(0, currentHarpoonCount - 1);
     }
 
     /**
      * Sets whether the character is invincible.
+     *
      * @param invincible boolean indicating whether the character is
      *                   invisible or not.
      */
     public void setInvincible(boolean invincible) {
         this.invincible = invincible;
+    }
+
+    /**
+     * Increases the score of the character.
+     * @param score the amount of the increase.
+     */
+    void increaseScore(final int score) {
+        notifyObservers(new Pair<>("increaseScore", score));
     }
 }
