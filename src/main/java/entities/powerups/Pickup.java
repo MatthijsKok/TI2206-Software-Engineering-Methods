@@ -43,7 +43,9 @@ public class Pickup extends AbstractEntity {
         super(position);
 
         // Create sprite and set its offset to the center.
-        Sprite pickUpSprite = new Sprite("pickup.png");
+        Sprite pickUpSprite = new Sprite("powerUps/ExtraLife.png");
+
+        //Sprite pickUpSprite = new Sprite("powerUps/ExtraSpeed.png");
         pickUpSprite.setOffsetToCenter();
         this.setSprite(pickUpSprite);
         this.powerUp = powerUp;
