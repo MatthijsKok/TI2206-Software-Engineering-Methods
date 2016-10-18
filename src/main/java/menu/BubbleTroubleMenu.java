@@ -73,6 +73,7 @@ public class BubbleTroubleMenu extends Pane {
         button.setLayoutX(220);
         button.setLayoutY(480);
         button.getStyleClass().add("green");
+        button.idProperty().set("multiPlayerButton");
 
         button.setOnMouseClicked(
                 e -> startGame(2, DEFAULT_LEVELS));
@@ -89,6 +90,7 @@ public class BubbleTroubleMenu extends Pane {
         button.setLayoutX(920);
         button.setLayoutY(550);
         button.getStyleClass().add("green");
+        button.idProperty().set("settingsButton");
         return button;
     }
 
@@ -101,6 +103,7 @@ public class BubbleTroubleMenu extends Pane {
         button.setLayoutX(64);
         button.setLayoutY(550);
         button.getStyleClass().add("green");
+        button.idProperty().set("quitButton");
 
         button.setOnMouseClicked(e -> Platform.exit());
 

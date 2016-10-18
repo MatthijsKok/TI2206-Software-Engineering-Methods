@@ -28,31 +28,21 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws Exception {
         StageManager.init(stage);
-
         Canvas canvas = CanvasManager.createCanvas(stage);
         CanvasManager.setCanvas(canvas);
-
         menu = new BubbleTroubleMenu();
-
         StageManager.getRoot().getChildren().add(menu);
     }
 
     @Before
     public void setUp() {
         game = Game.getInstance();
-
         game.stop();
     }
 
     @After
     public void tearDown() throws TimeoutException {
         release(new MouseButton[] {});
-    }
-
-    @Test
-    public void testOnClickSinglePlayerButton() {
-        clickOn("#singlePlayerButton");
-        assertThat(game.getPlayerCount(), is(1));
     }
 
     @Test
@@ -81,5 +71,21 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
         final String errMsg = "This button does not exist";
         assertNotNull(errMsg, menu.getChildren().get(3));
         assertTrue(menu.getChildren().get(3) instanceof Button);
+    }
+
+    @Test
+    public void testOnClickSinglePlayerButtons() {
+        clickOn("#singlePlayerButton");
+        assertThat(game.getPlayerCount(), is(1));
+        clickOn("#settingsButton");
+        assertThat(game.getPlayerCount(), is(1));
+    }
+
+    @Test
+    public void testOnClickMultiPlayerButtons() {
+        clickOn("#multiPlayerButton");
+        assertThat(game.getPlayerCount(), is(2));
+        clickOn("#settingsButton");
+        assertThat(game.getPlayerCount(), is(2));
     }
 }
