@@ -1,11 +1,11 @@
 package entities.powerups;
-import entities.Character;
+
+import graphics.Sprite;
 
 /**
  * Speeds up the players movements.
  */
-public class SpeedBoost implements PowerUp {
-
+class SpeedBoost extends AbstractDuringPowerUp {
 
     /**
      * The applied speed boost in px/s.
@@ -13,19 +13,24 @@ public class SpeedBoost implements PowerUp {
     private static final double SPEED_BOOST = 10;
 
     /**
-     * Enables the effect of the specific power up.
+     * Sprite of the speed boost power-up.
      */
-    @Override
-    public void enableEffect(Character character) {
-        System.out.println("Speed boost");
-        character.setRunSpeed(character.getRunSpeed() + SPEED_BOOST);
-    }
+    private static final Sprite SPEED_BOOST_SPRITE = new Sprite("powerUps/speed_boost.png");
 
     /**
-     * Disables the effect of the specific power up.
+     * Constructor of the speed boost power-up.
      */
+    SpeedBoost() {
+        setSprite(SPEED_BOOST_SPRITE);
+    }
+
     @Override
-    public void disableEffect(Character character) {
-        character.setRunSpeed(character.getRunSpeed() - SPEED_BOOST);
+    void enableEffect() {
+        getTarget().increaseRunSpeed(SPEED_BOOST);
+    }
+
+    @Override
+    void disableEffect() {
+        getTarget().increaseRunSpeed(-SPEED_BOOST);
     }
 }

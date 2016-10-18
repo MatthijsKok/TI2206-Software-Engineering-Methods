@@ -1,13 +1,10 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
-import game.Game;
 import game.player.Player;
 import geometry.Rectangle;
 import graphics.Sprite;
-
-import java.util.HashMap;
-
+import util.Pair;
 
 /**
  * The Character class represents a character.
@@ -17,34 +14,41 @@ public class Character extends AbstractEntity {
     /**
      * The offset of the bounding box of a character.
      */
-    private static final Vec2d OFFSET = new Vec2d(8, 32);
+    private static final Vec2d OFFSET = new Vec2d(8, 16);
     /**
      * The bounding box of a character.
      */
     private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
-
-    /**
-     * The running speed of a character. In pixels per second.
-     */
-    private double runSpeed = 226;
     /**
      * The gravity applied to a character. In pixels per second squared.
      */
     private static final double GRAVITY = 300; // px/s^2
+    /**
+     * The default run speed of a character.
+     */
+    private static final double DEFAULT_RUN_SPEED = 230; // px/s
 
     static {
         BOUNDING_BOX.setOffset(OFFSET.x, OFFSET.y);
     }
 
     /**
+     * The running speed of a character. In pixels per second.
+     */
+    private double runSpeed = DEFAULT_RUN_SPEED;
+    /**
      * Indicates whether a character is alive or not.
      */
     private boolean alive = true;
 
     /**
-     * Harpoon of the character.
+     * The amount of harpoons this character can shoot.
      */
-    private Harpoon harpoon;
+    private int maxHarpoonCount = 1;
+    /**
+     * The amount of harpoons this character has currently shot.
+     */
+    private int currentHarpoonCount = 0;
 
     /**
      * The sprites of the character.
@@ -67,6 +71,16 @@ public class Character extends AbstractEntity {
     private Player player;
 
     /**
+     * Boolean indicating whether the character is invincible.
+     */
+    private Shield shield = new Shield(this);
+
+    /**
+     * Boolean indicating whether the character can shoot.
+     */
+    private boolean canShoot;
+
+    /**
      * Instantiate a new character at position (x, y).
      *
      * @param position position of the character
@@ -74,11 +88,8 @@ public class Character extends AbstractEntity {
     Character(final Vec2d position) {
         super(position);
 
-        // Create harpoon for the character and add it to the level
-        harpoon = new Harpoon();
-        Game.getInstance().getState().getCurrentLevel().addEntity(harpoon);
-
         setShape(new Rectangle(BOUNDING_BOX));
+        getLevel().addEntity(shield);
     }
 
     /**
@@ -88,9 +99,14 @@ public class Character extends AbstractEntity {
     public void die() {
         alive = false;
         setChanged();
-        HashMap<String, Boolean> hashMap = new HashMap<>();
-        hashMap.put("dead", !isAlive());
-        notifyObservers(hashMap);
+        notifyObservers(new Pair<>("die", true));
+    }
+
+    /**
+     * Adds a life to this character.
+     */
+    public void increaseLife() {
+        getPlayer().increaseLives(1);
     }
 
     /**
@@ -131,13 +147,6 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * @return The harpoon of the player.
-     */
-    public Harpoon getHarpoon() {
-        return harpoon;
-    }
-
-    /**
      * Updates the Character object.
      *
      * @param timeDifference The time since the last time the update method was called
@@ -154,9 +163,12 @@ public class Character extends AbstractEntity {
         }
 
         // Shoot
-        if (shooting) {
-            harpoon.shoot(getPosition());
+        if (shooting && canShoot && currentHarpoonCount < maxHarpoonCount) {
+            currentHarpoonCount++;
+            getLevel().addEntity(new Harpoon(getPosition(), this));
         }
+
+        canShoot = !shooting;
     }
 
     /**
@@ -249,34 +261,28 @@ public class Character extends AbstractEntity {
         switch (id) {
             case 0:
                 //Set Mario as player 1
-                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32));
-                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
+                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32 - 16));
+                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35 - 16));
                 break;
             case 1:
                 //Set Yoshi as player 2
-                idleSprite = new Sprite("player/yoshi_idle.png", 1, new Vec2d(8, 32));
-                runningSprite = new Sprite("player/yoshi_running.png", 8, new Vec2d(11, 37));
+                idleSprite = new Sprite("player/yoshi_idle.png", 1, new Vec2d(8, 32 - 16));
+                runningSprite = new Sprite("player/yoshi_running.png", 8, new Vec2d(11, 37 - 16));
                 break;
             default:
                 //Set Mario for any other players
-                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32));
-                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35));
+                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32 - 16));
+                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35 - 16));
         }
     }
 
     /**
-     * @return the speed at which the character runs in px/s
+     * Increases the speed at which the character runs.
+     *
+     * @param amount The speed boost.
      */
-    public double getRunSpeed() {
-        return runSpeed;
-    }
-
-    /**
-     * Sets the speed at which the character runs.
-     * @param runSpeed The speed at which the Character should
-     */
-    public void setRunSpeed(double runSpeed) {
-        this.runSpeed = runSpeed;
+    public void increaseRunSpeed(final double amount) {
+        this.runSpeed += amount;
     }
 
     /**
@@ -288,9 +294,41 @@ public class Character extends AbstractEntity {
 
     /**
      * Set the player that controls this Character.
+     *
      * @param player The Player object that controls this Character.
      */
-    public void setPlayer(Player player) {
+    public void setPlayer(final Player player) {
         this.player = player;
+    }
+
+    /**
+     * Increases the amount of harpoons this character can shoot.
+     *
+     * @param amount the amount of harpoons a character can shoot extra.
+     */
+    public void increaseMaxHarpoonCount(int amount) {
+        maxHarpoonCount = Math.max(1, maxHarpoonCount + amount);
+    }
+
+    /**
+     * Called when a harpoon is removed from the level.
+     */
+    void harpoonRemoved() {
+        currentHarpoonCount = Math.max(0, currentHarpoonCount - 1);
+    }
+
+    /**
+     * Activates a shield around this character.
+     */
+    public void activateShield() {
+        shield.activate();
+    }
+
+    /**
+     * Increases the score of the character.
+     * @param score the amount of the increase.
+     */
+    void increaseScore(final int score) {
+        notifyObservers(new Pair<>("increaseScore", score));
     }
 }

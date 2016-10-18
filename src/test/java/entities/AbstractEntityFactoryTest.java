@@ -7,8 +7,8 @@ import org.json.JSONObject;
  * Base class for that provides usefull methods for the
  * Entity factory test suites.
  */
-class EntityFactoryTest extends BubbleTroubleApplicationTest {
-    static JSONObject createJSONEntity(final String type,
+abstract class AbstractEntityFactoryTest extends BubbleTroubleApplicationTest {
+    static /* default */ JSONObject createJSONEntity(final String type,
                                                  final double x,
                                                  final double y,
                                                  final JSONObject attributes) {
@@ -18,7 +18,7 @@ class EntityFactoryTest extends BubbleTroubleApplicationTest {
         return entity;
     }
 
-    static JSONObject createJSONEntity(final String type,
+    static /* default */ JSONObject createJSONEntity(final String type,
                                                  final double x,
                                                  final double y) {
         JSONObject entity = new JSONObject();

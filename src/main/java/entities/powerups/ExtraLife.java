@@ -1,26 +1,26 @@
 package entities.powerups;
-import entities.Character;
+
+import graphics.Sprite;
 
 /**
  * Adds a life to the players total.
  */
-public class ExtraLife implements PowerUp {
+class ExtraLife extends AbstractInstantPowerUp {
 
     /**
-     * Enables the effect of the specific power up.
+     * The sprite of the extra life power-up.
      */
-    @Override
-    public void enableEffect(Character character) {
-        System.out.println("Extra life");
-        character.getPlayer().setLives(character.getPlayer().getLives() + 1);
-    }
+    private static final Sprite EXTRA_LIFE_SPRITE = new Sprite("powerUps/1-up.png");
 
     /**
-     * Disables the effect of the specific power up.
+     * Creates a new ExtraLife power-up.
      */
-    @Override
-    public void disableEffect(Character character) {
-
+    ExtraLife() {
+        setSprite(EXTRA_LIFE_SPRITE);
     }
 
+    @Override
+    void applyEffect() {
+        getTarget().increaseLife();
+    }
 }
