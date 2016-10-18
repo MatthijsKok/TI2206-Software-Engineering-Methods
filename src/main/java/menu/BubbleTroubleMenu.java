@@ -53,18 +53,18 @@ public class BubbleTroubleMenu extends Pane {
      * @return singlePlayerGame
      */
     private Button createSinglePlayerButton() {
-        Button buttonSP = new Button("Start single player game.");
-        buttonSP.setLayoutX(190);
-        buttonSP.setLayoutY(420);
-        buttonSP.getStyleClass().add("green");
+        Button button = new Button("Start single player game.");
+        button.setLayoutX(190);
+        button.setLayoutY(420);
+        button.getStyleClass().add("green");
 
-        buttonSP.setOnMouseClicked(e -> {
+        button.setOnMouseClicked(e -> {
             Game game = Game.getInstance();
             game.setPlayerCount(1);
             game.setLevelsFromFiles(DEFAULT_LEVELS);
             startGame(game);
         });
-        return buttonSP;
+        return button;
     }
 
     /**
