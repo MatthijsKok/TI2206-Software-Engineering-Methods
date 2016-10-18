@@ -53,18 +53,15 @@ public class BubbleTroubleMenu extends Pane {
      * @return singlePlayerGame
      */
     private Button createSinglePlayerButton() {
-        Button buttonSP = new Button("Start single player game.");
-        buttonSP.setLayoutX(190);
-        buttonSP.setLayoutY(420);
-        buttonSP.getStyleClass().add("green");
+        Button button = new Button("Start single player game.");
+        button.setLayoutX(190);
+        button.setLayoutY(420);
+        button.getStyleClass().add("green");
+        button.idProperty().set("singlePlayerButton");
 
-        buttonSP.setOnMouseClicked(e -> {
-            Game game = Game.getInstance();
-            game.setPlayerCount(1);
-            game.setLevelsFromFiles(DEFAULT_LEVELS);
-            startGame(game);
-        });
-        return buttonSP;
+        button.setOnMouseClicked(
+                e -> startGame(1, DEFAULT_LEVELS));
+        return button;
     }
 
     /**
@@ -77,12 +74,8 @@ public class BubbleTroubleMenu extends Pane {
         button.setLayoutY(480);
         button.getStyleClass().add("green");
 
-        button.setOnMouseClicked(e -> {
-            Game game = Game.getInstance();
-            game.setPlayerCount(2);
-            game.setLevelsFromFiles(DEFAULT_LEVELS);
-            startGame(game);
-        });
+        button.setOnMouseClicked(
+                e -> startGame(2, DEFAULT_LEVELS));
 
         return button;
     }
@@ -114,7 +107,11 @@ public class BubbleTroubleMenu extends Pane {
         return button;
     }
 
-    private void startGame(Game game) {
+    private void startGame(int playerCount, List<String> levels) {
+        Game game = Game.getInstance();
+        game.setPlayerCount(playerCount);
+        game.setLevelsFromFiles(levels);
+
         try {
             game.start();
         } catch (IOException e) {

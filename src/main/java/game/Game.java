@@ -179,8 +179,10 @@ public class Game {
     /**
      * Stops the game and returns to the main menu.
      */
-    void stop() {
-        state.reset();
+    public void stop() {
+        if (levels.size() > 0) {
+            state.reset();
+        }
         timer.stop();
         CanvasManager.getCanvas().setVisible(false);
     }

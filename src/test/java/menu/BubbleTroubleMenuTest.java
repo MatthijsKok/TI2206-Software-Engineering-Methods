@@ -1,33 +1,47 @@
 package menu;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
+import game.Game;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
+import util.CanvasManager;
+import util.StageManager;
+
 import java.util.concurrent.TimeoutException;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 /**
  * Test class for BubbleTroubleMenu
  */
-public class BubbleTroubleMenuTest extends BubbleTroubleApplicationTest {
+public class BubbleTroubleMenuTest extends ApplicationTest {
 
-    private Button singlePlayerButton;
     private BubbleTroubleMenu menu;
+    private Game game;
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws Exception {
+        StageManager.init(stage);
+
+        Canvas canvas = CanvasManager.createCanvas(stage);
+        CanvasManager.setCanvas(canvas);
+
         menu = new BubbleTroubleMenu();
+
+        StageManager.getRoot().getChildren().add(menu);
     }
 
     @Before
     public void setUp() {
-        // it slaat nergens op
-        singlePlayerButton = lookup("buttonSP").queryFirst();
+        game = Game.getInstance();
+
+        game.stop();
     }
 
     @After
@@ -37,9 +51,8 @@ public class BubbleTroubleMenuTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testOnClickSinglePlayerButton() {
-//        Node singlePlayerButton = menu.getChildren().get(0);
-//        singlePlayerButton.onC
-//        assertTrue(menu.getChildren().get(0) instanceof Button);
+        clickOn("#singlePlayerButton");
+        assertThat(game.getPlayerCount(), is(1));
     }
 
     @Test
