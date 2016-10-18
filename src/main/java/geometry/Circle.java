@@ -1,5 +1,8 @@
 package geometry;
 
+import com.sun.javafx.geom.Vec2d;
+import graphics.Sprite;
+
 /**
  * Class representing a circle.
  */
@@ -19,11 +22,20 @@ public class Circle extends AbstractShape {
     }
 
     /**
-     * Creates a new Circle with the same dimensions as the original.
+     * Creates a new circle with the same dimensions as the original.
      * @param circle the circle to copy.
      */
     public Circle(final Circle circle) {
         this(circle.getX(), circle.getY(), circle.getRadius());
+    }
+
+    /**
+     * Creates a new circle around a sprite. Radius is the sprite's
+     * longest axis.
+     * @param sprite the sprite to create a circle around.
+     */
+    public Circle(final Sprite sprite) {
+        this(Math.max(sprite.getWidth(), sprite.getHeight()) / 2);
     }
 
     /**
@@ -41,7 +53,7 @@ public class Circle extends AbstractShape {
      * Set the radius of the circle. Should be bigger than zero.
      * @param radius the target radius.
      */
-    public void setRadius(final double radius) {
+    private void setRadius(final double radius) {
         if (radius > 0) {
             this.radius = radius;
         }
@@ -50,15 +62,12 @@ public class Circle extends AbstractShape {
     /**
      * @return the radius of the circle
      */
-    final /* default */ double getRadius() {
-        return this.radius;
+    public final /* default */ double getRadius() {
+        Vec2d s = getScale();
+        return this.radius * (s.x + s.y) / 2;
     }
 
-    /**
-     * Entry point for intersection checks.
-     * @param shape the shape to check intersection with
-     * @return whether the circle intersects with shape
-     */
+    @Override
     public boolean intersects(final AbstractShape shape) {
         if (shape instanceof Circle) {
             return intersects((Circle) shape);
@@ -76,7 +85,7 @@ public class Circle extends AbstractShape {
     private boolean intersects(final Rectangle rect) {
         final double xDiff = getX() - Math.max(rect.getLeft(), Math.min(getX(), rect.getRight()));
         final double yDiff = getY() - Math.max(rect.getTop(), Math.min(getY(), rect.getBottom()));
-        return Math.pow(xDiff, 2) + Math.pow(yDiff, 2) < Math.pow(radius, 2);
+        return Math.pow(xDiff, 2) + Math.pow(yDiff, 2) < Math.pow(getRadius(), 2);
     }
 
     /**

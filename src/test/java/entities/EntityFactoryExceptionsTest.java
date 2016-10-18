@@ -1,6 +1,7 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.ColoredBall;
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class EntityFactoryExceptionsTest extends AbstractEntityFactoryTest {
 
     @Test
     public void testBallWithColor() {
-        Ball expectedBall = new Ball(new Vec2d(0, 0), 2, Ball.Color.BLUE);
+        ColoredBall expectedBall = new ColoredBall(new Vec2d(0, 0), 2, ColoredBall.Color.BLUE);
 
         JSONObject params = new JSONObject();
         params.put("size", 2);
@@ -23,13 +24,13 @@ public class EntityFactoryExceptionsTest extends AbstractEntityFactoryTest {
 
         JSONObject json = createJSONEntity("Ball", 0, 0, params);
 
-        Ball actualBall = (Ball) EntityFactory.createEntity(json);
+        ColoredBall actualBall = (ColoredBall) EntityFactory.createEntity(json);
 
         if (actualBall == null) {
             fail();
         }
 
-        assertEquals(expectedBall.getRadius(), actualBall.getRadius());
+        assertEquals(expectedBall.getSize(), actualBall.getSize());
         assertEquals(expectedBall.getColor(), actualBall.getColor());
     }
 
