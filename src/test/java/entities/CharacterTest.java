@@ -2,14 +2,14 @@ package entities;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
+import geometry.Rectangle;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 
 /**
  * Test suite for the Character class.
@@ -102,10 +102,11 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testCollideWithFloorBlockFromBelow() {
+        Rectangle rect = (Rectangle) character.getShape();
         FloorBlock floor = new FloorBlock(
                 new Vec2d(
                         spawnPosition.x,
-                        spawnPosition.y - 50));
+                        rect.getBottom() - 50));
 
         double y = character.getY();
         character.collideWith(floor);
@@ -115,10 +116,11 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testCollideWithWallBlockOutside() {
+        Rectangle rect = (Rectangle) character.getShape();
         WallBlock wall = new WallBlock(
                 new Vec2d(
                         spawnPosition.x + 100,
-                        spawnPosition.y));
+                        rect.getBottom()));
 
         double x = character.getX();
         character.collideWith(wall);

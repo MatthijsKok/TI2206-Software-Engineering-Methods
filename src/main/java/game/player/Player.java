@@ -69,7 +69,7 @@ public class Player implements Observer {
     }
 
     /**
-     * @return The character instance this player controlls.
+     * @return The character instance this player controls.
      */
     public Character getCharacter() {
         return character;
@@ -174,7 +174,9 @@ public class Player implements Observer {
      * @param amount The amount of lives you want to get.
      */
     public void increaseLives(int amount) {
-        lives = Math.min(lives + amount, LIVES_AT_START);
+        if (amount > 0) {
+            lives = Math.min(lives + amount, LIVES_AT_START);
+        }
     }
 
     /**
