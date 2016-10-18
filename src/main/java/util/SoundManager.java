@@ -55,11 +55,11 @@ public final class SoundManager {
         AudioClip soundEffect = null;
 
         try {
-            soundEffect = new AudioClip(Paths.get(MUSIC_PATH + soundEffectName).toUri().toString());
+            soundEffect = new AudioClip(Paths.get(SOUND_EFFECTS_PATH + soundEffectName).toUri().toString());
         }
         catch (Exception e) {
             System.err.println("You probably made a typo in the sound effect name: " + soundEffectName);
-            e.printStackTrace();
+            System.err.println("The sound was not played");
         }
 
         if (soundEffect != null) {
@@ -104,7 +104,7 @@ public final class SoundManager {
         }
         catch (Exception e) {
             System.err.println("You probably made a typo in the music name: " + musicName);
-            e.printStackTrace();
+            System.err.println("The sound was not played");
         }
     }
 

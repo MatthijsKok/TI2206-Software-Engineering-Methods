@@ -2,7 +2,7 @@
   "name": "Level 1",
   "duration": 10,
   "backgroundImageURI": "backgrounds/background1.png",
-  "backgroundMusicURI": "mario_circuit.mp3",
+  "backgroundMusicURI": "yoshi_falls.mp3",
   "entities": [
     {
       "type": "Player",

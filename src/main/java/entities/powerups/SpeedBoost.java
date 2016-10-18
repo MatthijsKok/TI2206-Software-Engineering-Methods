@@ -1,6 +1,7 @@
 package entities.powerups;
 
 import graphics.Sprite;
+import util.SoundManager;
 
 /**
  * Speeds up the players movements.
@@ -18,6 +19,11 @@ class SpeedBoost extends AbstractDuringPowerUp {
     private static final Sprite SPEED_BOOST_SPRITE = new Sprite("powerUps/speed_boost.png");
 
     /**
+     * The name of the sound effect that will be played when the power-up is picked up.
+     */
+    private static final String SOUND_EFFECT_NAME = "speed_boost.wav";
+
+    /**
      * Constructor of the speed boost power-up.
      */
     SpeedBoost() {
@@ -27,6 +33,7 @@ class SpeedBoost extends AbstractDuringPowerUp {
     @Override
     void enableEffect() {
         getTarget().increaseRunSpeed(SPEED_BOOST);
+        SoundManager.playSoundEffect(SOUND_EFFECT_NAME);
     }
 
     @Override

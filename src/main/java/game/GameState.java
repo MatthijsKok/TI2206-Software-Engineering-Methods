@@ -91,6 +91,7 @@ public class GameState implements Observer {
     private void toggleProgress() {
         if (inProgress) {
             pause();
+            SoundManager.playSoundEffect("pause.wav");
         } else {
             resume();
         }
