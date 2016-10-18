@@ -29,8 +29,7 @@ public final class PickupFactory {
      * @return A boolean indicating if a pickup should be spawned.
      */
     private static boolean shouldSpawn() {
-        double randomNumber = Math.random();
-        return (randomNumber < SPAWN_CHANCE);
+        return (Math.random() < SPAWN_CHANCE);
     }
 
     /**
@@ -57,7 +56,7 @@ public final class PickupFactory {
      * @return A new PowerUp object.
      */
     @SuppressWarnings("magicnumber")
-    public static PowerUp createPowerUp(int randomNumber) {
+    private static PowerUp createPowerUp(int randomNumber) {
         switch (randomNumber) {
             case 0:
                 return new ExtraLife();
