@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 /**
  * A class that handles things on a game related level.
  */
-@SuppressWarnings("pmd.ShortClassName")
 public class Game {
 
     /**

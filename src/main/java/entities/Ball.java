@@ -13,7 +13,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Class that represents the bouncing balls in our game.
  */
-@SuppressWarnings("pmd.ShortClassName")
 public class Ball extends AbstractEntity {
 
     /**

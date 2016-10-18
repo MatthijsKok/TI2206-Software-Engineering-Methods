@@ -20,31 +20,35 @@ public class GameUI extends AbstractUIElement {
     /**
      * The overlay for when the game is won.
      */
-    private final GameWonOverlay gameWonOverlay = new GameWonOverlay();
+    private final transient GameWonOverlay gameWonOverlay = new GameWonOverlay();
     /**
      * The overlay for when the game is lost.
      */
-    private final GameLostOverlay gameLostOverlay = new GameLostOverlay();
+    private final transient GameLostOverlay gameLostOverlay = new GameLostOverlay();
     /**
      * The overlay for when a level is won.
      */
-    private final LevelWonOverlay levelWonOverlay = new LevelWonOverlay();
+    private final transient LevelWonOverlay levelWonOverlay = new LevelWonOverlay();
     /**
      * The overlay for when a level is lost.
      */
-    private final LevelLostOverlay levelLostOverlay = new LevelLostOverlay();
+    private final transient LevelLostOverlay levelLostOverlay = new LevelLostOverlay();
     /**
      * The overlay for when a level is lost by timeout.
      */
-    private final LevelTimeUpOverlay timeUpOverlay = new LevelTimeUpOverlay();
+    private final transient LevelTimeUpOverlay timeUpOverlay = new LevelTimeUpOverlay();
     /**
      * The overlay for when the game is paused.
      */
-    private final PauseOverlay pauseOverlay = new PauseOverlay();
+    private final transient PauseOverlay pauseOverlay = new PauseOverlay();
+    /**
+     * The Game instance this UI is for.
+     */
+    private final Game game;
     /**
      * The hud for when playing the game.
      */
-    private HeadsUpDisplay hud;
+    private transient HeadsUpDisplay hud;
 
     /**
      * Creates a new GameUI instance handling the UI of Game game.
@@ -52,16 +56,15 @@ public class GameUI extends AbstractUIElement {
      * @param game the game to draw the ui for.
      */
     public GameUI(final Game game) {
-
-        init(game);
+        super();
+        this.game = game;
+        init();
     }
 
     /**
      * Initializes the ui elements in a level.
-     *
-     * @param game the game to init the hud for.
      */
-    private void init(final Game game) {
+    private void init() {
         switch (game.getPlayerCount()) {
             case 1:
                 hud = new SinglePlayerHUD();
@@ -83,7 +86,7 @@ public class GameUI extends AbstractUIElement {
     public void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         LOGGER.trace("Drawing UI elements...");
 
-        final GameState state = Game.getInstance().getState();
+        final GameState state = game.getState();
         final Level level = state.getCurrentLevel();
 
         if (state.isWon()) {

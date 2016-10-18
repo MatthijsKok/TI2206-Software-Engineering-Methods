@@ -18,7 +18,9 @@ public final class PlayerFactory {
      * @return the created player.
      */
     public static Player createPlayer(final int playerId) {
-        String leftKey, rightKey, shootKey;
+        String leftKey;
+        String rightKey;
+        String shootKey;
 
         switch (playerId) {
             case 0:

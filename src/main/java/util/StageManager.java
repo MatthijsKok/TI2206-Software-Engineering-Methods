@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- * Utility class which manages the main stage of the main.BubbleTrouble application.
+ * Utility class which manages the main stage of the BubbleTrouble application.
  */
 public final class StageManager {
 
