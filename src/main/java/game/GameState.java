@@ -72,27 +72,11 @@ public class GameState implements Observer {
         Level level = getCurrentLevel();
 
         if (!level.isWon() && !level.isLost() && KeyboardInputManager.keyPressed(PAUSE_KEY)) {
-            if (inProgress) {
-                pause();
-            } else {
-                resume();
-            }
+            toggleProgress();
         }
 
         if (KeyboardInputManager.keyPressed(RESTART_KEY)) {
-            if (won || lost) {
-                game.stop();
-            } else if (level.isWon()) {
-                nextLevel();
-                resume();
-            } else if (level.isLost()) {
-                try {
-                    level.restart();
-                } catch (IOException e) {
-                    game.stop();
-                }
-                resume();
-            }
+            tryRestart(level);
         }
     }
 
@@ -101,6 +85,14 @@ public class GameState implements Observer {
      */
     public boolean isInProgress() {
         return inProgress;
+    }
+
+    private void toggleProgress() {
+        if (inProgress) {
+            pause();
+        } else {
+            resume();
+        }
     }
 
     /**
@@ -127,6 +119,22 @@ public class GameState implements Observer {
         won = false;
         lost = false;
         game.getPlayers().forEach(Player::resetLives);
+    }
+
+    private void tryRestart(Level level) {
+        if (won || lost) {
+            game.stop();
+        } else if (level.isWon()) {
+            nextLevel();
+            resume();
+        } else if (level.isLost()) {
+            try {
+                level.restart();
+            } catch (IOException e) {
+                game.stop();
+            }
+            resume();
+        }
     }
 
     /**

@@ -3,9 +3,9 @@ package geometry;
 import com.sun.javafx.geom.Vec2d;
 
 /**
- * Shape is abstract base class for all collision shapes.
+ * AbstractShape is abstract base class for all collision shapes.
  */
-public abstract class Shape {
+public abstract class AbstractShape {
 
     /**
      * The central position of the shape.
@@ -15,7 +15,7 @@ public abstract class Shape {
     /**
      * Creates a new shape instance at position (0, 0).
      */
-    Shape() {
+    AbstractShape() {
         this(0, 0);
     }
 
@@ -24,7 +24,7 @@ public abstract class Shape {
      * @param x x position of the shape
      * @param y y position of the shape
      */
-    Shape(double x, double y) {
+    AbstractShape(double x, double y) {
         setPosition(x, y);
     }
 
@@ -72,7 +72,7 @@ public abstract class Shape {
      * @param shape the shape to check with
      * @return whether the shapes intersect
      */
-    public abstract boolean intersects(Shape shape);
+    public abstract boolean intersects(AbstractShape shape);
 
     @Override
     public boolean equals(Object o) {
@@ -84,7 +84,7 @@ public abstract class Shape {
             return false;
         }
 
-        Shape shape = (Shape) o;
+        AbstractShape shape = (AbstractShape) o;
 
         return getPosition().equals(shape.getPosition());
 

@@ -2,7 +2,7 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
-import geometry.Shape;
+import geometry.AbstractShape;
 import graphics.Sprite;
 import level.Level;
 
@@ -28,9 +28,9 @@ public abstract class AbstractEntity extends Observable {
     private Sprite sprite;
 
     /**
-     * Shape used for collision detection of the entity.
+     * AbstractShape used for collision detection of the entity.
      */
-    private Shape shape;
+    private AbstractShape shape;
 
     /**
      * Boolean with the current visibility state of an entity.
@@ -167,7 +167,7 @@ public abstract class AbstractEntity extends Observable {
      * Returns The shape that is used for collisions of the entity.
      * @return The shape that is used for collisions of the entity
      */
-    public Shape getShape() {
+    public AbstractShape getShape() {
         return shape;
     }
 
@@ -230,7 +230,7 @@ public abstract class AbstractEntity extends Observable {
      * entity's position.
      * @param shape Sprite object for the entity.
      */
-    /* default */ protected void setShape(final Shape shape) {
+    /* default */ protected void setShape(final AbstractShape shape) {
         shape.bindPosition(position);
         this.shape = shape;
     }
