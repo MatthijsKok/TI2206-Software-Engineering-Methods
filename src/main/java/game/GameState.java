@@ -4,7 +4,8 @@ package game;
 import game.player.Player;
 import level.Level;
 import util.KeyboardInputManager;
-import util.SoundManager;
+import util.sound.Music;
+import util.sound.SoundEffect;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -91,7 +92,7 @@ public class GameState implements Observer {
     private void toggleProgress() {
         if (inProgress) {
             pause();
-            SoundManager.playSoundEffect("pause.wav");
+            SoundEffect.PAUSE.play();
         } else {
             resume();
         }
@@ -104,7 +105,7 @@ public class GameState implements Observer {
         inProgress = false;
 
         // Pause the music
-        SoundManager.pauseMusic();
+        Music.pauseMusic();
     }
 
     /**
@@ -114,7 +115,7 @@ public class GameState implements Observer {
         inProgress = true;
 
         // Resume the music
-        SoundManager.startMusic();
+        Music.startMusic();
     }
 
 

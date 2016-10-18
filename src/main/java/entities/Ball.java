@@ -6,6 +6,7 @@ import geometry.Circle;
 import geometry.Rectangle;
 import graphics.Sprite;
 import level.Level;
+import util.sound.SoundEffect;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -211,6 +212,7 @@ public class Ball extends AbstractEntity {
      */
     private void bounce() {
         getSpeed().y = -BOUNCE_SPEEDS[size];
+        SoundEffect.BALL_BOUNCE.play();
     }
 
     /**

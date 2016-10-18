@@ -12,9 +12,9 @@ import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import util.CanvasManager;
 import util.CollisionManager;
-import util.SoundManager;
 import util.StageManager;
 import util.logging.Logger;
+import util.sound.Music;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -138,7 +138,7 @@ public class Level {
     public void load() throws IOException {
         LOGGER.debug("Loading Level...");
 
-        SoundManager.setMusic(DEFAULT_BACKGROUND_MUSIC);
+        Music.setMusic(DEFAULT_BACKGROUND_MUSIC);
 
         LevelLoader.load(this);
         addEntities();
@@ -149,7 +149,7 @@ public class Level {
         Platform.runLater(() ->
                 StageManager.getStage().setTitle(name));
 
-        SoundManager.startMusic();
+        Music.startMusic();
 
     }
 
@@ -367,7 +367,7 @@ public class Level {
         if (!gameState.hasNextLevel()) {
             gameState.win();
         }
-        SoundManager.stopMusic();
+        Music.stopMusic();
     }
 
     /**
@@ -376,7 +376,7 @@ public class Level {
     public final void lose() {
         Game.getInstance().getState().pause();
         lost = true;
-        SoundManager.stopMusic();
+        Music.stopMusic();
     }
 
     /**

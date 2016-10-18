@@ -1,6 +1,7 @@
 package entities.powerups;
 
 import graphics.Sprite;
+import util.sound.SoundEffect;
 
 /**
  * Gives the player a shield that allows it to be hit one time.
@@ -22,6 +23,8 @@ class Shield extends AbstractInstantPowerUp {
     @Override
     void applyEffect() {
         getTarget().activateShield();
+
+        SoundEffect.SHIELD.play();
     }
 
 }

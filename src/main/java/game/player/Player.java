@@ -4,7 +4,8 @@ import entities.Character;
 import game.Game;
 import util.KeyboardInputManager;
 import util.Pair;
-import util.SoundManager;
+import util.sound.MultiSoundEffect;
+import util.sound.SoundEffect;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -143,16 +144,11 @@ public class Player implements Observer {
 
         if (lives > 0) {
             lives--;
-            game.getState().getCurrentLevel().lose();
 
             // play the life lost sound effect
-            if (this.getId() == 0) {
-                SoundManager.playSoundEffect("mario_life_lost.wav");
-            }
-            else {
-                SoundManager.playSoundEffect("yoshi_life_lost.wav");
-            }
+            MultiSoundEffect.PLAYER_LOSES_LIFE.play(getId());
 
+            game.getState().getCurrentLevel().lose();
         }
 
         boolean lost = true;
@@ -165,6 +161,7 @@ public class Player implements Observer {
 
         if (lost) {
             game.getState().lose();
+            SoundEffect.GAME_OVER.play();
         }
     }
 
