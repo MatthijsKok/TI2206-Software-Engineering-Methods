@@ -1,18 +1,12 @@
 package util.logging;
 
-import org.junit.*;
-import org.junit.rules.ExpectedException;
-
-import java.io.ByteArrayOutputStream;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
-
-import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Class that tests Logger.
