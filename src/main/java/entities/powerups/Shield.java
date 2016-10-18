@@ -1,26 +1,27 @@
 package entities.powerups;
 
-import entities.Character;
+import graphics.Sprite;
 
 /**
  * Gives the player a shield that allows it to be hit one time.
  */
-public class Shield implements PowerUp {
+class Shield extends AbstractInstantPowerUp {
 
     /**
-     * Enables the effect of the specific power up.
+     * The sprite of the shield power-up.
      */
-    @Override
-    public void enableEffect(Character character) {
-        System.out.println("Shield");
+    private static final Sprite SHIELD_SPRITE = new Sprite("powerUps/Shield.png");
+
+    /**
+     * Constructor for a new shield power-up.
+     */
+    Shield() {
+        setSprite(SHIELD_SPRITE);
     }
 
-    /**
-     * Disables the effect of the specific power up.
-     */
     @Override
-    public void disableEffect(Character character) {
-
+    void applyEffect() {
+        getTarget().activateShield();
     }
 
 }

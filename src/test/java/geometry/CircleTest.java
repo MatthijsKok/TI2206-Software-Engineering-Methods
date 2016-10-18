@@ -90,7 +90,7 @@ public class CircleTest {
     @Test
     public void intersectsShape(){
         Circle circle = new Circle(1);
-        Shape shape = new Circle(1);
+        AbstractShape shape = new Circle(1);
         assertTrue(circle.intersects(shape));
     }
 
@@ -100,7 +100,7 @@ public class CircleTest {
     @Test
     public void intersectsShape2(){
         Circle circle = new Circle(1);
-        Shape shape = new Rectangle(1, 1);
+        AbstractShape shape = new Rectangle(1, 1);
         assertTrue(circle.intersects(shape));
     }
 
@@ -110,9 +110,9 @@ public class CircleTest {
     @Test
     public void intersectsShape3(){
         Circle circle = new Circle(1);
-        Shape shape = new Shape() {
+        AbstractShape shape = new AbstractShape() {
             @Override
-            public boolean intersects(Shape shape) {
+            public boolean intersects(AbstractShape shape) {
                 return false;
             }
         };

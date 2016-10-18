@@ -41,16 +41,21 @@ public final class EntityFactory {
     }
 
     private static Character createCharacter(Vec2d position) {
+
         for (Player player : Game.getInstance().getPlayers()) {
             if (player.getCharacter() == null && player.getLives() > 0) {
-                Character character = new Character(position);
-                character.determineSprite(player.getId());
-                player.setCharacter(character);
-                character.setPlayer(player);
-                return character;
+                return instantiateCharacter(position, player);
             }
         }
         return null;
+    }
+
+    private static Character instantiateCharacter(Vec2d position, Player player) {
+        Character character = new Character(position);
+        character.determineSprite(player.getId());
+        player.setCharacter(character);
+        character.setPlayer(player);
+        return character;
     }
 
     private static Ball createBall(Vec2d position, JSONObject attributes) {
