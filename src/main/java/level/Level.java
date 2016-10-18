@@ -10,11 +10,9 @@ import game.player.Player;
 import graphics.Sprite;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.media.AudioClip;
-import util.CollisionManager;
 import util.CanvasManager;
+import util.CollisionManager;
 import util.SoundManager;
-import graphics.Sprite;
 import util.StageManager;
 import util.logging.Logger;
 
