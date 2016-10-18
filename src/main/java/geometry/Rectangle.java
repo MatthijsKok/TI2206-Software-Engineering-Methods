@@ -6,7 +6,7 @@ import graphics.Sprite;
 /**
  * Class representing a rectangle.
  */
-public class Rectangle extends Shape {
+public class Rectangle extends AbstractShape {
 
     /**
      * Vec2d representations of the rectangles size and offset.
@@ -176,7 +176,7 @@ public class Rectangle extends Shape {
      * @param shape the shape to check intersection with
      * @return whether the rectangle intersects with shape
      */
-    public boolean intersects(Shape shape) {
+    public boolean intersects(AbstractShape shape) {
         if (shape instanceof Rectangle) {
             return intersects((Rectangle) shape);
         }

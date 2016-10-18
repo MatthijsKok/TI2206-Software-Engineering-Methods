@@ -27,7 +27,7 @@ public class Sprite implements Cloneable {
     /**
      * The current frame to be displayed.
      */
-    private int currentFrame;
+    private transient int currentFrame;
 
     /**
      * The frameSpeed at which the sprite should be displayed in
@@ -50,7 +50,7 @@ public class Sprite implements Cloneable {
      * A double representing a timeline from frame 0 to the last
      * frame. Is used to determine currentFrame.
      */
-    private double framePart;
+    private transient double framePart;
 
     /**
      * Create new Sprite with 1 frame and a offset of (0,0).
@@ -227,11 +227,9 @@ public class Sprite implements Cloneable {
     /**
      * Draws the Sprite to the screen.
      *
-     * @param position a Vec2D containing the x and y coordinates of the sprite.
-     * @param xScale a double used to scale the sprite in x direction upon drawing
-     *               e.g. 0,5 for half the size.
-     * @param yScale a double used to scale the sprite in y direction upon drawing
-     *               e.g. 0,5 for half the size.
+     * @param position Vec2D containing the x and y coordinates of the sprite.
+     * @param xScale double used to scale the sprite in width.
+     * @param yScale double used to scale the sprite in height.
      */
     public final void draw(final Vec2d position, final double xScale, final double yScale) {
         draw(position.x, position.y, xScale, yScale);
@@ -263,10 +261,8 @@ public class Sprite implements Cloneable {
      *
      * @param xPosition the x position where the sprite should be drawn.
      * @param yPosition the y position where the sprite should be drawn.
-     * @param xScale a double used to scale the sprite in x direction upon drawing
-     *               e.g. 0,5 for half the size.
-     * @param yScale a double used to scale the sprite in y direction upon drawing
-     *               e.g. 0,5 for half the size.
+     * @param xScale double used to scale the sprite in width upon drawing.
+     * @param yScale double used to scale the sprite in height upon drawing.
      */
     public final void draw(final double xPosition, final double yPosition,
                            final double xScale, final double yScale) {
@@ -282,9 +278,9 @@ public class Sprite implements Cloneable {
 
     // GETTERS
     /**
-     * Returns a Vec2D with the ofset of the Sprite.
+     * Returns a Vec2D with the offset of the Sprite.
      *
-     * @return a Vec2D with the ofset of the Sprite
+     * @return a Vec2D with the offset of the Sprite
      */
     public Vec2d getOffset() {
         return offset;

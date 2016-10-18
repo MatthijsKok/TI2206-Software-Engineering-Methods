@@ -50,14 +50,18 @@
                 <version>3.6</version>
                 <executions>
                     <execution>
-                        <configuration>
-                            <verbose>true</verbose>
-                        </configuration>
                         <goals>
                             <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <linkXRef>true</linkXRef>
+                    <verbose>true</verbose>
+                    <rulesets>
+                        <ruleset>pmd.xml</ruleset>
+                    </rulesets>
+                </configuration>
             </plugin>
         </plugins>
     </build>

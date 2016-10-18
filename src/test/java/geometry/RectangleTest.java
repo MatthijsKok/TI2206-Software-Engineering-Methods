@@ -63,7 +63,7 @@ public class RectangleTest {
     @Test
     public void intersectShape(){
         Rectangle rect = new Rectangle(1, 1);
-        Shape shape = new Rectangle(1, 1);
+        AbstractShape shape = new Rectangle(1, 1);
         assertTrue(rect.intersects(shape));
     }
 
@@ -74,7 +74,7 @@ public class RectangleTest {
     @Test
     public void intersectShape2(){
         Rectangle rect = new Rectangle(1, 1);
-        Shape shape = new Circle(1);
+        AbstractShape shape = new Circle(1);
         assertTrue(rect.intersects(shape));
     }
 
@@ -85,9 +85,9 @@ public class RectangleTest {
     @Test
     public void intersectShape3(){
         Rectangle rect = new Rectangle(1, 1);
-        Shape shape = new Shape() {
+        AbstractShape shape = new AbstractShape() {
             @Override
-            public boolean intersects(Shape shape) {
+            public boolean intersects(AbstractShape shape) {
                 return false;
             }
         };

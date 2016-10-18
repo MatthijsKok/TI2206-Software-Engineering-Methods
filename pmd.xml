@@ -5,17 +5,30 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
 
     <description>
-        This ruleset checks my code for bad stuff.
+        This rule set checks my code for bad stuff.
     </description>
 
     <rule ref="rulesets/java/basic.xml"/>
     <rule ref="rulesets/java/braces.xml"/>
-    <rule ref="rulesets/java/codesize.xml"/>
-    <rule ref="rulesets/java/coupling.xml"/>
+    <rule ref="rulesets/java/codesize.xml">
+        <exclude name="TooManyMethods"/>
+    </rule>
+    <rule ref="rulesets/java/comments.xml">
+        <exclude name="CommentSize"/>
+        <exclude name="CommentRequired"/>
+    </rule>
     <rule ref="rulesets/java/imports.xml"/>
     <rule ref="rulesets/java/junit.xml"/>
-    <rule ref="rulesets/java/naming.xml"/>
-    <rule ref="rulesets/java/optimizations.xml"/>
+    <rule ref="rulesets/java/naming.xml">
+        <exclude name="ShortClassName"/>
+        <exclude name="ShortVariable"/>
+        <exclude name="LongVariable"/>
+    </rule>
+    <rule ref="rulesets/java/optimizations.xml">
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="RedundantFieldInitializer"/>
+    </rule>
     <rule ref="rulesets/java/unusedcode.xml"/>
 
 </ruleset>

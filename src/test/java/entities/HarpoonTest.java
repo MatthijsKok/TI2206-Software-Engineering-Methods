@@ -5,76 +5,60 @@ import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  * Test suite for the Harpoon class.
  */
 public class HarpoonTest extends BubbleTroubleApplicationTest {
 
-    private Harpoon harpoon;
-    private Vec2d shootPosition = new Vec2d(100, 300);
+    private Vec2d position1 = new Vec2d(100, 300);
+    private Vec2d position2 = new Vec2d(0, 0);
+    private Character mockedCharacter = Mockito.mock(Character.class);
+    private Harpoon harpoon1, harpoon2;
+
 
     @Before
     public void setUp() {
-        harpoon = new Harpoon();
+        harpoon1 = new Harpoon(position1, mockedCharacter);
+        harpoon2 = new Harpoon(position2, mockedCharacter);
     }
 
     @Test
-    public void testEmptyConstructor() {
-        assertEquals("A new harpoon should be created at (0,0)", harpoon.getPosition(), new Vec2d(0, 0));
-    }
-
-    @Test
-    public void testInvisibleAfterInstantiation() {
-        assertFalse("A harpoon should be invisible after instantiation", harpoon.isVisible());
-    }
-
-    @Test
-    public void testShootWhileNotShot() {
-        harpoon.shoot(shootPosition);
-        assertEquals("A harpoon shall be shot from shooting position.", harpoon.getPosition(), shootPosition);
-    }
-
-    @Test
-    public void testShootWhileAlreadyShot() {
-        Vec2d shootPosition2 = new Vec2d(200, 300);
-        harpoon.shoot(shootPosition);
-        harpoon.shoot(shootPosition2);
-        assertEquals("A harpoon can not change position while shot.", harpoon.getPosition(), shootPosition);
+    public void testMovingAfterInstantiation() {
+        assertThat(harpoon1.getYSpeed(), lessThan(0.d));
     }
 
     @Test
     public void testUpdateYGreaterThanZero() {
-        harpoon.shoot(shootPosition);
-        harpoon.update(0);
-        assertTrue("A harpoon should remain visible until it reached y<=0", harpoon.isVisible());
+        harpoon1.update(0);
+        verify(mockedCharacter, times(0)).harpoonRemoved();
     }
 
     @Test
     public void testUpdateYSmallerThanZero() {
-        harpoon.shoot(shootPosition);
-        harpoon.setPosition(200, -100);
-        harpoon.update(0);
-        assertFalse("A harpoon should become invisible when it reaches y<=0", harpoon.isVisible());
+        harpoon2.update(0);
+        verify(mockedCharacter, times(1)).harpoonRemoved();
     }
 
     @Test
     public void testCollisionWithBall() {
         Ball ball = new Ball(new Vec2d(300, 200), 2);
-        harpoon.shoot(shootPosition);
-        harpoon.collideWith(ball);
+        harpoon1.collideWith(ball);
 
-        assertFalse("A harpoon should become invisible and changed when it collides with a ball.", harpoon.isVisible());
+        verify(mockedCharacter, times(1)).increaseScore(300);
     }
 
     @Test
     public void testCollisionWithOtherEntity() {
         WallBlock otherEntity = new WallBlock(new Vec2d(300, 200));
-        harpoon.shoot(shootPosition);
-        harpoon.collideWith(otherEntity);
+        harpoon1.collideWith(otherEntity);
 
-        assertFalse("Nothing should change when a harpoon collides with an object other than a ball.", harpoon.hasChanged());
+        verify(mockedCharacter, times(0)).harpoonRemoved();
     }
 }

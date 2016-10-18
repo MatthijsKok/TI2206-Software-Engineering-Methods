@@ -1,8 +1,10 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
-import geometry.Shape;
+import game.Game;
+import geometry.AbstractShape;
 import graphics.Sprite;
+import level.Level;
 
 import java.util.Observable;
 
@@ -26,9 +28,9 @@ public abstract class AbstractEntity extends Observable {
     private Sprite sprite;
 
     /**
-     * Shape used for collision detection of the entity.
+     * AbstractShape used for collision detection of the entity.
      */
-    private Shape shape;
+    private AbstractShape shape;
 
     /**
      * Boolean with the current visibility state of an entity.
@@ -149,7 +151,7 @@ public abstract class AbstractEntity extends Observable {
     /**
      * @return The y position of the entity.
      */
-    /* default */ protected double getYSpeed() {
+    /* default */ double getYSpeed() {
         return speed.y;
     }
 
@@ -165,7 +167,7 @@ public abstract class AbstractEntity extends Observable {
      * Returns The shape that is used for collisions of the entity.
      * @return The shape that is used for collisions of the entity
      */
-    public Shape getShape() {
+    public AbstractShape getShape() {
         return shape;
     }
 
@@ -173,8 +175,16 @@ public abstract class AbstractEntity extends Observable {
      * Returns the boolean indicating if the sprite is visible.
      * @return the boolean indicating if the sprite is visible
      */
-    /* default */ protected boolean isVisible() {
-        return visible && sprite != null;
+    /* default */ boolean isVisible() {
+        return visible;
+    }
+
+    /**
+     * Returns the level the entity is in.
+     * @return the level the entity is in
+     */
+    /* default */ protected Level getLevel() {
+        return Game.getInstance().getState().getCurrentLevel();
     }
 
     //SETTERS
@@ -184,9 +194,17 @@ public abstract class AbstractEntity extends Observable {
      * @param xPosition The x coordinate of the entity
      * @param yPosition The y coordinate of the entity
      */
-    /* default */ protected final void setPosition(final double xPosition, final double yPosition) {
+    /* default */ private void setPosition(final double xPosition, final double yPosition) {
         this.position.x = xPosition;
         this.position.y = yPosition;
+    }
+
+    /**
+     * Binds the position of this entity to position.
+     * @param position the position to bind to.
+     */
+    final /* default */ void bindPosition(final Vec2d position) {
+        this.position = position;
     }
 
     /**
@@ -194,7 +212,7 @@ public abstract class AbstractEntity extends Observable {
      * @param xSpeed The horizontal speed
      * @param ySpeed The vertical speed
      */
-    /* default */ protected void setSpeed(final double xSpeed, final double ySpeed) {
+    /* default */ void setSpeed(final double xSpeed, final double ySpeed) {
         speed.x = xSpeed;
         speed.y = ySpeed;
     }
@@ -212,7 +230,7 @@ public abstract class AbstractEntity extends Observable {
      * entity's position.
      * @param shape Sprite object for the entity.
      */
-    /* default */ protected void setShape(final Shape shape) {
+    /* default */ protected void setShape(final AbstractShape shape) {
         shape.bindPosition(position);
         this.shape = shape;
     }

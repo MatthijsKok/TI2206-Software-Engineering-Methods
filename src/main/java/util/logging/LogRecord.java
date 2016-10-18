@@ -51,7 +51,7 @@ class LogRecord {
     /**
      * Formats the LogRecord as a String to be written to the log file.
      * Example:
-     * [2016-09-21][13:17:45.980][BubbleTrouble][start]
+     * [2016-09-21][13:17:45.980][main.BubbleTrouble][start]
      * DEBUG: Testing Logging....
      *
      * @return a String representing the LogRecord.

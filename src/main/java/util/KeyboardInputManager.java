@@ -56,24 +56,24 @@ public final class KeyboardInputManager extends Observable {
     }
 
     private void addEventHandlers(final Scene scene) {
-        scene.setOnKeyPressed(e -> {
-            String code = e.getCode().toString();
+        scene.setOnKeyPressed(e -> pressKey(e.getCode().toString()));
+        scene.setOnKeyReleased(e -> releaseKey(e.getCode().toString()));
+    }
 
-            if (!input.contains(code)) {
-                input.add(code);
-            }
+    private void pressKey(String code) {
+        if (!input.contains(code)) {
+            input.add(code);
+        }
 
-            setChanged();
-            notifyObservers();
-        });
+        setChanged();
+        notifyObservers();
+    }
 
-        scene.setOnKeyReleased(e -> {
-            String code = e.getCode().toString();
-            input.remove(code);
+    private void releaseKey(String code) {
+        input.remove(code);
 
-            setChanged();
-            notifyObservers();
-        });
+        setChanged();
+        notifyObservers();
     }
 
     /**

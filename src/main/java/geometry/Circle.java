@@ -3,7 +3,7 @@ package geometry;
 /**
  * Class representing a circle.
  */
-public class Circle extends Shape {
+public class Circle extends AbstractShape {
 
     /**
      * The radius of the circle.
@@ -59,7 +59,7 @@ public class Circle extends Shape {
      * @param shape the shape to check intersection with
      * @return whether the circle intersects with shape
      */
-    public boolean intersects(final Shape shape) {
+    public boolean intersects(final AbstractShape shape) {
         if (shape instanceof Circle) {
             return intersects((Circle) shape);
         }

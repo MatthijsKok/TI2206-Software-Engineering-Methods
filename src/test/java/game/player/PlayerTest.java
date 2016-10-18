@@ -2,19 +2,18 @@ package game.player;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
-import entities.Ball;
 import entities.Character;
-import entities.Harpoon;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import util.KeyboardInputManager;
+import util.Pair;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.hamcrest.Matchers.lessThan;
 
 /**
  * Test suite for the Player class.
@@ -23,13 +22,10 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
 
     private Player player;
     private Character character;
-    private Harpoon harpoon;
 
     @Before
     public void setUp() {
-        harpoon = Mockito.mock(Harpoon.class);
         character = Mockito.mock(Character.class);
-        when(character.getHarpoon()).thenReturn(harpoon);
         player = PlayerFactory.createPlayer(0);
     }
 
@@ -44,13 +40,19 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
     }
 
     @Test
-    public void testUpdateFromRope() {
-        Ball ball = Mockito.mock(Ball.class);
-        when(ball.getSize()).thenReturn(2);
+    public void testUpdateFromCharacterDie() {
+        int lives = player.getLives();
 
-        player.update(harpoon, ball);
+        player.update(character, new Pair<>("die", true));
 
-        assertThat(player.getScore(), greaterThan(0));
+        assertThat(player.getLives(), lessThan(lives));
+    }
+
+    @Test
+    public void testUpdateFromCharacterIncreaseScore() {
+        player.update(character, new Pair<>("increaseScore", 100));
+
+        assertThat(player.getScore(), is(100));
     }
 
     @Test
@@ -61,5 +63,36 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
         player.update(new KeyboardInputManager(), null);
 
         assertThat(player.getCharacter().getSpeed(), is(speed));
+    }
+
+    @Test
+    public void testIncreaseLivesGreaterThanZero() {
+        player.update(character, new Pair<>("die", true));
+
+        int lives = player.getLives();
+
+        player.increaseLives(3);
+        assertThat(player.getLives(), greaterThan(lives));
+    }
+
+    @Test
+    public void testIncreaseLivesSmallerThanZero() {
+        int lives = player.getLives();
+
+        player.increaseLives(-3);
+        assertThat(player.getLives(), is(lives));
+    }
+
+
+    @Test
+    public void testResetLives() {
+        int lives = player.getLives();
+
+        player.update(character, new Pair<>("die", true));
+        player.update(character, new Pair<>("die", true));
+
+        player.resetLives();
+
+        assertThat(player.getLives(), is(lives));
     }
 }

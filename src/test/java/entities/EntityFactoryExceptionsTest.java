@@ -11,7 +11,7 @@ import static org.junit.Assert.fail;
 /**
  * Test suite for exceptions in the EntityFactory.
  */
-public class EntityFactoryExceptionsTest extends EntityFactoryTest {
+public class EntityFactoryExceptionsTest extends AbstractEntityFactoryTest {
 
     @Test
     public void testBallWithColor() {

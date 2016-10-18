@@ -1,12 +1,10 @@
 package game.player;
 
-import entities.Ball;
 import entities.Character;
-import entities.Harpoon;
 import game.Game;
 import util.KeyboardInputManager;
+import util.Pair;
 
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,11 +18,6 @@ public class Player implements Observer {
      * The amount of lives the player starts the game with.
      */
     private static final int LIVES_AT_START = 3;
-
-    /**
-     * Score that is multiplied by the size of the ball, and then added to the score.
-     */
-    private static final int SCORE_PER_BALL = 100;
 
     /**
      * The player ID of the player.
@@ -76,7 +69,7 @@ public class Player implements Observer {
     }
 
     /**
-     * @return The character instance this player controlls.
+     * @return The character instance this player controls.
      */
     public Character getCharacter() {
         return character;
@@ -91,7 +84,6 @@ public class Player implements Observer {
         if (character != null) {
             this.character = character;
             character.addObserver(this);
-            character.getHarpoon().addObserver(this);
         }
     }
 
@@ -101,53 +93,33 @@ public class Player implements Observer {
      * @param observable The observable that is updated.
      * @param obj        The changes that are observed.
      */
+    @SuppressWarnings("unchecked")
     public void update(Observable observable, Object obj) {
         if (character != null && observable instanceof KeyboardInputManager) {
             updateKeyboardInput();
         }
 
         if (observable instanceof Character) {
-            updateFromCharacter((HashMap) obj);
+            updateFromCharacter((Pair<String, Object>) obj);
         }
-
-        if (observable instanceof Harpoon) {
-            updateFromRope((Ball) obj);
-        }
-    }
-
-    private void updateFromRope(Ball ball) {
-        int ballSize = ball.getSize();
-        // the smallest balls have size 0
-        score += (ballSize + 1) * SCORE_PER_BALL;
     }
 
     /**
      * Updates the player according to the information in the HashMap the Character supplied.
      *
-     * @param hashMap The hashmap with information about the changed state of the Character object.
+     * @param pair The pair containing information about the changed state of the Character object.
      */
-    private void updateFromCharacter(HashMap hashMap) {
-        Game game = Game.getInstance();
-
-        if (hashMap.get("dead").equals(true)) {
-            if (lives > 0) {
-                lives--;
-                game.getState().getCurrentLevel().lose();
-            }
-
-            boolean lost = true;
-            for (Player player : game.getPlayers()) {
-                if (player.getLives() > 0) {
-                    lost = false;
-                    break;
-                }
-            }
-
-            if (lost) {
-                game.getState().lose();
-            }
+    private void updateFromCharacter(Pair<String, Object> pair) {
+        switch (pair.getL()) {
+            case "die":
+                die();
+                break;
+            case "increaseScore":
+                increaseScore((int) pair.getR());
+                break;
+            default:
+                break;
         }
-
     }
 
     /**
@@ -165,6 +137,31 @@ public class Player implements Observer {
         character.setShooting(KeyboardInputManager.keyPressed(shootKey));
     }
 
+    private void die() {
+        Game game = Game.getInstance();
+
+        if (lives > 0) {
+            lives--;
+            game.getState().getCurrentLevel().lose();
+        }
+
+        boolean lost = true;
+        for (Player player : game.getPlayers()) {
+            if (player.getLives() > 0) {
+                lost = false;
+                break;
+            }
+        }
+
+        if (lost) {
+            game.getState().lose();
+        }
+    }
+
+    private void increaseScore(int amount) {
+        score += amount;
+    }
+
     /**
      * @return The amount of lives the player has left.
      */
@@ -173,11 +170,13 @@ public class Player implements Observer {
     }
 
     /**
-     * Sets the players lives.
-     * @param lives The amount of lives you want to set.
+     * Increases the players amount of lives.
+     * @param amount The amount of lives you want to get.
      */
-    public void setLives(int lives) {
-        this.lives = lives;
+    public void increaseLives(int amount) {
+        if (amount > 0) {
+            lives = Math.min(lives + amount, LIVES_AT_START);
+        }
     }
 
     /**

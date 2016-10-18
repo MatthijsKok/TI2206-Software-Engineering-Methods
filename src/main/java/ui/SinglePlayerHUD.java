@@ -1,9 +1,9 @@
 package ui;
 
 import com.sun.javafx.geom.Vec2d;
+import graphics.Sprite;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import graphics.Sprite;
 
 /**
  * Draws a HeadsUpDisplay for a game with a single player.
