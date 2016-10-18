@@ -10,7 +10,7 @@
 
     <rule ref="rulesets/java/basic.xml"/>
     <rule ref="rulesets/java/braces.xml"/>
-    <rule ref="rulesets/java/codeSize.xml">
+    <rule ref="rulesets/java/codesize.xml">
         <exclude name="TooManyMethods"/>
     </rule>
     <rule ref="rulesets/java/comments.xml">

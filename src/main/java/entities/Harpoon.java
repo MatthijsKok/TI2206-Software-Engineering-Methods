@@ -54,22 +54,14 @@ public class Harpoon extends AbstractEntity {
         character.harpoonRemoved();
     }
 
-    /**
-     * Updates the state of the harpoon.
-     *
-     * @param timeDifference delta time
-     */
+    @Override
     public void update(final double timeDifference) {
         if (getY() <= 0) {
             die();
         }
     }
 
-    /**
-     * Entry point for collisions.
-     *
-     * @param entity the entity this rope collides with
-     */
+    @Override
     public void collideWith(final AbstractEntity entity) {
         if (entity instanceof Ball) {
             collideWith((Ball) entity);
