@@ -2,7 +2,7 @@
   "name": "Level 2",
   "duration": 30,
   "backgroundImageURI": "backgrounds/background2.png",
-  "backgroundMusicURI": "",
+  "backgroundMusicURI": "/sounds/background2.mp3",
   "entities": [
     {
       "type": "Player",

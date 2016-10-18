@@ -17,6 +17,7 @@ import util.StageManager;
 import util.logging.Logger;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,6 +157,7 @@ public class Level {
         if (this.backgroundMusic != null) {
             this.backgroundMusic.play();
         }
+
     }
 
     /**
@@ -341,7 +343,7 @@ public class Level {
      */
     void setBackgroundMusic(String backgroundMusic) {
         if (backgroundMusic != null && !backgroundMusic.equals("")) {
-            this.backgroundMusic = new AudioClip(backgroundMusic);
+            this.backgroundMusic = new AudioClip(this.getClass().getResource(backgroundMusic).toExternalForm());
         }
     }
 
@@ -384,6 +386,7 @@ public class Level {
         if (!gameState.hasNextLevel()) {
             gameState.win();
         }
+        this.backgroundMusic.stop();
     }
 
     /**
@@ -392,6 +395,7 @@ public class Level {
     public final void lose() {
         Game.getInstance().getState().pause();
         lost = true;
+        this.backgroundMusic.stop();
     }
 
     /**
