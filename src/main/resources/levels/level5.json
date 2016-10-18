@@ -2,7 +2,7 @@
   "name": "Level 2",
   "duration": 40,
   "backgroundImageURI": "backgrounds/background5.png",
-  "backgroundMusicURI": "/sounds/music/DS Peach Gardens.mp3",
+  "backgroundMusicURI": "peach_gardens.mp3",
   "entities": [
     {
       "type": "Player",

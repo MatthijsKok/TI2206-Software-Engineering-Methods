@@ -2,7 +2,7 @@
   "name": "Level 2",
   "duration": 15,
   "backgroundImageURI": "backgrounds/background6.png",
-  "backgroundMusicURI": "/sounds/music/Toads Factory.mp3",
+  "backgroundMusicURI": "toads_factory.mp3",
   "entities": [
     {
       "type": "Player",

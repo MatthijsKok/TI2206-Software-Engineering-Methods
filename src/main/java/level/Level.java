@@ -7,17 +7,16 @@ import entities.Character;
 import game.Game;
 import game.GameState;
 import game.player.Player;
+import graphics.Sprite;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.media.AudioClip;
-import util.CollisionManager;
 import util.CanvasManager;
-import graphics.Sprite;
+import util.CollisionManager;
+import util.SoundManager;
 import util.StageManager;
 import util.logging.Logger;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,12 +44,12 @@ public class Level {
     /**
      * The default background image of a level.
      */
-    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("background.jpg");
+    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("backgrounds/background.png");
 
     /**
      * The default background music of a level.
      */
-    private static final AudioClip DEFAULT_BACKGROUND_MUSIC = null;
+    private static final String DEFAULT_BACKGROUND_MUSIC = "toads_factory.mp3";
 
     /**
      * The size of the level.
@@ -76,11 +75,6 @@ public class Level {
      * The scale at which the background image is drawn.
      */
     private double backgroundImageScale = 1;
-
-    /**
-     * Music of the level.
-     */
-    private AudioClip backgroundMusic = DEFAULT_BACKGROUND_MUSIC;
 
     /**
      * Time spend on the level.
@@ -132,7 +126,6 @@ public class Level {
      */
     public void unload() {
         Game.getInstance().getPlayers().forEach(Player::clearCharacter);
-
         entities = new ArrayList<>();
         entitiesToRemove = new ArrayList<>();
         entitiesToAdd = new ArrayList<>();
@@ -145,6 +138,8 @@ public class Level {
     public void load() throws IOException {
         LOGGER.debug("Loading Level...");
 
+        SoundManager.setMusic(DEFAULT_BACKGROUND_MUSIC);
+
         LevelLoader.load(this);
         addEntities();
         timeSpend = 0;
@@ -154,9 +149,7 @@ public class Level {
         Platform.runLater(() ->
                 StageManager.getStage().setTitle(name));
 
-        if (this.backgroundMusic != null) {
-            this.backgroundMusic.play();
-        }
+        SoundManager.startMusic();
 
     }
 
@@ -338,16 +331,6 @@ public class Level {
     }
 
     /**
-     * Sets the levels background music.
-     * @param backgroundMusic The URI of the music file.
-     */
-    void setBackgroundMusic(String backgroundMusic) {
-        if (backgroundMusic != null && !backgroundMusic.equals("")) {
-            this.backgroundMusic = new AudioClip(this.getClass().getResource(backgroundMusic).toExternalForm());
-        }
-    }
-
-    /**
      * @return The amount of seconds there is left to complete the level.
      */
     public double getTimeLeft() {
@@ -386,7 +369,7 @@ public class Level {
         if (!gameState.hasNextLevel()) {
             gameState.win();
         }
-        this.backgroundMusic.stop();
+        SoundManager.stopMusic();
     }
 
     /**
@@ -395,7 +378,7 @@ public class Level {
     public final void lose() {
         Game.getInstance().getState().pause();
         lost = true;
-        this.backgroundMusic.stop();
+        SoundManager.stopMusic();
     }
 
     /**

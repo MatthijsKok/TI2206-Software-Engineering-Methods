@@ -5,6 +5,7 @@ import entities.EntityFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.JSONParser;
+import util.SoundManager;
 
 import java.io.IOException;
 
@@ -51,7 +52,7 @@ final class LevelLoader {
         }
 
         if (metaData.has("backgroundMusicURI")) {
-            level.setBackgroundMusic(metaData.getString("backgroundMusicURI"));
+            SoundManager.setMusic(metaData.getString("backgroundMusicURI"));
         }
     }
 

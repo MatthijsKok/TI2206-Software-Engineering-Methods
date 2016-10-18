@@ -2,7 +2,7 @@
   "name": "Level 2",
   "duration": 30,
   "backgroundImageURI": "backgrounds/background3.png",
-  "backgroundMusicURI": "/sounds/music/GBA Shy Guy Beach.mp3",
+  "backgroundMusicURI": "shy_guy_beach.mp3",
   "entities": [
     {
       "type": "Player",
