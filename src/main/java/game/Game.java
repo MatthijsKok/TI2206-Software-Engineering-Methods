@@ -63,7 +63,7 @@ public class Game {
     /**
      * Creates an empty new game.
      */
-    public Game() {
+    private Game() {
         state = new GameState(this);
         setUpAnimationLoop();
     }
