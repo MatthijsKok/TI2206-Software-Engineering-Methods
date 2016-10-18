@@ -29,7 +29,7 @@ public final class PickupFactory {
      * @return A boolean indicating if a pickup should be spawned.
      */
     private static boolean shouldSpawn() {
-        return (Math.random() < SPAWN_CHANCE);
+        return Math.random() < SPAWN_CHANCE;
     }
 
     /**
