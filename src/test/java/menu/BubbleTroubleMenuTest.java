@@ -24,24 +24,26 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
 
     private BubbleTroubleMenu menu;
     private Game game;
+    private Canvas canvas;
 
     @Override
     public void start(Stage stage) throws Exception {
         StageManager.init(stage);
-        Canvas canvas = CanvasManager.createCanvas(stage);
+        canvas = CanvasManager.createCanvas(stage);
         CanvasManager.setCanvas(canvas);
         menu = new BubbleTroubleMenu();
         StageManager.getRoot().getChildren().add(menu);
+
     }
 
     @Before
     public void setUp() {
         game = Game.getInstance();
-        game.stop();
     }
 
     @After
     public void tearDown() throws TimeoutException {
+        game.stop();
         release(new MouseButton[] {});
     }
 
