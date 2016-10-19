@@ -24,12 +24,11 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
 
     private BubbleTroubleMenu menu;
     private Game game;
-    private Canvas canvas;
 
     @Override
     public void start(Stage stage) throws Exception {
         StageManager.init(stage);
-        canvas = CanvasManager.createCanvas(stage);
+        Canvas canvas = CanvasManager.createCanvas(stage);
         CanvasManager.setCanvas(canvas);
         menu = new BubbleTroubleMenu();
         StageManager.getRoot().getChildren().add(menu);
@@ -79,15 +78,11 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
     public void testOnClickSinglePlayerButtons() {
         clickOn("#singlePlayerButton");
         assertThat(game.getPlayerCount(), is(1));
-//        clickOn("#settingsButton");
-//        assertThat(game.getPlayerCount(), is(1));
     }
 
     @Test
     public void testOnClickMultiPlayerButtons() {
         clickOn("#multiPlayerButton");
         assertThat(game.getPlayerCount(), is(2));
-//        clickOn("#settingsButton");
-//        assertThat(game.getPlayerCount(), is(2));
     }
 }
