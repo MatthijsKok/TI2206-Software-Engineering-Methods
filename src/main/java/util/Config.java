@@ -44,7 +44,6 @@ public final class Config {
             LOGGER.info("Default settings loaded.");
         } catch (IOException e) {
             LOGGER.error("Default settings could not be loaded.");
-            e.printStackTrace();
         }
 
         // Load Default Properties into Properties, before overriding with config.
@@ -56,10 +55,8 @@ public final class Config {
             LOGGER.info("Settings loaded.");
         } catch (IOException e) {
             LOGGER.warn("Settings could not be loaded. Using default settings instead.");
-            e.printStackTrace();
         }
     }
-
 
     private Config() {
 
