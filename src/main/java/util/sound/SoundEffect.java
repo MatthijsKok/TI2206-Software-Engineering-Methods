@@ -2,6 +2,7 @@ package util.sound;
 
 
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.MediaException;
 
 import java.nio.file.Paths;
 
@@ -53,12 +54,11 @@ public final class SoundEffect {
     public static final SoundEffect GAME_WON = new SoundEffect("game_won.wav");
 
     // -------- CLASS LOGIC --------
+
     /**
      * Path where the sound effects are stored.
      */
     private static final String SOUND_EFFECTS_PATH = "src/main/resources/sounds/soundEffects/";
-
-
 
     /**
      * The volume at which the background is played.
@@ -72,15 +72,16 @@ public final class SoundEffect {
 
     /**
      * Creates a new SoundEffect Object.
+     *
      * @param soundEffectName The name of the audio file, for example 'effect.wav'.
+     * @throws MediaException When the name is not valid
      */
-    SoundEffect(String soundEffectName) {
+    SoundEffect(String soundEffectName) throws MediaException {
         try {
             audio = new AudioClip(Paths.get(SOUND_EFFECTS_PATH + soundEffectName).toUri().toString());
-        }
-        catch (Exception e) {
+        } catch (MediaException e) {
             System.err.println("You probably made a typo in the sound effect name: " + soundEffectName);
-            System.err.println("The sound will not be played in the game");
+            throw e;
         }
     }
 
@@ -98,6 +99,22 @@ public final class SoundEffect {
      * @param soundEffectsVolume A double between 0 and 1, with 1 being full volume.
      */
     public static void setSoundEffectsVolume(double soundEffectsVolume) {
-        SoundEffect.soundEffectsVolume = soundEffectsVolume;
+        if (soundEffectsVolume >= 0 && soundEffectsVolume <= 1) {
+            SoundEffect.soundEffectsVolume = soundEffectsVolume;
+        }
+    }
+
+    /**
+     * @return The AudioClip object related to this SoundEffect
+     */
+    public AudioClip getAudio() {
+        return audio;
+    }
+
+    /**
+     * @return The volume at which the sound effects are being played
+     */
+    public static double getSoundEffectsVolume() {
+        return soundEffectsVolume;
     }
 }
