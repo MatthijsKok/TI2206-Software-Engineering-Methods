@@ -3,6 +3,8 @@ package entities;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.AbstractBall;
+import entities.balls.ColoredBall;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -48,7 +50,7 @@ public class HarpoonTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testCollisionWithBall() {
-        Ball ball = new Ball(new Vec2d(300, 200), 2);
+        AbstractBall ball = new ColoredBall(new Vec2d(300, 200), 2);
         harpoon1.collideWith(ball);
 
         verify(mockedCharacter, times(1)).increaseScore(300);

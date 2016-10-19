@@ -1,29 +1,31 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.AbstractBall;
 import geometry.Rectangle;
 import graphics.Sprite;
 
 /**
- * Harpoon class, controlling the rope in the game.
+ * Harpoon entity class.
  */
 public class Harpoon extends AbstractEntity {
 
     /**
-     * Sprite of the rope.
+     * Sprite of the harpoon.
      */
-    private static final Sprite HARPOON_SPRITE = new Sprite("rope.png", new Vec2d(5, 0));
-
+    private static final Sprite HARPOON_SPRITE = new Sprite("harpoon.png", new Vec2d(5, 0));
     /**
-     * collision shape of the rope. Created around the original sprite.
+     * Collision shape of the harpoon. Created around the original sprite.
      */
     private static final Rectangle HARPOON_SHAPE = new Rectangle(HARPOON_SPRITE);
-
     /**
-     * Constant upward speed of the rope in px/s.
+     * Scale of the harpoon sprite.
+     */
+    private static final double HARPOON_SCALE = 0.5;
+    /**
+     * Constant upward speed of the harpoon in px/s.
      */
     private static final double TRAVEL_SPEED = 300; // px/s
-
     /**
      * Score that is multiplied by the size of the ball, and then added to the score.
      */
@@ -44,7 +46,8 @@ public class Harpoon extends AbstractEntity {
         super(position);
         setSprite(HARPOON_SPRITE);
         setShape(new Rectangle(HARPOON_SHAPE));
-        setSpeed(0, -TRAVEL_SPEED);
+        setYSpeed(-TRAVEL_SPEED);
+        setScale(HARPOON_SCALE);
 
         this.character = character;
     }
@@ -63,17 +66,17 @@ public class Harpoon extends AbstractEntity {
 
     @Override
     public void collideWith(final AbstractEntity entity) {
-        if (entity instanceof Ball) {
-            collideWith((Ball) entity);
+        if (entity instanceof AbstractBall) {
+            collideWith((AbstractBall) entity);
         }
     }
 
     /**
-     * Collision with a ball, the rope should disappear and the score should increase.
+     * Collision with a ball, the harpoon should disappear and the score should increase.
      *
-     * @param ball the ball this rope collides with
+     * @param ball the ball this harpoon collides with
      */
-    private void collideWith(final Ball ball) {
+    private void collideWith(final AbstractBall ball) {
         die();
 
         final int score = (ball.getSize() + 1) * SCORE_PER_BALL;
