@@ -4,6 +4,7 @@ package game;
 import game.player.Player;
 import level.Level;
 import util.KeyboardInputManager;
+import util.sound.MultiSoundEffect;
 import util.sound.Music;
 import util.sound.SoundEffect;
 
@@ -182,6 +183,7 @@ public class GameState implements Observer {
     public void win() {
         if (!lost) {
             won = true;
+            SoundEffect.GAME_WON.play();
         }
         pause();
     }
@@ -192,7 +194,7 @@ public class GameState implements Observer {
     public void lose() {
         if (!won) {
             lost = true;
-            SoundEffect.GAME_OVER.play();
+            MultiSoundEffect.GAME_OVER.playRandom();
         }
         pause();
     }

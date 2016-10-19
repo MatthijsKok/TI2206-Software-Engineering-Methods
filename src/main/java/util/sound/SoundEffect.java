@@ -38,26 +38,26 @@ public final class SoundEffect {
     public static final SoundEffect PAUSE = new SoundEffect("pause.wav");
 
     /**
-     * Sound effect played when the player is game over.
-     */
-    public static final SoundEffect GAME_OVER = new SoundEffect("game_over2.wav");
-
-    /**
      * Sound effect played when a ball bounces.
      */
     public static final SoundEffect BALL_BOUNCE = new SoundEffect("ball_bounce.wav");
 
     /**
-     * Sound that plays when time is almost up.
+     * Sound effect played when time is almost up.
      */
     public static final SoundEffect TIME_ALMOST_UP = new SoundEffect("hurry_up.wav");
 
+    /**
+     * Sound effect that plays once all levels are completed.
+     */
+    public static final SoundEffect GAME_WON = new SoundEffect("game_won.wav");
 
     // -------- CLASS LOGIC --------
     /**
      * Path where the sound effects are stored.
      */
     private static final String SOUND_EFFECTS_PATH = "src/main/resources/sounds/soundEffects/";
+
 
 
     /**
