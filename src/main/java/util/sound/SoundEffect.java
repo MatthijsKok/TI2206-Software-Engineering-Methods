@@ -50,7 +50,7 @@ public final class SoundEffect {
     /**
      * Sound that plays when time is almost up.
      */
-    public static final SoundEffect TIME_ALMOST_UP = new SoundEffect("hurry_up2.wav");
+    public static final SoundEffect TIME_ALMOST_UP = new SoundEffect("hurry_up.wav");
 
 
     // -------- CLASS LOGIC --------
