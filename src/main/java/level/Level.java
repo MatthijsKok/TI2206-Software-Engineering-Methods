@@ -15,6 +15,7 @@ import util.CollisionManager;
 import util.StageManager;
 import util.logging.Logger;
 import util.sound.Music;
+import util.sound.SoundEffect;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -259,6 +260,8 @@ public class Level {
             timeUp();
         }
 
+        timeAlmostUp(timeDifference);
+
         for (AbstractEntity entity : entities) {
             entity.update(timeDifference);
             entity.updatePosition(timeDifference);
@@ -398,5 +401,17 @@ public class Level {
      */
     public void increaseTime(final double extraTime) {
         timeSpend = Math.max(0, timeSpend - extraTime);
+    }
+
+    /**
+     * Plays a sound effect when the time of the level is almost up.
+     * @param dt Time difference used to assure the clip is only played once.
+     */
+    private void timeAlmostUp(double dt) {
+        final double timeAlmostUpClipLength = 2.1;
+        if (getTimeLeft() <= timeAlmostUpClipLength && getTimeLeft() >= timeAlmostUpClipLength - dt) {
+            Music.pauseMusic();
+            SoundEffect.TIME_ALMOST_UP.play();
+        }
     }
 }

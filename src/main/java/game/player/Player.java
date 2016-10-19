@@ -5,8 +5,6 @@ import game.Game;
 import util.KeyboardInputManager;
 import util.Pair;
 import util.sound.MultiSoundEffect;
-import util.sound.SoundEffect;
-
 import java.util.Observable;
 import java.util.Observer;
 
@@ -161,7 +159,6 @@ public class Player implements Observer {
 
         if (lost) {
             game.getState().lose();
-            SoundEffect.GAME_OVER.play();
         }
     }
 

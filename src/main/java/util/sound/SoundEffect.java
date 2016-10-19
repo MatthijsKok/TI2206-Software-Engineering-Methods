@@ -47,6 +47,11 @@ public final class SoundEffect {
      */
     public static final SoundEffect BALL_BOUNCE = new SoundEffect("ball_bounce.wav");
 
+    /**
+     * Sound that plays when time is almost up.
+     */
+    public static final SoundEffect TIME_ALMOST_UP = new SoundEffect("hurry_up2.wav");
+
 
     // -------- CLASS LOGIC --------
     /**
@@ -88,4 +93,11 @@ public final class SoundEffect {
         }
     }
 
+    /**
+     * Sets the volume at which all sound effects are played.
+     * @param soundEffectsVolume A double between 0 and 1, with 1 being full volume.
+     */
+    public static void setSoundEffectsVolume(double soundEffectsVolume) {
+        SoundEffect.soundEffectsVolume = soundEffectsVolume;
+    }
 }

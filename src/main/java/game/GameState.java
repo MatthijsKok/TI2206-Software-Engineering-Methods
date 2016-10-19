@@ -192,6 +192,7 @@ public class GameState implements Observer {
     public void lose() {
         if (!won) {
             lost = true;
+            SoundEffect.GAME_OVER.play();
         }
         pause();
     }
