@@ -19,7 +19,7 @@ public abstract class AbstractBall extends AbstractEntity {
     /**
      * The chance that splitting a ball spawns a pickup.
      */
-    private static final double PICKUP_CHANCE = 0.2;
+    private static final double DROP_CHANCE = 0.2;
     /**
      * Radius of a ball with size 0.
      */
@@ -98,12 +98,7 @@ public abstract class AbstractBall extends AbstractEntity {
     void die() {
         getLevel().removeEntity(this);
 
-        // Randomly spawn a power up
-        spawnPickUp();
-    }
-
-    private void spawnPickUp() {
-        if (Math.random() > PICKUP_CHANCE) {
+        if (Math.random() > DROP_CHANCE) {
             PickupFactory.spawnRandomPickUp(getLevel(), getPosition());
         }
     }
