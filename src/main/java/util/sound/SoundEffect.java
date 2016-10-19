@@ -68,15 +68,15 @@ public final class SoundEffect {
     /**
      * The audio clip to  of this SoundEffect.
      */
-    private AudioClip soundEffect;
+    private AudioClip audio;
 
     /**
      * Creates a new SoundEffect Object.
-     * @param soundEffectName The name of the soundEffect file, for example 'effect.wav'.
+     * @param soundEffectName The name of the audio file, for example 'effect.wav'.
      */
     SoundEffect(String soundEffectName) {
         try {
-            soundEffect = new AudioClip(Paths.get(SOUND_EFFECTS_PATH + soundEffectName).toUri().toString());
+            audio = new AudioClip(Paths.get(SOUND_EFFECTS_PATH + soundEffectName).toUri().toString());
         }
         catch (Exception e) {
             System.err.println("You probably made a typo in the sound effect name: " + soundEffectName);
@@ -88,8 +88,8 @@ public final class SoundEffect {
      * Plays the sound of the effect that is passed.
      */
     public void play() {
-        if (soundEffect != null) {
-            soundEffect.play(soundEffectsVolume);
+        if (audio != null) {
+            audio.play(soundEffectsVolume);
         }
     }
 

@@ -48,6 +48,7 @@ public final class Music {
      */
     public static void startMusic() {
         if (currentMusic != null) {
+            mediaPlayer.setVolume(musicVolume);
             mediaPlayer.play();
         }
     }
