@@ -1,6 +1,7 @@
 package util.sound;
 
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 
 import java.nio.file.Paths;
@@ -72,8 +73,9 @@ public final class Music {
             mediaPlayer = new MediaPlayer(currentMusic);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }
-        catch (Exception e) {
+        catch (MediaException e) {
             System.err.println("You probably made a typo in the music name: " + musicName);
+            throw e;
         }
     }
 
@@ -85,5 +87,26 @@ public final class Music {
         if (musicVolume >= 0.0 && musicVolume <= 1.0) {
             Music.musicVolume = musicVolume;
         }
+    }
+
+    /**
+     * @return The volume at which the music is being played.
+     */
+    public static double getMusicVolume() {
+        return musicVolume;
+    }
+
+    /**
+     * @return The MediaPlayer object controlling the music.
+     */
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    /**
+     * @return The Media object containing the music currently played.
+     */
+    public static Media getCurrentMusic() {
+        return currentMusic;
     }
 }
