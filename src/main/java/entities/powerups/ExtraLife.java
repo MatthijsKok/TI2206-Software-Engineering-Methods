@@ -14,11 +14,6 @@ class ExtraLife extends AbstractInstantPowerUp {
     private static final Sprite EXTRA_LIFE_SPRITE = new Sprite("powerUps/1-up.png");
 
     /**
-     * The name of the sound effect that will be played when the power-up is picked up.
-     */
-    private static final String SOUND_EFFECT_NAME = "1-up.wav";
-
-    /**
      * Creates a new ExtraLife power-up.
      */
     ExtraLife() {
