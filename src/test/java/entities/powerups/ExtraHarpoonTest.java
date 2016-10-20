@@ -6,7 +6,6 @@ import entities.Character;
 import game.player.Player;
 import org.junit.Before;
 import org.junit.Test;
-import util.Pair;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
@@ -48,5 +47,4 @@ public class ExtraHarpoonTest extends BubbleTroubleApplicationTest {
         extraHarpoon.disableEffect();
         assertEquals(maxHarpoonCountBeforePickup - 1, character.getMaxHarpoonCount());
     }
-
 }

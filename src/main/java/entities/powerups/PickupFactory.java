@@ -22,7 +22,7 @@ public final class PickupFactory {
         powerUpProbabilities.add(new Pair<>(2, ExtraHarpoon.class));
         powerUpProbabilities.add(new Pair<>(2, ExtraTime.class));
         powerUpProbabilities.add(new Pair<>(2, SpeedBoost.class));
-        powerUpProbabilities.add(new Pair<>(2, Shield.class));
+        powerUpProbabilities.add(new Pair<>(2, ActivateShield.class));
     }
 
     /**
