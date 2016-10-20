@@ -7,6 +7,7 @@ import game.player.Player;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.Pair;
+import util.sound.SoundEffect;
 
 /**
  * The Character class represents a character.
@@ -40,13 +41,13 @@ public class Character extends AbstractEntity {
     private boolean alive = true;
 
     /**
-     * The amount of harpoons this character can shoot.
+     * The amount of vines this character can shoot.
      */
-    private int maxHarpoonCount = 1;
+    private int maxVineCount = 1;
     /**
-     * The amount of harpoons this character has currently shot.
+     * The amount of vines this character has currently shot.
      */
-    private int currentHarpoonCount = 0;
+    private int currentVineCount = 0;
 
     /**
      * The sprites of the character.
@@ -159,9 +160,11 @@ public class Character extends AbstractEntity {
         }
 
         // Shoot
-        if (shooting && canShoot && currentHarpoonCount < maxHarpoonCount) {
-            currentHarpoonCount++;
-            getLevel().addEntity(new Harpoon(getPosition(), this));
+        if (shooting && canShoot && currentVineCount < maxVineCount) {
+            currentVineCount++;
+            getLevel().addEntity(new Vine(getPosition(), this));
+            final int occurrenceRate = 3;
+            SoundEffect.SHOOT.playSometimes(occurrenceRate);
         }
 
         canShoot = !shooting;
@@ -282,19 +285,19 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * Increases the amount of harpoons this character can shoot.
+     * Increases the amount of vines this character can shoot.
      *
-     * @param amount the amount of harpoons a character can shoot extra.
+     * @param amount the amount of vine a character can shoot extra.
      */
-    public void increaseMaxHarpoonCount(int amount) {
-        maxHarpoonCount = Math.max(1, maxHarpoonCount + amount);
+    public void increaseMaxVineCount(int amount) {
+        maxVineCount = Math.max(1, maxVineCount + amount);
     }
 
     /**
-     * Called when a harpoon is removed from the level.
+     * Called when a vine is removed from the level.
      */
-    void harpoonRemoved() {
-        currentHarpoonCount = Math.max(0, currentHarpoonCount - 1);
+    void vineRemoved() {
+        currentVineCount = Math.max(0, currentVineCount - 1);
     }
 
     /**
@@ -316,8 +319,8 @@ public class Character extends AbstractEntity {
      * Getter for maxHarpoonCount.
      * @return maxHarpoonCount
      */
-    public int getMaxHarpoonCount() {
-        return maxHarpoonCount;
+    public int getMaxVineCount() {
+        return maxVineCount;
     }
 
     /**

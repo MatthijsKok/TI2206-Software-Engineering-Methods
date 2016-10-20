@@ -10,11 +10,13 @@ import game.player.Player;
 import graphics.Sprite;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.media.AudioClip;
 import util.CanvasManager;
 import util.CollisionManager;
 import util.StageManager;
 import util.logging.Logger;
+import util.sound.MultiSoundEffect;
+import util.sound.Music;
+import util.sound.SoundEffect;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,12 +46,17 @@ public class Level {
     /**
      * The default background image of a level.
      */
-    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("background.jpg");
+    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("backgrounds/background.png");
 
     /**
      * The default background music of a level.
      */
-    private static final AudioClip DEFAULT_BACKGROUND_MUSIC = null;
+    private static final String DEFAULT_BACKGROUND_MUSIC = "mario_theme_remix.mp3";
+
+    /**
+     * The time that is left in the level when the time almost up should play.
+     */
+    private static final double TIME_ALMOST_UP_LENGTH = 2.1;
 
     /**
      * The size of the level.
@@ -75,11 +82,6 @@ public class Level {
      * The scale at which the background image is drawn.
      */
     private double backgroundImageScale = 1;
-
-    /**
-     * Music of the level.
-     */
-    private AudioClip backgroundMusic = DEFAULT_BACKGROUND_MUSIC;
 
     /**
      * Time spend on the level.
@@ -109,6 +111,11 @@ public class Level {
     private boolean won = false, lost = false;
 
     /**
+     * Indicates whether the entities must be sorted.
+     */
+    private boolean mustSort;
+
+    /**
      * Creates a new level instance.
      *
      * @param uri the file to load the level from.
@@ -131,7 +138,6 @@ public class Level {
      */
     public void unload() {
         Game.getInstance().getPlayers().forEach(Player::clearCharacter);
-
         entities = new ArrayList<>();
         entitiesToRemove = new ArrayList<>();
         entitiesToAdd = new ArrayList<>();
@@ -144,6 +150,8 @@ public class Level {
     public void load() throws IOException {
         LOGGER.debug("Loading Level...");
 
+        Music.setMusic(DEFAULT_BACKGROUND_MUSIC);
+
         LevelLoader.load(this);
         addEntities();
         timeSpend = 0;
@@ -153,9 +161,8 @@ public class Level {
         Platform.runLater(() ->
                 StageManager.getStage().setTitle(name));
 
-        if (this.backgroundMusic != null) {
-            this.backgroundMusic.play();
-        }
+        Music.startMusic();
+
     }
 
     /**
@@ -256,13 +263,7 @@ public class Level {
      * @param timeDifference time difference between now and last update
      */
     public final void update(final double timeDifference) {
-        LOGGER.debug("Updating AbstractEntity's...");
-
-        timeSpend += timeDifference;
-
-        if (timeSpend > duration) {
-            timeUp();
-        }
+        LOGGER.debug("Updating Entities...");
 
         for (AbstractEntity entity : entities) {
             entity.update(timeDifference);
@@ -271,10 +272,12 @@ public class Level {
             entity.updateSprite(timeDifference);
         }
 
-        LOGGER.debug("Updated AbstractEntity's");
+        LOGGER.debug("Updated Entities");
 
+        handleTime(timeDifference);
         removeEntities();
         addEntities();
+        sortEntities();
 
         if (countBalls() == 0) {
             win();
@@ -327,16 +330,6 @@ public class Level {
     }
 
     /**
-     * Sets the levels background music.
-     * @param backgroundMusic The URI of the music file.
-     */
-    void setBackgroundMusic(String backgroundMusic) {
-        if (backgroundMusic != null && !backgroundMusic.equals("")) {
-            this.backgroundMusic = new AudioClip(backgroundMusic);
-        }
-    }
-
-    /**
      * @return The amount of seconds there is left to complete the level.
      */
     public double getTimeLeft() {
@@ -378,10 +371,17 @@ public class Level {
     private void win() {
         GameState gameState = Game.getInstance().getState();
         gameState.pause();
+
+        SoundEffect.TIME_ALMOST_UP.getAudio().stop();
+
+        Music.stopMusic();
         won = true;
 
         if (!gameState.hasNextLevel()) {
             gameState.win();
+        }
+        else {
+            MultiSoundEffect.LEVEL_WON.playRandom();
         }
     }
 
@@ -391,6 +391,7 @@ public class Level {
     public final void lose() {
         Game.getInstance().getState().pause();
         lost = true;
+        Music.stopMusic();
     }
 
     /**
@@ -412,5 +413,48 @@ public class Level {
      */
     public void increaseTime(final double extraTime) {
         timeSpend = Math.max(0, timeSpend - extraTime);
+    }
+
+    /**
+     * Plays a sound effect when the time of the level is almost up.
+     */
+    private void timeAlmostUp() {
+        if (!SoundEffect.TIME_ALMOST_UP.getAudio().isPlaying()
+                && getTimeLeft() < TIME_ALMOST_UP_LENGTH) {
+            Music.pauseMusic();
+            SoundEffect.TIME_ALMOST_UP.play();
+        }
+    }
+
+    /**
+     * Sorts all entities by depth. This makes sure that all entities
+     * are drawn in correct order.
+     */
+    private void sortEntities() {
+        if (mustSort) {
+            entities.sort((a, b) -> b.getDepth() - a.getDepth());
+        }
+
+        mustSort = false;
+    }
+
+    /**
+     * Handles all time related events in the level.
+     */
+    private void handleTime(double timeDifference) {
+        timeSpend += timeDifference;
+
+        if (timeSpend > duration) {
+            timeUp();
+        }
+
+        timeAlmostUp();
+    }
+
+    /**
+     * Indicate that entities must be sorted.
+     */
+    public void depthSort() {
+        mustSort = true;
     }
 }

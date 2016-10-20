@@ -41,6 +41,14 @@ public class BubbleTrouble extends Application {
         Canvas canvas = CanvasManager.createCanvas(stage);
         canvas.setVisible(false);
 
+        //Load sounds
+        try {
+            Class.forName("util.sound.SoundEffect");
+            Class.forName("util.sound.MultiSoundEffect");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         children.add(new BubbleTroubleMenu());
         children.add(canvas);
 

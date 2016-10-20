@@ -72,7 +72,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     public void testSetShooting() {
         character.setShooting(true);
         character.update(1);
-        assertThat("A character should shoot when told to.", character.getHarpoon().isVisible(), is(true));
+        assertThat("A character should shoot when told to.", character.getVine().isVisible(), is(true));
     }*/
 
     @Test
@@ -180,15 +180,15 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     }
 
     @Test
-    public void testIncreaseHarpoonCount() {
+    public void testIncreaseVineCount() {
         int count = countEntities();
-        character.increaseMaxHarpoonCount(1);
+        character.increaseMaxVineCount(1);
         character.setShooting(true);
-        character.update(1); // 1 harpoon
+        character.update(1); // 1 vine
         character.setShooting(false);
-        character.update(1); // 1 harpoon
+        character.update(1); // 1 vine
         character.setShooting(true);
-        character.update(1); // 2 harpoons
+        character.update(1); // 2 vines
         assertThat(countEntities(), is(count + 2));
     }
 

@@ -28,6 +28,10 @@ public class BubbleTroubleMenu extends Pane {
     static {
         DEFAULT_LEVELS.add("src/main/resources/levels/level1.json");
         DEFAULT_LEVELS.add("src/main/resources/levels/level2.json");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level3.json");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level4.json");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level5.json");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level6.json");
     }
 
     /**

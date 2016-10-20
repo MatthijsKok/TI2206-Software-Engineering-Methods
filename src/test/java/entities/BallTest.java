@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 public class BallTest extends BubbleTroubleApplicationTest {
 
     private ColoredBall ball;
-    private Harpoon harpoon;
+    private Vine vine;
     private Vec2d spawnPosition = new Vec2d(100, 300);
     private int ballSize = 2;
     private ColoredBall.Color ballColor = ColoredBall.Color.BLUE;
@@ -37,7 +37,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
         level.addEntity(ball);
         level.update(0);
 
-        harpoon = new Harpoon(new Vec2d(0, 0), Mockito.mock(Character.class));
+        vine = new Vine(new Vec2d(0, 0), Mockito.mock(Character.class));
     }
 
     @After
@@ -132,8 +132,8 @@ public class BallTest extends BubbleTroubleApplicationTest {
     }
 
     @Test
-    public void testCollideWithHarpoon() {
-        ball.collideWith(harpoon);
+    public void testCollideWithVine() {
+        ball.collideWith(vine);
 
         assertFalse(level.getEntities().contains(ball));
     }
@@ -147,7 +147,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
     }
 
     /*@Test
-    public void testCollideWithHarpoonSizeIsZero() {
+    public void testCollideWithVineSizeIsZero() {
         AbstractBall ball2 = new AbstractBall(spawnPosition, 0);
 
         level.removeEntity(ball);
@@ -156,7 +156,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
 
         int size = level.getEntities().size();
 
-        ball2.collideWith(harpoon);
+        ball2.collideWith(vine);
 
         assertThat(level.getEntities().size(), is(size - 1));
     }*/

@@ -3,13 +3,14 @@ package entities.balls;
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.FloorBlock;
-import entities.Harpoon;
 import entities.Shield;
+import entities.Vine;
 import entities.WallBlock;
 import entities.behaviour.GravityBehaviour;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
 import geometry.Rectangle;
+import util.sound.SoundEffect;
 
 /**
  * Class that represents the bouncing balls in our game.
@@ -108,6 +109,7 @@ public abstract class AbstractBall extends AbstractEntity {
      */
     private void bounce() {
         setYSpeed(-getBounceSpeed());
+        SoundEffect.BALL_BOUNCE.play();
     }
 
     /**
@@ -127,8 +129,8 @@ public abstract class AbstractBall extends AbstractEntity {
             collideWith((WallBlock) entity);
         }
 
-        if (entity instanceof Harpoon) {
-            collideWithHarpoon();
+        if (entity instanceof Vine) {
+            collideWithVine();
         }
 
         if (entity instanceof Shield) {
@@ -184,9 +186,9 @@ public abstract class AbstractBall extends AbstractEntity {
     }
 
     /**
-     * The behaviour of the AbstractBall when it collides with a Harpoon AbstractEntity.
+     * The behaviour of the AbstractBall when it collides with a Vine AbstractEntity.
      */
-    private void collideWithHarpoon() {
+    private void collideWithVine() {
         die();
     }
 }
