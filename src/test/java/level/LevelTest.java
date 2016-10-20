@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 /**
@@ -22,7 +23,7 @@ public class LevelTest extends BubbleTroubleApplicationTest {
     @Before
     public void setUp(){
         level1 = new Level("src/main/resources/levels/level1.json");
-        level2 = new Level("src/main/resources/levels/level2.json");
+        level2 = new Level("src/main/resources/levelsForTesting/levelForLoader.json");
         noBall = new Level("src/main/resources/levelsForTesting/noBallsLevel.json");
         timeUp = new Level("src/main/resources/levelsForTesting/timeUpLevel.json");
     }
@@ -81,9 +82,10 @@ public class LevelTest extends BubbleTroubleApplicationTest {
         } catch (IOException e) {
             fail();
         }
+        int sizeBeforeRemoval = level2.getEntities().size();
         AbstractEntity removeThisBall = level2.getEntities().get(3);
         level2.removeEntity(removeThisBall);
-        assertEquals(111, level2.getEntities().size());
+        assertEquals(sizeBeforeRemoval - 1, level2.getEntities().size());
     }
 
     @Test
@@ -157,6 +159,6 @@ public class LevelTest extends BubbleTroubleApplicationTest {
             fail();
         }
         level2.update(20);
-        assertTrue(10 == level2.getTimeLeft());
+        assertThat(level2.getTimeLeft(), is(level2.getDuration() - 20));
     }
 }
