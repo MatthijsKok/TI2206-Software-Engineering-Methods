@@ -14,6 +14,7 @@ import util.CanvasManager;
 import util.CollisionManager;
 import util.StageManager;
 import util.logging.Logger;
+import util.sound.MultiSoundEffect;
 import util.sound.Music;
 import util.sound.SoundEffect;
 
@@ -365,12 +366,16 @@ public class Level {
     private void win() {
         GameState gameState = Game.getInstance().getState();
         gameState.pause();
+
+        Music.stopMusic();
         won = true;
 
         if (!gameState.hasNextLevel()) {
             gameState.win();
         }
-        Music.stopMusic();
+        else {
+            MultiSoundEffect.LEVEL_WON.playRandom();
+        }
     }
 
     /**

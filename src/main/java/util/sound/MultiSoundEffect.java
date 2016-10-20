@@ -26,6 +26,20 @@ public final class MultiSoundEffect {
             new MultiSoundEffect(new String[]{"game_over.wav", "game_over2.wav"});
 
     /**
+     *
+     */
+    public static final MultiSoundEffect LEVEL_WON =
+            new MultiSoundEffect(new String[]{"happy_mario.wav", "happy_yoshi.wav",
+                                              "happy_yoshi2.wav", "mario_lets_go.wav"});
+
+    /**
+     * Sound effect played when a ball is popped.
+     */
+    public static final MultiSoundEffect BALL_POP =
+            new MultiSoundEffect(new String[]{"ball_pop1.wav", "ball_pop2.wav",
+                                              "ball_pop3.wav", "ball_pop4.wav", "ball_pop5.wav"});
+
+    /**
      * The list containing the sound effects that can be played.
      */
     private SoundEffect[] effectList;

@@ -3,7 +3,6 @@ package util.sound;
 
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaException;
-
 import java.nio.file.Paths;
 
 /**
@@ -39,6 +38,11 @@ public final class SoundEffect {
     public static final SoundEffect PAUSE = new SoundEffect("pause.wav");
 
     /**
+     * Sound effect for shooting.
+     */
+    public static final SoundEffect SHOOT = new SoundEffect("vine.wav");
+
+    /**
      * Sound effect played when a ball bounces.
      */
     public static final SoundEffect BALL_BOUNCE = new SoundEffect("ball_bounce.wav");
@@ -71,6 +75,11 @@ public final class SoundEffect {
     private AudioClip audio;
 
     /**
+     * counts how many times the sound has been played for sounds that play once in x times.
+     */
+    private int playCount = 0;
+
+    /**
      * Creates a new SoundEffect Object.
      *
      * @param soundEffectName The name of the audio file, for example 'effect.wav'.
@@ -92,6 +101,17 @@ public final class SoundEffect {
         if (audio != null) {
             audio.play(soundEffectsVolume);
         }
+    }
+
+    /**
+     * Plays the sound once every x times.
+     * @param occurrenceRate The amount of times the playSometimes function should be called before playing the sound again.
+     */
+    public void playSometimes(int occurrenceRate) {
+        if (playCount % occurrenceRate == 0) {
+            play();
+        }
+        playCount++;
     }
 
     /**

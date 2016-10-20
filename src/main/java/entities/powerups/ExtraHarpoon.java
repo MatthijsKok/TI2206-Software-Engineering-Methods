@@ -10,7 +10,7 @@ class ExtraHarpoon extends AbstractDuringPowerUp {
     /**
      * The sprite of the extra harpoon power-up.
      */
-    private static final Sprite SPRITE = new Sprite("powerUps/extra_harpoon.png");
+    private static final Sprite SPRITE = new Sprite("powerUps/extra_vine.png");
 
     /**
      * The duration of the extra harpoon power-up (in ms).

@@ -2,6 +2,7 @@ package entities.powerups;
 import game.Game;
 import graphics.Sprite;
 import level.Level;
+import util.sound.Music;
 import util.sound.SoundEffect;
 
 /**
@@ -35,5 +36,7 @@ class ExtraTime extends AbstractInstantPowerUp {
         Level level = getLevel();
         level.increaseTime(EXTRA_TIME);
         SoundEffect.EXTRA_TIME.play();
+        SoundEffect.TIME_ALMOST_UP.getAudio().stop();
+        Music.startMusic();
     }
 }

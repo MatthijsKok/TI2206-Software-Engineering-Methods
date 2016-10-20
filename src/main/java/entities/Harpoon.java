@@ -12,7 +12,7 @@ public class Harpoon extends AbstractEntity {
     /**
      * Sprite of the rope.
      */
-    private static final Sprite HARPOON_SPRITE = new Sprite("rope.png", new Vec2d(5, 0));
+    private static final Sprite HARPOON_SPRITE = new Sprite("vine.png", new Vec2d(5, 0));
 
     /**
      * collision shape of the rope. Created around the original sprite.
@@ -22,7 +22,7 @@ public class Harpoon extends AbstractEntity {
     /**
      * Constant upward speed of the rope in px/s.
      */
-    private static final double TRAVEL_SPEED = 300; // px/s
+    private static final double TRAVEL_SPEED = 250; // px/s
 
     /**
      * Score that is multiplied by the size of the ball, and then added to the score.

@@ -5,6 +5,7 @@ import game.player.Player;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.Pair;
+import util.sound.SoundEffect;
 
 /**
  * The Character class represents a character.
@@ -166,6 +167,8 @@ public class Character extends AbstractEntity {
         if (shooting && canShoot && currentHarpoonCount < maxHarpoonCount) {
             currentHarpoonCount++;
             getLevel().addEntity(new Harpoon(getPosition(), this));
+            final int occurrenceRate = 3;
+            SoundEffect.SHOOT.playSometimes(occurrenceRate);
         }
 
         canShoot = !shooting;

@@ -6,6 +6,7 @@ import geometry.Circle;
 import geometry.Rectangle;
 import graphics.Sprite;
 import level.Level;
+import util.sound.MultiSoundEffect;
 import util.sound.SoundEffect;
 
 import java.util.Map;
@@ -199,6 +200,8 @@ public class Ball extends AbstractEntity {
 
         // Randomly spawn a power up
         spawnPickUp();
+
+        MultiSoundEffect.BALL_POP.playRandom();
     }
 
     private void spawnPickUp() {
