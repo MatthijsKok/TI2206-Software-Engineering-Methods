@@ -311,4 +311,12 @@ public class Character extends AbstractEntity {
     void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
     }
+
+    /**
+     * Getter for maxHarpoonCount.
+     * @return maxHarpoonCount
+     */
+    public int getMaxHarpoonCount() {
+        return maxHarpoonCount;
+    }
 }
