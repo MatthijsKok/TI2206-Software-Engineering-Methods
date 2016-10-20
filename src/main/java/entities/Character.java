@@ -83,7 +83,7 @@ public class Character extends AbstractEntity {
      *
      * @param position position of the character
      */
-    Character(final Vec2d position) {
+    public Character(final Vec2d position) {
         super(position);
 
         setShape(new Rectangle(BOUNDING_BOX));
@@ -310,5 +310,21 @@ public class Character extends AbstractEntity {
      */
     void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
+    }
+
+    /**
+     * Getter for maxHarpoonCount.
+     * @return maxHarpoonCount
+     */
+    public int getMaxHarpoonCount() {
+        return maxHarpoonCount;
+    }
+
+    /**
+     * Getter for runSpeed.
+     * @return runSpeed
+     */
+    public double getRunSpeed() {
+        return runSpeed;
     }
 }

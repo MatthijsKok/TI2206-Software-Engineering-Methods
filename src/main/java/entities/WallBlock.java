@@ -22,7 +22,7 @@ public class WallBlock extends AbstractEntity {
      * Creates a wall on position (x,y).
      * @param position the position of the wall
      */
-    WallBlock(final Vec2d position) {
+    public WallBlock(final Vec2d position) {
         super(position);
         setSprite(WALL_SPRITE);
         setShape(new Rectangle(WALL_SHAPE));
