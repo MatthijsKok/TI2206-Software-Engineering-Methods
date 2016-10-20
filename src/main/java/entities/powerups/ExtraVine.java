@@ -1,7 +1,7 @@
 package entities.powerups;
 
 import graphics.Sprite;
-import util.sound.SoundEffect;
+import util.sound.MultiSoundEffect;
 
 /**
  * Gives the player a extra rope to shoot.
@@ -32,7 +32,7 @@ class ExtraVine extends AbstractDuringPowerUp {
      */
     /* default */ void enableEffect() {
         getTarget().increaseMaxHarpoonCount(1);
-        SoundEffect.EXTRA_VINE.play();
+        MultiSoundEffect.EXTRA_VINE.play(getTarget().getPlayer().getId());
     }
 
     /**

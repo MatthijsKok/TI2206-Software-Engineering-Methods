@@ -35,7 +35,7 @@ public final class SoundEffect {
     /**
      * Sound effect for the extra vine power-up.
      */
-    public static final SoundEffect EXTRA_VINE = new SoundEffect("vine.wav");
+    public static final SoundEffect EXTRA_VINE = new SoundEffect("extra_vine.wav");
 
     /**
      * Sound effect for pausing the game.
@@ -45,7 +45,7 @@ public final class SoundEffect {
     /**
      * Sound effect for shooting.
      */
-    public static final SoundEffect SHOOT = new SoundEffect("vine2.wav");
+    public static final SoundEffect SHOOT = new SoundEffect("vine_shot.wav");
 
     /**
      * Sound effect played when a ball bounces.

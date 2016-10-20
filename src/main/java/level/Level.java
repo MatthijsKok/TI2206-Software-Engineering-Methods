@@ -51,7 +51,7 @@ public class Level {
     /**
      * The default background music of a level.
      */
-    private static final String DEFAULT_BACKGROUND_MUSIC = "toads_factory.mp3";
+    private static final String DEFAULT_BACKGROUND_MUSIC = "mario_theme_remix.mp3";
 
     /**
      * The time that is left in the level when the time almost up should play.
@@ -265,14 +265,6 @@ public class Level {
     public final void update(final double timeDifference) {
         LOGGER.debug("Updating Entities...");
 
-        timeSpend += timeDifference;
-
-        if (timeSpend > duration) {
-            timeUp();
-        }
-
-        timeAlmostUp();
-
         for (AbstractEntity entity : entities) {
             entity.update(timeDifference);
             entity.applyPhysicsBehaviour(timeDifference);
@@ -282,6 +274,7 @@ public class Level {
 
         LOGGER.debug("Updated Entities");
 
+        handleTime(timeDifference);
         removeEntities();
         addEntities();
         sortEntities();
@@ -443,6 +436,19 @@ public class Level {
         }
 
         mustSort = false;
+    }
+
+    /**
+     * Handles all time related events in the level.
+     */
+    private void handleTime(double timeDifference) {
+        timeSpend += timeDifference;
+
+        if (timeSpend > duration) {
+            timeUp();
+        }
+
+        timeAlmostUp();
     }
 
     /**

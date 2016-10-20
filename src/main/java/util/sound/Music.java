@@ -75,7 +75,6 @@ public final class Music {
         }
         catch (MediaException e) {
             System.err.println("You probably made a typo in the music name: " + musicName);
-            throw e;
         }
     }
 

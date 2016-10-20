@@ -4,6 +4,7 @@ import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import geometry.Rectangle;
 import graphics.Sprite;
+import util.sound.SoundEffect;
 
 /**
  * Vine class, controlling the rope in the game.
@@ -67,6 +68,7 @@ public class Vine extends AbstractEntity {
     public void collideWith(final AbstractEntity entity) {
         if (entity instanceof AbstractBall) {
             collideWith((AbstractBall) entity);
+            SoundEffect.SHOOT.getAudio().stop();
         }
     }
 
