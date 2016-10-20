@@ -31,11 +31,31 @@ public final class SceneManager {
     }
 
     /**
+     * Initializes the scenes.
+     */
+    public static void init() {
+        synchronized (new Object()) {
+            SceneManager.createScene("Menu");
+            SceneManager.createScene("Settings");
+            SceneManager.createScene("Game");
+            SceneManager.createScene("Pause");
+
+            KeyboardInputManager.addScene(SceneManager.getScene("Game"));
+
+            SceneManager.setCurrentScene("Menu");
+        }
+    }
+
+
+    /**
      * Creates a new Scene with a new Group as root.
+     * @param name The key for the Scene value in the HashMap.
      * @return The created Scene.
      */
-    public static Scene createScene() {
-        return new Scene(new Group());
+    public static Scene createScene(String name) {
+        Scene scene = new Scene(new Group());
+        sceneHashMap.put(name, scene);
+        return scene;
     }
 
     /**

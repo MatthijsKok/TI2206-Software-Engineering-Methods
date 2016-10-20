@@ -36,6 +36,7 @@ public class BubbleTrouble extends Application {
     public final void start(final Stage stage) {
         LOGGER.setLevel(LogLevel.INFO);
         StageManager.init(stage);
+        SceneManager.init();
 
         // Add BubbleTroubleMenu as a child to the root of the Menu Scene.
         ((Group) SceneManager.getScene("Menu").getRoot()).getChildren().add(new BubbleTroubleMenu());

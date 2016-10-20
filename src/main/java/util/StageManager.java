@@ -44,15 +44,6 @@ public final class StageManager {
             getStage().setMinHeight(DEFAULT_HEIGHT);
             getStage().getIcons().add(new Image("logo.png"));
             getStage().initStyle(StageStyle.UNDECORATED);
-
-            SceneManager.addScene("Menu", SceneManager.createScene());
-            SceneManager.addScene("Settings", SceneManager.createScene());
-            SceneManager.addScene("Pause", SceneManager.createScene());
-            SceneManager.addScene("Game", SceneManager.createScene());
-
-            KeyboardInputManager.addScene(SceneManager.getScene("Game"));
-
-            SceneManager.setCurrentScene("Menu");
         }
         stage.show();
     }
