@@ -40,7 +40,9 @@ public final class Music {
      * Pauses the music.
      */
     public static void pauseMusic() {
-        mediaPlayer.pause();
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
     }
 
 
@@ -48,7 +50,7 @@ public final class Music {
      * Starts the music that is defined in the music property.
      */
     public static void startMusic() {
-        if (currentMusic != null) {
+        if (mediaPlayer != null) {
             mediaPlayer.setVolume(musicVolume);
             mediaPlayer.play();
         }
@@ -75,6 +77,8 @@ public final class Music {
         }
         catch (MediaException e) {
             System.err.println("You probably made a typo in the music name: " + musicName);
+            mediaPlayer = null;
+            currentMusic = null;
         }
     }
 

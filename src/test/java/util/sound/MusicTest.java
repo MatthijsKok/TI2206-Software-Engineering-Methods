@@ -1,12 +1,12 @@
 package util.sound;
 
 import javafx.embed.swing.JFXPanel;
-import javafx.scene.media.MediaException;
 import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Test for the music class
@@ -17,18 +17,18 @@ public class MusicTest {
     public void setUp() {
         // used for initialisation of classes needed for testing
         new JFXPanel();
+    }
 
-        Music.setMusic("yoshi_falls.mp3");
+    @Test
+    public void testSetMusicInvalidURI() {
+        Music.setMusic("does_not_exist.wav");
+        assertNull(Music.getCurrentMusic());
     }
 
     @Test
     public void testSetMusicValidURI() {
+        Music.setMusic("yoshi_falls.mp3");
         assertNotNull(Music.getCurrentMusic());
-    }
-
-    @Test(expected=MediaException.class)
-    public void testSetMusicInvalidURI() {
-        Music.setMusic("does_not_exist.wav");
     }
 
     @Test

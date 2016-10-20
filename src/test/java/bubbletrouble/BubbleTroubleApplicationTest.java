@@ -7,7 +7,6 @@ import level.Level;
 import org.testfx.framework.junit.ApplicationTest;
 import util.CanvasManager;
 import util.StageManager;
-import util.sound.Music;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,6 @@ public class BubbleTroubleApplicationTest extends ApplicationTest {
         List<Level> levelList = new ArrayList<>();
         levelList.add(new Level("src/main/resources/levels/level1.json"));
         levelList.add(new Level("src/main/resources/levels/level2.json"));
-        Music.setMusic("mario_theme_remix.mp3");
         Game.getInstance().setLevels(levelList);
         Game.getInstance().setPlayerCount(1);
     }
