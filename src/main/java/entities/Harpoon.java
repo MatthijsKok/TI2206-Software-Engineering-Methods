@@ -1,5 +1,6 @@
 package entities;
 
+import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import geometry.Rectangle;
@@ -32,7 +33,7 @@ public class Harpoon extends AbstractEntity {
     private static final int SCORE_PER_BALL = 100;
 
     /**
-     * The character that shot this harpoon.
+     * The entities.character that shot this harpoon.
      */
     private final Character character;
 
@@ -40,9 +41,9 @@ public class Harpoon extends AbstractEntity {
      * Creates a new harpoon.
      *
      * @param position spawn position of the harpoon.
-     * @param character character which shot the harpoon.
+     * @param character entities.character which shot the harpoon.
      */
-    Harpoon(final Vec2d position, final Character character) {
+    public Harpoon(final Vec2d position, final Character character) {
         super(position);
         setSprite(HARPOON_SPRITE);
         setShape(new Rectangle(HARPOON_SHAPE));

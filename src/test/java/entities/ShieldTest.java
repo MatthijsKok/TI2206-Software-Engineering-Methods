@@ -1,6 +1,7 @@
 package entities;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
+import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.ColoredBall;
 import org.junit.Before;

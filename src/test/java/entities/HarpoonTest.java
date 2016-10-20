@@ -2,6 +2,7 @@ package entities;
 
 
 import bubbletrouble.BubbleTroubleApplicationTest;
+import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import entities.balls.ColoredBall;

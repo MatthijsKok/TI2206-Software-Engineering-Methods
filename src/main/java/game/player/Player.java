@@ -1,6 +1,6 @@
 package game.player;
 
-import entities.Character;
+import entities.character.Character;
 import game.Game;
 import util.KeyboardInputManager;
 import util.Pair;
@@ -40,16 +40,16 @@ public class Player implements Observer {
     private int lives = LIVES_AT_START;
 
     /**
-     * The character this player observes. Changes each level.
+     * The entities.character this player observes. Changes each level.
      */
     private Character character = null;
 
     /**
      * Creates a new player instance with the keys.
      *
-     * @param leftKey  The keyboard character that makes the player move left.
-     * @param rightKey The keyboard character that makes the player move right.
-     * @param shootKey The keyboard character that makes the player shoot.
+     * @param leftKey  The keyboard entities.character that makes the player move left.
+     * @param rightKey The keyboard entities.character that makes the player move right.
+     * @param shootKey The keyboard entities.character that makes the player shoot.
      * @param id The player id of the player.
      */
     public Player(int id, String leftKey, String rightKey, String shootKey) {
@@ -62,27 +62,28 @@ public class Player implements Observer {
     }
 
     /**
-     * Removes the character instance from this player.
+     * Removes the entities.character instance from this player.
      */
     public void clearCharacter() {
         character = null;
     }
 
     /**
-     * @return The character instance this player controls.
+     * @return The entities.character instance this player controls.
      */
     public Character getCharacter() {
         return character;
     }
 
     /**
-     * Assigns a character instance to this player.
+     * Assigns a entities.character instance to this player.
      *
-     * @param character the character to assign.
+     * @param character the entities.character to assign.
      */
     public void setCharacter(Character character) {
         if (character != null) {
             this.character = character;
+            character.setPlayer(this);
             character.addObserver(this);
         }
     }
@@ -123,7 +124,7 @@ public class Player implements Observer {
     }
 
     /**
-     * Handles keyboard input and passes it to the character.
+     * Handles keyboard input and passes it to the entities.character.
      */
     private void updateKeyboardInput() {
         if (KeyboardInputManager.keyPressed(leftKey) && !KeyboardInputManager.keyPressed(rightKey)) {

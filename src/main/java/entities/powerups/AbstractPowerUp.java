@@ -1,5 +1,5 @@
 package entities.powerups;
-import entities.Character;
+import entities.character.Character;
 import graphics.Sprite;
 
 /**
@@ -8,7 +8,7 @@ import graphics.Sprite;
 abstract class AbstractPowerUp {
 
     /**
-     * The character which picked up the power-up.
+     * The entities.character which picked up the power-up.
      */
     private Character target;
 
@@ -19,14 +19,14 @@ abstract class AbstractPowerUp {
 
     /**
      * Enables the effect of the specific power-up.
-     * @param character The character that picked up the power-up.
+     * @param character The entities.character that picked up the power-up.
      */
     /* default */ void setTarget(final Character character) {
         target = character;
     }
 
     /**
-     * @return The character which picked up the power-up.
+     * @return The entities.character which picked up the power-up.
      */
     /* default */ Character getTarget() {
         return target;

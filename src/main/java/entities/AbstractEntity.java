@@ -296,7 +296,7 @@ public abstract class AbstractEntity extends Observable {
      * Sets the vertical speed of the entity.
      * @param ySpeed vertical speed
      */
-    public void setYSpeed(final double ySpeed) {
+    public final void setYSpeed(final double ySpeed) {
         speed.y = ySpeed;
     }
 
@@ -304,7 +304,7 @@ public abstract class AbstractEntity extends Observable {
      * Sets the scale of the entity.
      * @param xScale double - the target horizontal scale
      */
-    /* default */ void setXScale(final double xScale) {
+    protected /* default */ final void setXScale(final double xScale) {
         setScale(xScale, getYScale());
     }
 

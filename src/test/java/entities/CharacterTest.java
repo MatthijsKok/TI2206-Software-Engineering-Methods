@@ -1,6 +1,7 @@
 package entities;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
+import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import game.player.Player;
@@ -38,7 +39,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     @Test
     public void testDie() {
         character.die();
-        assertFalse("A character should not be alive when it died.", character.isAlive());
+        assertFalse("A entities.character should not be alive when it died.", character.isAlive());
     }
 
     @Test
@@ -47,7 +48,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         double x = character.getX();
         character.update(1);
         character.updatePosition(1);
-        assertThat("A character should not move in x-direction if its direction is 0", character.getX(), is(x));
+        assertThat("A entities.character should not move in x-direction if its direction is 0", character.getX(), is(x));
     }
 
     @Test
@@ -56,7 +57,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         double x = character.getX();
         character.update(1);
         character.updatePosition(1);
-        assertThat("A character should move to the right if its direction is 1", character.getX(), greaterThan(x));
+        assertThat("A entities.character should move to the right if its direction is 1", character.getX(), greaterThan(x));
     }
 
     @Test
@@ -65,14 +66,14 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         double x = character.getX();
         character.update(1);
         character.updatePosition(1);
-        assertThat("A character should move to the left if its direction is -1", character.getX(), lessThan(x));
+        assertThat("A entities.character should move to the left if its direction is -1", character.getX(), lessThan(x));
     }
 
     /*@Test
     public void testSetShooting() {
-        character.setShooting(true);
-        character.update(1);
-        assertThat("A character should shoot when told to.", character.getHarpoon().isVisible(), is(true));
+        entities.character.setShooting(true);
+        entities.character.update(1);
+        assertThat("A entities.character should shoot when told to.", entities.character.getHarpoon().isVisible(), is(true));
     }*/
 
     @Test
@@ -81,7 +82,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
         character.collideWith(mockedBall);
 
-        assertThat("A character should die when it collides with a ball", character.isAlive(), is(false));
+        assertThat("A entities.character should die when it collides with a ball", character.isAlive(), is(false));
     }
 
     @Test
@@ -167,7 +168,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     /*@Test
     public void testIncreaseScore() {
         int score = player.getScore();
-        character.increaseScore(100);
+        entities.character.increaseScore(100);
         assertThat(player.getScore(), is(score + 100));
     }*/
 

@@ -3,7 +3,7 @@ package entities.powerups;
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.behaviour.GravityBehaviour;
-import entities.Character;
+import entities.character.Character;
 import entities.FloorBlock;
 import geometry.Rectangle;
 

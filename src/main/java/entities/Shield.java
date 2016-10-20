@@ -1,5 +1,6 @@
 package entities;
 
+import entities.character.Character;
 import entities.balls.AbstractBall;
 import geometry.Circle;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,7 +9,7 @@ import javafx.scene.shape.ArcType;
 import util.CanvasManager;
 
 /**
- * The shield class represents a shield that protects a character.
+ * The shield class represents a shield that protects a entities.character.
  */
 public class Shield extends AbstractEntity {
 
@@ -30,10 +31,10 @@ public class Shield extends AbstractEntity {
     private static final Circle SHIELD_SHAPE = new Circle(SHIELD_RADIUS);
 
     /**
-     * Creates a new shield around a character instance.
+     * Creates a new shield around a entities.character instance.
      * @param character Character this shield belongs to.
      */
-    Shield(final Character character) {
+    public Shield(final Character character) {
         super(character.getPosition());
         bindPosition(character.getPosition());
         setShape(new Circle(SHIELD_SHAPE));
@@ -43,7 +44,7 @@ public class Shield extends AbstractEntity {
     /**
      * Activates the shield.
      */
-    void activate() {
+    public void activate() {
         setVisibility(true);
     }
 

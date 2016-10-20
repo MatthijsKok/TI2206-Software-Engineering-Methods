@@ -33,7 +33,7 @@ class SinglePlayerHUD extends HeadsUpDisplay {
     /* default */ void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
         super.draw(canvas, graphicsContext);
 
-        for (int i = getPlayerLives(0); i >= 0; i--) {
+        for (int i = getPlayerLives(0) - 1; i >= 0; i--) {
             HEART.draw(MARGIN.x + SPACE * i, canvas.getHeight() - MARGIN.y);
         }
 

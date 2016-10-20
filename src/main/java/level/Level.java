@@ -3,7 +3,7 @@ package level;
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.balls.AbstractBall;
-import entities.Character;
+import entities.character.Character;
 import game.Game;
 import game.GameState;
 import game.player.Player;
@@ -402,7 +402,7 @@ public class Level {
     }
 
     /**
-     * This method kills each character because the time is up.
+     * This method kills each entities.character because the time is up.
      */
     private void timeUp() {
         for (Player player: Game.getInstance().getPlayers()) {

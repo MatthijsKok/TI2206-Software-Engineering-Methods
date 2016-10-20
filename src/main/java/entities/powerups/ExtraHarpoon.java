@@ -27,7 +27,7 @@ class ExtraHarpoon extends AbstractDuringPowerUp {
     }
 
     /**
-     * Increase the amount of ropes the character can shoot.
+     * Increase the amount of ropes the entities.character can shoot.
      */
     /* default */ void enableEffect() {
         getTarget().increaseMaxHarpoonCount(1);

@@ -1,5 +1,6 @@
 package entities;
 
+import entities.character.Character;
 import entities.balls.ColoredBall;
 import org.json.JSONObject;
 import org.junit.Test;
