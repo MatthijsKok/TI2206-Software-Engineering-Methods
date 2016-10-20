@@ -70,7 +70,6 @@ public final class Music {
     public static void setMusic(String musicName) {
         try {
             Music.currentMusic = new Media(Paths.get(MUSIC_PATH + musicName).toUri().toString());
-            System.out.println(Paths.get(MUSIC_PATH + musicName).toUri().toString());
             mediaPlayer = new MediaPlayer(currentMusic);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }

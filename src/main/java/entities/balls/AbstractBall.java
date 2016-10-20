@@ -3,8 +3,8 @@ package entities.balls;
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.FloorBlock;
-import entities.Harpoon;
 import entities.Shield;
+import entities.Vine;
 import entities.WallBlock;
 import entities.behaviour.GravityBehaviour;
 import entities.powerups.PickupFactory;
@@ -127,7 +127,7 @@ public abstract class AbstractBall extends AbstractEntity {
             collideWith((WallBlock) entity);
         }
 
-        if (entity instanceof Harpoon) {
+        if (entity instanceof Vine) {
             collideWithHarpoon();
         }
 
