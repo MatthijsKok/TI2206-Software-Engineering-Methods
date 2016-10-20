@@ -17,14 +17,12 @@ public class ExtraHarpoonTest extends BubbleTroubleApplicationTest {
 
     private ExtraHarpoon extraHarpoon;
     private Character character;
-    private Player player;
-    private Vec2d spawnPosition = new Vec2d(100, 300);
 
     @Before
     public void setUp() {
         extraHarpoon = new ExtraHarpoon();
-        character = new Character(spawnPosition);
-        player = new Player(1, "leftKey", "rightKey", "shootKey");
+        character = new Character(new Vec2d(100, 300));
+        Player player = new Player(1, "leftKey", "rightKey", "shootKey");
         character.setPlayer(player);
         extraHarpoon.setTarget(character);
     }

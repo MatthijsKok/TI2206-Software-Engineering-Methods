@@ -19,16 +19,14 @@ import static org.hamcrest.Matchers.greaterThan;
 public class ExtraTimeTest extends BubbleTroubleApplicationTest {
 
     private ExtraTime extraTime;
-    private Character character;
-    private Player player;
     private Vec2d spawnPosition = new Vec2d(100, 300);
     private Level level;
 
     @Before
     public void setUp() {
         extraTime = new ExtraTime();
-        character = new Character(spawnPosition);
-        player = new Player(1, "leftKey", "rightKey", "shootKey");
+        Character character = new Character(spawnPosition);
+        Player player = new Player(1, "leftKey", "rightKey", "shootKey");
         character.setPlayer(player);
         extraTime.setTarget(character);
         level = Game.getInstance().getState().getCurrentLevel();

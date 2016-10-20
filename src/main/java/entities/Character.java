@@ -319,4 +319,12 @@ public class Character extends AbstractEntity {
     public int getMaxHarpoonCount() {
         return maxHarpoonCount;
     }
+
+    /**
+     * Getter for runSpeed.
+     * @return runSpeed
+     */
+    public double getRunSpeed() {
+        return runSpeed;
+    }
 }
