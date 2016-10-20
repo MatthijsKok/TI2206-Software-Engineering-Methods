@@ -1,11 +1,11 @@
 package main;
 
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
-import menu.BubbleTroubleMenu;
-import util.CanvasManager;
+import panes.GamePane;
+import panes.MainMenu;
+import panes.SettingsMenu;
+import util.KeyboardInputManager;
 import util.SceneManager;
 import util.StageManager;
 import util.logging.LogLevel;
@@ -36,17 +36,17 @@ public class BubbleTrouble extends Application {
     public final void start(final Stage stage) {
         LOGGER.setLevel(LogLevel.INFO);
         StageManager.init(stage);
-        SceneManager.init();
 
-        // Add BubbleTroubleMenu as a child to the root of the Menu Scene.
-        ((Group) SceneManager.getScene("Menu").getRoot()).getChildren().add(new BubbleTroubleMenu());
+        SceneManager.setStage(stage);
 
-        Canvas canvas = CanvasManager.createCanvas(stage);
-        canvas.setVisible(false);
-        // Add the canvas as a child to the root of the Game Scene.
-        ((Group) SceneManager.getScene("Game").getRoot()).getChildren().add(canvas);
+        SceneManager.addScene("MainMenu", new MainMenu(stage));
+        SceneManager.addScene("SettingsMenu", new SettingsMenu(stage));
+        SceneManager.addScene("Game", new GamePane(stage));
 
-        CanvasManager.setCanvas(canvas);
+        SceneManager.goToScene("MainMenu");
+
+        KeyboardInputManager.addScene(SceneManager.getScene("Game"));
+
         LOGGER.info("App started");
     }
 

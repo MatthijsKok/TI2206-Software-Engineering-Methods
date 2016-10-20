@@ -43,7 +43,6 @@ public final class StageManager {
             getStage().setMinWidth(DEFAULT_WIDTH);
             getStage().setMinHeight(DEFAULT_HEIGHT);
             getStage().getIcons().add(new Image("logo.png"));
-            getStage().initStyle(StageStyle.UNDECORATED);
         }
         stage.show();
     }

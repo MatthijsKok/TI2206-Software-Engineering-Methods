@@ -2,6 +2,7 @@ package util;
 
 import util.logging.Logger;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +40,7 @@ public final class Config {
 
     static {
         DEFAULT_PROPERTIES = new Properties();
-        try (InputStream inputStream = new FileInputStream(DEFAULT_PROPERTIES_FILE_NAME)) {
+        try (InputStream inputStream = createInputStream(DEFAULT_PROPERTIES_FILE_NAME)) {
             DEFAULT_PROPERTIES.load(inputStream);
             LOGGER.info("Default settings loaded.");
         } catch (IOException e) {
@@ -50,7 +51,7 @@ public final class Config {
         // So that all values that are not defined are standard.
         PROPERTIES = DEFAULT_PROPERTIES;
 
-        try (InputStream inputStream = new FileInputStream(PROPERTIES_FILE_NAME)) {
+        try (InputStream inputStream = createInputStream(PROPERTIES_FILE_NAME)) {
             PROPERTIES.load(inputStream);
             LOGGER.info("Settings loaded.");
         } catch (IOException e) {
@@ -60,6 +61,14 @@ public final class Config {
 
     private Config() {
 
+    }
+
+    private static InputStream createInputStream(String fileName) throws IOException {
+        return new FileInputStream(
+                new File(
+                        Config.class.getClassLoader().getResource(PROPERTIES_FILE_NAME).getFile()
+                )
+        );
     }
 
     /**

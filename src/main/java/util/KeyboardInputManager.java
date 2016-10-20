@@ -45,7 +45,7 @@ public final class KeyboardInputManager extends Observable {
      * Adds keyboard input handling to a scene.
      * @param scene the scene to add keyboard input handling to.
      */
-    static void addScene(final Scene scene) {
+    public static void addScene(final Scene scene) {
         if (scenes.contains(scene)) {
             return;
         }

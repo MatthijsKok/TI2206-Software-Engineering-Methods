@@ -1,4 +1,4 @@
-package menu;
+package panes;
 
 import game.Game;
 import javafx.application.Platform;
@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import util.SceneManager;
 
 import java.io.IOException;
@@ -15,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The menu.BubbleTroubleMenu class is an javafx element which displays the main game menu.
+ * The menu.MainMenu class is an javafx element which displays the main game menu.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class BubbleTroubleMenu extends Pane {
+public class MainMenu extends Pane {
 
     /**
      * The list containing the default level files in the game.
@@ -31,8 +32,10 @@ public class BubbleTroubleMenu extends Pane {
 
     /**
      * Create a new menu element with all sub nodes.
+     * @param stage the stage this menu is drawn on.
      */
-    public BubbleTroubleMenu() {
+    public MainMenu(Stage stage) {
+        setPrefSize(stage.getWidth(), stage.getHeight());
         getChildren().add(createSinglePlayerButton());
         getChildren().add(createMultiPlayerButton());
         getChildren().add(createSettingsButton());
@@ -55,17 +58,11 @@ public class BubbleTroubleMenu extends Pane {
      */
     private Button createSinglePlayerButton() {
         Button button = new Button("Start single player game.");
-        button.setLayoutX(190);
-        button.setLayoutY(420);
+        button.setLayoutX(64);
+        button.setLayoutY(224);
         button.getStyleClass().add("green");
 
-        button.setOnMouseClicked(e -> {
-            Game game = Game.getInstance();
-            game.setPlayerCount(1);
-            game.setLevelsFromFiles(DEFAULT_LEVELS);
-            SceneManager.setCurrentScene("Game");
-            startGame(game);
-        });
+        button.setOnMouseClicked(e -> startGame(DEFAULT_LEVELS, 1));
         return button;
     }
 
@@ -75,17 +72,11 @@ public class BubbleTroubleMenu extends Pane {
      */
     private Button createMultiPlayerButton() {
         Button button = new Button("Start multi player game.");
-        button.setLayoutX(220);
-        button.setLayoutY(480);
+        button.setLayoutX(64);
+        button.setLayoutY(272);
         button.getStyleClass().add("green");
 
-        button.setOnMouseClicked(e -> {
-            Game game = Game.getInstance();
-            game.setPlayerCount(2);
-            game.setLevelsFromFiles(DEFAULT_LEVELS);
-            SceneManager.setCurrentScene("Game");
-            startGame(game);
-        });
+        button.setOnMouseClicked(e -> startGame(DEFAULT_LEVELS, 2));
 
         return button;
     }
@@ -96,13 +87,11 @@ public class BubbleTroubleMenu extends Pane {
      */
     private Button createSettingsButton() {
         Button button = new Button("Settings");
-        button.setLayoutX(920);
-        button.setLayoutY(550);
+        button.setLayoutX(64);
+        button.setLayoutY(320);
         button.getStyleClass().add("green");
 
-        button.setOnMouseClicked(e -> {
-            SceneManager.setCurrentScene("Settings");
-        });
+        button.setOnMouseClicked(e -> SceneManager.goToScene("SettingsMenu"));
 
         return button;
     }
@@ -114,7 +103,7 @@ public class BubbleTroubleMenu extends Pane {
     private Button createQuitButton() {
         Button button = new Button("Quit");
         button.setLayoutX(64);
-        button.setLayoutY(550);
+        button.setLayoutY(368);
         button.getStyleClass().add("green");
 
         button.setOnMouseClicked(e -> Platform.exit());
@@ -122,7 +111,12 @@ public class BubbleTroubleMenu extends Pane {
         return button;
     }
 
-    private void startGame(Game game) {
+    private void startGame(List<String> levels, int playerCount) {
+        Game game = Game.getInstance();
+        game.setPlayerCount(playerCount);
+        game.setLevelsFromFiles(levels);
+        SceneManager.goToScene("Game");
+
         try {
             game.start();
         } catch (IOException e) {
