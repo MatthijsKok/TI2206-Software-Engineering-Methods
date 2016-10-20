@@ -31,12 +31,12 @@ public final class Config {
     /**
      * The file containing all config properties.
      */
-    private static final String PROPERTIES_FILE_NAME = "settings.properties";
+    private static final String PROPERTIES_FILE_NAME = "properties/settings.properties";
 
     /**
      * The file containing all default config properties.
      */
-    private static final String DEFAULT_PROPERTIES_FILE_NAME = "default_settings.properties";
+    private static final String DEFAULT_PROPERTIES_FILE_NAME = "properties/default_settings.properties";
 
     static {
         DEFAULT_PROPERTIES = new Properties();
