@@ -45,6 +45,7 @@ public class Vine extends AbstractEntity {
         setSprite(HARPOON_SPRITE);
         setShape(new Rectangle(HARPOON_SHAPE));
         setSpeed(0, -TRAVEL_SPEED);
+        setDepth(1);
 
         this.character = character;
     }

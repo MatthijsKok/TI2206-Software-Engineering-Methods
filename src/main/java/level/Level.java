@@ -111,6 +111,11 @@ public class Level {
     private boolean won = false, lost = false;
 
     /**
+     * Indicates whether the entities must be sorted.
+     */
+    private boolean mustSort;
+
+    /**
      * Creates a new level instance.
      *
      * @param uri the file to load the level from.
@@ -278,6 +283,7 @@ public class Level {
 
         removeEntities();
         addEntities();
+        sortEntities();
 
         if (countBalls() == 0) {
             win();
@@ -419,9 +425,29 @@ public class Level {
      * Plays a sound effect when the time of the level is almost up.
      */
     private void timeAlmostUp() {
-        if (!SoundEffect.TIME_ALMOST_UP.getAudio().isPlaying() && getTimeLeft() < TIME_ALMOST_UP_LENGTH) {
+        if (!SoundEffect.TIME_ALMOST_UP.getAudio().isPlaying()
+                && getTimeLeft() < TIME_ALMOST_UP_LENGTH) {
             Music.pauseMusic();
             SoundEffect.TIME_ALMOST_UP.play();
         }
+    }
+
+    /**
+     * Sorts all entities by depth. This makes sure that all entities
+     * are drawn in correct order.
+     */
+    private void sortEntities() {
+        if (mustSort) {
+            entities.sort((a, b) -> b.getDepth() - a.getDepth());
+        }
+
+        mustSort = false;
+    }
+
+    /**
+     * Indicate that entities must be sorted.
+     */
+    public void depthSort() {
+        mustSort = true;
     }
 }

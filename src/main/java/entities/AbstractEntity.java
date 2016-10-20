@@ -38,6 +38,13 @@ public abstract class AbstractEntity extends Observable {
     private boolean visible = true;
 
     /**
+     * Depth of this entity.
+     * Entities with higher depth are drawn below entities with
+     * lower depth.
+     */
+    private int depth = 0;
+
+    /**
      * Creates a new entity.
      * @param position The position of the entity.
      */
@@ -241,5 +248,22 @@ public abstract class AbstractEntity extends Observable {
      */
     /* default */ void setVisibility(final boolean visible) {
         this.visible = visible;
+    }
+
+    /**
+     * Sets the depth of this entity and sorts all entities in the
+     * current level.
+     * @param depth the depth to set.
+     */
+    public final void setDepth(final int depth) {
+        this.depth = depth;
+        getLevel().depthSort();
+    }
+
+    /**
+     * @return Integer - the depth of this entity.
+     */
+    public final int getDepth() {
+        return depth;
     }
 }
