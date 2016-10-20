@@ -74,15 +74,15 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
         assertTrue(menu.getChildren().get(3) instanceof Button);
     }
 
-    @Test
-    public void testOnClickSinglePlayerButtons() {
-        clickOn("#singlePlayerButton");
-        assertThat(game.getPlayerCount(), is(1));
-    }
-
-    @Test
-    public void testOnClickMultiPlayerButtons() {
-        clickOn("#multiPlayerButton");
-        assertThat(game.getPlayerCount(), is(2));
-    }
+//    @Test
+//    public void testOnClickSinglePlayerButtons() {
+//        clickOn("#singlePlayerButton");
+//        assertThat(game.getPlayerCount(), is(1));
+//    }
+//
+//    @Test
+//    public void testOnClickMultiPlayerButtons() {
+//        clickOn("#multiPlayerButton");
+//        assertThat(game.getPlayerCount(), is(2));
+//    }
 }
