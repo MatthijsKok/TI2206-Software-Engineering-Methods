@@ -138,24 +138,9 @@ public class Player implements Observer {
     }
 
     private void die() {
-        Game game = Game.getInstance();
+        lives--;
 
-        if (lives > 0) {
-            lives--;
-            game.getState().getCurrentLevel().lose();
-        }
-
-        boolean lost = true;
-        for (Player player : game.getPlayers()) {
-            if (player.getLives() > 0) {
-                lost = false;
-                break;
-            }
-        }
-
-        if (lost) {
-            game.getState().lose();
-        }
+        Game.getInstance().getState().getCurrentLevel().lose();
     }
 
     private void increaseScore(int amount) {

@@ -389,7 +389,15 @@ public class Level {
      * Lose the level.
      */
     public final void lose() {
-        Game.getInstance().getState().pause();
+        Game game = Game.getInstance();
+
+        if (game.getPlayers().stream()
+                .allMatch(player -> player.getLives() <= 0)) {
+            game.getState().lose();
+        }
+
+        game.getState().pause();
+
         lost = true;
     }
 
@@ -403,6 +411,7 @@ public class Level {
                 character.die();
             }
         }
+
         lose();
     }
 
