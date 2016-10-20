@@ -2,7 +2,9 @@ package entities;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.ColoredBall;
 import game.Game;
+import geometry.Circle;
 import level.Level;
 import org.junit.After;
 import org.junit.Before;
@@ -16,22 +18,22 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 /**
- * Test suite for the Ball class.
+ * Test suite for the AbstractBall class.
  */
 public class BallTest extends BubbleTroubleApplicationTest {
 
-    private Ball ball;
+    private ColoredBall ball;
     private Vine vine;
     private Vec2d spawnPosition = new Vec2d(100, 300);
     private int ballSize = 2;
-    private Ball.Color ballColor = Ball.Color.BLUE;
+    private ColoredBall.Color ballColor = ColoredBall.Color.BLUE;
 
     private Level level;
 
     @Before
     public void setUp() {
         level = Game.getInstance().getState().getCurrentLevel();
-        ball = new Ball(spawnPosition, ballSize, ballColor);
+        ball = new ColoredBall(spawnPosition, ballSize, ballColor);
         level.addEntity(ball);
         level.update(0);
 
@@ -52,13 +54,6 @@ public class BallTest extends BubbleTroubleApplicationTest {
     @Test
     public void testGetColor() {
         assertThat(ball.getColor(), is(ballColor));
-    }
-
-    @Test
-    public void testUpdate() {
-        double ySpeed = ball.getYSpeed();
-        ball.update(1);
-        assertThat(ball.getYSpeed(), greaterThan(ySpeed));
     }
 
     @Test
@@ -88,7 +83,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
     public void testCollideWithWallBlockFromLeft() {
         WallBlock wall = new WallBlock(
                 new Vec2d(
-                        ball.getX() + ball.getRadius() - 1,
+                        ball.getX() + ((Circle) ball.getShape()).getRadius() - 1,
                         ball.getY()));
 
         ball.getSpeed().x = 10;
@@ -101,7 +96,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
     public void testCollideWithWallBlockFromRight() {
         WallBlock wall = new WallBlock(
                 new Vec2d(
-                        ball.getX() - ball.getRadius() - 32 + 1,
+                        ball.getX() - ((Circle) ball.getShape()).getRadius() - 32 + 1,
                         ball.getY()));
 
         ball.getSpeed().x = -10;
@@ -114,7 +109,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
     public void testCollideWithWallBlockFromLeftMovingLeft() {
         WallBlock wall = new WallBlock(
                 new Vec2d(
-                        ball.getX() + ball.getRadius() - 1,
+                        ball.getX() + ((Circle) ball.getShape()).getRadius() - 1,
                         ball.getY()));
 
         ball.getSpeed().x = -10;
@@ -127,7 +122,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
     public void testCollideWithWallBlockFromRightMovingRight() {
         WallBlock wall = new WallBlock(
                 new Vec2d(
-                        ball.getX() - ball.getRadius() - 32 + 1,
+                        ball.getX() - ((Circle) ball.getShape()).getRadius() - 32 + 1,
                         ball.getY()));
 
         ball.getSpeed().x = 10;
@@ -143,9 +138,17 @@ public class BallTest extends BubbleTroubleApplicationTest {
         assertFalse(level.getEntities().contains(ball));
     }
 
+    @Test
+    public void testCollideWithShield() {
+        Shield shield = Mockito.mock(Shield.class);
+        ball.collideWith(shield);
+
+        assertThat(ball.getYSpeed(), lessThan(0.d));
+    }
+
     /*@Test
     public void testCollideWithHarpoonSizeIsZero() {
-        Ball ball2 = new Ball(spawnPosition, 0);
+        AbstractBall ball2 = new AbstractBall(spawnPosition, 0);
 
         level.removeEntity(ball);
         level.addEntity(ball2);
@@ -170,11 +173,6 @@ public class BallTest extends BubbleTroubleApplicationTest {
     }
 
     @Test
-    public void testBallRandomColor() {
-        assertNotNull(Ball.randomColor());
-    }
-
-    @Test
     public void testBallGetColor() {
         List<String> colorNames = new ArrayList<>();
 
@@ -186,8 +184,8 @@ public class BallTest extends BubbleTroubleApplicationTest {
         colorNames.add("yellow");
 
         assertArrayEquals(
-                Ball.Color.values(),
+                ColoredBall.Color.values(),
                 colorNames.stream()
-                        .map(Ball::getColor).toArray());
+                        .map(ColoredBall::getColor).toArray());
     }
 }

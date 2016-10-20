@@ -2,7 +2,7 @@ package level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
-import entities.Ball;
+import entities.balls.AbstractBall;
 import entities.Character;
 import game.Game;
 import game.GameState;
@@ -240,7 +240,7 @@ public class Level {
 
     private long countBalls() {
         return entities.stream()
-                .filter(e -> e instanceof Ball)
+                .filter(e -> e instanceof AbstractBall)
                 .count();
     }
 
@@ -270,6 +270,7 @@ public class Level {
 
         for (AbstractEntity entity : entities) {
             entity.update(timeDifference);
+            entity.applyPhysicsBehaviour(timeDifference);
             entity.updatePosition(timeDifference);
             entity.updateSprite(timeDifference);
         }

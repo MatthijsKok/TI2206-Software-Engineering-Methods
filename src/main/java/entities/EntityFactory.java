@@ -1,6 +1,8 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.AbstractBall;
+import entities.balls.ColoredBall;
 import game.Game;
 import game.player.Player;
 import org.json.JSONObject;
@@ -58,15 +60,15 @@ public final class EntityFactory {
         return character;
     }
 
-    private static Ball createBall(Vec2d position, JSONObject attributes) {
+    private static AbstractBall createBall(Vec2d position, JSONObject attributes) {
         int size = attributes.getInt("size");
 
         if (attributes.has("color")) {
-            Ball.Color color = Ball.getColor(attributes.getString("color"));
-            return new Ball(position, size, color);
+            ColoredBall.Color color = ColoredBall.getColor(attributes.getString("color"));
+            return new ColoredBall(position, size, color);
         }
 
-        return new Ball(position, size);
+        return new ColoredBall(position, size);
     }
 
     private static WallBlock createWall(Vec2d position) {

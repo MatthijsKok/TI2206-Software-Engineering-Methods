@@ -1,6 +1,8 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.AbstractBall;
+import entities.behaviour.GravityBehaviour;
 import game.player.Player;
 import geometry.Rectangle;
 import graphics.Sprite;
@@ -20,10 +22,6 @@ public class Character extends AbstractEntity {
      * The bounding box of a character.
      */
     private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
-    /**
-     * The gravity applied to a character. In pixels per second squared.
-     */
-    private static final double GRAVITY = 300; // px/s^2
     /**
      * The default run speed of a character.
      */
@@ -79,7 +77,7 @@ public class Character extends AbstractEntity {
     /**
      * Boolean indicating whether the character can shoot.
      */
-    private boolean canShoot;
+    private boolean canShoot = true;
 
     /**
      * Instantiate a new character at position (x, y).
@@ -90,6 +88,7 @@ public class Character extends AbstractEntity {
         super(position);
 
         setShape(new Rectangle(BOUNDING_BOX));
+        setPhysicsBehaviour(new GravityBehaviour(this));
         getLevel().addEntity(shield);
     }
 
@@ -147,20 +146,17 @@ public class Character extends AbstractEntity {
         this.shooting = shooting;
     }
 
-    /**
-     * Updates the Character object.
-     *
-     * @param timeDifference The time since the last time the update method was called
-     */
+    @Override
     public final void update(final double timeDifference) {
         // Walk
-        setSpeed(runSpeed * direction, getYSpeed() + GRAVITY * timeDifference);
+        setXSpeed(runSpeed * direction);
 
         // Set the character sprite
         if (direction == 0) {
             setSprite(idleSprite);
         } else {
             setSprite(runningSprite);
+            setXScale(direction);
         }
 
         // Shoot
@@ -174,13 +170,9 @@ public class Character extends AbstractEntity {
         canShoot = !shooting;
     }
 
-    /**
-     * Entry point for collisions.
-     *
-     * @param entity the entity the character collides with
-     */
+    @Override
     public final void collideWith(final AbstractEntity entity) {
-        if (entity instanceof Ball) {
+        if (entity instanceof AbstractBall) {
             collideWithBall();
         }
 
@@ -213,11 +205,11 @@ public class Character extends AbstractEntity {
         if (shape.getBottom() > blockShape.getTop() && shape.getBottom() < blockShape.getBottom()) {
             // Hit the floor from above
             shape.setBottom(blockShape.getTop());
-            getSpeed().y = Math.min(getYSpeed(), 0);
+            setYSpeed(Math.min(getYSpeed(), 0));
         } else if (shape.getTop() > blockShape.getTop() && shape.getTop() < blockShape.getBottom()) {
             // Hit the floor from below
             shape.setTop(blockShape.getBottom());
-            getSpeed().y = Math.max(0, getYSpeed());
+            setYSpeed(Math.max(0, getYSpeed()));
         }
     }
 
@@ -233,23 +225,11 @@ public class Character extends AbstractEntity {
         if (shape.getRight() > blockShape.getLeft() && shape.getRight() < blockShape.getRight()) {
             // Hit the block from above
             shape.setRight(blockShape.getLeft());
-            getSpeed().x = Math.min(getXSpeed(), 0);
+            setXSpeed(Math.min(getXSpeed(), 0));
         } else if (shape.getLeft() > blockShape.getLeft() && shape.getLeft() < blockShape.getRight()) {
             // Hit the block from below
             shape.setLeft(blockShape.getRight());
-            getSpeed().x = Math.max(0, getXSpeed());
-        }
-    }
-
-    /**
-     * Draws the running sprite if the character is moving, draws the idle sprite
-     * otherwise.
-     */
-    public final void draw() {
-        if (direction == 0) {
-            getSprite().draw(getPosition());
-        } else {
-            getSprite().draw(getPosition(), direction, 1);
+            setXSpeed(Math.max(0, getXSpeed()));
         }
     }
 
