@@ -4,6 +4,7 @@ import util.logging.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -79,5 +80,19 @@ public final class Config {
      */
     public static String get(String key) {
         return PROPERTIES.getProperty(key);
+    }
+
+    /**
+     * Stores the key and value in the properties file.
+     * @param key The Key.
+     * @param value The Value.
+     */
+    public static void put(String key, String value) {
+        PROPERTIES.put(key, value);
+        try {
+            PROPERTIES.store(new FileWriter(PROPERTIES_FILE_NAME), " Player input properties");
+        } catch (IOException e) {
+            LOGGER.error("Could not write to properties file.");
+        }
     }
 }
