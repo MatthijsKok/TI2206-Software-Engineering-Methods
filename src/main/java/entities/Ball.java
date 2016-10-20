@@ -244,7 +244,7 @@ public class Ball extends AbstractEntity {
             collideWith((WallBlock) entity);
         }
 
-        if (entity instanceof Harpoon) {
+        if (entity instanceof Vine) {
             collideWithHarpoon();
         }
 
@@ -300,7 +300,7 @@ public class Ball extends AbstractEntity {
     }
 
     /**
-     * The behaviour of the Ball when it collides with a Harpoon AbstractEntity.
+     * The behaviour of the Ball when it collides with a Vine AbstractEntity.
      */
     private void collideWithHarpoon() {
         split();

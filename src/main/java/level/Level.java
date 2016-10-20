@@ -54,6 +54,11 @@ public class Level {
     private static final String DEFAULT_BACKGROUND_MUSIC = "toads_factory.mp3";
 
     /**
+     * The time that is left in the level when the time almost up should play.
+     */
+    private static final double TIME_ALMOST_UP_LENGTH = 2.1;
+
+    /**
      * The size of the level.
      */
     private Vec2d size = DEFAULT_SIZE;
@@ -253,7 +258,7 @@ public class Level {
      * @param timeDifference time difference between now and last update
      */
     public final void update(final double timeDifference) {
-        LOGGER.debug("Updating AbstractEntity's...");
+        LOGGER.debug("Updating Entities...");
 
         timeSpend += timeDifference;
 
@@ -261,7 +266,7 @@ public class Level {
             timeUp();
         }
 
-        timeAlmostUp(timeDifference);
+        timeAlmostUp();
 
         for (AbstractEntity entity : entities) {
             entity.update(timeDifference);
@@ -269,7 +274,7 @@ public class Level {
             entity.updateSprite(timeDifference);
         }
 
-        LOGGER.debug("Updated AbstractEntity's");
+        LOGGER.debug("Updated Entities");
 
         removeEntities();
         addEntities();
@@ -367,6 +372,8 @@ public class Level {
         GameState gameState = Game.getInstance().getState();
         gameState.pause();
 
+        SoundEffect.TIME_ALMOST_UP.getAudio().stop();
+
         Music.stopMusic();
         won = true;
 
@@ -410,11 +417,9 @@ public class Level {
 
     /**
      * Plays a sound effect when the time of the level is almost up.
-     * @param dt Time difference used to assure the clip is only played once.
      */
-    private void timeAlmostUp(double dt) {
-        final double timeAlmostUpClipLength = 2.1;
-        if (getTimeLeft() <= timeAlmostUpClipLength && getTimeLeft() >= timeAlmostUpClipLength - dt) {
+    private void timeAlmostUp() {
+        if (!SoundEffect.TIME_ALMOST_UP.getAudio().isPlaying() && getTimeLeft() < TIME_ALMOST_UP_LENGTH) {
             Music.pauseMusic();
             SoundEffect.TIME_ALMOST_UP.play();
         }

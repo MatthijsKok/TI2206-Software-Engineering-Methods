@@ -1,11 +1,12 @@
 package entities.powerups;
 
 import graphics.Sprite;
+import util.sound.SoundEffect;
 
 /**
  * Gives the player a extra rope to shoot.
  */
-class ExtraHarpoon extends AbstractDuringPowerUp {
+class ExtraVine extends AbstractDuringPowerUp {
 
     /**
      * The sprite of the extra harpoon power-up.
@@ -20,7 +21,7 @@ class ExtraHarpoon extends AbstractDuringPowerUp {
     /**
      * Creates a new extra harpoon power-up.
      */
-    ExtraHarpoon() {
+    ExtraVine() {
         super();
         setSprite(SPRITE);
         setDuration(DURATION);
@@ -31,6 +32,7 @@ class ExtraHarpoon extends AbstractDuringPowerUp {
      */
     /* default */ void enableEffect() {
         getTarget().increaseMaxHarpoonCount(1);
+        SoundEffect.EXTRA_VINE.play();
     }
 
     /**

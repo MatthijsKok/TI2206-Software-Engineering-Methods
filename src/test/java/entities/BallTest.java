@@ -3,8 +3,6 @@ package entities;
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import game.Game;
-import graphics.Sprite;
-import javafx.scene.image.Image;
 import level.Level;
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +14,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Test suite for the Ball class.
@@ -24,7 +21,7 @@ import static org.mockito.Mockito.*;
 public class BallTest extends BubbleTroubleApplicationTest {
 
     private Ball ball;
-    private Harpoon harpoon;
+    private Vine vine;
     private Vec2d spawnPosition = new Vec2d(100, 300);
     private int ballSize = 2;
     private Ball.Color ballColor = Ball.Color.BLUE;
@@ -38,7 +35,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
         level.addEntity(ball);
         level.update(0);
 
-        harpoon = new Harpoon(new Vec2d(0, 0), Mockito.mock(Character.class));
+        vine = new Vine(new Vec2d(0, 0), Mockito.mock(Character.class));
     }
 
     @After
@@ -141,7 +138,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testCollideWithHarpoon() {
-        ball.collideWith(harpoon);
+        ball.collideWith(vine);
 
         assertFalse(level.getEntities().contains(ball));
     }
@@ -156,7 +153,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
 
         int size = level.getEntities().size();
 
-        ball2.collideWith(harpoon);
+        ball2.collideWith(vine);
 
         assertThat(level.getEntities().size(), is(size - 1));
     }*/

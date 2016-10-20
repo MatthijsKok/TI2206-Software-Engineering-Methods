@@ -48,7 +48,7 @@ public final class MultiSoundEffect {
      * Creates a new SoundEffect Object.
      * @param soundEffectNames Array containing the names of the soundEffect files, for example 'effect.wav'.
      */
-    @SuppressWarnings("AvoidInstantiatingObjectsInLoops") // Warning makes no sense in this case
+    @SuppressWarnings("PMD") // Warning makes no sense in this case
     private MultiSoundEffect(String[] soundEffectNames) {
         effectList = new SoundEffect[soundEffectNames.length];
 

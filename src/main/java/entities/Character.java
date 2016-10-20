@@ -166,7 +166,7 @@ public class Character extends AbstractEntity {
         // Shoot
         if (shooting && canShoot && currentHarpoonCount < maxHarpoonCount) {
             currentHarpoonCount++;
-            getLevel().addEntity(new Harpoon(getPosition(), this));
+            getLevel().addEntity(new Vine(getPosition(), this));
             final int occurrenceRate = 3;
             SoundEffect.SHOOT.playSometimes(occurrenceRate);
         }

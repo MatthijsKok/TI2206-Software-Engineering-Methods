@@ -5,9 +5,9 @@ import geometry.Rectangle;
 import graphics.Sprite;
 
 /**
- * Harpoon class, controlling the rope in the game.
+ * Vine class, controlling the rope in the game.
  */
-public class Harpoon extends AbstractEntity {
+public class Vine extends AbstractEntity {
 
     /**
      * Sprite of the rope.
@@ -40,7 +40,7 @@ public class Harpoon extends AbstractEntity {
      * @param position spawn position of the harpoon.
      * @param character character which shot the harpoon.
      */
-    Harpoon(final Vec2d position, final Character character) {
+    Vine(final Vec2d position, final Character character) {
         super(position);
         setSprite(HARPOON_SPRITE);
         setShape(new Rectangle(HARPOON_SHAPE));
