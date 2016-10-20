@@ -3,6 +3,7 @@ package entities;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.ColoredBall;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -48,7 +49,7 @@ public class VineTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testCollisionWithBall() {
-        Ball ball = new Ball(new Vec2d(300, 200), 2);
+        ColoredBall ball = new ColoredBall(new Vec2d(300, 200), 2);
         vine1.collideWith(ball);
 
         verify(mockedCharacter, times(1)).increaseScore(300);

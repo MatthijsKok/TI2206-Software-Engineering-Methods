@@ -1,6 +1,7 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.AbstractBall;
 import geometry.Rectangle;
 import graphics.Sprite;
 
@@ -44,7 +45,7 @@ public class Vine extends AbstractEntity {
         super(position);
         setSprite(HARPOON_SPRITE);
         setShape(new Rectangle(HARPOON_SHAPE));
-        setSpeed(0, -TRAVEL_SPEED);
+        setYSpeed(-TRAVEL_SPEED);
         setDepth(1);
 
         this.character = character;
@@ -64,8 +65,8 @@ public class Vine extends AbstractEntity {
 
     @Override
     public void collideWith(final AbstractEntity entity) {
-        if (entity instanceof Ball) {
-            collideWith((Ball) entity);
+        if (entity instanceof AbstractBall) {
+            collideWith((AbstractBall) entity);
         }
     }
 
@@ -74,7 +75,7 @@ public class Vine extends AbstractEntity {
      *
      * @param ball the ball this rope collides with
      */
-    private void collideWith(final Ball ball) {
+    private void collideWith(final AbstractBall ball) {
         die();
 
         final int score = (ball.getSize() + 1) * SCORE_PER_BALL;

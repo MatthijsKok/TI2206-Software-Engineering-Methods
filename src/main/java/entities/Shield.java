@@ -1,5 +1,6 @@
 package entities;
 
+import entities.balls.AbstractBall;
 import geometry.Circle;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -9,7 +10,7 @@ import util.CanvasManager;
 /**
  * The shield class represents a shield that protects a character.
  */
-class Shield extends AbstractEntity {
+public class Shield extends AbstractEntity {
 
     /**
      * The opacity of a shield.
@@ -18,7 +19,7 @@ class Shield extends AbstractEntity {
     /**
      * The radius of a shield.
      */
-    private static final double SHIELD_RADIUS = 64;
+    private static final double SHIELD_RADIUS = 32;
     /**
      * The amount of degrees in a circle.
      */
@@ -48,7 +49,7 @@ class Shield extends AbstractEntity {
 
     @Override
     public void collideWith(final AbstractEntity entity) {
-        if (entity instanceof Ball) {
+        if (entity instanceof AbstractBall) {
             collideWithBall();
         }
     }
@@ -64,8 +65,8 @@ class Shield extends AbstractEntity {
             gc.setFill(Color.GOLD);
             gc.setGlobalAlpha(SHIELD_OPACITY);
             gc.fillArc(
-                    getX() - SHIELD_RADIUS / 2, getY() - SHIELD_RADIUS / 2,
-                    SHIELD_RADIUS, SHIELD_RADIUS,
+                    getX() - SHIELD_RADIUS, getY() - SHIELD_RADIUS,
+                    SHIELD_RADIUS * 2, SHIELD_RADIUS * 2,
                     0, FULL_CIRCLE, ArcType.ROUND);
             gc.setGlobalAlpha(1);
         }

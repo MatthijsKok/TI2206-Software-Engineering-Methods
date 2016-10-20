@@ -13,6 +13,11 @@ public abstract class AbstractShape {
     private Vec2d position = new Vec2d(0, 0);
 
     /**
+     * The scale of the shape.
+     */
+    private Vec2d scale = new Vec2d(1, 1);
+
+    /**
      * Creates a new shape instance at position (0, 0).
      */
     AbstractShape() {
@@ -42,29 +47,44 @@ public abstract class AbstractShape {
      * Binds the position of the shape to an existing Vec2d instance.
      * @param position vector of position
      */
-    public void bindPosition(Vec2d position) {
+    public final void bindPosition(Vec2d position) {
         this.position = position;
     }
 
     /**
      * @return the position of the shape.
      */
-    public Vec2d getPosition() {
+    public final Vec2d getPosition() {
         return position;
     }
 
     /**
      * @return x position
      */
-    public double getX() {
+    public final double getX() {
         return position.x;
     }
 
     /**
      * @return y position
      */
-    public double getY() {
+    public final double getY() {
         return position.y;
+    }
+
+    /**
+     * Binds the scale of the shape to an existing Vec2d instance.
+     * @param scale vector of scale.
+     */
+    public void bindScale(Vec2d scale) {
+        this.scale = scale;
+    }
+
+    /**
+     * @return the scale of the shape.
+     */
+    final Vec2d getScale() {
+        return scale;
     }
 
     /**

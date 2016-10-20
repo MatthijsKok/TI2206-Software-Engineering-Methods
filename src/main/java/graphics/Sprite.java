@@ -259,6 +259,16 @@ public class Sprite implements Cloneable {
     /**
      * Draws the Sprite to the screen.
      *
+     * @param position the x position where the sprite should be drawn.
+     * @param scale the scale at which the Sprite should be drawn.
+     */
+    public final void draw(final Vec2d position, final Vec2d scale) {
+        draw(position.x, position.y, scale.x, scale.y);
+    }
+
+    /**
+     * Draws the Sprite to the screen.
+     *
      * @param xPosition the x position where the sprite should be drawn.
      * @param yPosition the y position where the sprite should be drawn.
      * @param xScale double used to scale the sprite in width upon drawing.

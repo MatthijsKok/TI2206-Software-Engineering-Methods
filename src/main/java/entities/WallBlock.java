@@ -7,7 +7,7 @@ import graphics.Sprite;
 /**
  * Represents a FloorBlock entity used for walls in the game.
  */
-class WallBlock extends AbstractEntity {
+public class WallBlock extends AbstractEntity {
 
     /**
      * The sprite of the wall.
