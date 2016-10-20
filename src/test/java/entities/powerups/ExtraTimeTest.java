@@ -34,7 +34,7 @@ public class ExtraTimeTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testConstructorSetsSprite() {
-        assertNotNull("A floor should have a sprite", extraTime.getSprite());
+        assertNotNull("A extraTime should have a sprite", extraTime.getSprite());
     }
 
     @Test

@@ -31,7 +31,7 @@ public class SpeedBoostTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testConstructorSetsSprite() {
-        assertNotNull("A floor should have a sprite", speedBoost.getSprite());
+        assertNotNull("A speedBoost should have a sprite", speedBoost.getSprite());
     }
 
     @Test

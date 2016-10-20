@@ -32,7 +32,7 @@ public class ExtraLifeTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testConstructorSetsSprite() {
-        assertNotNull("A floor should have a sprite", extraLife.getSprite());
+        assertNotNull("A extraLife should have a sprite", extraLife.getSprite());
     }
 
     @Test

@@ -29,7 +29,7 @@ public class ExtraHarpoonTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testConstructorSetsSprite() {
-        assertNotNull("A floor should have a sprite", extraHarpoon.getSprite());
+        assertNotNull("A harpoon should have a sprite", extraHarpoon.getSprite());
     }
 
     @Test

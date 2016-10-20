@@ -36,7 +36,7 @@ public class ActivateShieldTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testConstructorSetsSprite() {
-        assertNotNull("A floor should have a sprite", activateShield.getSprite());
+        assertNotNull("A shield should have a sprite", activateShield.getSprite());
     }
 
     @Test
