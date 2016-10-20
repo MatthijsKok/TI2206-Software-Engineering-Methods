@@ -319,8 +319,8 @@ public class Character extends AbstractEntity {
      * Getter for maxHarpoonCount.
      * @return maxHarpoonCount
      */
-    public int getMaxHarpoonCount() {
-        return maxHarpoonCount;
+    public int getMaxVineCount() {
+        return maxVineCount;
     }
 
     /**

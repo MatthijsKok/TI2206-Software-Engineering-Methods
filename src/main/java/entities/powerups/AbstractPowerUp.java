@@ -10,7 +10,7 @@ abstract class AbstractPowerUp {
     /**
      * The default power-up sprite.
      */
-    private static final Sprite POWERUP_SPRITE = new Sprite("powerUps/extra_speed.png");
+    private static final Sprite POWERUP_SPRITE = new Sprite("powerUps/speed_boost.png");
 
     /**
      * The character which picked up the power-up.

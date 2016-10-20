@@ -13,36 +13,36 @@ import static junit.framework.TestCase.assertNotNull;
 /**
  * Tests for Harpoon class.
  */
-public class ExtraHarpoonTest extends BubbleTroubleApplicationTest {
+public class ExtraVineTest extends BubbleTroubleApplicationTest {
 
-    private ExtraHarpoon extraHarpoon;
+    private ExtraVine extraVine;
     private Character character;
 
     @Before
     public void setUp() {
-        extraHarpoon = new ExtraHarpoon();
+        extraVine = new ExtraVine();
         character = new Character(new Vec2d(100, 300));
         Player player = new Player(1, "leftKey", "rightKey", "shootKey");
         character.setPlayer(player);
-        extraHarpoon.setTarget(character);
+        extraVine.setTarget(character);
     }
 
     @Test
     public void testConstructorSetsSprite() {
-        assertNotNull("A harpoon should have a sprite", extraHarpoon.getSprite());
+        assertNotNull("A harpoon should have a sprite", extraVine.getSprite());
     }
 
     @Test
     public void testEnableEffect() {
-        int maxHarpoonCountBeforePickup = character.getMaxHarpoonCount();
-        extraHarpoon.enableEffect();
-        assertEquals(maxHarpoonCountBeforePickup + 1, character.getMaxHarpoonCount());
+        int maxHarpoonCountBeforePickup = character.getMaxVineCount();
+        extraVine.enableEffect();
+        assertEquals(maxHarpoonCountBeforePickup + 1, character.getMaxVineCount());
     }
 
     @Test
     public void testDisableEffect() {
-        int maxHarpoonCountBeforePickup = character.getMaxHarpoonCount();
-        extraHarpoon.disableEffect();
-        assertEquals(maxHarpoonCountBeforePickup - 1, character.getMaxHarpoonCount());
+        int maxHarpoonCountBeforePickup = character.getMaxVineCount();
+        extraVine.disableEffect();
+        assertEquals(maxHarpoonCountBeforePickup - 1, character.getMaxVineCount());
     }
 }
