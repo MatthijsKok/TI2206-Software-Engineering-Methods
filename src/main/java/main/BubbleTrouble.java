@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import menu.BubbleTroubleMenu;
 import util.CanvasManager;
+import util.SceneManager;
 import util.StageManager;
 import util.logging.LogLevel;
 import util.logging.Logger;
@@ -36,7 +37,7 @@ public class BubbleTrouble extends Application {
     public final void start(final Stage stage) {
         LOGGER.setLevel(LogLevel.INFO);
         StageManager.init(stage);
-        ObservableList<Node> children = StageManager.getRoot().getChildren();
+        ObservableList<Node> children = SceneManager.getRoot().getChildren();
 
         Canvas canvas = CanvasManager.createCanvas(stage);
         canvas.setVisible(false);

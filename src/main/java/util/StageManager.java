@@ -1,7 +1,5 @@
 package util;
 
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -26,11 +24,6 @@ public final class StageManager {
      */
     private static Stage stage;
 
-    /**
-     * The root element wherein all other elements are put.
-     */
-    private static Group root;
-
     private StageManager() {
 
     }
@@ -45,32 +38,39 @@ public final class StageManager {
         }
 
         synchronized (new Object()) {
-            StageManager.stage = stage;
-            root = new Group();
-            final Scene scene = new Scene(root);
-            KeyboardInputManager.addScene(scene);
+            setStage(stage);
+            getStage().setResizable(false);
+            getStage().setMinWidth(DEFAULT_WIDTH);
+            getStage().setMinHeight(DEFAULT_HEIGHT);
+            getStage().getIcons().add(new Image("logo.png"));
+            getStage().initStyle(StageStyle.UNDECORATED);
 
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setMinWidth(DEFAULT_WIDTH);
-            stage.setMinHeight(DEFAULT_HEIGHT);
-            stage.getIcons().add(new Image("logo.png"));
-            stage.initStyle(StageStyle.UNDECORATED);
+            SceneManager.addScene("Menu", SceneManager.createScene());
+            SceneManager.addScene("Settings", SceneManager.createScene());
+            SceneManager.addScene("Pause", SceneManager.createScene());
+            SceneManager.addScene("Game", SceneManager.createScene());
+
+            KeyboardInputManager.addScene(SceneManager.getScene("Game"));
+
+            SceneManager.setCurrentScene("Menu");
         }
         stage.show();
     }
 
     /**
-     * @return the main stage
+     * Sets the main stage for the application.
+     * @param stage The main stage for the application.
+     */
+    private static void setStage(Stage stage) {
+        StageManager.stage = stage;
+    }
+
+    /**
+     * Gets the main Stage.
+     * @return the main Stage.
      */
     public static Stage getStage() {
         return stage;
     }
 
-    /**
-     * @return the root element
-     */
-    public static Group getRoot() {
-        return root;
-    }
 }
