@@ -66,7 +66,7 @@ public final class Config {
     private static InputStream createInputStream(String fileName) throws IOException {
         return new FileInputStream(
                 new File(
-                        Config.class.getClassLoader().getResource(PROPERTIES_FILE_NAME).getFile()
+                        Config.class.getClassLoader().getResource(fileName).getFile()
                 )
         );
     }

@@ -2,7 +2,6 @@ package util;
 
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  * Utility class which manages the main stage of the BubbleTrouble application.
@@ -17,7 +16,7 @@ public final class StageManager {
     /**
      * The default height of the game canvas.
      */
-    private static final double DEFAULT_HEIGHT = 608;
+    private static final double DEFAULT_HEIGHT = 640;
 
     /**
      * The main stage of the whole application.
@@ -40,8 +39,8 @@ public final class StageManager {
         synchronized (new Object()) {
             setStage(stage);
             getStage().setResizable(false);
-            getStage().setMinWidth(DEFAULT_WIDTH);
-            getStage().setMinHeight(DEFAULT_HEIGHT);
+            getStage().setWidth(DEFAULT_WIDTH);
+            getStage().setHeight(DEFAULT_HEIGHT);
             getStage().getIcons().add(new Image("logo.png"));
         }
         stage.show();
