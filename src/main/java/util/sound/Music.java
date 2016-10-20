@@ -67,7 +67,7 @@ public final class Music {
      * Sets the music that will be played when the .startMusic() method is called.
      * @param musicName The name of the music file, for example 'music.mp3'.
      */
-    public static void setMusic(String musicName) {
+    public static synchronized void setMusic(String musicName) {
         try {
             Music.currentMusic = new Media(Paths.get(MUSIC_PATH + musicName).toUri().toString());
             mediaPlayer = new MediaPlayer(currentMusic);
