@@ -14,7 +14,7 @@ public class Vine extends AbstractEntity {
     /**
      * Sprite of the vine.
      */
-    private static final Sprite VINE_SPRITE = new Sprite("vine.png", new Vec2d(5, 0));
+    private static final Sprite VINE_SPRITE = new Sprite("vine.png", new Vec2d(12, 0));
 
     /**
      * collision shape of the vine. Created around the original sprite.
@@ -48,7 +48,6 @@ public class Vine extends AbstractEntity {
         setShape(new Rectangle(VINE_SHAPE));
         setYSpeed(-TRAVEL_SPEED);
         setDepth(1);
-
         this.character = character;
     }
 
