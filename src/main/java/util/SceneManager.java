@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 
 import java.util.HashMap;
 
-import static util.StageManager.getStage;
 
 /**
  * Utility class which manages switching scenes in the main stage of the BubbleTrouble application.
@@ -72,7 +71,7 @@ public final class SceneManager {
     public static void setCurrentScene(String sceneString) {
         scene = sceneHashMap.get(sceneString);
         setRoot((Group) getCurrentScene().getRoot());
-        getStage().setScene(scene);
+        StageManager.getStage().setScene(scene);
     }
 
     /**

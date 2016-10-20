@@ -1,8 +1,7 @@
 package main;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import menu.BubbleTroubleMenu;
@@ -37,13 +36,14 @@ public class BubbleTrouble extends Application {
     public final void start(final Stage stage) {
         LOGGER.setLevel(LogLevel.INFO);
         StageManager.init(stage);
-        ObservableList<Node> children = SceneManager.getRoot().getChildren();
+
+        // Add BubbleTroubleMenu as a child to the root of the Menu Scene.
+        ((Group) SceneManager.getScene("Menu").getRoot()).getChildren().add(new BubbleTroubleMenu());
 
         Canvas canvas = CanvasManager.createCanvas(stage);
         canvas.setVisible(false);
-
-        children.add(new BubbleTroubleMenu());
-        children.add(canvas);
+        // Add the canvas as a child to the root of the Game Scene.
+        ((Group) SceneManager.getScene("Game").getRoot()).getChildren().add(canvas);
 
         CanvasManager.setCanvas(canvas);
         LOGGER.info("App started");
