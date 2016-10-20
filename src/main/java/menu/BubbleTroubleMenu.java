@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -49,7 +51,9 @@ public class BubbleTroubleMenu extends Pane {
      */
     private BackgroundImage createBackgroundImage() {
         Image image = new Image("background.jpg");
-        return new BackgroundImage(image, null, null, null, null);
+
+        return new BackgroundImage(image, null, null,
+                BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
     }
 
     /**
@@ -61,13 +65,10 @@ public class BubbleTroubleMenu extends Pane {
         button.setLayoutX(190);
         button.setLayoutY(420);
         button.getStyleClass().add("green");
+        button.idProperty().set("singlePlayerButton");
 
-        button.setOnMouseClicked(e -> {
-            Game game = Game.getInstance();
-            game.setPlayerCount(1);
-            game.setLevelsFromFiles(DEFAULT_LEVELS);
-            startGame(game);
-        });
+        button.setOnMouseClicked(
+                e -> startGame(1, DEFAULT_LEVELS));
         return button;
     }
 
@@ -80,13 +81,10 @@ public class BubbleTroubleMenu extends Pane {
         button.setLayoutX(220);
         button.setLayoutY(480);
         button.getStyleClass().add("green");
+        button.idProperty().set("multiPlayerButton");
 
-        button.setOnMouseClicked(e -> {
-            Game game = Game.getInstance();
-            game.setPlayerCount(2);
-            game.setLevelsFromFiles(DEFAULT_LEVELS);
-            startGame(game);
-        });
+        button.setOnMouseClicked(
+                e -> startGame(2, DEFAULT_LEVELS));
 
         return button;
     }
@@ -100,6 +98,7 @@ public class BubbleTroubleMenu extends Pane {
         button.setLayoutX(920);
         button.setLayoutY(550);
         button.getStyleClass().add("green");
+        button.idProperty().set("settingsButton");
         return button;
     }
 
@@ -112,13 +111,18 @@ public class BubbleTroubleMenu extends Pane {
         button.setLayoutX(64);
         button.setLayoutY(550);
         button.getStyleClass().add("green");
+        button.idProperty().set("quitButton");
 
         button.setOnMouseClicked(e -> Platform.exit());
 
         return button;
     }
 
-    private void startGame(Game game) {
+    private void startGame(int playerCount, List<String> levels) {
+        Game game = Game.getInstance();
+        game.setPlayerCount(playerCount);
+        game.setLevelsFromFiles(levels);
+
         try {
             game.start();
         } catch (IOException e) {

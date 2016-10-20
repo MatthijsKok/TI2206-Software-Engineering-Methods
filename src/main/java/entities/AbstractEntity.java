@@ -225,7 +225,7 @@ public abstract class AbstractEntity extends Observable {
      * Returns the boolean indicating if the sprite is visible.
      * @return the boolean indicating if the sprite is visible
      */
-    /* default */ boolean isVisible() {
+    public /* default */ boolean isVisible() {
         return visible;
     }
 
