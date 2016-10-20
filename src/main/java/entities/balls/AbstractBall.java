@@ -10,6 +10,7 @@ import entities.behaviour.GravityBehaviour;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
 import geometry.Rectangle;
+import util.sound.SoundEffect;
 
 /**
  * Class that represents the bouncing balls in our game.
@@ -108,6 +109,7 @@ public abstract class AbstractBall extends AbstractEntity {
      */
     private void bounce() {
         setYSpeed(-getBounceSpeed());
+        SoundEffect.BALL_BOUNCE.play();
     }
 
     /**

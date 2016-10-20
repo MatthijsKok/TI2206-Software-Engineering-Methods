@@ -3,6 +3,7 @@ package entities.balls;
 import com.sun.javafx.geom.Vec2d;
 import graphics.Sprite;
 import level.Level;
+import util.sound.MultiSoundEffect;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -100,7 +101,7 @@ public class ColoredBall extends AbstractBall {
             level.addEntity(new ColoredBall(getPosition(), getSize() - 1, getColor(),
                     new Vec2d(-getXSpeed(), -getBounceSpeed())));
         }
-
+        MultiSoundEffect.BALL_POP.playRandom();
         super.die();
     }
 
