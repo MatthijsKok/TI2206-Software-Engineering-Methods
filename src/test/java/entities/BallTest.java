@@ -132,7 +132,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
     }
 
     @Test
-    public void testCollideWithHarpoon() {
+    public void testCollideWithVine() {
         ball.collideWith(vine);
 
         assertFalse(level.getEntities().contains(ball));
@@ -147,7 +147,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
     }
 
     /*@Test
-    public void testCollideWithHarpoonSizeIsZero() {
+    public void testCollideWithVineSizeIsZero() {
         AbstractBall ball2 = new AbstractBall(spawnPosition, 0);
 
         level.removeEntity(ball);

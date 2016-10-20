@@ -12,17 +12,17 @@ import util.sound.SoundEffect;
 public class Vine extends AbstractEntity {
 
     /**
-     * Sprite of the rope.
+     * Sprite of the vine.
      */
-    private static final Sprite HARPOON_SPRITE = new Sprite("vine.png", new Vec2d(5, 0));
+    private static final Sprite VINE_SPRITE = new Sprite("vine.png", new Vec2d(5, 0));
 
     /**
-     * collision shape of the rope. Created around the original sprite.
+     * collision shape of the vine. Created around the original sprite.
      */
-    private static final Rectangle HARPOON_SHAPE = new Rectangle(HARPOON_SPRITE);
+    private static final Rectangle VINE_SHAPE = new Rectangle(VINE_SPRITE);
 
     /**
-     * Constant upward speed of the rope in px/s.
+     * Constant upward speed of the vine in px/s.
      */
     private static final double TRAVEL_SPEED = 250; // px/s
 
@@ -32,20 +32,20 @@ public class Vine extends AbstractEntity {
     private static final int SCORE_PER_BALL = 100;
 
     /**
-     * The character that shot this harpoon.
+     * The character that shot this vine.
      */
     private final Character character;
 
     /**
-     * Creates a new harpoon.
+     * Creates a new vine.
      *
-     * @param position spawn position of the harpoon.
-     * @param character character which shot the harpoon.
+     * @param position spawn position of the vine.
+     * @param character character which shot the vine.
      */
     Vine(final Vec2d position, final Character character) {
         super(position);
-        setSprite(HARPOON_SPRITE);
-        setShape(new Rectangle(HARPOON_SHAPE));
+        setSprite(VINE_SPRITE);
+        setShape(new Rectangle(VINE_SHAPE));
         setYSpeed(-TRAVEL_SPEED);
         setDepth(1);
 
@@ -54,7 +54,7 @@ public class Vine extends AbstractEntity {
 
     private void die() {
         getLevel().removeEntity(this);
-        character.harpoonRemoved();
+        character.vineRemoved();
     }
 
     @Override

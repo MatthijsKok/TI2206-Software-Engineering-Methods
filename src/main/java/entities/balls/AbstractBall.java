@@ -130,7 +130,7 @@ public abstract class AbstractBall extends AbstractEntity {
         }
 
         if (entity instanceof Vine) {
-            collideWithHarpoon();
+            collideWithVine();
         }
 
         if (entity instanceof Shield) {
@@ -186,9 +186,9 @@ public abstract class AbstractBall extends AbstractEntity {
     }
 
     /**
-     * The behaviour of the AbstractBall when it collides with a Harpoon AbstractEntity.
+     * The behaviour of the AbstractBall when it collides with a Vine AbstractEntity.
      */
-    private void collideWithHarpoon() {
+    private void collideWithVine() {
         die();
     }
 }

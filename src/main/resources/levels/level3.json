@@ -2,7 +2,7 @@
   "name": "Level 2",
   "duration": 30,
   "backgroundImageURI": "backgrounds/background3.png",
-  "backgroundMusicURI": "shy_guy_beach.mp3",
+  "backgroundMusicURI": "dire_docks.mp3",
   "entities": [
     {
       "type": "Player",

@@ -38,13 +38,13 @@ public class VineTest extends BubbleTroubleApplicationTest {
     @Test
     public void testUpdateYGreaterThanZero() {
         vine1.update(0);
-        verify(mockedCharacter, times(0)).harpoonRemoved();
+        verify(mockedCharacter, times(0)).vineRemoved();
     }
 
     @Test
     public void testUpdateYSmallerThanZero() {
         vine2.update(0);
-        verify(mockedCharacter, times(1)).harpoonRemoved();
+        verify(mockedCharacter, times(1)).vineRemoved();
     }
 
     @Test
@@ -60,6 +60,6 @@ public class VineTest extends BubbleTroubleApplicationTest {
         WallBlock otherEntity = new WallBlock(new Vec2d(300, 200));
         vine1.collideWith(otherEntity);
 
-        verify(mockedCharacter, times(0)).harpoonRemoved();
+        verify(mockedCharacter, times(0)).vineRemoved();
     }
 }

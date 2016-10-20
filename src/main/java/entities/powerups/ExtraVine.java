@@ -4,22 +4,22 @@ import graphics.Sprite;
 import util.sound.MultiSoundEffect;
 
 /**
- * Gives the player a extra rope to shoot.
+ * Gives the player a extra vine to shoot.
  */
 class ExtraVine extends AbstractDuringPowerUp {
 
     /**
-     * The sprite of the extra harpoon power-up.
+     * The sprite of the extra vine power-up.
      */
     private static final Sprite SPRITE = new Sprite("powerUps/extra_vine.png");
 
     /**
-     * The duration of the extra harpoon power-up (in ms).
+     * The duration of the extra vine power-up (in ms).
      */
     private static final long DURATION = 10000;
 
     /**
-     * Creates a new extra harpoon power-up.
+     * Creates a new extra vine power-up.
      */
     ExtraVine() {
         super();
@@ -28,10 +28,10 @@ class ExtraVine extends AbstractDuringPowerUp {
     }
 
     /**
-     * Increase the amount of ropes the character can shoot.
+     * Increase the amount of vines the character can shoot.
      */
     /* default */ void enableEffect() {
-        getTarget().increaseMaxHarpoonCount(1);
+        getTarget().increaseMaxVineCount(1);
         MultiSoundEffect.EXTRA_VINE.play(getTarget().getPlayer().getId());
     }
 
@@ -39,7 +39,7 @@ class ExtraVine extends AbstractDuringPowerUp {
      * Disables the effect of the specific power up.
      */
     /* default */ void disableEffect() {
-        getTarget().increaseMaxHarpoonCount(-1);
+        getTarget().increaseMaxVineCount(-1);
     }
 
 }
