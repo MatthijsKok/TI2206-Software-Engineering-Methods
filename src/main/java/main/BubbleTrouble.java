@@ -40,7 +40,9 @@ public class BubbleTrouble extends Application {
         SceneManager.setStage(stage);
 
         SceneManager.addScene("MainMenu", new MainMenu(stage));
+        SceneManager.getScene("MainMenu").getStylesheets().add("stylesheets/mainMenu.css");
         SceneManager.addScene("SettingsMenu", new SettingsMenu(stage));
+        SceneManager.getScene("SettingsMenu").getStylesheets().add("stylesheets/settingsMenu.css");
         SceneManager.addScene("Game", new GamePane(stage));
 
         SceneManager.goToScene("MainMenu");
