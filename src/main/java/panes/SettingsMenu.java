@@ -1,7 +1,5 @@
 package panes;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,7 +13,6 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import panes.elements.MusicSlider;
 import util.Config;
 import util.SceneManager;
@@ -25,6 +22,7 @@ import util.sound.SoundEffect;
 /**
  * The settings menu.
  */
+@SuppressWarnings("magicnumber")
 public class SettingsMenu extends Pane {
 
     /**
@@ -59,8 +57,10 @@ public class SettingsMenu extends Pane {
     }
 
     private Button createBackButton() {
-        Button button = new Button();
-        button.setText("back");
+        Button button = new Button("back");
+        button.setLayoutX(128);
+        button.setLayoutY(128);
+
         button.getStyleClass().add("back");
         button.setOnMouseClicked(e -> SceneManager.goBack());
 
@@ -77,9 +77,7 @@ public class SettingsMenu extends Pane {
         Slider slider = (Slider) sliderPane.getChildren().get(1);
         slider.setValue(Double.valueOf(Config.get("bgVolume")));
 
-        slider.valueProperty().addListener((obs) -> {
-            Music.setMusicVolume(slider.getValue());
-        });
+        slider.valueProperty().addListener((obs) -> Music.setMusicVolume(slider.getValue()));
 
         slider.valueChangingProperty().addListener((obs, wasChanging, isNowChanging) -> {
             if (!isNowChanging) {

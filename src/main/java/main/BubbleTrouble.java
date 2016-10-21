@@ -81,7 +81,7 @@ public class BubbleTrouble extends Application {
             e.printStackTrace();
         }
 
-        Music.setMusic("gusty_garden.mp3");
+        Music.setMusic("menu_gusty_garden.mp3");
         Music.startMusic();
     }
 
