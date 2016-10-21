@@ -43,7 +43,7 @@ public class Vine extends AbstractEntity {
      * @param position spawn position of the vine.
      * @param character character which shot the vine.
      */
-    Vine(final Vec2d position, final Character character) {
+    public Vine(final Vec2d position, final Character character) {
         super(position);
         setSprite(VINE_SPRITE);
         setShape(new Rectangle(VINE_SHAPE));

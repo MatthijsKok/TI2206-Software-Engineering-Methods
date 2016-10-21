@@ -111,6 +111,7 @@ public class Player implements Observer {
      * @param pair The pair containing information about the changed state of the Character object.
      */
     private void updateFromCharacter(Pair<String, Object> pair) {
+        System.out.println("got update from character");
         switch (pair.getL()) {
             case "die":
                 die();
@@ -142,6 +143,14 @@ public class Player implements Observer {
         lives--;
 
         Game.getInstance().getState().getCurrentLevel().lose();
+
+        if (lives == 0) {
+            MultiSoundEffect.PLAYER_OUT_OF_LIVES.play(getId());
+        }
+        else {
+            MultiSoundEffect.PLAYER_LOSES_LIFE.play(getId());
+        }
+
     }
 
     private void increaseScore(int amount) {

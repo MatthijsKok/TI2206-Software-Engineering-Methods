@@ -2,7 +2,7 @@ package entities.powerups;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
-import entities.Character;
+import entities.character.Character;
 import entities.Shield;
 import game.Game;
 import game.player.Player;

@@ -89,7 +89,7 @@ public class Character extends AbstractEntity {
      *
      * @param position position of the character
      */
-    Character(final Vec2d position) {
+    public Character(final Vec2d position) {
         super(position);
 
         setShape(new Rectangle(BOUNDING_BOX));
@@ -277,7 +277,7 @@ public class Character extends AbstractEntity {
     /**
      * Called when a vine is removed from the level.
      */
-    void vineRemoved() {
+    public void vineRemoved() {
         currentVineCount = Math.max(0, currentVineCount - 1);
     }
 
