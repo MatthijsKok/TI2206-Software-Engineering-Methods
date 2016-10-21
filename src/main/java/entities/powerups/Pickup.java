@@ -62,8 +62,8 @@ class Pickup extends AbstractEntity {
     }
 
     /**
-     * The behaviour of the AbstractBall when it collides with a Block Entity.
-     * @param floor The Block Entity this AbstractBall collides with.
+     * The behaviour of the AbstractBall when it collides with a AbstractBlock Entity.
+     * @param floor The AbstractBlock Entity this AbstractBall collides with.
      */
     private void collideWith(final FloorBlock floor) {
         ((Rectangle) getShape()).setBottom(((Rectangle) floor.getShape()).getTop());
@@ -71,7 +71,7 @@ class Pickup extends AbstractEntity {
     }
 
     /**
-     * The behaviour of the pickup when it collides with a Block Entity.
+     * The behaviour of the pickup when it collides with a AbstractBlock Entity.
      * @param character The Character Entity this AbstractBall collides with.
      */
     private void collideWith(final Character character) {
