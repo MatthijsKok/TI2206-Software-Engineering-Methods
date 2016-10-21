@@ -51,6 +51,13 @@ public abstract class AbstractEntity extends Observable {
     private AbstractPhysicsBehaviour physicsBehaviour = new NoGravityBehaviour(this);
 
     /**
+     * Depth of this entity.
+     * Entities with higher depth are drawn below entities with
+     * lower depth.
+     */
+    private int depth = 0;
+
+    /**
      * Creates a new entity.
      * @param position The position of the entity.
      */
@@ -219,7 +226,7 @@ public abstract class AbstractEntity extends Observable {
      * Returns the boolean indicating if the sprite is visible.
      * @return the boolean indicating if the sprite is visible
      */
-    /* default */ boolean isVisible() {
+    public /* default */ boolean isVisible() {
         return visible;
     }
 
@@ -378,5 +385,22 @@ public abstract class AbstractEntity extends Observable {
      */
     protected /* default */ void setPhysicsBehaviour(final AbstractPhysicsBehaviour physicsBehaviour) {
         this.physicsBehaviour = physicsBehaviour;
+    }
+
+    /**
+     * Sets the depth of this entity and sorts all entities in the
+     * current level.
+     * @param depth the depth to set.
+     */
+    public final void setDepth(final int depth) {
+        this.depth = depth;
+        getLevel().depthSort();
+    }
+
+    /**
+     * @return Integer - the depth of this entity.
+     */
+    public final int getDepth() {
+        return depth;
     }
 }

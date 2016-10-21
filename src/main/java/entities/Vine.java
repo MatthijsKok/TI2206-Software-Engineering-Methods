@@ -5,57 +5,56 @@ import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import geometry.Rectangle;
 import graphics.Sprite;
+import util.sound.SoundEffect;
 
 /**
- * Harpoon entity class.
+ * Vine class, controlling the rope in the game.
  */
-public class Harpoon extends AbstractEntity {
+public class Vine extends AbstractEntity {
 
     /**
-     * Sprite of the harpoon.
+     * Sprite of the vine.
      */
-    private static final Sprite HARPOON_SPRITE = new Sprite("harpoon.png", new Vec2d(5, 0));
+    private static final Sprite VINE_SPRITE = new Sprite("vine.png", new Vec2d(12, 0));
+
     /**
-     * Collision shape of the harpoon. Created around the original sprite.
+     * collision shape of the vine. Created around the original sprite.
      */
-    private static final Rectangle HARPOON_SHAPE = new Rectangle(HARPOON_SPRITE);
+    private static final Rectangle VINE_SHAPE = new Rectangle(VINE_SPRITE);
+
     /**
-     * Scale of the harpoon sprite.
+     * Constant upward speed of the vine in px/s.
      */
-    private static final double HARPOON_SCALE = 0.5;
-    /**
-     * Constant upward speed of the harpoon in px/s.
-     */
-    private static final double TRAVEL_SPEED = 300; // px/s
+    private static final double TRAVEL_SPEED = 250; // px/s
+
     /**
      * Score that is multiplied by the size of the ball, and then added to the score.
      */
     private static final int SCORE_PER_BALL = 100;
 
     /**
-     * The entities.character that shot this harpoon.
+     * The character that shot this vine.
      */
     private final Character character;
 
     /**
-     * Creates a new harpoon.
+     * Creates a new vine.
      *
-     * @param position spawn position of the harpoon.
-     * @param character entities.character which shot the harpoon.
+     * @param position spawn position of the vine.
+     * @param character character which shot the vine.
      */
-    public Harpoon(final Vec2d position, final Character character) {
+    Vine(final Vec2d position, final Character character) {
         super(position);
-        setSprite(HARPOON_SPRITE);
-        setShape(new Rectangle(HARPOON_SHAPE));
+        setSprite(VINE_SPRITE);
+        setShape(new Rectangle(VINE_SHAPE));
         setYSpeed(-TRAVEL_SPEED);
-        setScale(HARPOON_SCALE);
-
+        setDepth(1);
         this.character = character;
     }
 
     private void die() {
         getLevel().removeEntity(this);
-        character.harpoonRemoved();
+        character.vineRemoved();
     }
 
     @Override
@@ -69,13 +68,14 @@ public class Harpoon extends AbstractEntity {
     public void collideWith(final AbstractEntity entity) {
         if (entity instanceof AbstractBall) {
             collideWith((AbstractBall) entity);
+            SoundEffect.SHOOT.getAudio().stop();
         }
     }
 
     /**
-     * Collision with a ball, the harpoon should disappear and the score should increase.
+     * Collision with a ball, the rope should disappear and the score should increase.
      *
-     * @param ball the ball this harpoon collides with
+     * @param ball the ball this rope collides with
      */
     private void collideWith(final AbstractBall ball) {
         die();

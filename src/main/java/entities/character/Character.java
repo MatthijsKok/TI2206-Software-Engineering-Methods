@@ -3,7 +3,7 @@ package entities.character;
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.FloorBlock;
-import entities.Harpoon;
+import entities.Vine;
 import entities.Shield;
 import entities.WallBlock;
 import entities.balls.AbstractBall;
@@ -12,22 +12,23 @@ import game.player.Player;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.Pair;
+import util.sound.SoundEffect;
 
 /**
- * The Character class represents a entities.character.
+ * The Character class represents a character.
  */
 public class Character extends AbstractEntity {
 
     /**
-     * The offset of the bounding box of a entities.character.
+     * The offset of the bounding box of a character.
      */
     private static final Vec2d OFFSET = new Vec2d(8, 16);
     /**
-     * The bounding box of a entities.character.
+     * The bounding box of a character.
      */
     private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
     /**
-     * The default run speed of a entities.character.
+     * The default run speed of a character.
      */
     private static final double DEFAULT_RUN_SPEED = 230; // px/s
 
@@ -36,35 +37,35 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * The running speed of a entities.character. In pixels per second.
+     * The running speed of a character. In pixels per second.
      */
     private double runSpeed = DEFAULT_RUN_SPEED;
     /**
-     * Indicates whether a entities.character is alive or not.
+     * Indicates whether a character is alive or not.
      */
     private boolean alive = true;
 
     /**
-     * The amount of harpoons this entities.character can shoot.
+     * The amount of vines this character can shoot.
      */
-    private int maxHarpoonCount = 1;
+    private int maxVineCount = 1;
     /**
-     * The amount of harpoons this entities.character has currently shot.
+     * The amount of vines this character has currently shot.
      */
-    private int currentHarpoonCount = 0;
+    private int currentVineCount = 0;
 
     /**
-     * The sprites of the entities.character.
+     * The sprites of the character.
      */
     private Sprite idleSprite, runningSprite;
 
     /**
-     * State of the entities.character, indicates which action a entities.character is performing.
+     * State of the character, indicates which action a character is performing.
      */
     private int direction = 0;
 
     /**
-     * Indicates whether the entities.character is shooting.
+     * Indicates whether the character is shooting.
      */
     private boolean shooting = false;
 
@@ -74,21 +75,21 @@ public class Character extends AbstractEntity {
     private Player player;
 
     /**
-     * Boolean indicating whether the entities.character is invincible.
+     * Boolean indicating whether the character is invincible.
      */
     private Shield shield = new Shield(this);
 
     /**
-     * Boolean indicating whether the entities.character can shoot.
+     * Boolean indicating whether the character can shoot.
      */
     private boolean canShoot = true;
 
     /**
-     * Instantiate a new entities.character at position (x, y).
+     * Instantiate a new character at position (x, y).
      *
-     * @param position position of the entities.character
+     * @param position position of the character
      */
-    public Character(final Vec2d position) {
+    Character(final Vec2d position) {
         super(position);
 
         setShape(new Rectangle(BOUNDING_BOX));
@@ -97,7 +98,7 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * The entities.character dies. Soo sad...
+     * The character dies. Soo sad...
      * After it dies it tells everybody it has died, but its already dead. How does that even work?
      */
     public void die() {
@@ -107,35 +108,35 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * Adds a life to this entities.character.
+     * Adds a life to this character.
      */
     public void increaseLife() {
         getPlayer().increaseLives(1);
     }
 
     /**
-     * @return whether the entities.character is alive
+     * @return whether the character is alive
      */
     public boolean isAlive() {
         return alive;
     }
 
     /**
-     * Makes the entities.character stop moving.
+     * Makes the character stop moving.
      */
     public void stop() {
         this.direction = 0;
     }
 
     /**
-     * Makes the entities.character move to the left.
+     * Makes the character move to the left.
      */
     public void moveLeft() {
         this.direction = -1;
     }
 
     /**
-     * Makes the entities.character move to the right.
+     * Makes the character move to the right.
      */
     public void moveRight() {
         this.direction = 1;
@@ -155,7 +156,7 @@ public class Character extends AbstractEntity {
         // Walk
         setXSpeed(runSpeed * direction);
 
-        // Set the entities.character sprite
+        // Set the character sprite
         if (direction == 0) {
             setSprite(idleSprite);
         } else {
@@ -164,9 +165,11 @@ public class Character extends AbstractEntity {
         }
 
         // Shoot
-        if (shooting && canShoot && currentHarpoonCount < maxHarpoonCount) {
-            currentHarpoonCount++;
-            getLevel().addEntity(new Harpoon(getPosition(), this));
+        if (shooting && canShoot && currentVineCount < maxVineCount) {
+            currentVineCount++;
+            getLevel().addEntity(new Vine(getPosition(), this));
+            final int occurrenceRate = 3;
+            SoundEffect.SHOOT.playSometimes(occurrenceRate);
         }
 
         canShoot = !shooting;
@@ -188,17 +191,17 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * When a entities.character collides with a ball, the entities.character dies.
+     * When a character collides with a ball, the character dies.
      */
     private void collideWithBall() {
         die();
     }
 
     /**
-     * If a entities.character collides with a ground floor, the entities.character should not sink
+     * If a character collides with a ground floor, the character should not sink
      * through it.
      *
-     * @param floor the ground floor the entities.character collides with
+     * @param floor the ground floor the character collides with
      */
     private void collideWith(final FloorBlock floor) {
         Rectangle shape = (Rectangle) getShape();
@@ -216,9 +219,9 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * If a entities.character collides with a wall, it should move outside that wall.
+     * If a character collides with a wall, it should move outside that wall.
      *
-     * @param wall the wall the entities.character collides with
+     * @param wall the wall the character collides with
      */
     private void collideWith(final WallBlock wall) {
         Rectangle shape = (Rectangle) getShape();
@@ -263,33 +266,49 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * Increases the amount of harpoons this entities.character can shoot.
+     * Increases the amount of vines this character can shoot.
      *
-     * @param amount the amount of harpoons a entities.character can shoot extra.
+     * @param amount the amount of vine a character can shoot extra.
      */
-    public void increaseMaxHarpoonCount(int amount) {
-        maxHarpoonCount = Math.max(1, maxHarpoonCount + amount);
+    public void increaseMaxVineCount(int amount) {
+        maxVineCount = Math.max(1, maxVineCount + amount);
     }
 
     /**
-     * Called when a harpoon is removed from the level.
+     * Called when a vine is removed from the level.
      */
-    public void harpoonRemoved() {
-        currentHarpoonCount = Math.max(0, currentHarpoonCount - 1);
+    void vineRemoved() {
+        currentVineCount = Math.max(0, currentVineCount - 1);
     }
 
     /**
-     * Activates a shield around this entities.character.
+     * Activates a shield around this character.
      */
     public void activateShield() {
         shield.activate();
     }
 
     /**
-     * Increases the score of the entities.character.
+     * Increases the score of the character.
      * @param score the amount of the increase.
      */
     public void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
+    }
+
+    /**
+     * Getter for maxHarpoonCount.
+     * @return maxHarpoonCount
+     */
+    public int getMaxVineCount() {
+        return maxVineCount;
+    }
+
+    /**
+     * Getter for runSpeed.
+     * @return runSpeed
+     */
+    public double getRunSpeed() {
+        return runSpeed;
     }
 }

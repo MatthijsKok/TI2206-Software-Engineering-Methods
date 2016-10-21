@@ -17,7 +17,7 @@ public class WallBlock extends Block {
      * Creates a wall on position (x,y).
      * @param position the position of the wall
      */
-    WallBlock(final Vec2d position) {
+    public WallBlock(final Vec2d position) {
         super(position);
         setSprite(WALL_SPRITE);
         setShapeToSprite();

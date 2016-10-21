@@ -4,7 +4,7 @@ import entities.character.Character;
 import game.Game;
 import util.KeyboardInputManager;
 import util.Pair;
-
+import util.sound.MultiSoundEffect;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -124,7 +124,7 @@ public class Player implements Observer {
     }
 
     /**
-     * Handles keyboard input and passes it to the entities.character.
+     * Handles keyboard input and passes it to the character.
      */
     private void updateKeyboardInput() {
         if (KeyboardInputManager.keyPressed(leftKey) && !KeyboardInputManager.keyPressed(rightKey)) {

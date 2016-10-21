@@ -8,7 +8,12 @@ import graphics.Sprite;
 abstract class AbstractPowerUp {
 
     /**
-     * The entities.character which picked up the power-up.
+     * The default power-up sprite.
+     */
+    private static final Sprite POWERUP_SPRITE = new Sprite("powerUps/speed_boost.png");
+
+    /**
+     * The character which picked up the power-up.
      */
     private Character target;
 
@@ -18,15 +23,22 @@ abstract class AbstractPowerUp {
     private Sprite sprite;
 
     /**
+     * Creates a new ExtraTime power-up.
+     */
+    AbstractPowerUp() {
+        setSprite(POWERUP_SPRITE);
+    }
+
+    /**
      * Enables the effect of the specific power-up.
-     * @param character The entities.character that picked up the power-up.
+     * @param character The character that picked up the power-up.
      */
     /* default */ void setTarget(final Character character) {
         target = character;
     }
 
     /**
-     * @return The entities.character which picked up the power-up.
+     * @return The character which picked up the power-up.
      */
     /* default */ Character getTarget() {
         return target;

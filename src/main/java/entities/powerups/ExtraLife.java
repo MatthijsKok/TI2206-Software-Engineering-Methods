@@ -1,6 +1,7 @@
 package entities.powerups;
 
 import graphics.Sprite;
+import util.sound.SoundEffect;
 
 /**
  * Adds a life to the players total.
@@ -21,6 +22,7 @@ class ExtraLife extends AbstractInstantPowerUp {
 
     @Override
     void applyEffect() {
+        SoundEffect.EXTRA_LIFE.play();
         getTarget().increaseLife();
     }
 }

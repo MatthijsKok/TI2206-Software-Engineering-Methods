@@ -17,7 +17,7 @@ public class FloorBlock extends Block {
      * Creates a new FloorBlock at position (x,y).
      * @param position the position of the block
      */
-    FloorBlock(final Vec2d position) {
+    public FloorBlock(final Vec2d position) {
         super(position);
         setSprite(BLOCK_SPRITE);
         setShapeToSprite();
