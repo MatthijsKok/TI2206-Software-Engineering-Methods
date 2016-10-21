@@ -88,9 +88,11 @@ public final class Config {
      * @param value The Value.
      */
     public static void put(String key, String value) {
-        PROPERTIES.put(key, value);
+        PROPERTIES.setProperty(key, value);
         try {
-            PROPERTIES.store(new FileWriter(PROPERTIES_FILE_NAME), " Player input properties");
+            FileWriter fileWriter = new FileWriter(PROPERTIES_FILE_NAME);
+            PROPERTIES.store(fileWriter, "Player input properties");
+            fileWriter.close();
         } catch (IOException e) {
             LOGGER.error("Could not write to properties file.");
         }
