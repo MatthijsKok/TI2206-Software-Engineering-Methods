@@ -320,7 +320,7 @@ public abstract class AbstractEntity extends Observable {
      * Sets the scale of the entity.
      * @param yScale double - the target vertical scale
      */
-    /* default */ final void setYScale(final double yScale) {
+    protected /* default */ final void setYScale(final double yScale) {
         setScale(getXScale(), yScale);
     }
 
