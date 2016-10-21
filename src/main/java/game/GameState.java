@@ -4,6 +4,7 @@ package game;
 import game.player.Player;
 import level.Level;
 import util.KeyboardInputManager;
+import util.SceneManager;
 import util.sound.MultiSoundEffect;
 import util.sound.Music;
 import util.sound.SoundEffect;
@@ -134,6 +135,7 @@ public class GameState implements Observer {
     private void tryRestart(Level level) {
         if (won || lost) {
             game.stop();
+            SceneManager.goToScene("MainMenu");
         } else if (level.isWon()) {
             nextLevel();
             resume();
