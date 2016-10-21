@@ -29,7 +29,7 @@ public class SettingsMenu extends Pane {
      * The image used in the background of the settings menu.
      */
     private static final Image BACKGROUND_IMAGE =
-            new Image("backgrounds/background1.png");
+            new Image("settings.png");
     /**
      * The background image of the settings menu.
      */
