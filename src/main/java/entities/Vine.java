@@ -1,8 +1,8 @@
 package entities;
 
-import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
+import entities.character.Character;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.sound.SoundEffect;
@@ -66,14 +66,18 @@ public class Vine extends AbstractEntity {
 
     @Override
     public void collideWith(final AbstractEntity entity) {
+        SoundEffect.SHOOT.getAudio().stop();
+
         if (entity instanceof AbstractBall) {
             collideWith((AbstractBall) entity);
-            SoundEffect.SHOOT.getAudio().stop();
+        }
+        if (entity instanceof WallBlock) {
+            collideWithBlock();
         }
     }
 
     /**
-     * Collision with a ball, the rope should disappear and the score should increase.
+     * Collision with a ball, the vine should disappear and the score should increase.
      *
      * @param ball the ball this rope collides with
      */
@@ -82,5 +86,12 @@ public class Vine extends AbstractEntity {
 
         final int score = (ball.getSize() + 1) * SCORE_PER_BALL;
         character.increaseScore(score);
+    }
+
+    /**
+     * Collision with a block, the vine should disappear and the score should increase.
+     */
+    private void collideWithBlock() {
+        die();
     }
 }

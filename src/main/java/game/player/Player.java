@@ -111,7 +111,6 @@ public class Player implements Observer {
      * @param pair The pair containing information about the changed state of the Character object.
      */
     private void updateFromCharacter(Pair<String, Object> pair) {
-        System.out.println("got update from character");
         switch (pair.getL()) {
             case "die":
                 die();
