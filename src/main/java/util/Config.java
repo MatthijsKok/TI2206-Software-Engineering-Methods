@@ -4,9 +4,10 @@ import util.logging.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 
 /**
@@ -52,9 +53,10 @@ public final class Config {
         // So that all values that are not defined are standard.
         PROPERTIES = DEFAULT_PROPERTIES;
 
-        try (InputStream inputStream = createInputStream(PROPERTIES_FILE_NAME)) {
-            PROPERTIES.load(inputStream);
+        try (InputStream input = createInputStream(PROPERTIES_FILE_NAME)) {
+            PROPERTIES.load(input);
             LOGGER.info("Settings loaded.");
+            input.close();
         } catch (IOException e) {
             LOGGER.warn("Settings could not be loaded. Using default settings instead.");
         }
@@ -65,10 +67,16 @@ public final class Config {
     }
 
     private static InputStream createInputStream(String fileName) throws IOException {
-        return new FileInputStream(
-                new File(
-                        Config.class.getClassLoader().getResource(fileName).getFile()
-                )
+        return new FileInputStream(getFile(fileName));
+    }
+
+    private static OutputStream createOutputStream(String fileName) throws IOException {
+        return new FileOutputStream(getFile(fileName));
+    }
+
+    private static File getFile(String fileName) throws IOException {
+        return new File(
+                Config.class.getClassLoader().getResource(fileName).getFile()
         );
     }
 
@@ -89,10 +97,10 @@ public final class Config {
      */
     public static void put(String key, String value) {
         PROPERTIES.setProperty(key, value);
-        try {
-            FileWriter fileWriter = new FileWriter(PROPERTIES_FILE_NAME);
-            PROPERTIES.store(fileWriter, "Player input properties");
-            fileWriter.close();
+
+        try (OutputStream output = createOutputStream(PROPERTIES_FILE_NAME)) {
+            PROPERTIES.store(output, "Player input properties");
+            output.close();
         } catch (IOException e) {
             LOGGER.error("Could not write to properties file.");
         }
