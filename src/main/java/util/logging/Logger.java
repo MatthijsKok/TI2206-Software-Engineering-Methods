@@ -1,6 +1,10 @@
 package util.logging;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +59,7 @@ public final class Logger {
     public static synchronized Logger getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new Logger("docs/logs/main.BubbleTrouble Log "
-                    + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())
+                    + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
                     + ".log");
         }
 

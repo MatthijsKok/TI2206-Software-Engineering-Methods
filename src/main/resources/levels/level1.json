@@ -1,8 +1,8 @@
 {
   "name": "Level 1",
-  "duration": 5,
-  "backgroundImageURI": "backgrounds/background1.png",
-  "backgroundMusicURI": "",
+  "duration": 15,
+  "backgroundImageURI": "backgrounds/background.png",
+  "backgroundMusicURI": "mario_theme_remix.mp3",
   "entities": [
     {
       "type": "Player",
@@ -21,17 +21,8 @@
       "x": 256,
       "y": 256,
       "attributes": {
-        "size": 0,
+        "size": 2,
         "color": "yellow"
-      }
-    },
-    {
-      "type": "Ball",
-      "x": 384,
-      "y": 256,
-      "attributes": {
-        "size": 0,
-        "color": "red"
       }
     },
     {

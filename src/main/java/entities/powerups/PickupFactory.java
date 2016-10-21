@@ -19,10 +19,10 @@ public final class PickupFactory {
 
     static {
         powerUpProbabilities.add(new Pair<>(1, ExtraLife.class));
-        powerUpProbabilities.add(new Pair<>(2, ExtraHarpoon.class));
+        powerUpProbabilities.add(new Pair<>(2, ExtraVine.class));
         powerUpProbabilities.add(new Pair<>(2, ExtraTime.class));
         powerUpProbabilities.add(new Pair<>(2, SpeedBoost.class));
-        powerUpProbabilities.add(new Pair<>(2, Shield.class));
+        powerUpProbabilities.add(new Pair<>(2, ActivateShield.class));
     }
 
     /**

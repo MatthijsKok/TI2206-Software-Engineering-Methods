@@ -4,7 +4,7 @@ import entities.Character;
 import game.Game;
 import util.KeyboardInputManager;
 import util.Pair;
-
+import util.sound.MultiSoundEffect;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -140,21 +140,31 @@ public class Player implements Observer {
     private void die() {
         Game game = Game.getInstance();
 
+        // decrease amount lives
+        lives = Math.max(0, lives - 1);
+
+        // lose the level
+        game.getState().getCurrentLevel().lose();
+
+        // check if the player still has lives
         if (lives > 0) {
-            lives--;
-            game.getState().getCurrentLevel().lose();
+            MultiSoundEffect.PLAYER_LOSES_LIFE.play(getId());
         }
-
-        boolean lost = true;
-        for (Player player : game.getPlayers()) {
-            if (player.getLives() > 0) {
-                lost = false;
-                break;
+        // if the player is out of lives, check if the other player is out of lives too
+        else {
+            boolean lost = true;
+            for (Player player : game.getPlayers()) {
+                if (player.getLives() > 0) {
+                    lost = false;
+                    break;
+                }
             }
-        }
-
-        if (lost) {
-            game.getState().lose();
+            if (lost) {
+                game.getState().lose(); // if so, lose the game
+            }
+            else {
+                MultiSoundEffect.PLAYER_OUT_OF_LIVES.play(getId()); // else play the player out of lives sound effect
+            }
         }
     }
 

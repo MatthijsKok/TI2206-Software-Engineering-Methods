@@ -2,7 +2,7 @@
   "name": "no Ball",
   "duration": 5,
   "backgroundImageURI": "backgrounds/background1.png",
-  "backgroundMusicURI": "",
+  "backgroundMusicURI": "mario_theme_remix.mp3",
   "entities": [
     {
       "type": "Player",

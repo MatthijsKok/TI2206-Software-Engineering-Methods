@@ -4,6 +4,9 @@ package game;
 import game.player.Player;
 import level.Level;
 import util.KeyboardInputManager;
+import util.sound.MultiSoundEffect;
+import util.sound.Music;
+import util.sound.SoundEffect;
 import util.SceneManager;
 
 import java.io.IOException;
@@ -91,6 +94,7 @@ public class GameState implements Observer {
     private void toggleProgress() {
         if (inProgress) {
             pause();
+            SoundEffect.PAUSE.play();
         } else {
             resume();
         }
@@ -101,6 +105,9 @@ public class GameState implements Observer {
      */
     public void pause() {
         inProgress = false;
+
+        // Pause the music
+        Music.pauseMusic();
     }
 
     /**
@@ -108,6 +115,9 @@ public class GameState implements Observer {
      */
     void resume() {
         inProgress = true;
+
+        // Resume the music
+        Music.startMusic();
     }
 
 
@@ -175,6 +185,7 @@ public class GameState implements Observer {
     public void win() {
         if (!lost) {
             won = true;
+            SoundEffect.GAME_WON.play();
         }
         pause();
     }
@@ -185,6 +196,7 @@ public class GameState implements Observer {
     public void lose() {
         if (!won) {
             lost = true;
+            MultiSoundEffect.GAME_OVER.playRandom();
         }
         pause();
     }

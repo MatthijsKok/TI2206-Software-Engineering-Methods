@@ -1,5 +1,6 @@
 package entities;
 
+import entities.balls.ColoredBall;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,7 @@ public class EntityFactoryClassNameTest extends AbstractEntityFactoryTest {
 
         return Arrays.asList(new Object[][] {
                 { createJSONEntity("Player", 10, 10), Character.class },
-                { createJSONEntity("Ball",   20, 10, ballParams), Ball.class },
+                { createJSONEntity("Ball",   20, 10, ballParams), ColoredBall.class },
                 { createJSONEntity("Wall",   30, 10), WallBlock.class },
                 { createJSONEntity("Floor",  10, 30), FloorBlock.class }
         });

@@ -35,6 +35,9 @@ public class BubbleTrouble extends Application {
      */
     public final void start(final Stage stage) {
         LOGGER.setLevel(LogLevel.INFO);
+
+        loadSounds();
+
         StageManager.init(stage);
 
         SceneManager.setStage(stage);
@@ -50,6 +53,16 @@ public class BubbleTrouble extends Application {
         KeyboardInputManager.addScene(SceneManager.getScene("Game"));
 
         LOGGER.info("App started");
+    }
+
+    private static void loadSounds() {
+        //Load sounds
+        try {
+            Class.forName("util.sound.SoundEffect");
+            Class.forName("util.sound.MultiSoundEffect");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

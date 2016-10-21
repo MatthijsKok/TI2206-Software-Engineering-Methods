@@ -23,7 +23,7 @@ abstract class AbstractDuringPowerUp extends AbstractPowerUp {
      * Enables the effect of the specific power-up.
      * @param character The character that picked up the power-up.
      */
-    void setTarget(Character character) {
+    void setTarget(final Character character) {
         super.setTarget(character);
         enableEffect();
         new Timer().schedule(new TimerTask() {

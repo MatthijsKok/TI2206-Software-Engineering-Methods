@@ -2,6 +2,7 @@ package entities.powerups;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
+import entities.behaviour.GravityBehaviour;
 import entities.Character;
 import entities.FloorBlock;
 import geometry.Rectangle;
@@ -10,11 +11,6 @@ import geometry.Rectangle;
  * Pickup that contains a power-up effect that will be applied to the player.
  */
 class Pickup extends AbstractEntity {
-    /**
-     * Gravity applied to a power-up, in pixels per second squared.
-     */
-    private static final double GRAVITY = 300; // px/s^2
-
     /**
      * The standard time before the pickup disappears in seconds.
      */
@@ -42,16 +38,11 @@ class Pickup extends AbstractEntity {
 
         setSprite(powerUp.getSprite());
         setShape(new Rectangle(getSprite()));
+        setPhysicsBehaviour(new GravityBehaviour(this));
     }
 
-    /**
-     * Update the speed and position of the ball.
-     * @param timeDifference Time difference from previous update in seconds.
-     */
+    @Override
     public void update(final double timeDifference) {
-        // Apply gravity
-        getSpeed().y += GRAVITY * timeDifference;
-
         // Update time
         timeRemaining -= timeDifference;
 
@@ -71,17 +62,17 @@ class Pickup extends AbstractEntity {
     }
 
     /**
-     * The behaviour of the Ball when it collides with a Block Entity.
-     * @param floor The Block Entity this Ball collides with.
+     * The behaviour of the AbstractBall when it collides with a Block Entity.
+     * @param floor The Block Entity this AbstractBall collides with.
      */
     private void collideWith(final FloorBlock floor) {
         ((Rectangle) getShape()).setBottom(((Rectangle) floor.getShape()).getTop());
-        getSpeed().y = 0;
+        setYSpeed(0);
     }
 
     /**
      * The behaviour of the pickup when it collides with a Block Entity.
-     * @param character The Character Entity this Ball collides with.
+     * @param character The Character Entity this AbstractBall collides with.
      */
     private void collideWith(final Character character) {
         powerUp.setTarget(character);

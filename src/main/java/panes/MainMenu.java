@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The menu.MainMenu class is an javafx element which displays the main game menu.
+ * The MainMenu class is an javafx element which displays the main game menu.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class MainMenu extends Pane {
@@ -28,6 +28,10 @@ public class MainMenu extends Pane {
     static {
         DEFAULT_LEVELS.add("src/main/resources/levels/level1.json");
         DEFAULT_LEVELS.add("src/main/resources/levels/level2.json");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level3.json");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level4.json");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level5.json");
+        DEFAULT_LEVELS.add("src/main/resources/levels/level6.json");
     }
 
     /**
@@ -61,6 +65,7 @@ public class MainMenu extends Pane {
         button.setLayoutX(64);
         button.setLayoutY(224);
         button.getStyleClass().add("green");
+        button.idProperty().set("singlePlayerButton");
 
         button.setOnMouseClicked(e -> startGame(DEFAULT_LEVELS, 1));
         return button;
@@ -75,6 +80,7 @@ public class MainMenu extends Pane {
         button.setLayoutX(64);
         button.setLayoutY(272);
         button.getStyleClass().add("green");
+        button.idProperty().set("multiPlayerButton");
 
         button.setOnMouseClicked(e -> startGame(DEFAULT_LEVELS, 2));
 
@@ -93,6 +99,7 @@ public class MainMenu extends Pane {
 
         button.setOnMouseClicked(e -> SceneManager.goToScene("SettingsMenu"));
 
+        button.idProperty().set("settingsButton");
         return button;
     }
 
@@ -105,6 +112,7 @@ public class MainMenu extends Pane {
         button.setLayoutX(64);
         button.setLayoutY(368);
         button.getStyleClass().add("green");
+        button.idProperty().set("quitButton");
 
         button.setOnMouseClicked(e -> Platform.exit());
 

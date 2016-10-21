@@ -7,7 +7,7 @@ import graphics.Sprite;
 /**
  * Represents a FloorBlock entity used for walls in the game.
  */
-class WallBlock extends AbstractEntity {
+public class WallBlock extends AbstractEntity {
 
     /**
      * The sprite of the wall.
@@ -22,7 +22,7 @@ class WallBlock extends AbstractEntity {
      * Creates a wall on position (x,y).
      * @param position the position of the wall
      */
-    WallBlock(final Vec2d position) {
+    public WallBlock(final Vec2d position) {
         super(position);
         setSprite(WALL_SPRITE);
         setShape(new Rectangle(WALL_SHAPE));

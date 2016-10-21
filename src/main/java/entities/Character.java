@@ -1,10 +1,13 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.AbstractBall;
+import entities.behaviour.GravityBehaviour;
 import game.player.Player;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.Pair;
+import util.sound.SoundEffect;
 
 /**
  * The Character class represents a character.
@@ -19,10 +22,6 @@ public class Character extends AbstractEntity {
      * The bounding box of a character.
      */
     private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
-    /**
-     * The gravity applied to a character. In pixels per second squared.
-     */
-    private static final double GRAVITY = 300; // px/s^2
     /**
      * The default run speed of a character.
      */
@@ -42,13 +41,13 @@ public class Character extends AbstractEntity {
     private boolean alive = true;
 
     /**
-     * The amount of harpoons this character can shoot.
+     * The amount of vines this character can shoot.
      */
-    private int maxHarpoonCount = 1;
+    private int maxVineCount = 1;
     /**
-     * The amount of harpoons this character has currently shot.
+     * The amount of vines this character has currently shot.
      */
-    private int currentHarpoonCount = 0;
+    private int currentVineCount = 0;
 
     /**
      * The sprites of the character.
@@ -78,17 +77,18 @@ public class Character extends AbstractEntity {
     /**
      * Boolean indicating whether the character can shoot.
      */
-    private boolean canShoot;
+    private boolean canShoot = true;
 
     /**
      * Instantiate a new character at position (x, y).
      *
      * @param position position of the character
      */
-    Character(final Vec2d position) {
+    public Character(final Vec2d position) {
         super(position);
 
         setShape(new Rectangle(BOUNDING_BOX));
+        setPhysicsBehaviour(new GravityBehaviour(this));
         getLevel().addEntity(shield);
     }
 
@@ -146,38 +146,33 @@ public class Character extends AbstractEntity {
         this.shooting = shooting;
     }
 
-    /**
-     * Updates the Character object.
-     *
-     * @param timeDifference The time since the last time the update method was called
-     */
+    @Override
     public final void update(final double timeDifference) {
         // Walk
-        setSpeed(runSpeed * direction, getYSpeed() + GRAVITY * timeDifference);
+        setXSpeed(runSpeed * direction);
 
         // Set the character sprite
         if (direction == 0) {
             setSprite(idleSprite);
         } else {
             setSprite(runningSprite);
+            setXScale(direction);
         }
 
         // Shoot
-        if (shooting && canShoot && currentHarpoonCount < maxHarpoonCount) {
-            currentHarpoonCount++;
-            getLevel().addEntity(new Harpoon(getPosition(), this));
+        if (shooting && canShoot && currentVineCount < maxVineCount) {
+            currentVineCount++;
+            getLevel().addEntity(new Vine(getPosition(), this));
+            final int occurrenceRate = 3;
+            SoundEffect.SHOOT.playSometimes(occurrenceRate);
         }
 
         canShoot = !shooting;
     }
 
-    /**
-     * Entry point for collisions.
-     *
-     * @param entity the entity the character collides with
-     */
+    @Override
     public final void collideWith(final AbstractEntity entity) {
-        if (entity instanceof Ball) {
+        if (entity instanceof AbstractBall) {
             collideWithBall();
         }
 
@@ -210,11 +205,11 @@ public class Character extends AbstractEntity {
         if (shape.getBottom() > blockShape.getTop() && shape.getBottom() < blockShape.getBottom()) {
             // Hit the floor from above
             shape.setBottom(blockShape.getTop());
-            getSpeed().y = Math.min(getYSpeed(), 0);
+            setYSpeed(Math.min(getYSpeed(), 0));
         } else if (shape.getTop() > blockShape.getTop() && shape.getTop() < blockShape.getBottom()) {
             // Hit the floor from below
             shape.setTop(blockShape.getBottom());
-            getSpeed().y = Math.max(0, getYSpeed());
+            setYSpeed(Math.max(0, getYSpeed()));
         }
     }
 
@@ -230,23 +225,11 @@ public class Character extends AbstractEntity {
         if (shape.getRight() > blockShape.getLeft() && shape.getRight() < blockShape.getRight()) {
             // Hit the block from above
             shape.setRight(blockShape.getLeft());
-            getSpeed().x = Math.min(getXSpeed(), 0);
+            setXSpeed(Math.min(getXSpeed(), 0));
         } else if (shape.getLeft() > blockShape.getLeft() && shape.getLeft() < blockShape.getRight()) {
             // Hit the block from below
             shape.setLeft(blockShape.getRight());
-            getSpeed().x = Math.max(0, getXSpeed());
-        }
-    }
-
-    /**
-     * Draws the running sprite if the character is moving, draws the idle sprite
-     * otherwise.
-     */
-    public final void draw() {
-        if (direction == 0) {
-            getSprite().draw(getPosition());
-        } else {
-            getSprite().draw(getPosition(), direction, 1);
+            setXSpeed(Math.max(0, getXSpeed()));
         }
     }
 
@@ -302,19 +285,19 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * Increases the amount of harpoons this character can shoot.
+     * Increases the amount of vines this character can shoot.
      *
-     * @param amount the amount of harpoons a character can shoot extra.
+     * @param amount the amount of vine a character can shoot extra.
      */
-    public void increaseMaxHarpoonCount(int amount) {
-        maxHarpoonCount = Math.max(1, maxHarpoonCount + amount);
+    public void increaseMaxVineCount(int amount) {
+        maxVineCount = Math.max(1, maxVineCount + amount);
     }
 
     /**
-     * Called when a harpoon is removed from the level.
+     * Called when a vine is removed from the level.
      */
-    void harpoonRemoved() {
-        currentHarpoonCount = Math.max(0, currentHarpoonCount - 1);
+    void vineRemoved() {
+        currentVineCount = Math.max(0, currentVineCount - 1);
     }
 
     /**
@@ -330,5 +313,21 @@ public class Character extends AbstractEntity {
      */
     void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
+    }
+
+    /**
+     * Getter for maxHarpoonCount.
+     * @return maxHarpoonCount
+     */
+    public int getMaxVineCount() {
+        return maxVineCount;
+    }
+
+    /**
+     * Getter for runSpeed.
+     * @return runSpeed
+     */
+    public double getRunSpeed() {
+        return runSpeed;
     }
 }

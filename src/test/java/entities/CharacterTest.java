@@ -2,6 +2,8 @@ package entities;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
+import entities.balls.AbstractBall;
+import game.player.Player;
 import geometry.Rectangle;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,12 +18,20 @@ import static org.junit.Assert.assertThat;
  */
 public class CharacterTest extends BubbleTroubleApplicationTest {
 
+    private Player player;
     private Character character;
     private Vec2d spawnPosition = new Vec2d(100, 300);
+
+    private int countEntities() {
+        return character.getLevel().getEntities().size();
+    }
 
     @Before
     public void setUp() {
         character = new Character(spawnPosition);
+        player = new Player(0, "", "", "");
+        player.setCharacter(character);
+        character.setPlayer(player);
     }
 
 
@@ -62,12 +72,12 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     public void testSetShooting() {
         character.setShooting(true);
         character.update(1);
-        assertThat("A character should shoot when told to.", character.getHarpoon().isVisible(), is(true));
+        assertThat("A character should shoot when told to.", character.getVine().isVisible(), is(true));
     }*/
 
     @Test
     public void testCollideWithBall() {
-        Ball mockedBall = Mockito.mock(Ball.class);
+        AbstractBall mockedBall = Mockito.mock(AbstractBall.class);
 
         character.collideWith(mockedBall);
 
@@ -152,5 +162,44 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         character.collideWith(wall);
 
         assertThat(character.getX(), greaterThan(x));
+    }
+
+    /*@Test
+    public void testIncreaseScore() {
+        int score = player.getScore();
+        character.increaseScore(100);
+        assertThat(player.getScore(), is(score + 100));
+    }*/
+
+    @Test
+    public void testShoot() {
+        int count = countEntities();
+        character.setShooting(true);
+        character.update(1);
+        assertThat(countEntities(), greaterThan(count));
+    }
+
+    @Test
+    public void testIncreaseVineCount() {
+        int count = countEntities();
+        character.increaseMaxVineCount(1);
+        character.setShooting(true);
+        character.update(1); // 1 vine
+        character.setShooting(false);
+        character.update(1); // 1 vine
+        character.setShooting(true);
+        character.update(1); // 2 vines
+        assertThat(countEntities(), is(count + 2));
+    }
+
+    @Test
+    public void testIncreaseLife() {
+        character.die();
+
+        int lives = player.getLives();
+
+        character.increaseLife();
+
+        assertThat(player.getLives(), is(lives + 1));
     }
 }
