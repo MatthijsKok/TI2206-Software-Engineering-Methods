@@ -403,7 +403,7 @@ public class Level {
     }
 
     /**
-     * This method kills each entities.character because the time is up.
+     * This method kills each character because the time is up.
      */
     private void timeUp() {
         for (Player player: Game.getInstance().getPlayers()) {

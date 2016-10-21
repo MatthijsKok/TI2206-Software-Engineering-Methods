@@ -3,6 +3,7 @@ package util.sound;
 
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaException;
+
 import java.nio.file.Paths;
 
 /**
@@ -62,12 +63,12 @@ public final class SoundEffect {
     /**
      * Path where the sound effects are stored.
      */
-    private static final String SOUND_EFFECTS_PATH = "src/main/resources/sounds/soundEffects/";
+    private static final String SFX_PATH = "src/main/resources/sounds/soundEffects/";
 
     /**
      * The volume at which the background is played.
      */
-    private static double soundEffectsVolume = 1.0;
+    private static double sfxVolume = 1.0;
 
     /**
      * The audio clip to  of this SoundEffect.
@@ -75,9 +76,10 @@ public final class SoundEffect {
     private AudioClip audio;
 
     /**
-     * counts how many times the sound has been played for sounds that play once in x times.
+     * counts how many times the sound has been played for sounds
+     * that play once in x times.
      */
-    private int playCount = 0;
+    private int playCount;
 
     /**
      * Creates a new SoundEffect Object.
@@ -85,13 +87,8 @@ public final class SoundEffect {
      * @param soundEffectName The name of the audio file, for example 'effect.wav'.
      * @throws MediaException When the name is not valid
      */
-    SoundEffect(String soundEffectName) throws MediaException {
-        try {
-            audio = new AudioClip(Paths.get(SOUND_EFFECTS_PATH + soundEffectName).toUri().toString());
-        } catch (MediaException e) {
-            System.err.println("You probably made a typo in the sound effect name: " + soundEffectName);
-            throw e;
-        }
+    SoundEffect(final String soundEffectName) throws MediaException {
+        audio = new AudioClip(Paths.get(SFX_PATH + soundEffectName).toUri().toString());
     }
 
     /**
@@ -99,15 +96,17 @@ public final class SoundEffect {
      */
     public void play() {
         if (audio != null) {
-            audio.play(soundEffectsVolume);
+            audio.play(sfxVolume);
         }
     }
 
     /**
      * Plays the sound once every x times.
-     * @param occurrenceRate The amount of times the playSometimes function should be called before playing the sound again.
+     * @param occurrenceRate The amount of times the playSometimes
+     *                       function should be called before playing
+     *                       the sound again.
      */
-    public void playSometimes(int occurrenceRate) {
+    public void playSometimes(final int occurrenceRate) {
         if (playCount % occurrenceRate == 0) {
             play();
         }
@@ -116,11 +115,11 @@ public final class SoundEffect {
 
     /**
      * Sets the volume at which all sound effects are played.
-     * @param soundEffectsVolume A double between 0 and 1, with 1 being full volume.
+     * @param sfxVolume A double between 0 and 1, with 1 being full volume.
      */
-    public static void setSoundEffectsVolume(double soundEffectsVolume) {
-        if (soundEffectsVolume >= 0 && soundEffectsVolume <= 1) {
-            SoundEffect.soundEffectsVolume = soundEffectsVolume;
+    public static void setSoundEffectsVolume(final double sfxVolume) {
+        if (sfxVolume >= 0 && sfxVolume <= 1) {
+            SoundEffect.sfxVolume = sfxVolume;
         }
     }
 
@@ -135,6 +134,6 @@ public final class SoundEffect {
      * @return The volume at which the sound effects are being played
      */
     public static double getSoundEffectsVolume() {
-        return soundEffectsVolume;
+        return sfxVolume;
     }
 }

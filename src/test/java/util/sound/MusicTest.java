@@ -32,6 +32,7 @@ public class MusicTest {
 
     @Test
     public void testSetInvalidSoundEffectVolume() {
+        Music.setMusicVolume(1);
         Music.setMusicVolume(5);
         assertEquals(1, Music.getMusicVolume(), 0);
     }

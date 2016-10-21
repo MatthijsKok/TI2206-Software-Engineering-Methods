@@ -48,7 +48,7 @@ abstract class AbstractPowerUp {
      * Sets the sprite of this power-up.
      * @param sprite The sprite to set.
      */
-    /* default */ void setSprite(final Sprite sprite) {
+    /* default */ final void setSprite(final Sprite sprite) {
         this.sprite = sprite;
     }
 
