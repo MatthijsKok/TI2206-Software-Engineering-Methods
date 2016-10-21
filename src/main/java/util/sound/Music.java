@@ -70,6 +70,8 @@ public final class Music {
      * @param musicName The name of the music file, for example 'music.mp3'.
      */
     public static synchronized void setMusic(String musicName) {
+        Music.stopMusic();
+
         try {
             Music.currentMusic = new Media(Paths.get(MUSIC_PATH + musicName).toUri().toString());
             mediaPlayer = new MediaPlayer(currentMusic);
