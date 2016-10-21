@@ -2,8 +2,8 @@ package level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
-import entities.balls.AbstractBall;
 import entities.Character;
+import entities.balls.AbstractBall;
 import game.Game;
 import game.GameState;
 import game.player.Player;

@@ -69,16 +69,16 @@ public final class Music {
      * Sets the music that will be played when the .startMusic() method is called.
      * @param musicName The name of the music file, for example 'music.mp3'.
      */
-    public static synchronized void setMusic(String musicName) {
-        try {
-            Music.currentMusic = new Media(Paths.get(MUSIC_PATH + musicName).toUri().toString());
-            mediaPlayer = new MediaPlayer(currentMusic);
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        }
-        catch (MediaException e) {
-            System.err.println("You probably made a typo in the music name: " + musicName);
-            mediaPlayer = null;
-            currentMusic = null;
+    public static void setMusic(final String musicName) {
+        synchronized (new Object()) {
+            try {
+                Music.currentMusic = new Media(Paths.get(MUSIC_PATH + musicName).toUri().toString());
+                mediaPlayer = new MediaPlayer(currentMusic);
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            } catch (MediaException e) {
+                mediaPlayer = null;
+                currentMusic = null;
+            }
         }
     }
 
@@ -86,7 +86,7 @@ public final class Music {
      * Sets the volume at which the music should be played.
      * @param musicVolume A double between 0 and 1, with 1 being full volume.
      */
-    public static void setMusicVolume(double musicVolume) {
+    public static void setMusicVolume(final double musicVolume) {
         if (musicVolume >= 0.0 && musicVolume <= 1.0) {
             Music.musicVolume = musicVolume;
             if (mediaPlayer != null) {

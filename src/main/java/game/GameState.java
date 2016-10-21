@@ -4,10 +4,10 @@ package game;
 import game.player.Player;
 import level.Level;
 import util.KeyboardInputManager;
+import util.SceneManager;
 import util.sound.MultiSoundEffect;
 import util.sound.Music;
 import util.sound.SoundEffect;
-import util.SceneManager;
 
 import java.io.IOException;
 import java.util.Observable;

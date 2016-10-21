@@ -14,8 +14,9 @@ public class GamePane extends Pane {
      * Creates a new game.
      * @param stage The stage the game is run in.
      */
-    public GamePane(Stage stage) {
-        Canvas canvas = CanvasManager.createCanvas(stage);
+    public GamePane(final Stage stage) {
+        super();
+        final Canvas canvas = CanvasManager.createCanvas(stage);
 
         CanvasManager.setCanvas(canvas);
 

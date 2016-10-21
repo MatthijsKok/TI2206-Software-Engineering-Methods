@@ -15,42 +15,32 @@ public class MusicSlider extends Pane {
     private static final double VOLUME_STEP_SIZE = 0.1;
 
     /**
-     * The slider in this pane.
-     */
-    private final Slider slider;
-
-    /**
      * Creates a new music slider.
      * @param label the name of the slider.
      */
-    public MusicSlider(String label) {
-        slider = createSlider();
+    public MusicSlider(final String label) {
+        super();
+
+        Slider slider = createSlider();
         getChildren().addAll(
                 createLabel(label),
                 slider
         );
     }
 
-    private Label createLabel(String label) {
+    private Label createLabel(final String label) {
         return new Label(label);
     }
 
+    @SuppressWarnings("magicnumber")
     private Slider createSlider() {
-        Slider slider = new Slider();
+        final Slider slider = new Slider();
         slider.setLayoutY(32);
 
         slider.setMin(0);
         slider.setMax(1);
         slider.setBlockIncrement(VOLUME_STEP_SIZE);
 
-        return slider;
-    }
-
-    /**
-     * Gets the slider out of this pane.
-     * @return the slider.
-     */
-    public Slider getSlider() {
         return slider;
     }
 }

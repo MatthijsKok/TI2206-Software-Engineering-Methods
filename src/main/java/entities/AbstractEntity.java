@@ -54,7 +54,7 @@ public abstract class AbstractEntity extends Observable {
      * Entities with higher depth are drawn below entities with
      * lower depth.
      */
-    private int depth = 0;
+    private int depth;
 
     /**
      * Creates a new entity.
@@ -381,7 +381,7 @@ public abstract class AbstractEntity extends Observable {
      * current level.
      * @param depth the depth to set.
      */
-    public final void setDepth(final int depth) {
+    protected final void setDepth(final int depth) {
         this.depth = depth;
         getLevel().depthSort();
     }

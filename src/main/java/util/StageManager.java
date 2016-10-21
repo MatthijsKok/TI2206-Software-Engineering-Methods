@@ -50,7 +50,7 @@ public final class StageManager {
      * Sets the main stage for the application.
      * @param stage The main stage for the application.
      */
-    private static void setStage(Stage stage) {
+    private static void setStage(final Stage stage) {
         StageManager.stage = stage;
     }
 
