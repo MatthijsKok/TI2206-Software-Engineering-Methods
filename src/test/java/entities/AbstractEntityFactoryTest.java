@@ -9,22 +9,22 @@ import org.json.JSONObject;
  */
 abstract class AbstractEntityFactoryTest extends BubbleTroubleApplicationTest {
     static /* default */ JSONObject createJSONEntity(final String type,
-                                                 final double x,
-                                                 final double y,
+                                                 final double xPosition,
+                                                 final double yPosition,
                                                  final JSONObject attributes) {
-        JSONObject entity = createJSONEntity(type, x, y);
+        final JSONObject entity = createJSONEntity(type, xPosition, yPosition);
         entity.put("attributes", attributes);
 
         return entity;
     }
 
     static /* default */ JSONObject createJSONEntity(final String type,
-                                                 final double x,
-                                                 final double y) {
-        JSONObject entity = new JSONObject();
+                                                 final double xPosition,
+                                                 final double yPosition) {
+        final JSONObject entity = new JSONObject();
         entity.put("type", type);
-        entity.put("x", x);
-        entity.put("y", y);
+        entity.put("x", xPosition);
+        entity.put("y", yPosition);
 
         return entity;
     }

@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class SoundEffectTest {
 
-    SoundEffect validSoundEffect;
+    private SoundEffect validSoundEffect;
 
     @Before
     public void setUp(){
@@ -32,6 +32,7 @@ public class SoundEffectTest {
 
     @Test
     public void testSetInvalidSoundEffectVolume() {
+        SoundEffect.setSoundEffectsVolume(1);
         SoundEffect.setSoundEffectsVolume(5);
         assertEquals(1, SoundEffect.getSoundEffectsVolume(), 0);
     }

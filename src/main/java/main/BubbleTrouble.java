@@ -1,15 +1,18 @@
 package main;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
-import menu.BubbleTroubleMenu;
-import util.CanvasManager;
+import panes.GamePane;
+import panes.MainMenu;
+import panes.SettingsMenu;
+import util.Config;
+import util.KeyboardInputManager;
+import util.SceneManager;
 import util.StageManager;
 import util.logging.LogLevel;
 import util.logging.Logger;
+import util.sound.Music;
+import util.sound.SoundEffect;
 
 /**
  * Bubble Trouble is a game written in JavaFX.
@@ -35,13 +38,42 @@ public class BubbleTrouble extends Application {
      */
     public final void start(final Stage stage) {
         LOGGER.setLevel(LogLevel.INFO);
+
+        loadSounds();
+
         StageManager.init(stage);
-        ObservableList<Node> children = StageManager.getRoot().getChildren();
 
-        Canvas canvas = CanvasManager.createCanvas(stage);
-        canvas.setVisible(false);
+        SceneManager.setStage(stage);
 
-        //Load sounds
+        SceneManager.addScene("MainMenu", new MainMenu(stage));
+        SceneManager.getScene("MainMenu").getStylesheets().add("stylesheets/mainMenu.css");
+        SceneManager.addScene("SettingsMenu", new SettingsMenu(stage));
+        SceneManager.getScene("SettingsMenu").getStylesheets().add("stylesheets/settingsMenu.css");
+        SceneManager.addScene("Game", new GamePane(stage));
+
+        SceneManager.goToScene("MainMenu");
+
+        KeyboardInputManager.addScene(SceneManager.getScene("Game"));
+
+        LOGGER.info("App started");
+    }
+
+    private static void loadSounds() {
+        // Set volume
+        String volume;
+        volume = Config.get("bgVolume");
+        if (volume == null) {
+            volume = "0";
+        }
+        Music.setMusicVolume(Double.valueOf(volume));
+
+        volume = Config.get("sfxVolume");
+        if (volume == null) {
+            volume = "0";
+        }
+        SoundEffect.setSoundEffectsVolume(Double.valueOf(volume));
+
+        // Load sounds
         try {
             Class.forName("util.sound.SoundEffect");
             Class.forName("util.sound.MultiSoundEffect");
@@ -49,11 +81,8 @@ public class BubbleTrouble extends Application {
             e.printStackTrace();
         }
 
-        children.add(new BubbleTroubleMenu());
-        children.add(canvas);
-
-        CanvasManager.setCanvas(canvas);
-        LOGGER.info("App started");
+        Music.setMusic("menu_gusty_garden.mp3");
+        Music.startMusic();
     }
 
 }
