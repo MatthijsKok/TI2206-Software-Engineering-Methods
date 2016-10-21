@@ -71,17 +71,19 @@ public class SettingsMenu extends Pane {
         Pane sliderPane = new MusicSlider("Background music volume");
 
         sliderPane.setLayoutX(128);
-        sliderPane.setLayoutY(128);
+        sliderPane.setLayoutY(192);
         sliderPane.prefWidth(1024 - 256);
 
         Slider slider = (Slider) sliderPane.getChildren().get(1);
         slider.setValue(Double.valueOf(Config.get("bgVolume")));
 
+        slider.valueProperty().addListener((obs) -> {
+            Music.setMusicVolume(slider.getValue());
+        });
+
         slider.valueChangingProperty().addListener((obs, wasChanging, isNowChanging) -> {
             if (!isNowChanging) {
-                double volume = slider.getValue();
-                Music.setMusicVolume(volume);
-                Config.put("bgVolume", String.valueOf(volume));
+                Config.put("bgVolume", String.valueOf(slider.getValue()));
             }
         });
 

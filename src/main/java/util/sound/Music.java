@@ -89,6 +89,9 @@ public final class Music {
     public static void setMusicVolume(double musicVolume) {
         if (musicVolume >= 0.0 && musicVolume <= 1.0) {
             Music.musicVolume = musicVolume;
+            if (mediaPlayer != null) {
+                mediaPlayer.setVolume(musicVolume);
+            }
         }
     }
 

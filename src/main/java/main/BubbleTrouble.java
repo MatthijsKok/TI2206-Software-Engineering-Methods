@@ -82,6 +82,7 @@ public class BubbleTrouble extends Application {
         }
 
         Music.setMusic("gusty_garden.mp3");
+        Music.startMusic();
     }
 
 }
