@@ -3,7 +3,6 @@ package panes.elements;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
-import util.Config;
 
 /**
  * This class is a slider that controls music volume.
@@ -11,23 +10,24 @@ import util.Config;
 public class MusicSlider extends Pane {
 
     /**
-     * The maximal of the volume.
-     */
-    private static final int MAX_VOLUME = 100;
-    /**
      * The steps between to consecutive volume values.
      */
-    private static final int VOLUME_STEP_SIZE = 10;
+    private static final double VOLUME_STEP_SIZE = 0.1;
+
+    /**
+     * The slider in this pane.
+     */
+    private final Slider slider;
 
     /**
      * Creates a new music slider.
      * @param label the name of the slider.
-     * @param configKey the key of the configuration file this slider handles.
      */
-    public MusicSlider(String label, String configKey) {
+    public MusicSlider(String label) {
+        slider = createSlider();
         getChildren().addAll(
                 createLabel(label),
-                createSlider(configKey)
+                slider
         );
     }
 
@@ -35,18 +35,22 @@ public class MusicSlider extends Pane {
         return new Label(label);
     }
 
-    private Slider createSlider(String configKey) {
+    private Slider createSlider() {
         Slider slider = new Slider();
         slider.setLayoutY(32);
 
         slider.setMin(0);
-        slider.setMax(MAX_VOLUME);
+        slider.setMax(1);
         slider.setBlockIncrement(VOLUME_STEP_SIZE);
 
-        slider.setOnDragDone(e -> {
+        return slider;
+    }
 
-            Config.put(configKey, String.valueOf(slider.getValue()));
-        });
+    /**
+     * Gets the slider out of this pane.
+     * @return the slider.
+     */
+    public Slider getSlider() {
         return slider;
     }
 }

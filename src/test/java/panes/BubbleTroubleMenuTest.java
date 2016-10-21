@@ -14,7 +14,6 @@ import util.StageManager;
 
 import java.util.concurrent.TimeoutException;
 
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 /**
@@ -22,7 +21,7 @@ import static org.junit.Assert.*;
  */
 public class BubbleTroubleMenuTest extends ApplicationTest {
 
-    private BubbleTroubleMenu menu;
+    private MainMenu menu;
     private Game game;
 
     @Override
@@ -30,8 +29,7 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
         StageManager.init(stage);
         Canvas canvas = CanvasManager.createCanvas(stage);
         CanvasManager.setCanvas(canvas);
-        menu = new BubbleTroubleMenu();
-        StageManager.getRoot().getChildren().add(menu);
+        menu = new MainMenu(stage);
 
     }
 

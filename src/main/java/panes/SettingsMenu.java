@@ -1,15 +1,26 @@
 package panes;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import panes.elements.MusicSlider;
 import util.Config;
 import util.SceneManager;
+import util.sound.Music;
+import util.sound.SoundEffect;
 
 /**
  * The settings menu.
@@ -57,23 +68,46 @@ public class SettingsMenu extends Pane {
     }
 
     private Pane createBackgroundMusicSlider() {
-        Pane slider = new MusicSlider("Background music volume", "bgVolume");
+        Pane sliderPane = new MusicSlider("Background music volume");
 
-        slider.setLayoutX(128);
-        slider.setLayoutY(128);
-        slider.prefWidth(1024-256);
+        sliderPane.setLayoutX(128);
+        sliderPane.setLayoutY(128);
+        sliderPane.prefWidth(1024 - 256);
 
-        return slider;
+        Slider slider = (Slider) sliderPane.getChildren().get(1);
+        slider.setValue(Double.valueOf(Config.get("bgVolume")));
+
+        slider.valueChangingProperty().addListener((obs, wasChanging, isNowChanging) -> {
+            if (!isNowChanging) {
+                double volume = slider.getValue();
+                Music.setMusicVolume(volume);
+                Config.put("bgVolume", String.valueOf(volume));
+            }
+        });
+
+        return sliderPane;
     }
 
     private Pane createSoundEffectSlider() {
-        Pane slider = new MusicSlider("Sound effect volume", "sfxVolume");
+        Pane sliderPane = new MusicSlider("Sound effect volume");
 
-        slider.setLayoutX(128);
-        slider.setLayoutY(256);
-        slider.prefWidth(1024-256);
+        sliderPane.setLayoutX(128);
+        sliderPane.setLayoutY(256);
+        sliderPane.prefWidth(1024 - 256);
 
-        return slider;
+        Slider slider = (Slider) sliderPane.getChildren().get(1);
+        slider.setValue(Double.valueOf(Config.get("sfxVolume")));
+
+        slider.valueChangingProperty().addListener((obs, wasChanging, isNowChanging) -> {
+            if (!isNowChanging) {
+                double volume = slider.getValue();
+                SoundEffect.setSoundEffectsVolume(volume);
+                SoundEffect.EXTRA_LIFE.play();
+                Config.put("sfxVolume", String.valueOf(volume));
+            }
+        });
+
+        return sliderPane;
     }
 
     private GridPane createPlayerOneInput() {
