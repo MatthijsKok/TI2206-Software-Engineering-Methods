@@ -5,6 +5,7 @@ import entities.behaviour.AbstractPhysicsBehaviour;
 import entities.behaviour.NoGravityBehaviour;
 import game.Game;
 import geometry.AbstractShape;
+import geometry.Rectangle;
 import graphics.Sprite;
 import level.Level;
 
@@ -351,6 +352,16 @@ public abstract class AbstractEntity extends Observable {
         shape.bindPosition(position);
         shape.bindScale(scale);
         this.shape = shape;
+    }
+
+    /**
+     * Sets the shape of the entity and binds its position to the
+     * entity's position.
+     */
+    /* default */ protected void setShapeToSprite() {
+        if (sprite != null) {
+            setShape(new Rectangle(sprite));
+        }
     }
 
     /**
