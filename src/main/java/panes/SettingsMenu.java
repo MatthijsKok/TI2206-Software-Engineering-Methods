@@ -3,11 +3,11 @@ package panes;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import panes.elements.MusicSlider;
 import util.Config;
 import util.SceneManager;
 
@@ -56,23 +56,23 @@ public class SettingsMenu extends Pane {
         return button;
     }
 
-    private Slider createBackgroundMusicSlider() {
-        Slider slider = new Slider();
-        slider.setMin(0);
-        slider.setMax(100);
-        slider.setBlockIncrement(10);
+    private Pane createBackgroundMusicSlider() {
+        Pane slider = new MusicSlider("Background music volume", "bgVolume");
 
-        slider.setOnDragDone(dragEvent -> Config.put("bgVolume", String.valueOf(slider.getValue())));
+        slider.setLayoutX(128);
+        slider.setLayoutY(128);
+        slider.prefWidth(1024-256);
+
         return slider;
     }
 
-    private Slider createSoundEffectSlider() {
-        Slider slider = new Slider();
-        slider.setMin(0);
-        slider.setMax(100);
-        slider.setBlockIncrement(10);
+    private Pane createSoundEffectSlider() {
+        Pane slider = new MusicSlider("Sound effect volume", "sfxVolume");
 
-        slider.setOnDragDone(dragEvent -> Config.put("sfxVolume", String.valueOf(slider.getValue())));
+        slider.setLayoutX(128);
+        slider.setLayoutY(256);
+        slider.prefWidth(1024-256);
+
         return slider;
     }
 
@@ -80,7 +80,7 @@ public class SettingsMenu extends Pane {
         GridPane grid = createInputGrid("Player 1", "playerOne");
 
         grid.setLayoutX(128);
-        grid.setLayoutY(200);
+        grid.setLayoutY(400);
         grid.setMaxWidth(352);
 
         return grid;
@@ -90,7 +90,7 @@ public class SettingsMenu extends Pane {
         GridPane grid = createInputGrid("Player 2", "playerTwo");
 
         grid.setLayoutX(544);
-        grid.setLayoutY(200);
+        grid.setLayoutY(400);
         grid.setMaxWidth(352);
 
         return grid;
