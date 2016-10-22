@@ -52,7 +52,7 @@ public class MainMenu extends Pane {
      * @return backgroundImage
      */
     private BackgroundImage createBackgroundImage() {
-        Image image = new Image("menu.png");
+        Image image = new Image("menu.jpg");
         return new BackgroundImage(image, null, null, null, null);
     }
 
@@ -61,8 +61,8 @@ public class MainMenu extends Pane {
      * @return singlePlayerGame
      */
     private Button createSinglePlayerButton() {
-        Button button = new Button("Start single player game");
-        button.setLayoutX(200);
+        Button button = new Button("Start Singleplayer Game");
+        button.setLayoutX(180);
         button.setLayoutY(224);
         button.getStyleClass().add("green");
         button.idProperty().set("singlePlayerButton");
@@ -76,8 +76,8 @@ public class MainMenu extends Pane {
      * @return multiPlayerGame
      */
     private Button createMultiPlayerButton() {
-        Button button = new Button("Start multi player game");
-        button.setLayoutX(200);
+        Button button = new Button("Start Multiplayer Game");
+        button.setLayoutX(180);
         button.setLayoutY(282);
         button.getStyleClass().add("green");
         button.idProperty().set("multiPlayerButton");
@@ -93,7 +93,7 @@ public class MainMenu extends Pane {
      */
     private Button createSettingsButton() {
         Button button = new Button("Settings");
-        button.setLayoutX(200);
+        button.setLayoutX(180);
         button.setLayoutY(342);
         button.getStyleClass().add("green");
 
@@ -109,7 +109,7 @@ public class MainMenu extends Pane {
      */
     private Button createQuitButton() {
         Button button = new Button("Quit");
-        button.setLayoutX(200);
+        button.setLayoutX(180);
         button.setLayoutY(402);
         button.getStyleClass().add("green");
         button.idProperty().set("quitButton");

@@ -136,6 +136,8 @@ public class GameState implements Observer {
         if (won || lost) {
             game.stop();
             SceneManager.goToScene("MainMenu");
+            Music.setMusic("menu_gusty_garden.mp3");
+            Music.startMusic();
         } else if (level.isWon()) {
             nextLevel();
             resume();
