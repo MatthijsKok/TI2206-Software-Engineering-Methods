@@ -29,7 +29,7 @@ public class SettingsMenu extends Pane {
      * The image used in the background of the settings menu.
      */
     private static final Image BACKGROUND_IMAGE =
-            new Image("backgrounds/background1.png");
+            new Image("settings.jpg");
     /**
      * The background image of the settings menu.
      */
@@ -57,20 +57,19 @@ public class SettingsMenu extends Pane {
     }
 
     private Button createBackButton() {
-        Button button = new Button("back");
-        button.setLayoutX(128);
+        Button button = new Button("Back");
+        button.setLayoutX(180);
         button.setLayoutY(128);
 
-        button.getStyleClass().add("back");
         button.setOnMouseClicked(e -> SceneManager.goBack());
 
         return button;
     }
 
     private Pane createBackgroundMusicSlider() {
-        Pane sliderPane = new MusicSlider("Background music volume");
+        Pane sliderPane = new MusicSlider("Background Music Volume");
 
-        sliderPane.setLayoutX(128);
+        sliderPane.setLayoutX(180);
         sliderPane.setLayoutY(192);
         sliderPane.prefWidth(1024 - 256);
 
@@ -89,9 +88,9 @@ public class SettingsMenu extends Pane {
     }
 
     private Pane createSoundEffectSlider() {
-        Pane sliderPane = new MusicSlider("Sound effect volume");
+        Pane sliderPane = new MusicSlider("Sound Effect Volume");
 
-        sliderPane.setLayoutX(128);
+        sliderPane.setLayoutX(180);
         sliderPane.setLayoutY(256);
         sliderPane.prefWidth(1024 - 256);
 
@@ -102,7 +101,7 @@ public class SettingsMenu extends Pane {
             if (!isNowChanging) {
                 double volume = slider.getValue();
                 SoundEffect.setSoundEffectsVolume(volume);
-                SoundEffect.EXTRA_LIFE.play();
+                SoundEffect.SPEED_BOOST.play();
                 Config.put("sfxVolume", String.valueOf(volume));
             }
         });
@@ -113,9 +112,9 @@ public class SettingsMenu extends Pane {
     private GridPane createPlayerOneInput() {
         GridPane grid = createInputGrid("Player 1", "playerOne");
 
-        grid.setLayoutX(128);
-        grid.setLayoutY(400);
-        grid.setMaxWidth(352);
+        grid.setLayoutX(180);
+        grid.setLayoutY(440);
+        grid.setMaxWidth(400);
 
         return grid;
     }
@@ -123,9 +122,9 @@ public class SettingsMenu extends Pane {
     private Node createPlayerTwoInput() {
         GridPane grid = createInputGrid("Player 2", "playerTwo");
 
-        grid.setLayoutX(544);
-        grid.setLayoutY(400);
-        grid.setMaxWidth(352);
+        grid.setLayoutX(596);
+        grid.setLayoutY(440);
+        grid.setMaxWidth(380);
 
         return grid;
     }

@@ -143,11 +143,7 @@ public class Sprite implements Cloneable {
      * @param frames amount of frames
      */
     private void setFrames(final int frames) {
-        if (frames > 0) {
-            this.frames = frames;
-        } else {
-            this.frames = 1;
-        }
+        this.frames = Math.max(1, frames);
     }
 
     /**

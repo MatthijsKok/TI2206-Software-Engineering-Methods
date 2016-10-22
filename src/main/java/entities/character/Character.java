@@ -1,6 +1,11 @@
-package entities;
+package entities.character;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.AbstractEntity;
+import entities.FloorBlock;
+import entities.Vine;
+import entities.Shield;
+import entities.WallBlock;
 import entities.balls.AbstractBall;
 import entities.behaviour.GravityBehaviour;
 import game.player.Player;
@@ -112,7 +117,7 @@ public class Character extends AbstractEntity {
     /**
      * @return whether the character is alive
      */
-    boolean isAlive() {
+    public boolean isAlive() {
         return alive;
     }
 
@@ -234,33 +239,7 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * Sets the correct sprites according to the player id.
-     *
-     * @param id The player id.
-     */
-    @SuppressWarnings("magicnumber")
-    //useless too make new fields for the offsets.
-    void determineSprite(int id) {
-        switch (id) {
-            case 0:
-                //Set Mario as player 1
-                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32 - 16));
-                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35 - 16));
-                break;
-            case 1:
-                //Set Yoshi as player 2
-                idleSprite = new Sprite("player/yoshi_idle.png", 1, new Vec2d(8, 32 - 16));
-                runningSprite = new Sprite("player/yoshi_running.png", 8, new Vec2d(11, 37 - 16));
-                break;
-            default:
-                //Set Mario for any other players
-                idleSprite = new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32 - 16));
-                runningSprite = new Sprite("player/mario_running.png", 8, new Vec2d(11, 35 - 16));
-        }
-    }
-
-    /**
-     * Increases the speed at which the character runs.
+     * Increases the speed at which the entities.character runs.
      *
      * @param amount The speed boost.
      */
@@ -282,6 +261,8 @@ public class Character extends AbstractEntity {
      */
     public void setPlayer(final Player player) {
         this.player = player;
+        idleSprite = CharacterSprites.getIdleSprite(player.getId());
+        runningSprite = CharacterSprites.getRunningSprite(player.getId());
     }
 
     /**
@@ -296,7 +277,7 @@ public class Character extends AbstractEntity {
     /**
      * Called when a vine is removed from the level.
      */
-    void vineRemoved() {
+    public void vineRemoved() {
         currentVineCount = Math.max(0, currentVineCount - 1);
     }
 
@@ -311,7 +292,7 @@ public class Character extends AbstractEntity {
      * Increases the score of the character.
      * @param score the amount of the increase.
      */
-    void increaseScore(final int score) {
+    public void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
     }
 

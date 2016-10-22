@@ -1,5 +1,5 @@
 package entities.powerups;
-import entities.Character;
+import entities.character.Character;
 import graphics.Sprite;
 
 /**

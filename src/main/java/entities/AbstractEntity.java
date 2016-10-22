@@ -5,6 +5,7 @@ import entities.behaviour.AbstractPhysicsBehaviour;
 import entities.behaviour.NoGravityBehaviour;
 import game.Game;
 import geometry.AbstractShape;
+import geometry.Rectangle;
 import graphics.Sprite;
 import level.Level;
 
@@ -303,7 +304,7 @@ public abstract class AbstractEntity extends Observable {
      * Sets the vertical speed of the entity.
      * @param ySpeed vertical speed
      */
-    public void setYSpeed(final double ySpeed) {
+    public final void setYSpeed(final double ySpeed) {
         speed.y = ySpeed;
     }
 
@@ -311,7 +312,7 @@ public abstract class AbstractEntity extends Observable {
      * Sets the scale of the entity.
      * @param xScale double - the target horizontal scale
      */
-    /* default */ void setXScale(final double xScale) {
+    protected /* default */ final void setXScale(final double xScale) {
         setScale(xScale, getYScale());
     }
 
@@ -319,7 +320,7 @@ public abstract class AbstractEntity extends Observable {
      * Sets the scale of the entity.
      * @param yScale double - the target vertical scale
      */
-    /* default */ final void setYScale(final double yScale) {
+    protected /* default */ final void setYScale(final double yScale) {
         setScale(getXScale(), yScale);
     }
 
@@ -358,6 +359,16 @@ public abstract class AbstractEntity extends Observable {
         shape.bindPosition(position);
         shape.bindScale(scale);
         this.shape = shape;
+    }
+
+    /**
+     * Sets the shape of the entity and binds its position to the
+     * entity's position.
+     */
+    /* default */ protected void setShapeToSprite() {
+        if (sprite != null) {
+            setShape(new Rectangle(sprite));
+        }
     }
 
     /**

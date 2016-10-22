@@ -70,13 +70,9 @@ public class Rectangle extends AbstractShape {
      * @param size target size
      */
     public void setSize(Vec2d size) {
-        if (size.x < 0) {
-            size.x = 0;
-        }
+        size.x = Math.max(size.x, 0);
+        size.y = Math.max(size.y, 0);
 
-        if (size.y < 0) {
-            size.y = 0;
-        }
         this.size = size;
     }
 

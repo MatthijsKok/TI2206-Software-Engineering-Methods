@@ -3,9 +3,11 @@ package util;
 import javafx.scene.Scene;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 /**
  * This singleton class manages keyboard input and makes it available
@@ -26,7 +28,7 @@ public final class KeyboardInputManager extends Observable {
     /**
      * The list containing information about which keys are pressed at any time.
      */
-    private static List<String> input = new ArrayList<>();
+    private static Set<String> input = new HashSet<>();
 
     /**
      * This overrides the default public constructor.
@@ -61,9 +63,7 @@ public final class KeyboardInputManager extends Observable {
     }
 
     private void pressKey(String code) {
-        if (!input.contains(code)) {
-            input.add(code);
-        }
+        input.add(code);
 
         setChanged();
         notifyObservers();

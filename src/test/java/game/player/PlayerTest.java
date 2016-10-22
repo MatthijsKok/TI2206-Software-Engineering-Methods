@@ -2,7 +2,7 @@ package game.player;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
-import entities.Character;
+import entities.character.Character;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

@@ -2,8 +2,8 @@ package level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
-import entities.Character;
 import entities.balls.AbstractBall;
+import entities.character.Character;
 import game.Game;
 import game.GameState;
 import game.player.Player;
@@ -389,7 +389,15 @@ public class Level {
      * Lose the level.
      */
     public final void lose() {
-        Game.getInstance().getState().pause();
+        Game game = Game.getInstance();
+
+        if (game.getPlayers().stream()
+                .allMatch(player -> player.getLives() <= 0)) {
+            game.getState().lose();
+        }
+
+        game.getState().pause();
+
         lost = true;
         Music.stopMusic();
     }
@@ -404,6 +412,7 @@ public class Level {
                 character.die();
             }
         }
+
         lose();
     }
 

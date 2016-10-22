@@ -1,6 +1,7 @@
 package entities;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
+import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import game.player.Player;
@@ -81,7 +82,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
         character.collideWith(mockedBall);
 
-        assertThat("A character should die when it collides with a ball", character.isAlive(), is(false));
+        assertThat("A entities.character should die when it collides with a ball", character.isAlive(), is(false));
     }
 
     @Test

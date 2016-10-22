@@ -1,5 +1,6 @@
 package entities;
 
+import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import entities.balls.ColoredBall;
@@ -54,9 +55,7 @@ public final class EntityFactory {
 
     private static Character instantiateCharacter(Vec2d position, Player player) {
         Character character = new Character(position);
-        character.determineSprite(player.getId());
         player.setCharacter(character);
-        character.setPlayer(player);
         return character;
     }
 
