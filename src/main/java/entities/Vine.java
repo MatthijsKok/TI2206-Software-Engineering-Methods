@@ -66,7 +66,6 @@ public class Vine extends AbstractEntity {
 
     @Override
     public void collideWith(final AbstractEntity entity) {
-        SoundEffect.SHOOT.getAudio().stop();
 
         if (entity instanceof AbstractBall) {
             collideWith((AbstractBall) entity);
@@ -92,6 +91,7 @@ public class Vine extends AbstractEntity {
      * Collision with a block, the vine should disappear and the score should increase.
      */
     private void collideWithBlock() {
+        SoundEffect.SHOOT.getAudio().stop();
         die();
     }
 }
