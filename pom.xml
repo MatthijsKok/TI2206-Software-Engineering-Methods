@@ -122,6 +122,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.6</version>
+                <configuration>
+                    <linkXRef>true</linkXRef>
+                    <verbose>true</verbose>
+                    <rulesets>
+                        <ruleset>pmd.xml</ruleset>
+                    </rulesets>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
