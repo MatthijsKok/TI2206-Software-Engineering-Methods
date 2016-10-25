@@ -25,7 +25,7 @@ public class Vine extends AbstractEntity {
     /**
      * Constant upward speed of the vine in px/s.
      */
-    private static final double TRAVEL_SPEED = 250; // px/s
+    private static final double TRAVEL_SPEED = 300; // px/s
 
     /**
      * Score that is multiplied by the size of the ball, and then added to the score.
@@ -55,6 +55,7 @@ public class Vine extends AbstractEntity {
     private void die() {
         getLevel().removeEntity(this);
         character.vineRemoved();
+        SoundEffect.SHOOT.getAudio().stop();
     }
 
     @Override
