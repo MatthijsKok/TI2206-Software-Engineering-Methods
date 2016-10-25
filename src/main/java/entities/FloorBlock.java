@@ -22,4 +22,11 @@ public class FloorBlock extends AbstractBlock {
         setSprite(BLOCK_SPRITE);
         setShapeToSprite();
     }
+
+    /**
+     * @return The sprite of the block
+     */
+    public static Sprite getBlockSprite() {
+        return BLOCK_SPRITE;
+    }
 }

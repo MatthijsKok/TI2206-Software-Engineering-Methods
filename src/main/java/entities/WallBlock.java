@@ -22,4 +22,11 @@ public class WallBlock extends AbstractBlock {
         setSprite(WALL_SPRITE);
         setShapeToSprite();
     }
+
+    /**
+     * @return The sprite of the block
+     */
+    public static Sprite getWallSprite() {
+        return WALL_SPRITE;
+    }
 }
