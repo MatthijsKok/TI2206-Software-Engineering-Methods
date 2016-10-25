@@ -46,7 +46,7 @@ public class Level {
     /**
      * The default background image of a level.
      */
-    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("backgrounds/background.png");
+    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("backgrounds/overworld.png");
 
     /**
      * The default background music of a level.
