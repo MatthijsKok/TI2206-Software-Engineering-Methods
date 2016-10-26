@@ -1,12 +1,12 @@
 {
-  "name": "Level 2",
+  "name": "Level 5",
   "duration": 40,
   "backgroundImageURI": "backgrounds/background5.png",
   "backgroundMusicURI": "peach_gardens.mp3",
   "entities": [
     {
       "type": "Player",
-      "x": 512,
+      "x": 200,
       "y": 500,
       "attributes": {}
     },
@@ -33,6 +33,11 @@
         "size": 3,
         "color": "green"
       }
+    },
+    {
+      "type": "Plant",
+      "x": 482,
+      "y": 480
     },
     {
       "type": "Wall",

@@ -34,6 +34,8 @@ public final class EntityFactory {
                 return createCharacter(position);
             case "Ball":
                 return createBall(position, entity.getJSONObject("attributes"));
+            case "Plant":
+                return createPlant(position);
             case "Wall":
                 return createWall(position);
             case "Floor":
@@ -72,6 +74,10 @@ public final class EntityFactory {
 
     private static WallBlock createWall(Vec2d position) {
         return new WallBlock(position);
+    }
+
+    private static Plant createPlant(Vec2d position) {
+        return new Plant(position);
     }
 
     private static FloorBlock createFloor(Vec2d position) {

@@ -1,11 +1,7 @@
 package entities.character;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.AbstractEntity;
-import entities.FloorBlock;
-import entities.Vine;
-import entities.Shield;
-import entities.WallBlock;
+import entities.*;
 import entities.balls.AbstractBall;
 import entities.behaviour.GravityBehaviour;
 import game.player.Player;
@@ -188,6 +184,10 @@ public class Character extends AbstractEntity {
         if (entity instanceof WallBlock) {
             collideWith((WallBlock) entity);
         }
+
+        if (entity instanceof Plant) {
+            collideWith((Plant) entity);
+        }
     }
 
     /**
@@ -221,11 +221,11 @@ public class Character extends AbstractEntity {
     /**
      * If a character collides with a wall, it should move outside that wall.
      *
-     * @param wall the wall the character collides with
+     * @param wallOrPlant the wall the character collides with
      */
-    private void collideWith(final WallBlock wall) {
+    private void collideWith(final AbstractBlock wallOrPlant) {
         Rectangle shape = (Rectangle) getShape();
-        Rectangle blockShape = (Rectangle) wall.getShape();
+        Rectangle blockShape = (Rectangle) wallOrPlant.getShape();
 
         if (shape.getRight() > blockShape.getLeft() && shape.getRight() < blockShape.getRight()) {
             // Hit the block from above

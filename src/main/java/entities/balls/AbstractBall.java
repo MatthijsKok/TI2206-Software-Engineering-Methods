@@ -1,11 +1,7 @@
 package entities.balls;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.AbstractEntity;
-import entities.FloorBlock;
-import entities.Shield;
-import entities.Vine;
-import entities.WallBlock;
+import entities.*;
 import entities.behaviour.GravityBehaviour;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
@@ -129,6 +125,10 @@ public abstract class AbstractBall extends AbstractEntity {
             collideWith((WallBlock) entity);
         }
 
+        if (entity instanceof Plant) {
+            collideWith((Plant) entity);
+        }
+
         if (entity instanceof Vine) {
             collideWithVine();
         }
@@ -180,6 +180,27 @@ public abstract class AbstractBall extends AbstractEntity {
             // Hit the wall from the left
             setX(wallShape.getRight() + radius);
             if (getXSpeed() < 0) {
+                setXSpeed(-getXSpeed());
+            }
+        }
+    }
+
+    /**
+     * Collision between ball and plant.
+     * @param plant it collides with.
+     */
+    private void collideWith(Plant plant) {
+        Circle shape = (Circle) getShape();
+        Rectangle plantShape = (Rectangle) plant.getShape();
+
+        double radius = shape.getRadius();
+        double right = getX() + radius;
+
+        if (right > plantShape.getLeft()
+                && right < plantShape.getRight()) {
+            // Hit the wall from the right
+            setX(plantShape.getLeft() - radius);
+            if (getXSpeed() > 0) {
                 setXSpeed(-getXSpeed());
             }
         }

@@ -34,6 +34,11 @@ public class Level {
     private static final Logger LOGGER = Logger.getInstance();
 
     /**
+     * Counts the total amount of ball death's in level for the mid date.
+     */
+    private int ballDeathCounter = 0;
+
+    /**
      * The default size of a level.
      */
     private static final Vec2d DEFAULT_SIZE = new Vec2d(1024, 608);
@@ -243,6 +248,10 @@ public class Level {
         entitiesToRemove = new ArrayList<>();
     }
 
+    /**
+     * Counts the balls.
+     * @return long ball count
+     */
     private long countBalls() {
         return entities.stream()
                 .filter(e -> e instanceof AbstractBall)
@@ -465,5 +474,20 @@ public class Level {
      */
     public void depthSort() {
         mustSort = true;
+    }
+
+    /**
+     * Setter for ball deaths.
+     */
+    public void setBallDeathCounter() {
+        ballDeathCounter++;
+    }
+
+    /**
+     * Getter for ball deaths.
+     * @return ball death counter.
+     */
+    public int getBallDeathCounter() {
+        return ballDeathCounter;
     }
 }
