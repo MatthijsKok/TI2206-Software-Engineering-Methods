@@ -15,14 +15,12 @@ import static org.junit.Assert.*;
  */
 public class LevelTest extends BubbleTroubleApplicationTest {
 
-    private Level level1;
     private Level level2;
     private Level noBall;
     private Level timeUp;
 
     @Before
     public void setUp(){
-        level1 = new Level("src/main/resources/levels/level1.json");
         level2 = new Level("src/main/resources/levelsForTesting/levelForLoader.json");
         noBall = new Level("src/main/resources/levelsForTesting/noBallsLevel.json");
         timeUp = new Level("src/main/resources/levelsForTesting/timeUpLevel.json");
@@ -30,27 +28,27 @@ public class LevelTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testLevelConstructor(){
-        assertEquals(level1.getFilename(), "src/main/resources/levels/level1.json");
+        assertEquals(level2.getFilename(), "src/main/resources/levelsForTesting/levelForLoader.json");
     }
 
     @Test
     public void testLevelLoadIsWon(){
         try {
-            level1.load();
+            level2.load();
         } catch (IOException e) {
             fail();
         }
-        assertFalse(level1.isWon());
+        assertFalse(level2.isWon());
     }
 
     @Test
     public void testLevelLoadIsLost(){
         try {
-            level1.load();
+            level2.load();
         } catch (IOException e) {
             fail();
         }
-        assertFalse(level1.isLost());
+        assertFalse(level2.isLost());
     }
 
     @Test
@@ -67,12 +65,12 @@ public class LevelTest extends BubbleTroubleApplicationTest {
     @Test
     public void testSetSize(){
         try {
-            level1.load();
+            level2.load();
         } catch (IOException e) {
             fail();
         }
-        level1.setSize(6,8);
-        assertTrue(level1.getWidth() == 6 && level1.getHeight() == 8);
+        level2.setSize(6,8);
+        assertTrue(level2.getWidth() == 6 && level2.getHeight() == 8);
     }
 
     @Test
@@ -117,12 +115,12 @@ public class LevelTest extends BubbleTroubleApplicationTest {
     @Test
     public void testLost(){
         try {
-            level1.load();
+            level2.load();
         } catch (IOException e) {
             fail();
         }
-        level1.lose();
-        assertTrue(level1.isLost());
+        level2.lose();
+        assertTrue(level2.isLost());
     }
 
     /**
