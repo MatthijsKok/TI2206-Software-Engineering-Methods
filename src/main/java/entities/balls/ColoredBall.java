@@ -92,17 +92,22 @@ public class ColoredBall extends AbstractBall {
         setSprite(SPRITES.get(color));
     }
 
+    /**
+     * The bouncedirection indicates if the balls go up or down after the splitup.
+     * By death by vain, the smaller balls go up,
+     * by death by ceiling the smaller balls go down.
+     */
     @Override
-    void die() {
+    void die(int bounceDirection) {
         Level level = getLevel();
         if (getSize() > 0) {
             level.addEntity(new ColoredBall(getPosition(), getSize() - 1, getColor(),
-                    new Vec2d(getXSpeed(), -getBounceSpeed())));
+                    new Vec2d(getXSpeed(), bounceDirection * getBounceSpeed())));
             level.addEntity(new ColoredBall(getPosition(), getSize() - 1, getColor(),
-                    new Vec2d(-getXSpeed(), -getBounceSpeed())));
+                    new Vec2d(-getXSpeed(), bounceDirection * getBounceSpeed())));
         }
         MultiSoundEffect.BALL_POP.playRandom();
-        super.die();
+        super.die(bounceDirection);
     }
 
     /**

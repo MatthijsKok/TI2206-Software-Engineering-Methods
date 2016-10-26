@@ -1,11 +1,7 @@
 package entities.balls;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.AbstractEntity;
-import entities.FloorBlock;
-import entities.Shield;
-import entities.Vine;
-import entities.WallBlock;
+import entities.*;
 import entities.behaviour.GravityBehaviour;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
@@ -95,8 +91,10 @@ public abstract class AbstractBall extends AbstractEntity {
      * Removes this ball from the level and adds two smaller balls on the same
      * position, moving in different directions. If the ball is already at it's
      * smallest, no new balls will be added.
+     * @param directionSmallerBalls is -1 when it dies by a vain,
+     * and 1 if it dies because of the ceiling.
      */
-    void die() {
+    void die(int directionSmallerBalls) {
         getLevel().removeEntity(this);
 
         if (Math.random() > DROP_CHANCE) {
@@ -136,6 +134,10 @@ public abstract class AbstractBall extends AbstractEntity {
         if (entity instanceof Shield) {
             collideWithShield();
         }
+
+        if (entity instanceof SpikeBlock) {
+            collideWithSpike();
+        }
     }
 
     /**
@@ -146,6 +148,14 @@ public abstract class AbstractBall extends AbstractEntity {
     private void collideWith(FloorBlock floor) {
         setY(Math.min(floor.getY() - ((Circle) getShape()).getRadius(), getY()));
         bounce();
+    }
+
+    /**
+     * the ball dies if it hits the spikes, just like in the original bubble trouble.
+     * int 1 causes the smaller balls to go down.
+     */
+    private void collideWithSpike() {
+        die(1);
     }
 
     /**
@@ -187,8 +197,9 @@ public abstract class AbstractBall extends AbstractEntity {
 
     /**
      * The behaviour of the AbstractBall when it collides with a Vine AbstractEntity.
+     * int -1 causes the smaller balls to go up
      */
     private void collideWithVine() {
-        die();
+        die(-1);
     }
 }

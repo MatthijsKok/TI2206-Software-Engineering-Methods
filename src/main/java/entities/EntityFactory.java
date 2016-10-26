@@ -38,6 +38,8 @@ public final class EntityFactory {
                 return createWall(position);
             case "Floor":
                 return createFloor(position);
+            case "Spike":
+                return createSpike(position);
             default:
                 return null;
         }
@@ -76,5 +78,9 @@ public final class EntityFactory {
 
     private static FloorBlock createFloor(Vec2d position) {
         return new FloorBlock(position);
+    }
+
+    private static SpikeBlock createSpike(Vec2d position) {
+        return new SpikeBlock(position);
     }
 }
