@@ -28,7 +28,6 @@ public class ActivateShieldTest extends BubbleTroubleApplicationTest {
         activateShield = new ActivateShield();
         Character character = new Character(new Vec2d(100, 300));
         Player player = new Player(1, "leftKey", "rightKey", "shootKey");
-        character.setPlayer(player);
         activateShield.setTarget(character);
         level = Game.getInstance().getState().getCurrentLevel();
         level.addEntity(character);

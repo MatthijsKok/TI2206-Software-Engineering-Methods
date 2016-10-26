@@ -21,7 +21,7 @@ class ActivateShield extends AbstractInstantPowerUp {
     }
 
     @Override
-    void applyEffect() {
+    /* default */ final void applyEffect() {
         getTarget().activateShield();
 
         SoundEffect.SHIELD.play();

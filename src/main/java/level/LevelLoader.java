@@ -22,7 +22,7 @@ final class LevelLoader {
      * @param level The level to load.
      * @throws IOException If the level file is not found.
      */
-    static void load(Level level) throws IOException {
+    /* default */ static void load(Level level) throws IOException {
         JSONObject json = JSONParser.parseJSONFile(level.getFilename());
         JSONArray entities = json.getJSONArray("entities");
 

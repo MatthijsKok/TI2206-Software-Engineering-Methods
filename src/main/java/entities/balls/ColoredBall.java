@@ -5,6 +5,7 @@ import graphics.Sprite;
 import level.Level;
 import util.sound.MultiSoundEffect;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -73,7 +74,7 @@ public class ColoredBall extends AbstractBall {
      * @return The color from AbstractBall.Color.
      */
     public static Color getColor(String color) {
-        return Color.valueOf(color.toUpperCase());
+        return Color.valueOf(color.toUpperCase(Locale.ENGLISH));
     }
 
     /**
@@ -93,7 +94,7 @@ public class ColoredBall extends AbstractBall {
     }
 
     @Override
-    void die() {
+    /* default */ final void die() {
         Level level = getLevel();
         if (getSize() > 0) {
             level.addEntity(new ColoredBall(getPosition(), getSize() - 1, getColor(),

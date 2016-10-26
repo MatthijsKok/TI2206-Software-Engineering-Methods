@@ -38,7 +38,7 @@ public abstract class AbstractShape {
      * @param x x position
      * @param y y position
      */
-    void setPosition(double x, double y) {
+    /* default */ final void setPosition(double x, double y) {
         position.x = x;
         position.y = y;
     }
@@ -83,7 +83,7 @@ public abstract class AbstractShape {
     /**
      * @return the scale of the shape.
      */
-    final Vec2d getScale() {
+    /* default */ final Vec2d getScale() {
         return scale;
     }
 

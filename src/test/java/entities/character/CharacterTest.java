@@ -33,7 +33,6 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         character = new Character(spawnPosition);
         player = new Player(0, "", "", "");
         player.setCharacter(character);
-        character.setPlayer(player);
     }
 
 

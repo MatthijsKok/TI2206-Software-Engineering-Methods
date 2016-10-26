@@ -8,7 +8,7 @@ import util.CanvasManager;
 /**
  * Class that handles the creation of sprites.
  */
-public class Sprite implements Cloneable {
+public class Sprite {
     /**
      * The default frame per second rate of any sprite.
      */

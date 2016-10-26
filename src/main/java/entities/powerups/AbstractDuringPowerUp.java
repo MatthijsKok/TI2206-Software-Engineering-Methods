@@ -18,7 +18,7 @@ abstract class AbstractDuringPowerUp extends AbstractPowerUp {
     private long duration = DEFAULT_DURATION;
 
     @Override
-    void activate() {
+    /* default */ final void activate() {
         enableEffect();
         new Timer().schedule(new TimerTask() {
             @Override
@@ -32,17 +32,17 @@ abstract class AbstractDuringPowerUp extends AbstractPowerUp {
      * Sets the duration of the power-up.
      * @param duration the duration of the power-up.
      */
-    void setDuration(final long duration) {
+    /* default */ final void setDuration(final long duration) {
         this.duration =  duration;
     }
 
     /**
      * Enables the effect of the specific power-up.
      */
-    abstract void enableEffect();
+    /* default */ abstract void enableEffect();
 
     /**
      * Disables the effect of the specific power-up.
      */
-    abstract void disableEffect();
+    /* default */ abstract void disableEffect();
 }

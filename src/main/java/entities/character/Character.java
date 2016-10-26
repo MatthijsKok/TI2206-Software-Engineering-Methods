@@ -4,11 +4,10 @@ import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.CollidingEntity;
 import entities.DynamicEntity;
-import entities.blocks.FloorBlock;
-import entities.blocks.WallBlock;
 import entities.balls.AbstractBall;
 import entities.behaviour.GravityBehaviour;
-import game.player.Player;
+import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.Pair;
@@ -70,14 +69,9 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     private boolean shooting = false;
 
     /**
-     * The Player that is controlling this Character.
-     */
-    private Player player;
-
-    /**
      * Boolean indicating whether the character is invincible.
      */
-    private Shield shield = new Shield(this);
+    private final Shield shield;
 
     /**
      * Boolean indicating whether the character can shoot.
@@ -92,6 +86,8 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     public Character(final Vec2d position) {
         super(position);
 
+        shield = new Shield(this);
+
         setShape(new Rectangle(BOUNDING_BOX));
         setPhysicsBehaviour(new GravityBehaviour(this));
         getLevel().addEntity(shield);
@@ -104,20 +100,21 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     public void die() {
         alive = false;
         setChanged();
-        notifyObservers(new Pair<>("die", true));
+        notifyObservers(new Pair<>("increaseLives", -1));
     }
 
     /**
      * Adds a life to this character.
      */
     public void increaseLife() {
-        getPlayer().increaseLives(1);
+        setChanged();
+        notifyObservers(new Pair<>("increaseLives", 1));
     }
 
     /**
      * @return whether the character is alive
      */
-    boolean isAlive() {
+    /* default */ boolean isAlive() {
         return alive;
     }
 
@@ -239,30 +236,14 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     }
 
     /**
-     * Increases the speed at which the entities.character runs.
-     *
-     * @param amount The speed boost.
-     */
-    public void increaseRunSpeed(final double amount) {
-        this.runSpeed += amount;
-    }
-
-    /**
-     * @return The Player object that is controlling this Character object
-     */
-    public Player getPlayer() {
-        return player;
-    }
-
-    /**
      * Set the images.player that controls this Character.
      *
-     * @param player The Player object that controls this Character.
+     * @param playerID int - The id of the player that controls
+     *                 this Character.
      */
-    public void setPlayer(final Player player) {
-        this.player = player;
-        idleSprite = CharacterSprites.getIdleSprite(player.getId());
-        runningSprite = CharacterSprites.getRunningSprite(player.getId());
+    public void setSprites(final int playerID) {
+        idleSprite = CharacterSprites.getIdleSprite(playerID);
+        runningSprite = CharacterSprites.getRunningSprite(playerID);
     }
 
     /**
@@ -277,8 +258,16 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     /**
      * Called when a vine is removed from the level.
      */
-    void vineRemoved() {
+    /* default */ void vineRemoved() {
         currentVineCount = Math.max(0, currentVineCount - 1);
+    }
+
+    /**
+     * Getter for maxHarpoonCount.
+     * @return maxHarpoonCount
+     */
+    public int getMaxVineCount() {
+        return maxVineCount;
     }
 
     /**
@@ -292,16 +281,17 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
      * Increases the score of the character.
      * @param score the amount of the increase.
      */
-    void increaseScore(final int score) {
+    /* default */ void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
     }
 
     /**
-     * Getter for maxHarpoonCount.
-     * @return maxHarpoonCount
+     * Increases the speed at which the entities.character runs.
+     *
+     * @param amount The speed boost.
      */
-    public int getMaxVineCount() {
-        return maxVineCount;
+    public void increaseRunSpeed(final double amount) {
+        this.runSpeed += amount;
     }
 
     /**

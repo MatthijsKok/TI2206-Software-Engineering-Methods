@@ -58,6 +58,11 @@ public final class SoundEffect {
      */
     public static final SoundEffect GAME_WON = new SoundEffect("game_won.wav");
 
+    /**
+     * Sound effect played when a vine is picked up.
+     */
+    public static final SoundEffect EXTRA_VINE = new SoundEffect("happy_mario2.wav");
+
     // -------- CLASS LOGIC --------
 
     /**

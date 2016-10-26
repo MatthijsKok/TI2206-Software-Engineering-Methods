@@ -41,7 +41,7 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
     public void testUpdateFromCharacterDie() {
         int lives = player.getLives();
 
-        player.update(character, new Pair<>("die", true));
+        player.update(character, new Pair<>("increaseLives", -1));
 
         assertThat(player.getLives(), lessThan(lives));
     }
@@ -65,7 +65,7 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testIncreaseLivesGreaterThanZero() {
-        player.update(character, new Pair<>("die", true));
+        player.update(character, new Pair<>("increaseLives", -1));
 
         int lives = player.getLives();
 
@@ -77,7 +77,7 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
     public void testIncreaseLivesSmallerThanZero() {
         int lives = player.getLives();
 
-        player.increaseLives(-3);
+        player.increaseLives(0);
         assertThat(player.getLives(), is(lives));
     }
 
@@ -86,8 +86,8 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
     public void testResetLives() {
         int lives = player.getLives();
 
-        player.update(character, new Pair<>("die", true));
-        player.update(character, new Pair<>("die", true));
+        player.update(character, new Pair<>("increaseLives", -1));
+        player.update(character, new Pair<>("increaseLives", -1));
 
         player.resetLives();
 

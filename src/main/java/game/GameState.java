@@ -1,4 +1,3 @@
-
 package game;
 
 import game.player.Player;
@@ -31,7 +30,7 @@ public class GameState implements Observer {
     /**
      * The game this instance handles the state for.
      */
-    private Game game;
+    private final Game game;
 
     /**
      * Indicates whether the game is in progress.
@@ -113,7 +112,7 @@ public class GameState implements Observer {
     /**
      * Pauses the game.
      */
-    void resume() {
+    /* default */ void resume() {
         inProgress = true;
 
         // Resume the music
@@ -124,7 +123,7 @@ public class GameState implements Observer {
     /**
      * Resets the game state.
      */
-    void reset() {
+    /* default */ void reset() {
         getCurrentLevel().unload();
         currentLevel = 0;
         won = false;

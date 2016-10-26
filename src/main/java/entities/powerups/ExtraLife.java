@@ -21,7 +21,7 @@ class ExtraLife extends AbstractInstantPowerUp {
     }
 
     @Override
-    void applyEffect() {
+    /* default */ final void applyEffect() {
         SoundEffect.EXTRA_LIFE.play();
         getTarget().increaseLife();
     }

@@ -23,7 +23,7 @@ public class Player implements Observer {
     /**
      * The images.player ID of the images.player.
      */
-    private int id = 0;
+    private final int id;
 
     /**
      * These Strings represent the keyboard characters this images.player uses.
@@ -33,7 +33,7 @@ public class Player implements Observer {
     /**
      * The initial score of a images.player is zero.
      */
-    private int score = 0;
+    private int score;
 
     /**
      * Every images.player starts with 3 lives.
@@ -84,7 +84,7 @@ public class Player implements Observer {
     public void setCharacter(Character character) {
         if (character != null) {
             this.character = character;
-            character.setPlayer(this);
+            character.setSprites(id);
             character.addObserver(this);
         }
     }
@@ -113,8 +113,8 @@ public class Player implements Observer {
      */
     private void updateFromCharacter(Pair<String, Object> pair) {
         switch (pair.getL()) {
-            case "die":
-                die();
+            case "increaseLives":
+                increaseLives((int) pair.getR());
                 break;
             case "increaseScore":
                 increaseScore((int) pair.getR());
@@ -139,20 +139,6 @@ public class Player implements Observer {
         character.setShooting(KeyboardInputManager.keyPressed(shootKey));
     }
 
-    private void die() {
-        lives--;
-
-        Game.getInstance().getState().getCurrentLevel().lose();
-
-        if (lives == 0) {
-            MultiSoundEffect.PLAYER_OUT_OF_LIVES.play(getId());
-        }
-        else {
-            MultiSoundEffect.PLAYER_LOSES_LIFE.play(getId());
-        }
-
-    }
-
     private void increaseScore(int amount) {
         score += amount;
     }
@@ -168,9 +154,19 @@ public class Player implements Observer {
      * Increases the players amount of lives.
      * @param amount The amount of lives you want to get.
      */
-    public void increaseLives(int amount) {
-        if (amount > 0) {
+    /* default */ void increaseLives(int amount) {
+        if (amount >= 0) {
             lives = Math.min(lives + amount, LIVES_AT_START);
+        } else {
+            lives--;
+
+            Game.getInstance().getState().getCurrentLevel().lose();
+        }
+
+        if (lives == 0) {
+            MultiSoundEffect.PLAYER_OUT_OF_LIVES.play(id);
+        } else {
+            MultiSoundEffect.PLAYER_LOSES_LIFE.play(id);
         }
     }
 
@@ -191,14 +187,7 @@ public class Player implements Observer {
     /**
      * @return The lives the images.player has at the start.
      */
-    static int getLivesAtStart() {
+    /* default */ static int getLivesAtStart() {
         return LIVES_AT_START;
-    }
-
-    /**
-     * @return The id of the images.player.
-     */
-    public int getId() {
-        return id;
     }
 }

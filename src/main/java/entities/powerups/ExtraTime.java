@@ -32,7 +32,7 @@ class ExtraTime extends AbstractInstantPowerUp {
     }
 
     @Override
-    void applyEffect() {
+    /* default */ final void applyEffect() {
         Level level = getLevel();
         level.increaseTime(EXTRA_TIME);
         SoundEffect.EXTRA_TIME.play();

@@ -31,11 +31,6 @@ public final class KeyboardInputManager extends Observable {
     private static Set<String> input = new HashSet<>();
 
     /**
-     * This overrides the default public constructor.
-     */
-    public KeyboardInputManager() { }
-
-    /**
      * Adds an observer to the keyboard.
      * @param observer the observer to add.
      */

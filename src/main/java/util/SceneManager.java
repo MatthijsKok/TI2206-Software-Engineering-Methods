@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 
@@ -16,7 +17,7 @@ public final class SceneManager {
     /**
      * The HashMap that holds all Scenes.
      */
-    private static HashMap<String, Scene> scenes = new HashMap<>();
+    private static Map<String, Scene> scenes = new HashMap<>();
 
     /**
      * The stage on which the scenes are shown.

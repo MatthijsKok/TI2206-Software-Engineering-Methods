@@ -10,7 +10,7 @@ abstract class AbstractInstantPowerUp extends AbstractPowerUp {
     abstract /* default */ void applyEffect();
 
     @Override
-    void activate() {
+    /* default */ final void activate() {
         applyEffect();
     }
 }

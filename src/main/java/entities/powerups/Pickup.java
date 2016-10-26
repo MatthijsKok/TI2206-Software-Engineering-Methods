@@ -5,8 +5,8 @@ import entities.AbstractEntity;
 import entities.CollidingEntity;
 import entities.DynamicEntity;
 import entities.behaviour.GravityBehaviour;
-import entities.character.Character;
 import entities.blocks.FloorBlock;
+import entities.character.Character;
 import geometry.Rectangle;
 
 /**

@@ -67,7 +67,7 @@ public class Level {
     /**
      * The size of the level.
      */
-    private Vec2d size = DEFAULT_SIZE;
+    private final Vec2d size = DEFAULT_SIZE;
 
     /**
      * Duration of the level.
@@ -113,7 +113,7 @@ public class Level {
     /**
      * The file the level is loaded from.
      */
-    private String filename;
+    private final String filename;
 
     /**
      * Indicate whether the level is either won, lost or neither.
@@ -196,7 +196,7 @@ public class Level {
      * @param width  the width of the level
      * @param height the height of the level
      */
-    final void setSize(final double width, final double height) {
+    /* default */ final void setSize(final double width, final double height) {
         LOGGER.trace("Setting level size to (" + size.x + "," + size.y + ").");
         size.x = width;
         size.y = height;
@@ -314,14 +314,14 @@ public class Level {
     }
 
     private void handleEntities() {
-        if (entitiesToAdd.size() > 0 || entitiesToRemove.size() > 0) {
+        if (!entitiesToAdd.isEmpty() || !entitiesToRemove.isEmpty()) {
             removeEntities();
             addEntities();
             dynamicEntities = entities.stream()
                     .filter(entity -> entity instanceof DynamicEntity)
                     .map(entity -> (DynamicEntity) entity)
                     .collect(Collectors.toList());
-            collisionManager.updateEntities(entities);
+            collisionManager.setEntities(entities);
         }
         sortEntities();
     }
@@ -347,7 +347,7 @@ public class Level {
      * Sets the levels name.
      * @param name The name of this level.
      */
-    void setName(String name) {
+    /* default */ void setName(String name) {
         this.name = name;
     }
 
@@ -355,7 +355,7 @@ public class Level {
      * Sets the levels background image.
      * @param backgroundImage URI of the image file.
      */
-    void setBackgroundImage(String backgroundImage) {
+    /* default */ void setBackgroundImage(String backgroundImage) {
         Canvas canvas = CanvasManager.getCanvas();
         if (backgroundImage != null && !backgroundImage.equals("")) {
             this.backgroundImage = new Sprite(backgroundImage);
@@ -384,7 +384,7 @@ public class Level {
      * Sets the duration of the level.
      * @param duration the duration of the level.
      */
-    void setDuration(double duration) {
+    /* default */ void setDuration(double duration) {
         this.duration = duration;
     }
 
@@ -414,11 +414,10 @@ public class Level {
         Music.stopMusic();
         won = true;
 
-        if (!gameState.hasNextLevel()) {
-            gameState.win();
-        }
-        else {
+        if (gameState.hasNextLevel()) {
             MultiSoundEffect.LEVEL_WON.playRandom();
+        } else {
+            gameState.win();
         }
     }
 

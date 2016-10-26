@@ -23,7 +23,6 @@ public class ExtraVineTest extends BubbleTroubleApplicationTest {
         extraVine = new ExtraVine();
         character = new Character(new Vec2d(100, 300));
         Player player = new Player(1, "leftKey", "rightKey", "shootKey");
-        character.setPlayer(player);
         extraVine.setTarget(character);
     }
 

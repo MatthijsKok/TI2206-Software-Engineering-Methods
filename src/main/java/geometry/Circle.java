@@ -35,7 +35,7 @@ public class Circle extends AbstractShape {
      * @param sprite the sprite to create a circle around.
      */
     public Circle(final Sprite sprite) {
-        this(Math.max(sprite.getWidth(), sprite.getHeight()) / 2);
+        this(Math.max(sprite.getWidth(), sprite.getHeight()) / 2.d);
     }
 
     /**

@@ -3,11 +3,11 @@ package entities.balls;
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.CollidingEntity;
+import entities.behaviour.GravityBehaviour;
 import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
 import entities.character.Shield;
 import entities.character.Vine;
-import entities.blocks.WallBlock;
-import entities.behaviour.GravityBehaviour;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
 import geometry.Rectangle;
@@ -97,7 +97,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
      * position, moving in different directions. If the ball is already at it's
      * smallest, no new images.balls will be added.
      */
-    void die() {
+    /* default */ void die() {
         getLevel().removeEntity(this);
 
         if (Math.random() > DROP_CHANCE) {
@@ -116,7 +116,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     /**
      * @return the bounce speed of this ball.
      */
-    double getBounceSpeed() {
+    /* default */ double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
     }
 

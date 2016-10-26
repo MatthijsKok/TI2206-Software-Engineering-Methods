@@ -1,7 +1,7 @@
 package entities.powerups;
 
 import graphics.Sprite;
-import util.sound.MultiSoundEffect;
+import util.sound.SoundEffect;
 
 /**
  * Gives the images.player a extra vine to shoot.
@@ -30,15 +30,15 @@ class ExtraVine extends AbstractDuringPowerUp {
     /**
      * Increase the amount of vines the character can shoot.
      */
-    /* default */ void enableEffect() {
+    /* default */ final void enableEffect() {
         getTarget().increaseMaxVineCount(1);
-        MultiSoundEffect.EXTRA_VINE.play(getTarget().getPlayer().getId());
+        SoundEffect.EXTRA_VINE.play();
     }
 
     /**
      * Disables the effect of the specific power up.
      */
-    /* default */ void disableEffect() {
+    /* default */ final void disableEffect() {
         getTarget().increaseMaxVineCount(-1);
     }
 

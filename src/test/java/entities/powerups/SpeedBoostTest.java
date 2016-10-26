@@ -3,7 +3,6 @@ package entities.powerups;
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.character.Character;
-import game.player.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,8 +23,6 @@ public class SpeedBoostTest extends BubbleTroubleApplicationTest {
     public void setUp() {
         speedBoost = new SpeedBoost();
         character = new Character(new Vec2d(100, 300));
-        Player player = new Player(1, "leftKey", "rightKey", "shootKey");
-        character.setPlayer(player);
         speedBoost.setTarget(character);
     }
 

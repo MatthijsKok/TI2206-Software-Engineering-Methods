@@ -1,11 +1,11 @@
 package entities;
 
-import entities.blocks.FloorBlock;
-import entities.blocks.WallBlock;
-import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import entities.balls.ColoredBall;
+import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
+import entities.character.Character;
 import game.Game;
 import game.player.Player;
 import org.json.JSONObject;

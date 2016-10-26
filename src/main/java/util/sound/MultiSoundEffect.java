@@ -41,15 +41,9 @@ public final class MultiSoundEffect {
                                               "ball_pop3.wav", "ball_pop4.wav", "ball_pop5.wav"});
 
     /**
-     * Sound effect played when a vine is picked up.
-     */
-    public static final MultiSoundEffect EXTRA_VINE =
-            new MultiSoundEffect(new String[]{"happy_mario2.wav", "yoshi_mmmm_yam.wav"});
-
-    /**
      * The list containing the sound effects that can be played.
      */
-    private SoundEffect[] effectList;
+    private final SoundEffect[] effectList;
 
     /**
      * Creates a new SoundEffect Object.

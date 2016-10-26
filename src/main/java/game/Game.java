@@ -38,7 +38,7 @@ public final class Game {
     /**
      * The state of the game.
      */
-    private GameState state;
+    private final GameState state;
     /**
      * The UI of the game.
      */
@@ -46,7 +46,7 @@ public final class Game {
     /**
      * A list containing all the players that play the game.
      */
-    private List<Player> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
     /**
      * A list containing all the levels in the game.
      */
@@ -73,12 +73,14 @@ public final class Game {
      *
      * @return a Game instance.
      */
-    public static synchronized Game getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new Game();
-            LOGGER.trace("New game instance created.");
+    public static Game getInstance() {
+        synchronized (new Object()) {
+            if (uniqueInstance == null) {
+                uniqueInstance = new Game();
+                LOGGER.trace("New game instance created.");
+            }
+            return uniqueInstance;
         }
-        return uniqueInstance;
     }
 
     private void setUpAnimationLoop() {
@@ -153,7 +155,7 @@ public final class Game {
     /**
      * @return Returns a list of all levels in the game.
      */
-    List<Level> getLevels() {
+    /* default */ List<Level> getLevels() {
         return levels;
     }
 
@@ -180,7 +182,7 @@ public final class Game {
      * Stops the game and returns to the main menu.
      */
     public void stop() {
-        if (levels.size() > 0) {
+        if (!levels.isEmpty()) {
             state.reset();
         }
         timer.stop();

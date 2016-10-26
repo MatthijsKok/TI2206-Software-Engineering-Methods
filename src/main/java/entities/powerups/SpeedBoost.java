@@ -26,13 +26,13 @@ class SpeedBoost extends AbstractDuringPowerUp {
     }
 
     @Override
-    void enableEffect() {
+    /* default */ final void enableEffect() {
         getTarget().increaseRunSpeed(SPEED_BOOST);
         SoundEffect.SPEED_BOOST.play();
     }
 
     @Override
-    void disableEffect() {
+    /* default */ final void disableEffect() {
         getTarget().increaseRunSpeed(-SPEED_BOOST);
     }
 }

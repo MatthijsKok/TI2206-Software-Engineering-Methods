@@ -45,7 +45,7 @@ public class Shield extends AbstractEntity implements CollidingEntity {
     /**
      * Activates the shield.
      */
-    void activate() {
+    /* default */ void activate() {
         setVisibility(true);
     }
 
