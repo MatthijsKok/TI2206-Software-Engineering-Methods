@@ -1,7 +1,7 @@
 {
   "name": "Level 2",
   "duration": 30,
-  "backgroundImageURI": "backgrounds/background4.png",
+  "backgroundImageURI": "images/backgrounds/background4.png",
   "backgroundMusicURI": "gusty_garden.mp3",
   "entities": [
     {

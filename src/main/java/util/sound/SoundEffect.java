@@ -73,7 +73,7 @@ public final class SoundEffect {
     /**
      * The audio clip to  of this SoundEffect.
      */
-    private AudioClip audio;
+    private final AudioClip audio;
 
     /**
      * counts how many times the sound has been played for sounds

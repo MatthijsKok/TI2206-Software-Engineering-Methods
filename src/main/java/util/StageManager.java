@@ -41,7 +41,7 @@ public final class StageManager {
             getStage().setResizable(false);
             getStage().setWidth(DEFAULT_WIDTH);
             getStage().setHeight(DEFAULT_HEIGHT);
-            getStage().getIcons().add(new Image("logo.png"));
+            getStage().getIcons().add(new Image("images/logo.png"));
         }
         stage.show();
     }

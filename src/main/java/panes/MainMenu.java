@@ -52,7 +52,7 @@ public class MainMenu extends Pane {
      * @return backgroundImage
      */
     private BackgroundImage createBackgroundImage() {
-        Image image = new Image("menu.jpg");
+        Image image = new Image("images/menu.jpg");
         return new BackgroundImage(image, null, null, null, null);
     }
 

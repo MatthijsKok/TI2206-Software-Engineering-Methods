@@ -2,10 +2,10 @@ package entities.character;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
-import entities.FloorBlock;
-import entities.Vine;
-import entities.Shield;
-import entities.WallBlock;
+import entities.CollidingEntity;
+import entities.DynamicEntity;
+import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
 import entities.balls.AbstractBall;
 import entities.behaviour.GravityBehaviour;
 import game.player.Player;
@@ -17,7 +17,7 @@ import util.sound.SoundEffect;
 /**
  * The Character class represents a character.
  */
-public class Character extends AbstractEntity {
+public class Character extends AbstractEntity implements DynamicEntity, CollidingEntity {
 
     /**
      * The offset of the bounding box of a character.
@@ -117,7 +117,7 @@ public class Character extends AbstractEntity {
     /**
      * @return whether the character is alive
      */
-    public boolean isAlive() {
+    boolean isAlive() {
         return alive;
     }
 
@@ -143,9 +143,9 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * Makes the player toggle shooting.
+     * Makes the images.player toggle shooting.
      *
-     * @param shooting boolean whether the player is shooting or not.
+     * @param shooting boolean whether the images.player is shooting or not.
      */
     public void setShooting(boolean shooting) {
         this.shooting = shooting;
@@ -255,7 +255,7 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * Set the player that controls this Character.
+     * Set the images.player that controls this Character.
      *
      * @param player The Player object that controls this Character.
      */
@@ -277,7 +277,7 @@ public class Character extends AbstractEntity {
     /**
      * Called when a vine is removed from the level.
      */
-    public void vineRemoved() {
+    void vineRemoved() {
         currentVineCount = Math.max(0, currentVineCount - 1);
     }
 
@@ -292,7 +292,7 @@ public class Character extends AbstractEntity {
      * Increases the score of the character.
      * @param score the amount of the increase.
      */
-    public void increaseScore(final int score) {
+    void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
     }
 

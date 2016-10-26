@@ -14,4 +14,9 @@ public class NoGravityBehaviour extends AbstractPhysicsBehaviour {
     public NoGravityBehaviour(final AbstractEntity entity) {
         super(entity);
     }
+
+    @Override
+    public void applyPhysics(double timeDifference) {
+        // Does nothing...
+    }
 }

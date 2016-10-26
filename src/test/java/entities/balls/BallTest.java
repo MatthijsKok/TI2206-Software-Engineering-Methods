@@ -1,9 +1,12 @@
-package entities;
+package entities.balls;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
-import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
-import entities.balls.ColoredBall;
+import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
+import entities.character.Character;
+import entities.character.Shield;
+import entities.character.Vine;
 import game.Game;
 import geometry.Circle;
 import level.Level;

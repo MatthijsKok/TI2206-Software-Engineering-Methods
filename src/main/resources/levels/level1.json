@@ -1,7 +1,7 @@
 {
   "name": "Level 1",
   "duration": 15,
-  "backgroundImageURI": "backgrounds/background.png",
+  "backgroundImageURI": "images/backgrounds/background.png",
   "backgroundMusicURI": "mario_theme_remix.mp3",
   "entities": [
     {

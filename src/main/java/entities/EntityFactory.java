@@ -1,5 +1,7 @@
 package entities;
 
+import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
 import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;

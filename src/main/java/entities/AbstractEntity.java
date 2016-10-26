@@ -90,15 +90,6 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
-     * Updates the entity's state.
-     * @param timeDifference The time elapsed since the last time
-     *                       the method was called
-     */
-    public void update(final double timeDifference) {
-        // This method is to be implemented by subclasses.
-    }
-
-    /**
      * Applies physics on the entity.
      * @param timeDifference The time elapsed since the last time
      *                       the method was called
@@ -120,20 +111,10 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
-     * This method is an empty because it *may* be overwritten
-     * by subclasses. Is does not necessarily have to be overwritten
-     * so it is not an abstract method.
-     * @param entity the entity to do nothing with.
-     */
-    public void collideWith(final AbstractEntity entity) {
-        // This method is to be implemented by sub classes.
-    }
-
-    /**
      * Draws the entity to the screen.
      */
     public void draw() {
-        if (isVisible()) {
+        if (isVisible() && sprite != null) {
             sprite.draw(getPosition(), getScale());
         }
     }
@@ -144,14 +125,14 @@ public abstract class AbstractEntity extends Observable {
      * Returns the position of the entity.
      * @return the position
      */
-    protected /* default */ Vec2d getPosition() {
+    public /* default */ Vec2d getPosition() {
         return position;
     }
 
     /**
      * @return The x position of the entity.
      */
-    protected /* default */ double getX() {
+    public/* default */ double getX() {
         return position.x;
     }
 
@@ -173,7 +154,7 @@ public abstract class AbstractEntity extends Observable {
     /**
      * @return The horizontal speed of the entity.
      */
-    protected /* default */ double getXSpeed() {
+    public/* default */ double getXSpeed() {
         return speed.x;
     }
 
@@ -234,7 +215,7 @@ public abstract class AbstractEntity extends Observable {
      * Returns the level the entity is in.
      * @return the level the entity is in
      */
-    /* default */ protected Level getLevel() {
+    public /* default */ Level getLevel() {
         return Game.getInstance().getState().getCurrentLevel();
     }
 
@@ -254,7 +235,7 @@ public abstract class AbstractEntity extends Observable {
      * Binds the position of this entity to position.
      * @param position the position to bind to.
      */
-    final /* default */ void bindPosition(final Vec2d position) {
+    protected final /* default */ void bindPosition(final Vec2d position) {
         this.position = position;
     }
 
@@ -375,7 +356,7 @@ public abstract class AbstractEntity extends Observable {
      * Set whether the entity is visible.
      * @param visible a boolean indicating if the entity should be visible.
      */
-    /* default */ void setVisibility(final boolean visible) {
+    protected /* default */ void setVisibility(final boolean visible) {
         this.visible = visible;
     }
 

@@ -2,20 +2,16 @@ package entities.powerups;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
-import entities.*;
+import entities.blocks.FloorBlock;
 import entities.character.Character;
 import game.Game;
-import game.player.Player;
-import graphics.Sprite;
 import level.Level;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
 
 /**
  * Tests for Pickups.
@@ -30,15 +26,18 @@ public class PickupTest extends BubbleTroubleApplicationTest{
 
     @Before
     public void setUp() {
-        Sprite sprite = new Sprite("powerUps/1-up.png");
-        AbstractPowerUp mockedPowerUp = Mockito.mock(AbstractPowerUp.class);
-        when(mockedPowerUp.getSprite()).thenReturn(sprite);
-        pickup = new Pickup(spawnPosition, mockedPowerUp);
+        AbstractPowerUp powerUp = new AbstractPowerUp() {
+            @Override
+            void activate() {
+
+            }
+        };
+
+        pickup = new Pickup(spawnPosition, powerUp);
 
         character = new Character(new Vec2d(100, 300));
         floor = new FloorBlock(new Vec2d(0, 0));
-        Player player = new Player(1, "left", "right", "shoot");
-        character.setPlayer(player);
+
         level = Game.getInstance().getState().getCurrentLevel();
         level.addEntity(pickup);
         level.update(1);

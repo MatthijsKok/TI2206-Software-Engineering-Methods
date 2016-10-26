@@ -1,9 +1,10 @@
-package entities;
+package entities.character;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
-import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
+import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
 import game.player.Player;
 import geometry.Rectangle;
 import org.junit.Before;
@@ -167,9 +168,9 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     /*@Test
     public void testIncreaseScore() {
-        int score = player.getScore();
+        int score = images.player.getScore();
         character.increaseScore(100);
-        assertThat(player.getScore(), is(score + 100));
+        assertThat(images.player.getScore(), is(score + 100));
     }*/
 
     @Test

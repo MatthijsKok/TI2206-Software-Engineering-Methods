@@ -2,6 +2,7 @@ package level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
+import entities.DynamicEntity;
 import entities.balls.AbstractBall;
 import entities.character.Character;
 import game.Game;
@@ -11,7 +12,6 @@ import graphics.Sprite;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import util.CanvasManager;
-import util.CollisionManager;
 import util.StageManager;
 import util.logging.Logger;
 import util.sound.MultiSoundEffect;
@@ -21,10 +21,11 @@ import util.sound.SoundEffect;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The level class represents a level, which is loaded from a file and consists
- * of characters, balls, walls and so on.
+ * of characters, images.balls, walls and so on.
  */
 public class Level {
 
@@ -46,7 +47,7 @@ public class Level {
     /**
      * The default background image of a level.
      */
-    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("backgrounds/background.png");
+    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("images/backgrounds/background.png");
 
     /**
      * The default background music of a level.
@@ -57,6 +58,11 @@ public class Level {
      * The time that is left in the level when the time almost up should play.
      */
     private static final double TIME_ALMOST_UP_LENGTH = 2.1;
+
+    /**
+     * The object which handles collisions for this level.
+     */
+    private final CollisionManager collisionManager;
 
     /**
      * The size of the level.
@@ -99,6 +105,10 @@ public class Level {
      * The entities that will be added to the level after the update cycle.
      */
     private List<AbstractEntity> entitiesToAdd = new ArrayList<>();
+    /**
+     * The entities which should be updated each frame.
+     */
+    private List<DynamicEntity> dynamicEntities = new ArrayList<>();
 
     /**
      * The file the level is loaded from.
@@ -122,6 +132,7 @@ public class Level {
      */
     public Level(final String uri) {
         filename = uri;
+        collisionManager = new CollisionManager();
     }
 
     /**
@@ -153,7 +164,7 @@ public class Level {
         Music.setMusic(DEFAULT_BACKGROUND_MUSIC);
 
         LevelLoader.load(this);
-        addEntities();
+        handleEntities();
         timeSpend = 0;
         won = false;
         lost = false;
@@ -265,8 +276,11 @@ public class Level {
     public final void update(final double timeDifference) {
         LOGGER.debug("Updating Entities...");
 
-        for (AbstractEntity entity : entities) {
+        for (DynamicEntity entity : dynamicEntities) {
             entity.update(timeDifference);
+        }
+
+        for (AbstractEntity entity : entities) {
             entity.applyPhysicsBehaviour(timeDifference);
             entity.updatePosition(timeDifference);
             entity.updateSprite(timeDifference);
@@ -275,17 +289,41 @@ public class Level {
         LOGGER.debug("Updated Entities");
 
         handleTime(timeDifference);
-        removeEntities();
-        addEntities();
-        sortEntities();
+        handleEntities();
 
         if (countBalls() == 0) {
             win();
         }
 
         LOGGER.debug("Handling collisions...");
-        CollisionManager.handleCollisions();
+        collisionManager.handleCollisions();
         LOGGER.debug("Collisions handled.");
+    }
+
+    /**
+     * Handles all time related events in the level.
+     */
+    private void handleTime(double timeDifference) {
+        timeSpend += timeDifference;
+
+        if (timeSpend > duration) {
+            timeUp();
+        }
+
+        timeAlmostUp();
+    }
+
+    private void handleEntities() {
+        if (entitiesToAdd.size() > 0 || entitiesToRemove.size() > 0) {
+            removeEntities();
+            addEntities();
+            dynamicEntities = entities.stream()
+                    .filter(entity -> entity instanceof DynamicEntity)
+                    .map(entity -> (DynamicEntity) entity)
+                    .collect(Collectors.toList());
+            collisionManager.updateEntities(entities);
+        }
+        sortEntities();
     }
 
     /**
@@ -296,7 +334,6 @@ public class Level {
 
         // Draw background
         LOGGER.trace("Drawing background.");
-
 
         final Canvas canvas = CanvasManager.getCanvas();
         backgroundImage.draw(canvas.getWidth() / 2, canvas.getHeight() / 2, backgroundImageScale);
@@ -445,19 +482,6 @@ public class Level {
         }
 
         mustSort = false;
-    }
-
-    /**
-     * Handles all time related events in the level.
-     */
-    private void handleTime(double timeDifference) {
-        timeSpend += timeDifference;
-
-        if (timeSpend > duration) {
-            timeUp();
-        }
-
-        timeAlmostUp();
     }
 
     /**

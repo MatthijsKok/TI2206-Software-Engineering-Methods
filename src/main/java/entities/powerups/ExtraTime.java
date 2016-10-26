@@ -18,7 +18,7 @@ class ExtraTime extends AbstractInstantPowerUp {
     /**
      * The sprite of the extra time power-up.
      */
-    private static final Sprite EXTRA_TIME_SPRITE = new Sprite("powerUps/extra_time.png");
+    private static final Sprite EXTRA_TIME_SPRITE = new Sprite("images/powerUps/extra_time.png");
 
     /**
      * Creates a new ExtraTime power-up.

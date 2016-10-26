@@ -1,8 +1,11 @@
-package entities;
+package entities.character;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.AbstractEntity;
+import entities.CollidingEntity;
+import entities.DynamicEntity;
 import entities.balls.AbstractBall;
-import entities.character.Character;
+import entities.blocks.WallBlock;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.sound.SoundEffect;
@@ -10,12 +13,12 @@ import util.sound.SoundEffect;
 /**
  * Vine class, controlling the rope in the game.
  */
-public class Vine extends AbstractEntity {
+public class Vine extends AbstractEntity implements DynamicEntity, CollidingEntity {
 
     /**
      * Sprite of the vine.
      */
-    private static final Sprite VINE_SPRITE = new Sprite("vine.png", new Vec2d(12, 0));
+    private static final Sprite VINE_SPRITE = new Sprite("images/vine.png", new Vec2d(12, 0));
 
     /**
      * collision shape of the vine. Created around the original sprite.

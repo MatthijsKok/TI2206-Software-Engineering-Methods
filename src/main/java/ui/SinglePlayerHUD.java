@@ -6,14 +6,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * Draws a HeadsUpDisplay for a game with a single player.
+ * Draws a HeadsUpDisplay for a game with a single images.player.
  */
 class SinglePlayerHUD extends HeadsUpDisplay {
 
     /**
      * The heart sprite.
      */
-    private static final Sprite HEART = new Sprite("heart.png");
+    private static final Sprite HEART = new Sprite("images/heart.png");
 
     /**
      * The offset of the start place of the hearts.
@@ -26,7 +26,7 @@ class SinglePlayerHUD extends HeadsUpDisplay {
     private static final double SPACE = 48;
 
     /**
-     * Draws amount of lives and score of the first player.
+     * Draws amount of lives and score of the first images.player.
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */

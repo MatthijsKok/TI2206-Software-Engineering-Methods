@@ -1,4 +1,4 @@
-package entities;
+package entities.blocks;
 
 import com.sun.javafx.geom.Vec2d;
 import graphics.Sprite;
@@ -11,11 +11,11 @@ public class FloorBlock extends AbstractBlock {
     /**
      * The sprite used for the block object in the game.
      */
-    private static final Sprite BLOCK_SPRITE = new Sprite("block.png");
+    private static final Sprite BLOCK_SPRITE = new Sprite("images/block.png");
 
     /**
      * Creates a new FloorBlock at position (x,y).
-     * @param position the position of the block
+     * @param position Vec2d - Position of the block
      */
     public FloorBlock(final Vec2d position) {
         super(position);

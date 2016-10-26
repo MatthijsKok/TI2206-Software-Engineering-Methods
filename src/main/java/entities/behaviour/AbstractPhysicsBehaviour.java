@@ -24,9 +24,7 @@ public abstract class AbstractPhysicsBehaviour {
      * Applies physics on a entity.
      * @param timeDifference the amount of time that passed.
      */
-    public void applyPhysics(final double timeDifference) {
-        // To be overridden by sub classes.
-    }
+    public abstract void applyPhysics(double timeDifference);
 
     /**
      * @return the entity this physics works on.

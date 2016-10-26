@@ -20,7 +20,7 @@ import static org.junit.Assert.assertArrayEquals;
  */
 public class GameStateTest extends BubbleTroubleApplicationTest {
 
-    private static Game mockedGame = Mockito.mock(Game.class);
+    private static Game game = Game.getInstance();
 
     private GameState gameState;
 
@@ -29,10 +29,10 @@ public class GameStateTest extends BubbleTroubleApplicationTest {
         List<Level> levels = new ArrayList<>();
         levels.add(Mockito.mock(Level.class));
 
-        Mockito.when(mockedGame.getPlayers()).thenReturn(new ArrayList<>());
-        Mockito.when(mockedGame.getLevels()).thenReturn(levels);
+        game.setLevels(levels);
+        game.setPlayerCount(0);
 
-        gameState = new GameState(mockedGame);
+        gameState = new GameState(game);
     }
 
     @Test

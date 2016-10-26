@@ -1,6 +1,7 @@
-package entities;
+package entities.character;
 
-import entities.character.Character;
+import entities.AbstractEntity;
+import entities.CollidingEntity;
 import entities.balls.AbstractBall;
 import geometry.Circle;
 import javafx.scene.canvas.GraphicsContext;
@@ -11,7 +12,7 @@ import util.CanvasManager;
 /**
  * The shield class represents a shield that protects a entities.character.
  */
-public class Shield extends AbstractEntity {
+public class Shield extends AbstractEntity implements CollidingEntity {
 
     /**
      * The opacity of a shield.
@@ -34,7 +35,7 @@ public class Shield extends AbstractEntity {
      * Creates a new shield around a entities.character instance.
      * @param character Character this shield belongs to.
      */
-    public Shield(final Character character) {
+    Shield(final Character character) {
         super(character.getPosition());
         bindPosition(character.getPosition());
         setShape(new Circle(SHIELD_SHAPE));
@@ -44,7 +45,7 @@ public class Shield extends AbstractEntity {
     /**
      * Activates the shield.
      */
-    public void activate() {
+    void activate() {
         setVisibility(true);
     }
 

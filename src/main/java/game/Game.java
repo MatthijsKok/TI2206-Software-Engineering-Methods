@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * A class that handles things on a game related level.
  */
-public class Game {
+public final class Game {
 
     /**
      * The logger access point to which everything will be logged.
@@ -114,10 +114,10 @@ public class Game {
     }
 
     /**
-     * Gets the player with id id.
+     * Gets the images.player with id id.
      *
-     * @param id the id specifying the player.
-     * @return The player instance with id id.
+     * @param id the id specifying the images.player.
+     * @return The images.player instance with id id.
      */
     public Player getPlayer(int id) {
         return players.get(id);

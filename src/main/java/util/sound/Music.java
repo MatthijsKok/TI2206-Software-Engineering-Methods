@@ -113,7 +113,7 @@ public final class Music {
     /**
      * @return The Media object containing the music currently played.
      */
-    public static Media getCurrentMusic() {
+    static /* default */ Media getCurrentMusic() {
         return currentMusic;
     }
 }

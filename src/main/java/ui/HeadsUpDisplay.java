@@ -38,25 +38,25 @@ class HeadsUpDisplay extends AbstractUIElement {
     }
 
     /**
-     * Selector for the lives of a player with id playerID.
-     * @param playerId the id of the player.
-     * @return the lives of a player.
+     * Selector for the lives of a images.player with id playerID.
+     * @param playerId the id of the images.player.
+     * @return the lives of a images.player.
      */
     /* default */ int getPlayerLives(final int playerId) {
         return getPlayer(playerId).getLives();
     }
 
     /**
-     * Selector for the score of a player with id playerID.
-     * @param playerId the id of the player.
-     * @return the score of a player.
+     * Selector for the score of a images.player with id playerID.
+     * @param playerId the id of the images.player.
+     * @return the score of a images.player.
      */
     /* default */ int getPlayerScore(final int playerId) {
         return getPlayer(playerId).getScore();
     }
 
     /**
-     * Draws the lives that the first player of a level has left.
+     * Draws the lives that the first images.player of a level has left.
      * @param canvas The Canvas to draw on
      * @param graphicsContext The GraphicsContext to draw on
      */

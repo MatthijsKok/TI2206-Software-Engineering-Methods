@@ -3,7 +3,7 @@ package entities.powerups;
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.character.Character;
-import entities.Shield;
+import entities.character.Shield;
 import game.Game;
 import game.player.Player;
 import level.Level;

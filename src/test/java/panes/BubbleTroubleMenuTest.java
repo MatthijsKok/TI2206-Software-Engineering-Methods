@@ -2,7 +2,7 @@ package panes;
 
 import game.Game;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.After;
@@ -14,7 +14,8 @@ import util.StageManager;
 
 import java.util.concurrent.TimeoutException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test class for BubbleTroubleMenu

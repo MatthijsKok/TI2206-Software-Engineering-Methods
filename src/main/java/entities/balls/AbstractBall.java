@@ -2,10 +2,11 @@ package entities.balls;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
-import entities.FloorBlock;
-import entities.Shield;
-import entities.Vine;
-import entities.WallBlock;
+import entities.CollidingEntity;
+import entities.blocks.FloorBlock;
+import entities.character.Shield;
+import entities.character.Vine;
+import entities.blocks.WallBlock;
 import entities.behaviour.GravityBehaviour;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
@@ -13,9 +14,9 @@ import geometry.Rectangle;
 import util.sound.SoundEffect;
 
 /**
- * Class that represents the bouncing balls in our game.
+ * Class that represents the bouncing images.balls in our game.
  */
-public abstract class AbstractBall extends AbstractEntity {
+public abstract class AbstractBall extends AbstractEntity implements CollidingEntity {
 
     /**
      * The chance that splitting a ball spawns a pickup.
@@ -58,7 +59,7 @@ public abstract class AbstractBall extends AbstractEntity {
     }
 
     /**
-     * Constructor for the bouncing balls in our game.
+     * Constructor for the bouncing images.balls in our game.
      *
      * @param position Vec2d of the starting position of the ball.
      * @param size     Integer ranging 0-4 representing the ball size.
@@ -92,9 +93,9 @@ public abstract class AbstractBall extends AbstractEntity {
     }
 
     /**
-     * Removes this ball from the level and adds two smaller balls on the same
+     * Removes this ball from the level and adds two smaller images.balls on the same
      * position, moving in different directions. If the ball is already at it's
-     * smallest, no new balls will be added.
+     * smallest, no new images.balls will be added.
      */
     void die() {
         getLevel().removeEntity(this);
@@ -105,7 +106,7 @@ public abstract class AbstractBall extends AbstractEntity {
     }
 
     /**
-     * Set the vertical speed to up at the speed for that balls bounce height.
+     * Set the vertical speed to up at the speed for that images.balls bounce height.
      */
     private void bounce() {
         setYSpeed(-getBounceSpeed());
