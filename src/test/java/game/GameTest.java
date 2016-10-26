@@ -48,7 +48,7 @@ public class GameTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testSetLevelsFromFiles() {
-        final String path = "testLevel1";
+        final String path = "levelsForTesting";
         List<String> levelFiles = new ArrayList<>();
         levelFiles.add(path);
 
