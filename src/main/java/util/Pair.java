@@ -3,8 +3,8 @@ package util;
 /**
  * The class Pair contains a 2 values.
  *
- * @param <L>
- * @param <R>
+ * @param <L> Type of the left value of the pair.
+ * @param <R> Type of the right value of the pair.
  */
 public class Pair<L, R> {
     /**

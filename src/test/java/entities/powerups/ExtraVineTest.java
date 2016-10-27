@@ -3,12 +3,13 @@ package entities.powerups;
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.character.Character;
-import game.player.Player;
+import entities.character.Gun;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Tests for Harpoon class.
@@ -16,13 +17,13 @@ import static junit.framework.TestCase.assertNotNull;
 public class ExtraVineTest extends BubbleTroubleApplicationTest {
 
     private ExtraVine extraVine;
-    private Character character;
+    private Gun gun;
 
     @Before
     public void setUp() {
         extraVine = new ExtraVine();
-        character = new Character(new Vec2d(100, 300));
-        Player player = new Player(1, "leftKey", "rightKey", "shootKey");
+        Character character = new Character(new Vec2d(100, 300));
+        gun = character.getGun();
         extraVine.setTarget(character);
     }
 
@@ -33,15 +34,15 @@ public class ExtraVineTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testEnableEffect() {
-        int maxHarpoonCountBeforePickup = character.getMaxVineCount();
+        int maxConcurrentShots = gun.getMaxConcurrentShots();
         extraVine.enableEffect();
-        assertEquals(maxHarpoonCountBeforePickup + 1, character.getMaxVineCount());
+        assertThat(gun.getMaxConcurrentShots(), is(maxConcurrentShots + 1));
     }
 
     @Test
     public void testDisableEffect() {
-        int maxHarpoonCountBeforePickup = character.getMaxVineCount();
+        int maxConcurrentShots = gun.getMaxConcurrentShots();
         extraVine.disableEffect();
-        assertEquals(maxHarpoonCountBeforePickup - 1, character.getMaxVineCount());
+        assertThat(gun.getMaxConcurrentShots(), is(maxConcurrentShots - 1));
     }
 }

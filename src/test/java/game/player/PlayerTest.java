@@ -3,6 +3,7 @@ package game.player;
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.character.Character;
+import entities.character.Gun;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -12,6 +13,7 @@ import util.Pair;
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.when;
 
 /**
  * Test suite for the Player class.
@@ -23,7 +25,9 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
 
     @Before
     public void setUp() {
+        Gun gun = Mockito.mock(Gun.class);
         character = Mockito.mock(Character.class);
+        when(character.getGun()).thenReturn(gun);
         player = PlayerFactory.createPlayer(0);
     }
 

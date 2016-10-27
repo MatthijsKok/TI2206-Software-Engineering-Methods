@@ -8,10 +8,10 @@ import entities.balls.AbstractBall;
 import entities.behaviour.GravityBehaviour;
 import entities.blocks.FloorBlock;
 import entities.blocks.WallBlock;
+import entities.character.bullets.Vine;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.Pair;
-import util.sound.SoundEffect;
 
 /**
  * The Character class represents a character.
@@ -45,15 +45,6 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     private boolean alive = true;
 
     /**
-     * The amount of vines this character can shoot.
-     */
-    private int maxVineCount = 1;
-    /**
-     * The amount of vines this character has currently shot.
-     */
-    private int currentVineCount = 0;
-
-    /**
      * The sprites of the character.
      */
     private Sprite idleSprite, runningSprite;
@@ -64,19 +55,14 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     private int direction = 0;
 
     /**
-     * Indicates whether the character is shooting.
-     */
-    private boolean shooting = false;
-
-    /**
-     * Boolean indicating whether the character is invincible.
+     * The shield this character carries.
      */
     private final Shield shield;
 
     /**
-     * Boolean indicating whether the character can shoot.
+     * The gun this character carries.
      */
-    private boolean canShoot = true;
+    private final Gun gun;
 
     /**
      * Instantiate a new character at position (x, y).
@@ -87,10 +73,13 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
         super(position);
 
         shield = new Shield(this);
+        gun = new Gun<>(this, Vine.class);
+
+        getLevel().addEntity(shield);
+        getLevel().addEntity(gun);
 
         setShape(new Rectangle(BOUNDING_BOX));
         setPhysicsBehaviour(new GravityBehaviour(this));
-        getLevel().addEntity(shield);
     }
 
     /**
@@ -139,15 +128,6 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
         this.direction = 1;
     }
 
-    /**
-     * Makes the images.player toggle shooting.
-     *
-     * @param shooting boolean whether the images.player is shooting or not.
-     */
-    public void setShooting(boolean shooting) {
-        this.shooting = shooting;
-    }
-
     @Override
     public final void update(final double timeDifference) {
         // Walk
@@ -160,16 +140,6 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
             setSprite(runningSprite);
             setXScale(direction);
         }
-
-        // Shoot
-        if (shooting && canShoot && currentVineCount < maxVineCount) {
-            currentVineCount++;
-            getLevel().addEntity(new Vine(getPosition(), this));
-            final int occurrenceRate = 3;
-            SoundEffect.SHOOT.playSometimes(occurrenceRate);
-        }
-
-        canShoot = !shooting;
     }
 
     @Override
@@ -247,27 +217,10 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     }
 
     /**
-     * Increases the amount of vines this character can shoot.
-     *
-     * @param amount the amount of vine a character can shoot extra.
+     * @return Gun - The gun this player carries.
      */
-    public void increaseMaxVineCount(int amount) {
-        maxVineCount = Math.max(1, maxVineCount + amount);
-    }
-
-    /**
-     * Called when a vine is removed from the level.
-     */
-    /* default */ void vineRemoved() {
-        currentVineCount = Math.max(0, currentVineCount - 1);
-    }
-
-    /**
-     * Getter for maxHarpoonCount.
-     * @return maxHarpoonCount
-     */
-    public int getMaxVineCount() {
-        return maxVineCount;
+    public Gun getGun() {
+        return gun;
     }
 
     /**
@@ -281,7 +234,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
      * Increases the score of the character.
      * @param score the amount of the increase.
      */
-    /* default */ void increaseScore(final int score) {
+    public void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
     }
 

@@ -7,7 +7,7 @@ import entities.behaviour.GravityBehaviour;
 import entities.blocks.FloorBlock;
 import entities.blocks.WallBlock;
 import entities.character.Shield;
-import entities.character.Vine;
+import entities.character.bullets.Vine;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
 import geometry.Rectangle;

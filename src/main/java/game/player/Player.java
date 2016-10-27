@@ -136,7 +136,7 @@ public class Player implements Observer {
             character.stop();
         }
 
-        character.setShooting(KeyboardInputManager.keyPressed(shootKey));
+        character.getGun().setShooting(KeyboardInputManager.keyPressed(shootKey));
     }
 
     private void increaseScore(int amount) {

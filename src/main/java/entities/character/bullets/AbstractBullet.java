@@ -1,4 +1,4 @@
-package entities.character;
+package entities.character.bullets;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
@@ -6,29 +6,14 @@ import entities.CollidingEntity;
 import entities.DynamicEntity;
 import entities.balls.AbstractBall;
 import entities.blocks.WallBlock;
-import geometry.Rectangle;
-import graphics.Sprite;
+import entities.character.Character;
+import entities.character.Gun;
 import util.sound.SoundEffect;
 
 /**
- * Vine class, controlling the rope in the game.
+ * The base class for all kinds of bullets.
  */
-public class Vine extends AbstractEntity implements DynamicEntity, CollidingEntity {
-
-    /**
-     * Sprite of the vine.
-     */
-    private static final Sprite VINE_SPRITE = new Sprite("images/vine.png", new Vec2d(12, 0));
-
-    /**
-     * collision shape of the vine. Created around the original sprite.
-     */
-    private static final Rectangle VINE_SHAPE = new Rectangle(VINE_SPRITE);
-
-    /**
-     * Constant upward speed of the vine in px/s.
-     */
-    private static final double TRAVEL_SPEED = 250; // px/s
+public abstract class AbstractBullet extends AbstractEntity implements DynamicEntity, CollidingEntity {
 
     /**
      * Score that is multiplied by the size of the ball, and then added to the score.
@@ -46,18 +31,10 @@ public class Vine extends AbstractEntity implements DynamicEntity, CollidingEnti
      * @param position spawn position of the vine.
      * @param character character which shot the vine.
      */
-    public Vine(final Vec2d position, final Character character) {
+    AbstractBullet(final Vec2d position, final Character character) {
         super(position);
-        setSprite(VINE_SPRITE);
-        setShape(new Rectangle(VINE_SHAPE));
-        setYSpeed(-TRAVEL_SPEED);
         setDepth(1);
         this.character = character;
-    }
-
-    private void die() {
-        getLevel().removeEntity(this);
-        character.vineRemoved();
     }
 
     @Override
@@ -88,7 +65,7 @@ public class Vine extends AbstractEntity implements DynamicEntity, CollidingEnti
         die();
 
         final int score = (ball.getSize() + 1) * SCORE_PER_BALL;
-        character.increaseScore(score);
+        getCharacter().increaseScore(score);
     }
 
     /**
@@ -97,4 +74,24 @@ public class Vine extends AbstractEntity implements DynamicEntity, CollidingEnti
     private void collideWithBlock() {
         die();
     }
+
+    /**
+     * @return The gun this bullet is shot from.
+     */
+    /* default */ final Gun getGun() {
+        return character.getGun();
+    }
+
+    /**
+     * @return The character that shot this bullet.
+     */
+    /* default */ final Character getCharacter() {
+        return character;
+    }
+
+    /**
+     * Called when the bullet dies.
+     */
+    /* default */ abstract void die();
+
 }

@@ -22,6 +22,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     private Player player;
     private Character character;
+    private Gun gun;
     private Vec2d spawnPosition = new Vec2d(100, 300);
 
     private int countEntities() {
@@ -31,6 +32,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     @Before
     public void setUp() {
         character = new Character(spawnPosition);
+        gun = character.getGun();
         player = new Player(0, "", "", "");
         player.setCharacter(character);
     }
@@ -175,21 +177,21 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     @Test
     public void testShoot() {
         int count = countEntities();
-        character.setShooting(true);
-        character.update(1);
+        gun.setShooting(true);
+        gun.update(1);
         assertThat(countEntities(), greaterThan(count));
     }
 
     @Test
     public void testIncreaseVineCount() {
         int count = countEntities();
-        character.increaseMaxVineCount(1);
-        character.setShooting(true);
-        character.update(1); // 1 vine
-        character.setShooting(false);
-        character.update(1); // 1 vine
-        character.setShooting(true);
-        character.update(1); // 2 vines
+        gun.increaseMaxConcurrentShots(1);
+        gun.setShooting(true);
+        gun.update(1); // 1 shot
+        gun.setShooting(false);
+        gun.update(1); // 1 shot
+        gun.setShooting(true);
+        gun.update(1); // 2 shots
         assertThat(countEntities(), is(count + 2));
     }
 

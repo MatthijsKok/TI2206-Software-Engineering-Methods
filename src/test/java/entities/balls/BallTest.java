@@ -6,7 +6,7 @@ import entities.blocks.FloorBlock;
 import entities.blocks.WallBlock;
 import entities.character.Character;
 import entities.character.Shield;
-import entities.character.Vine;
+import entities.character.bullets.Vine;
 import game.Game;
 import geometry.Circle;
 import level.Level;
