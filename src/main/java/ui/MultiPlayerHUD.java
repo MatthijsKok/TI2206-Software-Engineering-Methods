@@ -7,7 +7,7 @@ import javafx.scene.text.TextAlignment;
 import level.LevelTimer;
 
 /**
- * Draws a HeadsUpDisplay for a game with a single images.player.
+ * Draws a HeadsUpDisplay for a game with a single player.
  */
 public class MultiPlayerHUD extends HeadsUpDisplay {
 
@@ -52,18 +52,18 @@ public class MultiPlayerHUD extends HeadsUpDisplay {
 
         // Player one lives
         for (int i = player1.getLives() - 1; i >= 0; i--) {
-            HEART.draw(MARGIN.x + SPACE * i, canvas().getHeight() - MARGIN.y);
+            HEART.draw(MARGIN.x + SPACE * i, getCanvas().getHeight() - MARGIN.y);
         }
-        graphicsContext().fillText(String.valueOf(player1.getScore()),
-                MARGIN.x, canvas().getHeight() - 2 * MARGIN.y);
+        getGraphicsContext().fillText(String.valueOf(player1.getScore()),
+                MARGIN.x, getCanvas().getHeight() - 2 * MARGIN.y);
 
         // Player two lives
         for (int i = player2.getLives() - 1; i >= 0; i--) {
-            HEART.draw(canvas().getWidth() - (MARGIN.x + SPACE * i), canvas().getHeight() - MARGIN.y);
+            HEART.draw(getCanvas().getWidth() - (MARGIN.x + SPACE * i), getCanvas().getHeight() - MARGIN.y);
         }
-        graphicsContext().setTextAlign(TextAlignment.RIGHT);
-        graphicsContext().fillText(String.valueOf(player2.getScore()),
-                canvas().getWidth() - MARGIN.x, canvas().getHeight() - 2 * MARGIN.y);
-        graphicsContext().setTextAlign(TextAlignment.LEFT);
+        getGraphicsContext().setTextAlign(TextAlignment.RIGHT);
+        getGraphicsContext().fillText(String.valueOf(player2.getScore()),
+                getCanvas().getWidth() - MARGIN.x, getCanvas().getHeight() - 2 * MARGIN.y);
+        getGraphicsContext().setTextAlign(TextAlignment.LEFT);
     }
 }

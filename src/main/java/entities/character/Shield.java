@@ -10,7 +10,7 @@ import javafx.scene.shape.ArcType;
 import util.CanvasManager;
 
 /**
- * The shield class represents a shield that protects a entities.character.
+ * The shield class represents a shield that protects a character.
  */
 public class Shield extends AbstractEntity implements CollidingEntity {
 
@@ -32,7 +32,7 @@ public class Shield extends AbstractEntity implements CollidingEntity {
     private static final Circle SHIELD_SHAPE = new Circle(SHIELD_RADIUS);
 
     /**
-     * Creates a new shield around a entities.character instance.
+     * Creates a new shield around a character instance.
      * @param character Character this shield belongs to.
      */
     Shield(final Character character) {

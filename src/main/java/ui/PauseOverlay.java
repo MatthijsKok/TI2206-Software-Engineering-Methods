@@ -19,18 +19,18 @@ public class PauseOverlay extends AbstractUIElement {
 
     @Override
     public void draw() {
-        graphicsContext().setFill(Color.DARKGRAY);
-        graphicsContext().fillRect(0, 0, canvas().getWidth(), canvas().getHeight());
-        graphicsContext().setFill(Color.WHITE);
+        getGraphicsContext().setFill(Color.DARKGRAY);
+        getGraphicsContext().fillRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
+        getGraphicsContext().setFill(Color.WHITE);
 
-        graphicsContext().setFont(BIGGER_FONT);
-        graphicsContext().fillText("PAUSED...",
-                canvas().getWidth() / 2,
-                canvas().getHeight() / 2 - BIGGER_FONT.getSize());
+        getGraphicsContext().setFont(BIGGER_FONT);
+        getGraphicsContext().fillText("PAUSED...",
+                getCanvas().getWidth() / 2,
+                getCanvas().getHeight() / 2 - BIGGER_FONT.getSize());
 
-        graphicsContext().setFont(SMALLER_FONT);
-        graphicsContext().fillText("Press P to resume.",
-                canvas().getWidth() / 2,
-                canvas().getHeight() / 2 + BIGGER_FONT.getSize());
+        getGraphicsContext().setFont(SMALLER_FONT);
+        getGraphicsContext().fillText("Press P to resume.",
+                getCanvas().getWidth() / 2,
+                getCanvas().getHeight() / 2 + BIGGER_FONT.getSize());
     }
 }

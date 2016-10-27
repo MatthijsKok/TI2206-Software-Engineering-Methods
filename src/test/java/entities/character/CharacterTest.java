@@ -86,7 +86,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
         character.collideWith(mockedBall);
 
-        assertThat("A entities.character should die when it collides with a ball", character.isAlive(), is(false));
+        assertThat("A character should die when it collides with a ball", character.isAlive(), is(false));
     }
 
     @Test
@@ -171,9 +171,9 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     /*@Test
     public void testIncreaseScore() {
-        int score = images.player.getScore();
+        int score = player.getScore();
         character.increaseScore(100);
-        assertThat(images.player.getScore(), is(score + 100));
+        assertThat(player.getScore(), is(score + 100));
     }*/
 
     @Test

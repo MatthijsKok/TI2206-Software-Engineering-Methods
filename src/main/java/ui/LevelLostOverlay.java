@@ -20,18 +20,18 @@ public class LevelLostOverlay extends AbstractUIElement {
 
     @Override
     public void draw() {
-        graphicsContext().setFill(Color.DARKRED);
-        graphicsContext().fillRect(0, 0, canvas().getWidth(), canvas().getHeight());
-        graphicsContext().setFill(Color.WHITE);
+        getGraphicsContext().setFill(Color.DARKRED);
+        getGraphicsContext().fillRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
+        getGraphicsContext().setFill(Color.WHITE);
 
-        graphicsContext().setFont(BIGGER_FONT);
-        graphicsContext().fillText("You died...",
-                canvas().getWidth() / 2,
-                canvas().getHeight() / 2 - BIGGER_FONT.getSize());
+        getGraphicsContext().setFont(BIGGER_FONT);
+        getGraphicsContext().fillText("You died...",
+                getCanvas().getWidth() / 2,
+                getCanvas().getHeight() / 2 - BIGGER_FONT.getSize());
 
-        graphicsContext().setFont(SMALLER_FONT);
-        graphicsContext().fillText("Press R to restart level",
-                canvas().getWidth() / 2,
-                canvas().getHeight() / 2 + BIGGER_FONT.getSize());
+        getGraphicsContext().setFont(SMALLER_FONT);
+        getGraphicsContext().fillText("Press R to restart level",
+                getCanvas().getWidth() / 2,
+                getCanvas().getHeight() / 2 + BIGGER_FONT.getSize());
     }
 }

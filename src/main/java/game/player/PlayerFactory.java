@@ -3,7 +3,7 @@ package game.player;
 import util.Config;
 
 /**
- * The factory creating images.player objects.
+ * The factory creating player objects.
  */
 public final class PlayerFactory {
 
@@ -12,10 +12,10 @@ public final class PlayerFactory {
     }
 
     /**
-     * Creates a new images.player instance with the keyboard mapping
+     * Creates a new player instance with the keyboard mapping
      * corresponding to the playerId.
-     * @param playerId the id of the images.player.
-     * @return the created images.player.
+     * @param playerId the id of the player.
+     * @return the created player.
      */
     public static Player createPlayer(final int playerId) {
         String leftKey;

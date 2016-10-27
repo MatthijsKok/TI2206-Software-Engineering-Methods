@@ -4,7 +4,7 @@ import graphics.Sprite;
 import util.sound.SoundEffect;
 
 /**
- * Gives the images.player a shield that allows it to be hit one time.
+ * Gives the player a shield that allows it to be hit one time.
  */
 class ActivateShield extends AbstractInstantPowerUp {
 

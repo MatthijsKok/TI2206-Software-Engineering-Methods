@@ -8,13 +8,13 @@ import java.util.Random;
 public final class MultiSoundEffect {
 
     /**
-     * Sound effect that will be played when the images.player loses a life.
+     * Sound effect that will be played when the player loses a life.
      */
     public static final MultiSoundEffect PLAYER_LOSES_LIFE =
             new MultiSoundEffect(new String[]{"mario_life_lost.wav", "yoshi_life_lost.wav"});
 
     /**
-     * Sound effect that will be played when the images.player loses a life.
+     * Sound effect that will be played when the player loses a life.
      */
     public static final MultiSoundEffect PLAYER_OUT_OF_LIVES =
             new MultiSoundEffect(new String[]{"mario_oh_no.wav", "sad_yoshi.wav"});

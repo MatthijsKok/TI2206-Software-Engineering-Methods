@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Class that represents colored images.balls.
+ * Class that represents colored balls.
  */
 public class ColoredBall extends AbstractBall {
 

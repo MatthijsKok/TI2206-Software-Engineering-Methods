@@ -164,7 +164,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     }
 
     /**
-     * Set the images.player that controls this Character.
+     * Set the player that controls this Character.
      *
      * @param playerID Integer - The id of the player that
      *                 controls this Character.

@@ -10,7 +10,7 @@ import entities.character.Character;
 import geometry.Rectangle;
 
 /**
- * Pickup that contains a power-up effect that will be applied to the images.player.
+ * Pickup that contains a power-up effect that will be applied to a character.
  */
 class Pickup extends AbstractEntity implements DynamicEntity, CollidingEntity {
     /**

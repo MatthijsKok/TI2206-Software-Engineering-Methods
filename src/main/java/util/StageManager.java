@@ -9,12 +9,12 @@ import javafx.stage.Stage;
 public final class StageManager {
 
     /**
-     * The default width of the game canvas.
+     * The default width of the game getCanvas.
      */
     private static final double DEFAULT_WIDTH = 1024;
 
     /**
-     * The default height of the game canvas.
+     * The default height of the game getCanvas.
      */
     private static final double DEFAULT_HEIGHT = 640;
 

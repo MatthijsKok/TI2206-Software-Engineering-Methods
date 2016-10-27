@@ -45,15 +45,15 @@ public class HeadsUpDisplay extends AbstractUIElement {
     @Override
     public void draw() {
         // Outer time bar
-        graphicsContext().setFill(Color.BLACK);
-        graphicsContext().fillRect(
-                MARGIN, canvas().getHeight() - HEIGHT - MARGIN,
-                canvas().getWidth() - 2 * MARGIN, HEIGHT);
+        getGraphicsContext().setFill(Color.BLACK);
+        getGraphicsContext().fillRect(
+                MARGIN, getCanvas().getHeight() - HEIGHT - MARGIN,
+                getCanvas().getWidth() - 2 * MARGIN, HEIGHT);
 
         // Inner time bar
-        graphicsContext().setFill(Color.RED);
-        graphicsContext().fillRect(
-                MARGIN + PADDING, canvas().getHeight() - HEIGHT - MARGIN + PADDING,
-                (canvas().getWidth() - 2 * (PADDING + MARGIN)) * getTimeLeft(), HEIGHT - 2 * PADDING);
+        getGraphicsContext().setFill(Color.RED);
+        getGraphicsContext().fillRect(
+                MARGIN + PADDING, getCanvas().getHeight() - HEIGHT - MARGIN + PADDING,
+                (getCanvas().getWidth() - 2 * (PADDING + MARGIN)) * getTimeLeft(), HEIGHT - 2 * PADDING);
     }
 }

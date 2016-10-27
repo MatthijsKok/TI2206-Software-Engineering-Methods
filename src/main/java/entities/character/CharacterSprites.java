@@ -30,8 +30,8 @@ final class CharacterSprites {
 
     /**
      * Returns the idle sprite corresponding to id.
-     * @param playerId the playerId of the images.player.
-     * @return the sprite of the entities.character.
+     * @param playerId the playerId of the player.
+     * @return the sprite of the character.
      */
     /* default */ static Sprite getIdleSprite(final int playerId) {
         return new Sprite(IDLE_SPRITES[playerId]);
@@ -39,8 +39,8 @@ final class CharacterSprites {
 
     /**
      * Returns the running sprite corresponding to playerId.
-     * @param playerId the playerId of the images.player.
-     * @return the sprite of the entities.character.
+     * @param playerId the playerId of the player.
+     * @return the sprite of the character.
      */
     /* default */ static Sprite getRunningSprite(final int playerId) {
         return new Sprite(RUNNING_SPRITES[playerId]);

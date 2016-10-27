@@ -4,7 +4,7 @@ import graphics.Sprite;
 import util.sound.SoundEffect;
 
 /**
- * Gives the images.player a extra vine to shoot.
+ * Gives a character an extra vine to shoot.
  */
 class ExtraVine extends AbstractDuringPowerUp {
 

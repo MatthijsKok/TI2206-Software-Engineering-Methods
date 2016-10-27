@@ -6,7 +6,7 @@ import graphics.Sprite;
 import level.LevelTimer;
 
 /**
- * Draws a HeadsUpDisplay for a game with a single images.player.
+ * Draws a HeadsUpDisplay for a game with a single player.
  */
 public class SinglePlayerHUD extends HeadsUpDisplay {
 
@@ -45,11 +45,11 @@ public class SinglePlayerHUD extends HeadsUpDisplay {
         super.draw();
 
         for (int i = player.getLives() - 1; i >= 0; i--) {
-            HEART.draw(MARGIN.x + SPACE * i, canvas().getHeight() - MARGIN.y);
+            HEART.draw(MARGIN.x + SPACE * i, getCanvas().getHeight() - MARGIN.y);
         }
 
-        graphicsContext().fillText(
+        getGraphicsContext().fillText(
                 String.valueOf(player.getScore()),
-                MARGIN.x, canvas().getHeight() - 2 * MARGIN.y);
+                MARGIN.x, getCanvas().getHeight() - 2 * MARGIN.y);
     }
 }

@@ -62,7 +62,7 @@ public class CharacterMovement {
     }
 
     /**
-     * Increases the speed at which the entities.character runs.
+     * Increases the speed at which the character runs.
      *
      * @param amount Double - The speed boost.
      */
