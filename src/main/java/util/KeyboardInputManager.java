@@ -57,8 +57,10 @@ public final class KeyboardInputManager {
     }
 
     private static void pressKey(String code) {
-        pressed.add(code);
-        pressed.add("ANY");
+        if (!input.contains(code)) {
+            pressed.add(code);
+            pressed.add("ANY");
+        }
         input.add(code);
     }
 

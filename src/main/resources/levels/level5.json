@@ -1,7 +1,7 @@
 {
   "name": "Level 2",
   "duration": 40,
-  "backgroundImageURI": "backgrounds/overworld.png",
+  "backgroundImageURI": "images/backgrounds/overworld.png",
   "backgroundMusicURI": "peach_gardens.mp3",
   "entities": [
     {

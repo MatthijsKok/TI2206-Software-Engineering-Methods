@@ -1,7 +1,7 @@
 {
   "name": "Level 2",
   "duration": 40,
-  "backgroundImageURI": "backgrounds/underwater.png",
+  "backgroundImageURI": "images/backgrounds/underwater.png",
   "backgroundMusicURI": "dire_docks.mp3",
   "entities": [
     {

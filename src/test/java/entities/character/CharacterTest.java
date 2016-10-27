@@ -121,7 +121,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         FloorBlock floor = new FloorBlock(
                 new Vec2d(
                         spawnPosition.x - 5,
-                        rect.getBottom() - 50));
+                        rect.getTop() - 59));
 
         double y = character.getY();
         character.collideWith(floor);
@@ -160,8 +160,8 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     public void testCollideWithWallBlockFromRight() {
         WallBlock wall = new WallBlock(
                 new Vec2d(
-                        spawnPosition.x - 37,
-                        spawnPosition.y - 30));
+                        spawnPosition.x - 60,
+                        spawnPosition.y - 32));
 
         double x = character.getX();
         character.collideWith(wall);

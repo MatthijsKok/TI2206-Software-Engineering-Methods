@@ -28,7 +28,7 @@ public class FloorBlockTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testConstructorSetsShape() {
-        Rectangle floorShape = new Rectangle(FloorBlock.BLOCK_SPRITE.getWidth(), FloorBlock.BLOCK_SPRITE.getHeight());
+        Rectangle floorShape = new Rectangle(FloorBlock.FLOOR_SPRITE.getWidth(), FloorBlock.FLOOR_SPRITE.getHeight());
         assertEquals("A floor should have a rectangular bounding box", floor.getShape(), floorShape);
     }
 }

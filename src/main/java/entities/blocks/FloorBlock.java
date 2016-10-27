@@ -11,7 +11,7 @@ public class FloorBlock extends AbstractBlock {
     /**
      * The sprite used for the block object in the game.
      */
-    private static final Sprite FLOOR_SPRITE = new Sprite("images/block.png");
+    /* default */ static final Sprite FLOOR_SPRITE = new Sprite("images/grass_block.png");
 
     /**
      * Creates a new FloorBlock at position (x,y).
@@ -19,7 +19,7 @@ public class FloorBlock extends AbstractBlock {
      */
     public FloorBlock(final Vec2d position) {
         super(position);
-        setSprite(BLOCK_SPRITE);
+        setSprite(FLOOR_SPRITE);
         setShapeToSprite();
     }
 }

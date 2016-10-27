@@ -75,7 +75,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
      * The character dies. Soo sad...
      * After it dies it tells everybody it has died, but its already dead. How does that even work?
      */
-    public void die() {
+    /* default */ void die() {
         alive = false;
         setChanged();
         notifyObservers(new Pair<>("increaseLives", -1));
