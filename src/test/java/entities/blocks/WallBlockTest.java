@@ -1,4 +1,4 @@
-package entities;
+package entities.blocks;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;

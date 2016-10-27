@@ -2,19 +2,22 @@ package panes;
 
 import game.Game;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
+import level.Level;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 import util.CanvasManager;
 import util.StageManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test class for BubbleTroubleMenu
@@ -22,10 +25,15 @@ import static org.junit.Assert.*;
 public class BubbleTroubleMenuTest extends ApplicationTest {
 
     private MainMenu menu;
-    private Game game;
 
     @Override
     public void start(Stage stage) throws Exception {
+        List<Level> levels = new ArrayList<>();
+
+        levels.add(new Level("filename"));
+
+        Game.setLevels(levels);
+
         StageManager.init(stage);
         Canvas canvas = CanvasManager.createCanvas(stage);
         CanvasManager.setCanvas(canvas);
@@ -33,14 +41,9 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
 
     }
 
-    @Before
-    public void setUp() {
-        game = Game.getInstance();
-    }
-
     @After
     public void tearDown() throws TimeoutException {
-        game.stop();
+        Game.stop();
         release(new MouseButton[] {});
     }
 
@@ -75,12 +78,12 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
 //    @Test
 //    public void testOnClickSinglePlayerButtons() {
 //        clickOn("#singlePlayerButton");
-//        assertThat(game.getPlayerCount(), is(1));
+//        assertThat(Game.getPlayerCount(), is(1));
 //    }
 //
 //    @Test
 //    public void testOnClickMultiPlayerButtons() {
 //        clickOn("#multiPlayerButton");
-//        assertThat(game.getPlayerCount(), is(2));
+//        assertThat(Game.getPlayerCount(), is(2));
 //    }
 }

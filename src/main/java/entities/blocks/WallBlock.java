@@ -1,4 +1,4 @@
-package entities;
+package entities.blocks;
 
 import com.sun.javafx.geom.Vec2d;
 import graphics.Sprite;
@@ -11,7 +11,7 @@ public class WallBlock extends AbstractBlock {
     /**
      * The sprite of the wall.
      */
-    public static final Sprite WALL_SPRITE = new Sprite("wall.png");
+    /* default */ static final Sprite WALL_SPRITE = new Sprite("images/wall.png");
 
     /**
      * Creates a wall on position (x,y).
@@ -24,4 +24,3 @@ public class WallBlock extends AbstractBlock {
         setShapeToSprite();
     }
 }
-

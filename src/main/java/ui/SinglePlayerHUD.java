@@ -1,19 +1,19 @@
 package ui;
 
 import com.sun.javafx.geom.Vec2d;
+import game.player.Player;
 import graphics.Sprite;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import level.LevelTimer;
 
 /**
  * Draws a HeadsUpDisplay for a game with a single player.
  */
-class SinglePlayerHUD extends HeadsUpDisplay {
+public class SinglePlayerHUD extends HeadsUpDisplay {
 
     /**
      * The heart sprite.
      */
-    private static final Sprite HEART = new Sprite("heart.png");
+    private static final Sprite HEART = new Sprite("images/heart.png");
 
     /**
      * The offset of the start place of the hearts.
@@ -26,17 +26,30 @@ class SinglePlayerHUD extends HeadsUpDisplay {
     private static final double SPACE = 48;
 
     /**
-     * Draws amount of lives and score of the first player.
-     * @param canvas The Canvas to draw on
-     * @param graphicsContext The GraphicsContext to draw on
+     * The player this HUD draws the lives for.
      */
-    /* default */ void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
-        super.draw(canvas, graphicsContext);
+    private final Player player;
 
-        for (int i = getPlayerLives(0) - 1; i >= 0; i--) {
-            HEART.draw(MARGIN.x + SPACE * i, canvas.getHeight() - MARGIN.y);
+    /**
+     * Creates a new SinglePlayerHUD.
+     * @param timer The timer to draw the HUD for.
+     * @param player The player to draw the HUD for.
+     */
+    public SinglePlayerHUD(LevelTimer timer, Player player) {
+        super(timer);
+        this.player = player;
+    }
+
+    @Override
+    public void draw() {
+        super.draw();
+
+        for (int i = player.getLives() - 1; i >= 0; i--) {
+            HEART.draw(MARGIN.x + SPACE * i, getCanvas().getHeight() - MARGIN.y);
         }
 
-        graphicsContext.fillText(String.valueOf(getPlayerScore(0)), MARGIN.x, canvas.getHeight() - 2 * MARGIN.y);
+        getGraphicsContext().fillText(
+                String.valueOf(player.getScore()),
+                MARGIN.x, getCanvas().getHeight() - 2 * MARGIN.y);
     }
 }

@@ -8,7 +8,7 @@ import util.CanvasManager;
 /**
  * Class that handles the creation of sprites.
  */
-public class Sprite implements Cloneable {
+public class Sprite {
     /**
      * The default frame per second rate of any sprite.
      */
@@ -33,7 +33,7 @@ public class Sprite implements Cloneable {
      * The frameSpeed at which the sprite should be displayed in
      * frames per second.
      */
-    private double frameSpeed; // Frames / second
+    private transient double frameSpeed; // Frames / second
 
     /**
      * A Vec2d containing the x and y coordinates to be used as the
@@ -44,7 +44,7 @@ public class Sprite implements Cloneable {
     /**
      * The with and height of the sprite in pixels.
      */
-    private int width, height;
+    private transient int width, height;
 
     /**
      * A double representing a timeline from frame 0 to the last

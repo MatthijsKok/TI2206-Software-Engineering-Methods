@@ -1,7 +1,7 @@
 {
   "name": "TimeUp",
   "duration": 5,
-  "backgroundImageURI": "",
+  "backgroundImageURI": "images/backgrounds/background2.png",
   "backgroundMusicURI": "mario_theme_remix.mp3",
   "entities": [
     {

@@ -1,31 +1,19 @@
-package entities;
+package entities.character.bullets;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.AbstractEntity;
+import entities.CollidingEntity;
+import entities.DynamicEntity;
 import entities.balls.AbstractBall;
+import entities.blocks.WallBlock;
 import entities.character.Character;
-import geometry.Rectangle;
-import graphics.Sprite;
+import entities.character.Gun;
 import util.sound.SoundEffect;
 
 /**
- * Vine class, controlling the rope in the game.
+ * The base class for all kinds of bullets.
  */
-public class Vine extends AbstractEntity {
-
-    /**
-     * Sprite of the vine.
-     */
-    private static final Sprite VINE_SPRITE = new Sprite("vine.png", new Vec2d(12, 0));
-
-    /**
-     * collision shape of the vine. Created around the original sprite.
-     */
-    private static final Rectangle VINE_SHAPE = new Rectangle(VINE_SPRITE);
-
-    /**
-     * Constant upward speed of the vine in px/s.
-     */
-    private static final double TRAVEL_SPEED = 300; // px/s
+public abstract class AbstractBullet extends AbstractEntity implements DynamicEntity, CollidingEntity {
 
     /**
      * Score that is multiplied by the size of the ball, and then added to the score.
@@ -43,19 +31,10 @@ public class Vine extends AbstractEntity {
      * @param position spawn position of the vine.
      * @param character character which shot the vine.
      */
-    public Vine(final Vec2d position, final Character character) {
+    AbstractBullet(final Vec2d position, final Character character) {
         super(position);
-        setSprite(VINE_SPRITE);
-        setShape(new Rectangle(VINE_SHAPE));
-        setYSpeed(-TRAVEL_SPEED);
         setDepth(1);
         this.character = character;
-    }
-
-    private void die() {
-        getLevel().removeEntity(this);
-        character.vineRemoved();
-        SoundEffect.SHOOT.getAudio().stop();
     }
 
     @Override
@@ -67,6 +46,7 @@ public class Vine extends AbstractEntity {
 
     @Override
     public void collideWith(final AbstractEntity entity) {
+        SoundEffect.SHOOT.getAudio().stop();
 
         if (entity instanceof AbstractBall) {
             collideWith((AbstractBall) entity);
@@ -85,14 +65,33 @@ public class Vine extends AbstractEntity {
         die();
 
         final int score = (ball.getSize() + 1) * SCORE_PER_BALL;
-        character.increaseScore(score);
+        getCharacter().increaseScore(score);
     }
 
     /**
      * Collision with a block, the vine should disappear and the score should increase.
      */
     private void collideWithBlock() {
-        SoundEffect.SHOOT.getAudio().stop();
         die();
     }
+
+    /**
+     * @return The gun this bullet is shot from.
+     */
+    /* default */ final Gun getGun() {
+        return character.getGun();
+    }
+
+    /**
+     * @return The character that shot this bullet.
+     */
+    /* default */ final Character getCharacter() {
+        return character;
+    }
+
+    /**
+     * Called when the bullet dies.
+     */
+    /* default */ abstract void die();
+
 }

@@ -2,11 +2,12 @@ package entities.balls;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
-import entities.FloorBlock;
-import entities.Shield;
-import entities.Vine;
-import entities.WallBlock;
+import entities.CollidingEntity;
 import entities.behaviour.GravityBehaviour;
+import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
+import entities.character.Shield;
+import entities.character.bullets.Vine;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
 import geometry.Rectangle;
@@ -15,7 +16,7 @@ import util.sound.SoundEffect;
 /**
  * Class that represents the bouncing balls in our game.
  */
-public abstract class AbstractBall extends AbstractEntity {
+public abstract class AbstractBall extends AbstractEntity implements CollidingEntity {
 
     /**
      * The chance that splitting a ball spawns a pickup.
@@ -100,7 +101,7 @@ public abstract class AbstractBall extends AbstractEntity {
      * position, moving in different directions. If the ball is already at it's
      * smallest, no new balls will be added.
      */
-    void die() {
+    /* default */ void die() {
         getLevel().removeEntity(this);
 
         if (Math.random() < DROP_CHANCE) {
@@ -119,7 +120,7 @@ public abstract class AbstractBall extends AbstractEntity {
     /**
      * @return The bounce speed of this ball.
      */
-    double getBounceSpeed() {
+    /* default */ double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
     }
 

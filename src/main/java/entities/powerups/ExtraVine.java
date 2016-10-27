@@ -1,17 +1,17 @@
 package entities.powerups;
 
 import graphics.Sprite;
-import util.sound.MultiSoundEffect;
+import util.sound.SoundEffect;
 
 /**
- * Gives the player a extra vine to shoot.
+ * Gives a character an extra vine to shoot.
  */
 class ExtraVine extends AbstractDuringPowerUp {
 
     /**
      * The sprite of the extra vine power-up.
      */
-    private static final Sprite SPRITE = new Sprite("powerUps/extra_vine.png");
+    private static final Sprite SPRITE = new Sprite("images/powerUps/extra_vine.png");
 
     /**
      * The duration of the extra vine power-up (in ms).
@@ -30,16 +30,16 @@ class ExtraVine extends AbstractDuringPowerUp {
     /**
      * Increase the amount of vines the character can shoot.
      */
-    /* default */ void enableEffect() {
-        getTarget().increaseMaxVineCount(1);
-        MultiSoundEffect.EXTRA_VINE.play(getTarget().getPlayer().getId());
+    protected final void enableEffect() {
+        getTarget().getGun().increaseMaxConcurrentShots(1);
+        SoundEffect.EXTRA_VINE.play();
     }
 
     /**
      * Disables the effect of the specific power up.
      */
-    /* default */ void disableEffect() {
-        getTarget().increaseMaxVineCount(-1);
+    protected final void disableEffect() {
+        getTarget().getGun().increaseMaxConcurrentShots(-1);
     }
 
 }

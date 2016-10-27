@@ -1,7 +1,8 @@
 package game.player;
 
 import entities.character.Character;
-import game.Game;
+import entities.character.CharacterMovement;
+import entities.character.Gun;
 import util.KeyboardInputManager;
 import util.Pair;
 import util.sound.MultiSoundEffect;
@@ -21,9 +22,9 @@ public class Player implements Observer {
     private static final int LIVES_AT_START = 3;
 
     /**
-     * The player ID of the player.
+     * The ID of the player.
      */
-    private int id = 0;
+    private final int id;
 
     /**
      * These Strings represent the keyboard characters this player uses.
@@ -33,7 +34,7 @@ public class Player implements Observer {
     /**
      * The initial score of a player is zero.
      */
-    private int score = 0;
+    private int score;
 
     /**
      * Every player starts with 3 lives.
@@ -48,18 +49,16 @@ public class Player implements Observer {
     /**
      * Creates a new player instance with the keys.
      *
-     * @param leftKey  The keyboard entities.character that makes the player move left.
-     * @param rightKey The keyboard entities.character that makes the player move right.
-     * @param shootKey The keyboard entities.character that makes the player shoot.
-     * @param id The player id of the player.
+     * @param leftKey  The keyboard key that makes the character move left.
+     * @param rightKey The keyboard key that makes the character move right.
+     * @param shootKey The keyboard key that makes the character shoot.
+     * @param id The id of the player.
      */
     public Player(int id, String leftKey, String rightKey, String shootKey) {
         this.id = id;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.shootKey = shootKey;
-
-        KeyboardInputManager.addListener(this);
     }
 
     /**
@@ -84,7 +83,7 @@ public class Player implements Observer {
     public void setCharacter(Character character) {
         if (character != null) {
             this.character = character;
-            character.setPlayer(this);
+            character.setSprites(id);
             character.addObserver(this);
         }
     }
@@ -97,10 +96,6 @@ public class Player implements Observer {
      */
     @SuppressWarnings("unchecked")
     public void update(Observable observable, Object obj) {
-        if (character != null && observable instanceof KeyboardInputManager) {
-            updateKeyboardInput();
-        }
-
         if (observable instanceof Character) {
             updateFromCharacter((Pair<String, Object>) obj);
         }
@@ -113,8 +108,8 @@ public class Player implements Observer {
      */
     private void updateFromCharacter(Pair<String, Object> pair) {
         switch (pair.getL()) {
-            case "die":
-                die();
+            case "increaseLives":
+                increaseLives((int) pair.getR());
                 break;
             case "increaseScore":
                 increaseScore((int) pair.getR());
@@ -127,30 +122,19 @@ public class Player implements Observer {
     /**
      * Handles keyboard input and passes it to the character.
      */
-    private void updateKeyboardInput() {
-        if (KeyboardInputManager.keyPressed(leftKey) && !KeyboardInputManager.keyPressed(rightKey)) {
-            character.moveLeft();
-        } else if (!KeyboardInputManager.keyPressed(leftKey) && KeyboardInputManager.keyPressed(rightKey)) {
-            character.moveRight();
+    public void updateKeyboardInput() {
+        Gun gun = character.getGun();
+        CharacterMovement movement = character.getMovement();
+
+        if (KeyboardInputManager.keyDown(leftKey) && !KeyboardInputManager.keyDown(rightKey)) {
+            movement.moveLeft();
+        } else if (!KeyboardInputManager.keyDown(leftKey) && KeyboardInputManager.keyDown(rightKey)) {
+            movement.moveRight();
         } else {
-            character.stop();
+            movement.stop();
         }
 
-        character.setShooting(KeyboardInputManager.keyPressed(shootKey));
-    }
-
-    private void die() {
-        lives--;
-
-        Game.getInstance().getState().getCurrentLevel().lose();
-
-        if (lives == 0) {
-            MultiSoundEffect.PLAYER_OUT_OF_LIVES.play(getId());
-        }
-        else {
-            MultiSoundEffect.PLAYER_LOSES_LIFE.play(getId());
-        }
-
+        gun.setShooting(KeyboardInputManager.keyDown(shootKey));
     }
 
     private void increaseScore(int amount) {
@@ -169,8 +153,12 @@ public class Player implements Observer {
      * @param amount The amount of lives you want to get.
      */
     public void increaseLives(int amount) {
-        if (amount > 0) {
-            lives = Math.min(lives + amount, LIVES_AT_START);
+        lives = Math.max(0, Math.min(lives + amount, LIVES_AT_START));
+
+        if (lives == 0) {
+            MultiSoundEffect.PLAYER_OUT_OF_LIVES.play(id);
+        } else if (amount < 0) {
+            MultiSoundEffect.PLAYER_LOSES_LIFE.play(id);
         }
     }
 
@@ -191,14 +179,7 @@ public class Player implements Observer {
     /**
      * @return The lives the player has at the start.
      */
-    static int getLivesAtStart() {
+    /* default */ static int getLivesAtStart() {
         return LIVES_AT_START;
-    }
-
-    /**
-     * @return The id of the player.
-     */
-    public int getId() {
-        return id;
     }
 }

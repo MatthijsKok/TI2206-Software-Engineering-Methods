@@ -1,6 +1,7 @@
-package entities;
+package entities.blocks;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.AbstractEntity;
 
 /**
  * Represents AbstractBlock entity used for different walls in the game.
@@ -8,10 +9,10 @@ import com.sun.javafx.geom.Vec2d;
 public abstract class AbstractBlock extends AbstractEntity {
 
     /**
-     * Creates a wall on position (x,y).
-     * @param position the position of the wall
+     * Creates a block at position (x,y).
+     * @param position Vec2d - Position of the block
      */
-    public AbstractBlock(final Vec2d position) {
+    AbstractBlock(final Vec2d position) {
         super(position);
     }
 }

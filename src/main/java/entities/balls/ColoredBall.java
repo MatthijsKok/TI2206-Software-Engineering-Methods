@@ -5,6 +5,7 @@ import graphics.Sprite;
 import level.Level;
 import util.sound.MultiSoundEffect;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,12 +20,12 @@ public class ColoredBall extends AbstractBall {
     private static final Map<Color, Sprite> SPRITES = new ConcurrentHashMap<>();
 
     static {
-        SPRITES.put(Color.BLUE,   new Sprite("balls/blue_ball.png"));
-        SPRITES.put(Color.GREEN,  new Sprite("balls/green_ball.png"));
-        SPRITES.put(Color.ORANGE, new Sprite("balls/orange_ball.png"));
-        SPRITES.put(Color.PURPLE, new Sprite("balls/purple_ball.png"));
-        SPRITES.put(Color.RED,    new Sprite("balls/red_ball.png"));
-        SPRITES.put(Color.YELLOW, new Sprite("balls/yellow_ball.png"));
+        SPRITES.put(Color.BLUE,   new Sprite("images/balls/blue_ball.png"));
+        SPRITES.put(Color.GREEN,  new Sprite("images/balls/green_ball.png"));
+        SPRITES.put(Color.ORANGE, new Sprite("images/balls/orange_ball.png"));
+        SPRITES.put(Color.PURPLE, new Sprite("images/balls/purple_ball.png"));
+        SPRITES.put(Color.RED,    new Sprite("images/balls/red_ball.png"));
+        SPRITES.put(Color.YELLOW, new Sprite("images/balls/yellow_ball.png"));
 
         SPRITES.values().forEach(Sprite::setOffsetToCenter);
     }
@@ -73,7 +74,7 @@ public class ColoredBall extends AbstractBall {
      * @return The color from AbstractBall.Color.
      */
     public static Color getColor(String color) {
-        return Color.valueOf(color.toUpperCase());
+        return Color.valueOf(color.toUpperCase(Locale.ENGLISH));
     }
 
     /**
@@ -93,7 +94,7 @@ public class ColoredBall extends AbstractBall {
     }
 
     @Override
-    void die() {
+    /* default */ final void die() {
         Level level = getLevel();
         if (getSize() > 0) {
             level.addEntity(new ColoredBall(getPosition(), getSize() - 1, getColor(),

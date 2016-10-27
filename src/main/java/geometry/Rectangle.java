@@ -177,6 +177,10 @@ public class Rectangle extends AbstractShape {
             return intersects((Rectangle) shape);
         }
 
+        if (shape instanceof Point) {
+            return shape.intersects(this);
+        }
+
         return shape instanceof Circle && shape.intersects(this);
     }
 

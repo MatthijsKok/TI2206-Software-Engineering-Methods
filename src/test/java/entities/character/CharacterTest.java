@@ -1,9 +1,10 @@
-package entities;
+package entities.character;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
-import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
+import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
 import game.player.Player;
 import geometry.Rectangle;
 import org.junit.Before;
@@ -21,7 +22,9 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     private Player player;
     private Character character;
+    private Gun gun;
     private Vec2d spawnPosition = new Vec2d(100, 300);
+    private CharacterMovement movement;
 
     private int countEntities() {
         return character.getLevel().getEntities().size();
@@ -30,9 +33,10 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     @Before
     public void setUp() {
         character = new Character(spawnPosition);
+        movement = character.getMovement();
+        gun = character.getGun();
         player = new Player(0, "", "", "");
         player.setCharacter(character);
-        character.setPlayer(player);
     }
 
 
@@ -44,7 +48,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testStop() {
-        character.stop();
+        movement.stop();
         double x = character.getX();
         character.update(1);
         character.updatePosition(1);
@@ -53,7 +57,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testMoveRight() {
-        character.moveRight();
+        movement.moveRight();
         double x = character.getX();
         character.update(1);
         character.updatePosition(1);
@@ -62,7 +66,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testMoveLeft() {
-        character.moveLeft();
+        movement.moveLeft();
         double x = character.getX();
         character.update(1);
         character.updatePosition(1);
@@ -82,7 +86,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
         character.collideWith(mockedBall);
 
-        assertThat("A entities.character should die when it collides with a ball", character.isAlive(), is(false));
+        assertThat("A character should die when it collides with a ball", character.isAlive(), is(false));
     }
 
     @Test
@@ -102,8 +106,8 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     public void testCollideWithFloorBlockFromAbove() {
         FloorBlock floor = new FloorBlock(
                 new Vec2d(
-                        spawnPosition.x,
-                        spawnPosition.y - 10));
+                        spawnPosition.x - 5,
+                        spawnPosition.y - 5));
 
         double y = character.getY();
         character.collideWith(floor);
@@ -116,8 +120,8 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         Rectangle rect = (Rectangle) character.getShape();
         FloorBlock floor = new FloorBlock(
                 new Vec2d(
-                        spawnPosition.x,
-                        rect.getBottom() - FloorBlock.BLOCK_SPRITE.getHeight()));
+                        spawnPosition.x - 5,
+                        rect.getTop() - 59));
 
         double y = character.getY();
         character.collideWith(floor);
@@ -144,7 +148,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         WallBlock wall = new WallBlock(
                 new Vec2d(
                         spawnPosition.x + 5,
-                        spawnPosition.y));
+                        spawnPosition.y - 30));
 
         double x = character.getX();
         character.collideWith(wall);
@@ -156,12 +160,13 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     public void testCollideWithWallBlockFromRight() {
         WallBlock wall = new WallBlock(
                 new Vec2d(
-                        spawnPosition.x - WallBlock.WALL_SPRITE.getWidth(),
-                        spawnPosition.y));
+                        spawnPosition.x - 60,
+                        spawnPosition.y - 32));
 
         double x = character.getX();
         character.collideWith(wall);
-        assertThat(character.getX(), greaterThanOrEqualTo(x));
+
+        assertThat(character.getX(), greaterThan(x));
     }
 
     /*@Test
@@ -174,21 +179,21 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     @Test
     public void testShoot() {
         int count = countEntities();
-        character.setShooting(true);
-        character.update(1);
+        gun.setShooting(true);
+        gun.update(1);
         assertThat(countEntities(), greaterThan(count));
     }
 
     @Test
     public void testIncreaseVineCount() {
         int count = countEntities();
-        character.increaseMaxVineCount(1);
-        character.setShooting(true);
-        character.update(1); // 1 vine
-        character.setShooting(false);
-        character.update(1); // 1 vine
-        character.setShooting(true);
-        character.update(1); // 2 vines
+        gun.increaseMaxConcurrentShots(1);
+        gun.setShooting(true);
+        gun.update(1); // 1 shot
+        gun.setShooting(false);
+        gun.update(1); // 1 shot
+        gun.setShooting(true);
+        gun.update(1); // 2 shots
         assertThat(countEntities(), is(count + 2));
     }
 

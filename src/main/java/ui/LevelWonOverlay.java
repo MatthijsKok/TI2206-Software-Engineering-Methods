@@ -1,14 +1,12 @@
 package ui;
 
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
  * The level lost overlay draws the an overlay after a level has been won.
  */
-class LevelWonOverlay extends AbstractUIElement {
+public class LevelWonOverlay extends AbstractUIElement {
     /**
      * Font size used for bigger text.
      */
@@ -19,24 +17,20 @@ class LevelWonOverlay extends AbstractUIElement {
      */
     private static final Font SMALLER_FONT = Font.font("Georgia", 16);
 
-    /**
-     * Draws the level lost overlay.
-     * @param canvas The Canvas to draw on
-     * @param graphicsContext The GraphicsContext to draw on
-     */
-    /* default */ void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
-        graphicsContext.setFill(Color.CORNFLOWERBLUE);
-        graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        graphicsContext.setFill(Color.WHITE);
+    @Override
+    public void draw() {
+        getGraphicsContext().setFill(Color.CORNFLOWERBLUE);
+        getGraphicsContext().fillRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
+        getGraphicsContext().setFill(Color.WHITE);
 
-        graphicsContext.setFont(BIGGER_FONT);
-        graphicsContext.fillText("You won!",
-                canvas.getWidth() / 2,
-                canvas.getHeight() / 2 - BIGGER_FONT.getSize());
+        getGraphicsContext().setFont(BIGGER_FONT);
+        getGraphicsContext().fillText("You won!",
+                getCanvas().getWidth() / 2,
+                getCanvas().getHeight() / 2 - BIGGER_FONT.getSize());
 
-        graphicsContext.setFont(SMALLER_FONT);
-        graphicsContext.fillText("Press R to start next level.",
-                canvas.getWidth() / 2,
-                canvas.getHeight() / 2 + BIGGER_FONT.getSize());
+        getGraphicsContext().setFont(SMALLER_FONT);
+        getGraphicsContext().fillText("Press R to start next level.",
+                getCanvas().getWidth() / 2,
+                getCanvas().getHeight() / 2 + BIGGER_FONT.getSize());
     }
 }
