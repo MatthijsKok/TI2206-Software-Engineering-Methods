@@ -1,15 +1,15 @@
 package ui;
 
 import com.sun.javafx.geom.Vec2d;
+import game.player.Player;
 import graphics.Sprite;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.TextAlignment;
+import level.LevelTimer;
 
 /**
  * Draws a HeadsUpDisplay for a game with a single images.player.
  */
-class MultiPlayerHUD extends HeadsUpDisplay {
+public class MultiPlayerHUD extends HeadsUpDisplay {
 
     /**
      * The heart sprite.
@@ -29,28 +29,41 @@ class MultiPlayerHUD extends HeadsUpDisplay {
     }
 
     /**
-     * Draws amount of lives of the two players.
-     * @param canvas The Canvas to draw on
-     * @param graphicsContext The GraphicsContext to draw on
+     * The players this HUD draws the lives for.
      */
-    /* default */ void draw(final Canvas canvas, final GraphicsContext graphicsContext) {
+    private final Player player1, player2;
+
+    /**
+     * Creates a new SinglePlayerHUD.
+     * @param timer The timer to draw the HUD for.
+     * @param player1 The player to draw the HUD for.
+     * @param player2 The player to draw the HUD for.
+     */
+    public MultiPlayerHUD(LevelTimer timer, Player player1, Player player2) {
+        super(timer);
+        this.player1 = player1;
+        this.player2 = player2;
+    }
+
+    @Override
+    public void draw() {
         // Time bar
-        super.draw(canvas, graphicsContext);
+        super.draw();
 
         // Player one lives
-        for (int i = getPlayerLives(0) - 1; i >= 0; i--) {
-            HEART.draw(MARGIN.x + SPACE * i, canvas.getHeight() - MARGIN.y);
+        for (int i = player1.getLives() - 1; i >= 0; i--) {
+            HEART.draw(MARGIN.x + SPACE * i, canvas().getHeight() - MARGIN.y);
         }
-        graphicsContext.fillText(String.valueOf(getPlayerScore(0)),
-                MARGIN.x, canvas.getHeight() - 2 * MARGIN.y);
+        graphicsContext().fillText(String.valueOf(player1.getScore()),
+                MARGIN.x, canvas().getHeight() - 2 * MARGIN.y);
 
         // Player two lives
-        for (int i = getPlayerLives(1); i >= 0; i--) {
-            HEART.draw(canvas.getWidth() - (MARGIN.x + SPACE * i), canvas.getHeight() - MARGIN.y);
+        for (int i = player2.getLives() - 1; i >= 0; i--) {
+            HEART.draw(canvas().getWidth() - (MARGIN.x + SPACE * i), canvas().getHeight() - MARGIN.y);
         }
-        graphicsContext.setTextAlign(TextAlignment.RIGHT);
-        graphicsContext.fillText(String.valueOf(getPlayerScore(1)),
-                canvas.getWidth() - MARGIN.x, canvas.getHeight() - 2 * MARGIN.y);
-        graphicsContext.setTextAlign(TextAlignment.LEFT);
+        graphicsContext().setTextAlign(TextAlignment.RIGHT);
+        graphicsContext().fillText(String.valueOf(player2.getScore()),
+                canvas().getWidth() - MARGIN.x, canvas().getHeight() - 2 * MARGIN.y);
+        graphicsContext().setTextAlign(TextAlignment.LEFT);
     }
 }

@@ -30,7 +30,7 @@ class ExtraVine extends AbstractDuringPowerUp {
     /**
      * Increase the amount of vines the character can shoot.
      */
-    /* default */ final void enableEffect() {
+    protected final void enableEffect() {
         getTarget().getGun().increaseMaxConcurrentShots(1);
         SoundEffect.EXTRA_VINE.play();
     }
@@ -38,7 +38,7 @@ class ExtraVine extends AbstractDuringPowerUp {
     /**
      * Disables the effect of the specific power up.
      */
-    /* default */ final void disableEffect() {
+    protected final void disableEffect() {
         getTarget().getGun().increaseMaxConcurrentShots(-1);
     }
 

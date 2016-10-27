@@ -1,7 +1,6 @@
 package entities.powerups;
 import game.Game;
 import graphics.Sprite;
-import level.Level;
 import util.sound.Music;
 import util.sound.SoundEffect;
 
@@ -11,7 +10,7 @@ import util.sound.SoundEffect;
 class ExtraTime extends AbstractInstantPowerUp {
 
     /**
-     * The amount of time in seconds that is added on picking up this powerup.
+     * The amount of time in seconds that is added on picking up this power-up.
      */
     private static final double EXTRA_TIME = 10;
 
@@ -27,14 +26,9 @@ class ExtraTime extends AbstractInstantPowerUp {
         setSprite(EXTRA_TIME_SPRITE);
     }
 
-    private Level getLevel() {
-        return Game.getInstance().getState().getCurrentLevel();
-    }
-
     @Override
     /* default */ final void applyEffect() {
-        Level level = getLevel();
-        level.increaseTime(EXTRA_TIME);
+        Game.getCurrentLevel().getTimer().increaseTime(EXTRA_TIME);
         SoundEffect.EXTRA_TIME.play();
         SoundEffect.TIME_ALMOST_UP.getAudio().stop();
         Music.startMusic();

@@ -38,7 +38,7 @@ public class PickupTest extends BubbleTroubleApplicationTest{
         character = new Character(new Vec2d(100, 300));
         floor = new FloorBlock(new Vec2d(0, 0));
 
-        level = Game.getInstance().getState().getCurrentLevel();
+        level = Game.getCurrentLevel();
         level.addEntity(pickup);
         level.update(1);
     }

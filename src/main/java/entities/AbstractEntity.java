@@ -43,12 +43,12 @@ public abstract class AbstractEntity extends Observable {
     /**
      * Boolean with the current visibility state of an entity.
      */
-    private boolean visible = true;
+    private transient boolean visible = true;
 
     /**
      * The physics behaviour of an entity.
      */
-    private AbstractPhysicsBehaviour physicsBehaviour = new NoGravityBehaviour(this);
+    private transient AbstractPhysicsBehaviour physicsBehaviour = new NoGravityBehaviour(this);
 
     /**
      * Depth of this entity.
@@ -217,7 +217,7 @@ public abstract class AbstractEntity extends Observable {
      * @return the level the entity is in
      */
     public Level getLevel() {
-        return Game.getInstance().getState().getCurrentLevel();
+        return Game.getCurrentLevel();
     }
 
     //SETTERS

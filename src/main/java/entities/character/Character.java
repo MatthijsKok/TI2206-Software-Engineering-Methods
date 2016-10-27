@@ -92,7 +92,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     /**
      * @return whether the character is alive
      */
-    /* default */ boolean isAlive() {
+    public boolean isAlive() {
         return alive;
     }
 

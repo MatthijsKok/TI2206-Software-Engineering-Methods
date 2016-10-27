@@ -27,7 +27,7 @@ public class PickupFactoryTest extends BubbleTroubleApplicationTest {
 
     @Before
     public void setUp() {
-        level = Game.getInstance().getState().getCurrentLevel();
+        level = Game.getCurrentLevel();
     }
 
     @Test

@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 import util.CanvasManager;
@@ -23,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 public class BubbleTroubleMenuTest extends ApplicationTest {
 
     private MainMenu menu;
-    private Game game;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -34,14 +32,9 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
 
     }
 
-    @Before
-    public void setUp() {
-        game = Game.getInstance();
-    }
-
     @After
     public void tearDown() throws TimeoutException {
-        game.stop();
+        Game.stop();
         release(new MouseButton[] {});
     }
 
@@ -76,12 +69,12 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
 //    @Test
 //    public void testOnClickSinglePlayerButtons() {
 //        clickOn("#singlePlayerButton");
-//        assertThat(game.getPlayerCount(), is(1));
+//        assertThat(Game.getPlayerCount(), is(1));
 //    }
 //
 //    @Test
 //    public void testOnClickMultiPlayerButtons() {
 //        clickOn("#multiPlayerButton");
-//        assertThat(game.getPlayerCount(), is(2));
+//        assertThat(Game.getPlayerCount(), is(2));
 //    }
 }

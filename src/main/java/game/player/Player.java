@@ -3,7 +3,6 @@ package game.player;
 import entities.character.Character;
 import entities.character.CharacterMovement;
 import entities.character.Gun;
-import game.Game;
 import util.KeyboardInputManager;
 import util.Pair;
 import util.sound.MultiSoundEffect;
@@ -60,8 +59,6 @@ public class Player implements Observer {
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.shootKey = shootKey;
-
-        KeyboardInputManager.addListener(this);
     }
 
     /**
@@ -99,10 +96,6 @@ public class Player implements Observer {
      */
     @SuppressWarnings("unchecked")
     public void update(Observable observable, Object obj) {
-        if (character != null && observable instanceof KeyboardInputManager) {
-            updateKeyboardInput();
-        }
-
         if (observable instanceof Character) {
             updateFromCharacter((Pair<String, Object>) obj);
         }
@@ -129,19 +122,19 @@ public class Player implements Observer {
     /**
      * Handles keyboard input and passes it to the character.
      */
-    private void updateKeyboardInput() {
+    public void updateKeyboardInput() {
         Gun gun = character.getGun();
         CharacterMovement movement = character.getMovement();
 
-        if (KeyboardInputManager.keyPressed(leftKey) && !KeyboardInputManager.keyPressed(rightKey)) {
+        if (KeyboardInputManager.keyDown(leftKey) && !KeyboardInputManager.keyDown(rightKey)) {
             movement.moveLeft();
-        } else if (!KeyboardInputManager.keyPressed(leftKey) && KeyboardInputManager.keyPressed(rightKey)) {
+        } else if (!KeyboardInputManager.keyDown(leftKey) && KeyboardInputManager.keyDown(rightKey)) {
             movement.moveRight();
         } else {
             movement.stop();
         }
 
-        gun.setShooting(KeyboardInputManager.keyPressed(shootKey));
+        gun.setShooting(KeyboardInputManager.keyDown(shootKey));
     }
 
     private void increaseScore(int amount) {
@@ -159,18 +152,12 @@ public class Player implements Observer {
      * Increases the players amount of lives.
      * @param amount The amount of lives you want to get.
      */
-    /* default */ void increaseLives(int amount) {
-        if (amount >= 0) {
-            lives = Math.min(lives + amount, LIVES_AT_START);
-        } else {
-            lives--;
-
-            Game.getInstance().getState().getCurrentLevel().lose();
-        }
+    public void increaseLives(int amount) {
+        lives = Math.max(0, Math.min(lives + amount, LIVES_AT_START));
 
         if (lives == 0) {
             MultiSoundEffect.PLAYER_OUT_OF_LIVES.play(id);
-        } else {
+        } else if (amount < 0) {
             MultiSoundEffect.PLAYER_LOSES_LIFE.play(id);
         }
     }

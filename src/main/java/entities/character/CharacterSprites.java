@@ -33,7 +33,7 @@ final class CharacterSprites {
      * @param playerId the playerId of the images.player.
      * @return the sprite of the entities.character.
      */
-    static /* default */ Sprite getIdleSprite(final int playerId) {
+    /* default */ static Sprite getIdleSprite(final int playerId) {
         return new Sprite(IDLE_SPRITES[playerId]);
     }
 
@@ -42,7 +42,7 @@ final class CharacterSprites {
      * @param playerId the playerId of the images.player.
      * @return the sprite of the entities.character.
      */
-    static /* default */ Sprite getRunningSprite(final int playerId) {
+    /* default */ static Sprite getRunningSprite(final int playerId) {
         return new Sprite(RUNNING_SPRITES[playerId]);
     }
 }

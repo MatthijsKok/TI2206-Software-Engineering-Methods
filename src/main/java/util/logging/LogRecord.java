@@ -12,23 +12,23 @@ class LogRecord {
     /**
      * The logLevel of this message.
      */
-    private final LogLevel logLevel;
+    private final transient LogLevel logLevel;
     /**
      * The name of the class this logRecord comes from.
      */
-    private final String sourceClassName;
+    private final transient String sourceClassName;
     /**
      * The name of the method this logRecord is created from.
      */
-    private final String sourceMethodName;
+    private final transient String sourceMethodName;
     /**
      * The log message.
      */
-    private final String message;
+    private final transient String message;
     /**
      * The timestamp this logRecord is created at.
      */
-    private final long milliseconds;
+    private final transient long milliseconds;
 
     /**
      * Constructor for LogRecord. Should only be called by Logger.log().
@@ -56,7 +56,7 @@ class LogRecord {
      *
      * @return a String representing the LogRecord.
      */
-    /* default */ String format() {
+    /* default */ final String format() {
         return new SimpleDateFormat("[yyyy-MM-dd][HH:mm:ss.SSS][", Locale.ENGLISH).format(new Date(milliseconds))
                 + sourceClassName + "][" + sourceMethodName + "]\n" + logLevel.getName() + ": " + message + "\n";
     }

@@ -36,7 +36,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
 
     @Before
     public void setUp() {
-        level = Game.getInstance().getState().getCurrentLevel();
+        level = Game.getCurrentLevel();
         ball = new ColoredBall(spawnPosition, ballSize, ballColor);
         level.addEntity(ball);
         level.update(0);

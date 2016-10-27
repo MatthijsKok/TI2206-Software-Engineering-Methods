@@ -32,7 +32,7 @@ abstract class AbstractPowerUp {
     /**
      * Activates the effect of this power-up.
      */
-    abstract /* default */ void activate();
+    protected abstract void activate();
 
     /**
      * Enables the effect of the specific power-up.
@@ -54,14 +54,14 @@ abstract class AbstractPowerUp {
      * Sets the sprite of this power-up.
      * @param sprite Sprite - sprite to set.
      */
-    /* default */ final void setSprite(final Sprite sprite) {
+    protected final void setSprite(final Sprite sprite) {
         this.sprite = sprite;
     }
 
     /**
      * @return Sprite - sprite of the power-up.
      */
-    /* default */ final Sprite getSprite() {
+    protected final Sprite getSprite() {
         return sprite;
     }
 }

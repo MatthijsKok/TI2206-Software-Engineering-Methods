@@ -33,7 +33,7 @@ public class Sprite {
      * The frameSpeed at which the sprite should be displayed in
      * frames per second.
      */
-    private double frameSpeed; // Frames / second
+    private transient double frameSpeed; // Frames / second
 
     /**
      * A Vec2d containing the x and y coordinates to be used as the
@@ -44,7 +44,7 @@ public class Sprite {
     /**
      * The with and height of the sprite in pixels.
      */
-    private int width, height;
+    private transient int width, height;
 
     /**
      * A double representing a timeline from frame 0 to the last

@@ -20,10 +20,11 @@ final class LevelLoader {
     /**
      * Loads metadata and entities in a level.
      * @param level The level to load.
+     * @param filename The file to load the level from.
      * @throws IOException If the level file is not found.
      */
-    /* default */ static void load(Level level) throws IOException {
-        JSONObject json = JSONParser.parseJSONFile(level.getFilename());
+    /* default */ static void load(Level level, String filename) throws IOException {
+        JSONObject json = JSONParser.parseJSONFile(filename);
         JSONArray entities = json.getJSONArray("entities");
 
         loadMetaData(level, json);
@@ -44,7 +45,9 @@ final class LevelLoader {
 
         // Time
         if (metaData.has("duration")) {
-            level.setDuration(metaData.getDouble("duration"));
+            level.setTimer(new LevelTimer(metaData.getDouble("duration")));
+        } else {
+            level.setTimer(new LevelTimer());
         }
 
         if (metaData.has("backgroundImageURI")) {

@@ -26,7 +26,7 @@ final class CollisionManager {
     /**
      * Handles collisions between this managers entities.
      */
-    /* default */ void handleCollisions() {
+    /* default */ void update() {
         int n = entities.size();
         AbstractEntity a, b;
 

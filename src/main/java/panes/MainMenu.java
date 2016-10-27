@@ -58,10 +58,10 @@ public class MainMenu extends Pane {
 
     /**
      * Button to start a singlePlayerGame.
-     * @return singlePlayerGame
+     * @return Button - singlePlayerGame
      */
     private Button createSinglePlayerButton() {
-        Button button = new Button("Start Singleplayer Game");
+        Button button = new Button("Start Single Player Game");
         button.setLayoutX(180);
         button.setLayoutY(224);
         button.getStyleClass().add("green");
@@ -73,10 +73,10 @@ public class MainMenu extends Pane {
 
     /**
      * Button to start a multiPlayerGame.
-     * @return multiPlayerGame
+     * @return Button - multiPlayerGame
      */
     private Button createMultiPlayerButton() {
-        Button button = new Button("Start Multiplayer Game");
+        Button button = new Button("Start Multi Player Game");
         button.setLayoutX(180);
         button.setLayoutY(282);
         button.getStyleClass().add("green");
@@ -89,7 +89,7 @@ public class MainMenu extends Pane {
 
     /**
      * Creates a settings button.
-     * @return settings button
+     * @return Button - Settings button
      */
     private Button createSettingsButton() {
         Button button = new Button("Settings");
@@ -105,7 +105,7 @@ public class MainMenu extends Pane {
 
     /**
      * Button to quit the game.
-     * @return Quit
+     * @return Button - Quit button.
      */
     private Button createQuitButton() {
         Button button = new Button("Quit");
@@ -120,13 +120,12 @@ public class MainMenu extends Pane {
     }
 
     private void startGame(List<String> levels, int playerCount) {
-        Game game = Game.getInstance();
-        game.setPlayerCount(playerCount);
-        game.setLevelsFromFiles(levels);
+        Game.setLevelsFromFiles(levels);
+        Game.setPlayerCount(playerCount);
         SceneManager.goToScene("Game");
 
         try {
-            game.start();
+            Game.start();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

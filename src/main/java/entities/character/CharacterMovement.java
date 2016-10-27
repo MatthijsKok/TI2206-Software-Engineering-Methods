@@ -12,16 +12,16 @@ public class CharacterMovement {
     /**
      * The character this instance handles the movement for.
      */
-    private final Character character;
+    private final transient Character character;
     /**
      * The running speed of a character. In pixels per second.
      */
-    private double runSpeed = DEFAULT_RUN_SPEED;
+    private transient double runSpeed = DEFAULT_RUN_SPEED;
     /**
      * State of the character, indicates which action a character
      * is performing.
      */
-    private int direction = 0;
+    private transient int direction;
 
     /**
      * Creates a new CharacterMovement object.
@@ -36,7 +36,7 @@ public class CharacterMovement {
     /**
      * Handles the character's movement.
      */
-    /* default */ void update() {
+    /* default */ final void update() {
         character.setXSpeed(runSpeed * direction);
     }
 

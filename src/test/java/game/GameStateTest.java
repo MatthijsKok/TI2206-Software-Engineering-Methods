@@ -16,13 +16,13 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
 
 /**
- * Test suite for the GameState class.
+ * Test suite for the ObsoleteGameState class.
  */
 public class GameStateTest extends BubbleTroubleApplicationTest {
 
-    private static Game game = Game.getInstance();
+    /*private static Game game = Game.getInstance();
 
-    private GameState gameState;
+    private ObsoleteGameState gameState;
 
     @Before
     public void setUp() {
@@ -32,7 +32,7 @@ public class GameStateTest extends BubbleTroubleApplicationTest {
         game.setLevels(levels);
         game.setPlayerCount(0);
 
-        gameState = new GameState(game);
+        gameState = new ObsoleteGameState(game);
     }
 
     @Test
@@ -97,5 +97,5 @@ public class GameStateTest extends BubbleTroubleApplicationTest {
         gameState.win();
         gameState.lose();
         assertThat(gameState.isLost(), is(false));
-    }
+    }*/
 }

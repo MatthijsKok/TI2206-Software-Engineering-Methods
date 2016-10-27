@@ -46,8 +46,7 @@ public final class EntityFactory {
     }
 
     private static Character createCharacter(Vec2d position) {
-
-        for (Player player : Game.getInstance().getPlayers()) {
+        for (Player player : Game.getPlayers()) {
             if (player.getCharacter() == null && player.getLives() > 0) {
                 return instantiateCharacter(position, player);
             }

@@ -29,7 +29,7 @@ public abstract class AbstractPhysicsBehaviour {
     /**
      * @return the entity this physics works on.
      */
-    final /* default */ AbstractEntity getEntity() {
+    protected final AbstractEntity getEntity() {
         return entity;
     }
 }

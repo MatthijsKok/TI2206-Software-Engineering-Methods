@@ -84,7 +84,7 @@ public final class SoundEffect {
      * counts how many times the sound has been played for sounds
      * that play once in x times.
      */
-    private int playCount;
+    private transient int playCount;
 
     /**
      * Creates a new SoundEffect Object.

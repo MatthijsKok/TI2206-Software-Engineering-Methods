@@ -8,7 +8,6 @@ import entities.character.Gun;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import util.KeyboardInputManager;
 import util.Pair;
 
 import static junit.framework.TestCase.assertEquals;
@@ -65,7 +64,7 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
         player.setCharacter(character);
         Vec2d speed = player.getCharacter().getSpeed();
 
-        player.update(new KeyboardInputManager(), null);
+        player.updateKeyboardInput();
 
         assertThat(player.getCharacter().getSpeed(), is(speed));
     }

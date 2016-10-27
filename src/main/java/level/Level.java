@@ -2,30 +2,21 @@ package level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
-import entities.DynamicEntity;
-import entities.balls.AbstractBall;
-import entities.character.Character;
 import game.Game;
-import game.GameState;
-import game.player.Player;
 import graphics.Sprite;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import util.CanvasManager;
 import util.StageManager;
 import util.logging.Logger;
-import util.sound.MultiSoundEffect;
 import util.sound.Music;
-import util.sound.SoundEffect;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The level class represents a level, which is loaded from a file and consists
- * of characters, images.balls, walls and so on.
+ * of characters, balls, walls and so on.
  */
 public class Level {
 
@@ -33,97 +24,52 @@ public class Level {
      * The logger access point to which everything will be logged.
      */
     private static final Logger LOGGER = Logger.getInstance();
-
     /**
      * The default size of a level.
      */
     private static final Vec2d DEFAULT_SIZE = new Vec2d(1024, 608);
-
-    /**
-     * The default duration of a level.
-     */
-    private static final double DEFAULT_DURATION = 30;
-
     /**
      * The default background image of a level.
      */
     private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("images/backgrounds/background.png");
-
     /**
      * The default background music of a level.
      */
     private static final String DEFAULT_BACKGROUND_MUSIC = "mario_theme_remix.mp3";
 
     /**
-     * The time that is left in the level when the time almost up should play.
-     */
-    private static final double TIME_ALMOST_UP_LENGTH = 2.1;
-
-    /**
-     * The object which handles collisions for this level.
-     */
-    private final CollisionManager collisionManager;
-
-    /**
      * The size of the level.
      */
     private final Vec2d size = DEFAULT_SIZE;
-
     /**
-     * Duration of the level.
+     * The file the level is loaded from.
      */
-    private double duration = DEFAULT_DURATION;
-
+    private final String filename;
     /**
      * Name of the level.
      */
     private String name = "";
-
     /**
      * The background image of this level.
      */
     private Sprite backgroundImage = DEFAULT_BACKGROUND_IMAGE;
-
     /**
      * The scale at which the background image is drawn.
      */
     private double backgroundImageScale = 1;
 
     /**
-     * Time spend on the level.
+     * A timer for which handles all time related things for this level.
      */
-    private double timeSpend = 0;
+    private LevelTimer timer;
     /**
-     * The entities currently active in the level.
+     * The object which handles collisions for this level.
      */
-    private List<AbstractEntity> entities = new ArrayList<>();
+    private final CollisionManager collisionManager;
     /**
-     * The entities that will be removed from the level after the update cycle.
+     * The object which handles entities for this level.
      */
-    private List<AbstractEntity> entitiesToRemove = new ArrayList<>();
-    /**
-     * The entities that will be added to the level after the update cycle.
-     */
-    private List<AbstractEntity> entitiesToAdd = new ArrayList<>();
-    /**
-     * The entities which should be updated each frame.
-     */
-    private List<DynamicEntity> dynamicEntities = new ArrayList<>();
-
-    /**
-     * The file the level is loaded from.
-     */
-    private final String filename;
-
-    /**
-     * Indicate whether the level is either won, lost or neither.
-     */
-    private boolean won = false, lost = false;
-
-    /**
-     * Indicates whether the entities must be sorted.
-     */
-    private boolean mustSort;
+    private final EntityManager entityManager;
 
     /**
      * Creates a new level instance.
@@ -133,29 +79,19 @@ public class Level {
     public Level(final String uri) {
         filename = uri;
         collisionManager = new CollisionManager();
-    }
-
-    /**
-     * Restarts the level.
-     * @throws IOException if the level file is not found.
-     */
-    public final void restart() throws IOException {
-        unload();
-        load();
+        entityManager = new EntityManager();
     }
 
     /**
      * Removes all references to entities in this level.
      */
     public void unload() {
-        Game.getInstance().getPlayers().forEach(Player::clearCharacter);
-        entities = new ArrayList<>();
-        entitiesToRemove = new ArrayList<>();
-        entitiesToAdd = new ArrayList<>();
+        entityManager.clear();
     }
 
     /**
      * Loads a level from a file.
+     *
      * @throws IOException when the file is not found.
      */
     public void load() throws IOException {
@@ -163,31 +99,73 @@ public class Level {
 
         Music.setMusic(DEFAULT_BACKGROUND_MUSIC);
 
-        LevelLoader.load(this);
-        handleEntities();
-        timeSpend = 0;
-        won = false;
-        lost = false;
+        LevelLoader.load(this, filename);
+        if (entityManager.update(0)) {
+            collisionManager.setEntities(getEntities());
+        }
+        timer.reset();
+
+        Game.setTimer(this.timer);
 
         Platform.runLater(() ->
                 StageManager.getStage().setTitle(name));
 
         Music.startMusic();
-
     }
 
     /**
-     * @return the level width
+     * Updates the state of all entities in the level.
+     *
+     * @param timeDifference time difference between now and last update
      */
-    public final double getWidth() {
-        return size.x;
+    public final void update(final double timeDifference) {
+        LOGGER.debug("Updating Level");
+
+        timer.update(timeDifference);
+
+        if (entityManager.update(timeDifference)) {
+            collisionManager.setEntities(getEntities());
+        }
+
+        collisionManager.update();
     }
 
     /**
-     * @return the level height
+     * Draws all entities and UIElements in the current level.
      */
-    public final double getHeight() {
-        return size.y;
+    public final void draw() {
+        LOGGER.debug("Drawing level...");
+
+        // Draw background
+        LOGGER.trace("Drawing background.");
+
+        final Canvas canvas = CanvasManager.getCanvas();
+        backgroundImage.draw(canvas.getWidth() / 2, canvas.getHeight() / 2, backgroundImageScale);
+
+        entityManager.draw();
+    }
+
+    /**
+     * @return A list containing all entities in this level.
+     */
+    public final List<AbstractEntity> getEntities() {
+        return entityManager.getEntities();
+    }
+
+    /**
+     * Adds an entity to the level.
+     * @param entity The entity to add.
+     */
+    public final void addEntity(AbstractEntity entity) {
+        entityManager.addEntity(entity);
+    }
+
+    /**
+     * Removes an entity from the level.
+     * @param entity The entity to remove.
+     */
+    public final void removeEntity(AbstractEntity entity) {
+        entityManager.removeEntity(entity);
     }
 
     /**
@@ -203,148 +181,8 @@ public class Level {
     }
 
     /**
-     * @return The name of the file this level is loaded from.
-     */
-    public final String getFilename() {
-        return filename;
-    }
-
-    /**
-     * @return a list of all entities in the current level.
-     */
-    public final List<AbstractEntity> getEntities() {
-        List<AbstractEntity> entities = new ArrayList<>();
-
-        entities.addAll(this.entities);
-        entities.addAll(entitiesToAdd);
-        entities.removeAll(entitiesToRemove);
-
-        return entities;
-    }
-
-    /**
-     * Register that an entity has to be added.
+     * Sets the level's name.
      *
-     * @param e entity to add
-     */
-    public final void addEntity(final AbstractEntity e) {
-        entitiesToAdd.add(e);
-    }
-
-    /**
-     * Register that an entity has to be removed.
-     *
-     * @param e The entity to remove
-     * @return true if e is not already removed, false otherwise
-     */
-    public final boolean removeEntity(final AbstractEntity e) {
-        if (entities.contains(e) && !entitiesToRemove.contains(e)) {
-            entitiesToRemove.add(e);
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Really removes all entities that need to be removed from the entity list.
-     */
-    private void removeEntities() {
-        entities.removeAll(entitiesToRemove);
-        entitiesToRemove = new ArrayList<>();
-    }
-
-    private long countBalls() {
-        return entities.stream()
-                .filter(e -> e instanceof AbstractBall)
-                .count();
-    }
-
-    /**
-     * Really add all entities that need to be removed to the entity list.
-     */
-    private void addEntities() {
-        entities.addAll(entitiesToAdd);
-        entitiesToAdd = new ArrayList<>();
-    }
-
-    /**
-     * Updates the state of all entities in the level.
-     *
-     * @param timeDifference time difference between now and last update
-     */
-    public final void update(final double timeDifference) {
-        LOGGER.debug("Updating Entities...");
-
-        for (DynamicEntity entity : dynamicEntities) {
-            entity.update(timeDifference);
-        }
-
-        for (AbstractEntity entity : entities) {
-            entity.applyPhysicsBehaviour(timeDifference);
-            entity.updatePosition(timeDifference);
-            entity.updateSprite(timeDifference);
-        }
-
-        LOGGER.debug("Updated Entities");
-
-        handleTime(timeDifference);
-        handleEntities();
-
-        if (countBalls() == 0) {
-            win();
-        }
-
-        LOGGER.debug("Handling collisions...");
-        collisionManager.handleCollisions();
-        LOGGER.debug("Collisions handled.");
-    }
-
-    /**
-     * Handles all time related events in the level.
-     */
-    private void handleTime(double timeDifference) {
-        timeSpend += timeDifference;
-
-        if (timeSpend > duration) {
-            timeUp();
-        }
-
-        timeAlmostUp();
-    }
-
-    private void handleEntities() {
-        if (!entitiesToAdd.isEmpty() || !entitiesToRemove.isEmpty()) {
-            removeEntities();
-            addEntities();
-            dynamicEntities = entities.stream()
-                    .filter(entity -> entity instanceof DynamicEntity)
-                    .map(entity -> (DynamicEntity) entity)
-                    .collect(Collectors.toList());
-            collisionManager.setEntities(entities);
-        }
-        sortEntities();
-    }
-
-    /**
-     * Draws all entities and UIElements in the current level.
-     */
-    public final void draw() {
-        LOGGER.debug("Drawing level...");
-
-        // Draw background
-        LOGGER.trace("Drawing background.");
-
-        final Canvas canvas = CanvasManager.getCanvas();
-        backgroundImage.draw(canvas.getWidth() / 2, canvas.getHeight() / 2, backgroundImageScale);
-
-        // Draw entities
-        LOGGER.trace("Drawing entities...");
-        entities.forEach(AbstractEntity::draw);
-    }
-
-    /**
-     * Sets the levels name.
      * @param name The name of this level.
      */
     /* default */ void setName(String name) {
@@ -352,7 +190,24 @@ public class Level {
     }
 
     /**
+     * Sets the level's timer.
+     *
+     * @param timer The timer of this level.
+     */
+    /* default */ void setTimer(LevelTimer timer) {
+        this.timer = timer;
+    }
+
+    /**
+     * @return Timer - The timer of this level.
+     */
+    public LevelTimer getTimer() {
+        return timer;
+    }
+
+    /**
      * Sets the levels background image.
+     *
      * @param backgroundImage URI of the image file.
      */
     /* default */ void setBackgroundImage(String backgroundImage) {
@@ -367,126 +222,9 @@ public class Level {
     }
 
     /**
-     * @return The amount of seconds there is left to complete the level.
-     */
-    public double getTimeLeft() {
-        return duration - timeSpend;
-    }
-
-    /**
-     * @return The total amount of seconds a players has to complete the level.
-     */
-    public double getDuration() {
-        return duration;
-    }
-
-    /**
-     * Sets the duration of the level.
-     * @param duration the duration of the level.
-     */
-    /* default */ void setDuration(double duration) {
-        this.duration = duration;
-    }
-
-    /**
-     * @return Boolean indicating whether the level is won.
-     */
-    public boolean isWon() {
-        return won;
-    }
-
-    /**
-     * @return Boolean indicating whether the level is lost.
-     */
-    public boolean isLost() {
-        return lost;
-    }
-
-    /**
-     * Win the level.
-     */
-    private void win() {
-        GameState gameState = Game.getInstance().getState();
-        gameState.pause();
-
-        SoundEffect.TIME_ALMOST_UP.getAudio().stop();
-
-        Music.stopMusic();
-        won = true;
-
-        if (gameState.hasNextLevel()) {
-            MultiSoundEffect.LEVEL_WON.playRandom();
-        } else {
-            gameState.win();
-        }
-    }
-
-    /**
-     * Lose the level.
-     */
-    public final void lose() {
-        Game game = Game.getInstance();
-
-        if (game.getPlayers().stream()
-                .allMatch(player -> player.getLives() <= 0)) {
-            game.getState().lose();
-        }
-
-        game.getState().pause();
-
-        lost = true;
-        Music.stopMusic();
-    }
-
-    /**
-     * This method kills each character because the time is up.
-     */
-    private void timeUp() {
-        for (Player player: Game.getInstance().getPlayers()) {
-            Character character = player.getCharacter();
-            if (character != null) {
-                character.die();
-            }
-        }
-
-        lose();
-    }
-
-    /**
-     * Increases the amount of time left in the level.
-     * @param extraTime The amount of time extra.
-     */
-    public void increaseTime(final double extraTime) {
-        timeSpend = Math.max(0, timeSpend - extraTime);
-    }
-
-    /**
-     * Plays a sound effect when the time of the level is almost up.
-     */
-    private void timeAlmostUp() {
-        if (!SoundEffect.TIME_ALMOST_UP.getAudio().isPlaying()
-                && getTimeLeft() < TIME_ALMOST_UP_LENGTH) {
-            Music.pauseMusic();
-            SoundEffect.TIME_ALMOST_UP.play();
-        }
-    }
-
-    /**
-     * Sorts all entities by depth. This makes sure that all entities
-     * are drawn in correct order.
-     */
-    private void sortEntities() {
-        if (mustSort) {
-            entities.sort((a, b) -> b.getDepth() - a.getDepth());
-        }
-
-        mustSort = false;
-    }
-
-    /**
-     * Indicate that entities must be sorted.
+     * Sorts all entities in the level by depth.
      */
     public void depthSort() {
-        mustSort = true;
+        entityManager.sort();
     }
 }
