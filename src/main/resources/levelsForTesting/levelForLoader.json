@@ -1,7 +1,7 @@
 {
   "name": "level for loader",
   "duration": 50,
-  "backgroundImageURI": "images/backgrounds/background1.png",
+  "backgroundImageURI": "",
   "backgroundMusicURI": "mario_theme_remix.mp3",
   "entities": [
     {

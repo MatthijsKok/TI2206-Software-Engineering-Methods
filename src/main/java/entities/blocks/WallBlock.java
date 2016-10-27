@@ -15,6 +15,7 @@ public class WallBlock extends AbstractBlock {
 
     /**
      * Creates a wall on position (x,y).
+     *
      * @param position the position of the wall
      */
     public WallBlock(final Vec2d position) {

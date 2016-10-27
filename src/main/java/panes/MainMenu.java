@@ -31,7 +31,6 @@ public class MainMenu extends Pane {
         DEFAULT_LEVELS.add("src/main/resources/levels/level3.json");
         DEFAULT_LEVELS.add("src/main/resources/levels/level4.json");
         DEFAULT_LEVELS.add("src/main/resources/levels/level5.json");
-        DEFAULT_LEVELS.add("src/main/resources/levels/level6.json");
     }
 
     /**

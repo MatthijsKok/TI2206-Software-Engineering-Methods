@@ -11,7 +11,7 @@ public class FloorBlock extends AbstractBlock {
     /**
      * The sprite used for the block object in the game.
      */
-    private static final Sprite BLOCK_SPRITE = new Sprite("images/block.png");
+    private static final Sprite FLOOR_SPRITE = new Sprite("images/block.png");
 
     /**
      * Creates a new FloorBlock at position (x,y).

@@ -59,7 +59,7 @@ public class SettingsMenu extends Pane {
     private Button createBackButton() {
         Button button = new Button("Back");
         button.setLayoutX(180);
-        button.setLayoutY(128);
+        button.setLayoutY(100);
 
         button.setOnMouseClicked(e -> SceneManager.goBack());
 
@@ -75,6 +75,7 @@ public class SettingsMenu extends Pane {
 
         Slider slider = (Slider) sliderPane.getChildren().get(1);
         slider.setValue(Double.valueOf(Config.get("bgVolume")));
+        slider.setPrefWidth(390);
 
         slider.valueProperty().addListener((obs) -> Music.setMusicVolume(slider.getValue()));
 
@@ -91,11 +92,12 @@ public class SettingsMenu extends Pane {
         Pane sliderPane = new MusicSlider("Sound Effect Volume");
 
         sliderPane.setLayoutX(180);
-        sliderPane.setLayoutY(256);
+        sliderPane.setLayoutY(300);
         sliderPane.prefWidth(1024 - 256);
 
         Slider slider = (Slider) sliderPane.getChildren().get(1);
         slider.setValue(Double.valueOf(Config.get("sfxVolume")));
+        slider.setPrefWidth(390);
 
         slider.valueChangingProperty().addListener((obs, wasChanging, isNowChanging) -> {
             if (!isNowChanging) {
@@ -110,6 +112,7 @@ public class SettingsMenu extends Pane {
     }
 
     private GridPane createPlayerOneInput() {
+
         GridPane grid = createInputGrid("Player 1", "playerOne");
 
         grid.setLayoutX(180);
@@ -133,6 +136,7 @@ public class SettingsMenu extends Pane {
         GridPane grid = new GridPane();
 
         Label nameLabel = new Label(label);
+        nameLabel.getStyleClass().add("player-text");
 
         Label leftKeyLabel = new Label("Left");
         Label rightKeyLabel = new Label("Right");
@@ -145,10 +149,10 @@ public class SettingsMenu extends Pane {
         grid.add(nameLabel, 0, 0, 3, 1);
         grid.add(leftKeyLabel, 0, 1);
         grid.add(leftKeyInput, 0, 2);
-        grid.add(rightKeyLabel, 1, 1);
-        grid.add(rightKeyInput, 1, 2);
-        grid.add(shootKeyLabel, 2, 1);
-        grid.add(shootKeyInput, 2, 2);
+        grid.add(rightKeyLabel, 2, 1);
+        grid.add(rightKeyInput, 2, 2);
+        grid.add(shootKeyLabel, 1, 1);
+        grid.add(shootKeyInput, 1, 2);
 
         return grid;
     }

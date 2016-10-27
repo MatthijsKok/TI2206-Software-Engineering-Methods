@@ -98,9 +98,9 @@ public class ColoredBall extends AbstractBall {
         Level level = getLevel();
         if (getSize() > 0) {
             level.addEntity(new ColoredBall(getPosition(), getSize() - 1, getColor(),
-                    new Vec2d(getXSpeed(), -getBounceSpeed())));
+                    new Vec2d(getXSpeed(), -getSplitBounceSpeed())));
             level.addEntity(new ColoredBall(getPosition(), getSize() - 1, getColor(),
-                    new Vec2d(-getXSpeed(), -getBounceSpeed())));
+                    new Vec2d(-getXSpeed(), -getSplitBounceSpeed())));
         }
         MultiSoundEffect.BALL_POP.playRandom();
         super.die();
