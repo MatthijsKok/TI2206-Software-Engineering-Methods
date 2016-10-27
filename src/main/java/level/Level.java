@@ -194,7 +194,6 @@ public class Level {
      *
      * @param timer The timer of this level.
      */
-    /* default */
     public void setTimer(LevelTimer timer) {
         this.timer = timer;
     }
