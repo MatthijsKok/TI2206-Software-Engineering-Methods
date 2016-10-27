@@ -16,7 +16,7 @@ public class WallBlockTest extends BubbleTroubleApplicationTest {
     /**
      * The shape used for the wall object in the game.
      */
-    private static final Rectangle WALL_SHAPE = new Rectangle(WallBlock.getWallSprite().getWidth(), WallBlock.getWallSprite().getHeight());
+    private static final Rectangle WALL_SHAPE = new Rectangle(WallBlock.WALL_SPRITE.getWidth(), WallBlock.WALL_SPRITE.getHeight());
 
     private static WallBlock wall;
 

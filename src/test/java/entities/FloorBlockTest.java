@@ -16,7 +16,7 @@ public class FloorBlockTest extends BubbleTroubleApplicationTest {
     /**
      * The shape used for the floor object in the game.
      */
-    private final Rectangle FLOOR_SHAPE = new Rectangle(FloorBlock.getBlockSprite().getWidth(), FloorBlock.getBlockSprite().getHeight());
+    private final Rectangle FLOOR_SHAPE = new Rectangle(FloorBlock.BLOCK_SPRITE.getWidth(), FloorBlock.BLOCK_SPRITE.getHeight());
 
     private FloorBlock floor;
 

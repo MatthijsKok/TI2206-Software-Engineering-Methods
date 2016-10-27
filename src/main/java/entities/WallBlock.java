@@ -11,10 +11,11 @@ public class WallBlock extends AbstractBlock {
     /**
      * The sprite of the wall.
      */
-    private static final Sprite WALL_SPRITE = new Sprite("wall.png");
+    public static final Sprite WALL_SPRITE = new Sprite("wall.png");
 
     /**
      * Creates a wall on position (x,y).
+     *
      * @param position the position of the wall
      */
     public WallBlock(final Vec2d position) {
@@ -22,11 +23,5 @@ public class WallBlock extends AbstractBlock {
         setSprite(WALL_SPRITE);
         setShapeToSprite();
     }
-
-    /**
-     * @return The sprite of the block
-     */
-    public static Sprite getWallSprite() {
-        return WALL_SPRITE;
-    }
 }
+
