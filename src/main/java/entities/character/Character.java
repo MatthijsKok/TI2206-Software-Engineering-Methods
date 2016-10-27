@@ -228,11 +228,11 @@ public class Character extends AbstractEntity {
         Rectangle blockShape = (Rectangle) wall.getShape();
 
         if (shape.getRight() > blockShape.getLeft() && shape.getRight() < blockShape.getRight()) {
-            // Hit the block from above
+            // Hit the block from the right
             shape.setRight(blockShape.getLeft());
             setXSpeed(Math.min(getXSpeed(), 0));
         } else if (shape.getLeft() > blockShape.getLeft() && shape.getLeft() < blockShape.getRight()) {
-            // Hit the block from below
+            // Hit the block from the left
             shape.setLeft(blockShape.getRight());
             setXSpeed(Math.max(0, getXSpeed()));
         }

@@ -32,9 +32,14 @@
 
 .text-field {
     -fx-font-family: 'New Super Mario Font U';
-    -fx-font-size: 30px;
-    -fx-text-fill: #be271f;
+    -fx-font-size: 25px;
+    -fx-text-fill: #234463;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.94) , 0, 0, 1, 3);
+}
+
+.player-text {
+    -fx-font-size: 35px;
+    -fx-text-fill: white;
 }
 
 

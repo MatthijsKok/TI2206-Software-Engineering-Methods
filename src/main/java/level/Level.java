@@ -46,7 +46,7 @@ public class Level {
     /**
      * The default background image of a level.
      */
-    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("backgrounds/background.png");
+    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("backgrounds/overworld.png");
 
     /**
      * The default background music of a level.
@@ -321,11 +321,16 @@ public class Level {
     void setBackgroundImage(String backgroundImage) {
         Canvas canvas = CanvasManager.getCanvas();
         if (backgroundImage != null && !backgroundImage.equals("")) {
-            this.backgroundImage = new Sprite(backgroundImage);
-            this.backgroundImage.setOffsetToCenter();
-            this.backgroundImageScale = Math.max(
-                    canvas.getWidth() / this.backgroundImage.getWidth(),
-                    canvas.getHeight() / this.backgroundImage.getHeight());
+
+            try {
+                this.backgroundImage = new Sprite(backgroundImage);
+                this.backgroundImage.setOffsetToCenter();
+                this.backgroundImageScale = Math.max(
+                        canvas.getWidth() / this.backgroundImage.getWidth(),
+                        canvas.getHeight() / this.backgroundImage.getHeight());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

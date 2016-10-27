@@ -20,7 +20,7 @@ public abstract class AbstractBall extends AbstractEntity {
     /**
      * The chance that splitting a ball spawns a pickup.
      */
-    private static final double DROP_CHANCE = 0.2;
+    private static final double DROP_CHANCE = 0.25;
     /**
      * Radius of a ball with size 0.
      */
@@ -33,6 +33,10 @@ public abstract class AbstractBall extends AbstractEntity {
      * Bounce speed for the different ball sizes.
      */
     private static final double[] BOUNCE_SPEEDS = {225, 300, 375, 450, 500};
+    /**
+     * Bounce speed for the different ball sizes when the ball splits.
+     */
+    private static final double[] SPLIT_BOUNCE_SPEEDS = {100, 150, 200, 300, 400};
     /**
      * Horizontal speed of a ball. In pixels per second.
      */
@@ -99,7 +103,7 @@ public abstract class AbstractBall extends AbstractEntity {
     void die() {
         getLevel().removeEntity(this);
 
-        if (Math.random() > DROP_CHANCE) {
+        if (Math.random() < DROP_CHANCE) {
             PickupFactory.spawnRandomPickUp(getLevel(), getPosition());
         }
     }
@@ -113,10 +117,17 @@ public abstract class AbstractBall extends AbstractEntity {
     }
 
     /**
-     * @return the bounce speed of this ball.
+     * @return The bounce speed of this ball.
      */
     double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
+    }
+
+    /**
+     * @return The split bounce speed of this ball.
+     */
+    double getSplitBounceSpeed() {
+        return SPLIT_BOUNCE_SPEEDS[size];
     }
 
     @Override

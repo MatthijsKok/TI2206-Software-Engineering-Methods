@@ -13,7 +13,7 @@ class ExtraTime extends AbstractInstantPowerUp {
     /**
      * The amount of time in seconds that is added on picking up this powerup.
      */
-    private static final double EXTRA_TIME = 10;
+    private static final double EXTRA_TIME = 5;
 
     /**
      * The sprite of the extra time power-up.
