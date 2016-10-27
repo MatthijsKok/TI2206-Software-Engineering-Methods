@@ -88,9 +88,8 @@ public final class SceneManager {
         Scene temp = scenes.get(name);
         if (temp != null) {
             history.push(temp);
+            setScene();
         }
-
-        setScene();
     }
 
     /**

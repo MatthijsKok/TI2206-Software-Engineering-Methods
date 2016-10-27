@@ -180,7 +180,9 @@ public final class Game {
      */
     public static void stop() {
         setState(new NotStartedState());
-        timer.stop();
+        if (timer != null) {
+            timer.stop();
+        }
 
         getCurrentLevel().unload();
 

@@ -5,12 +5,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
+import level.Level;
 import org.junit.After;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 import util.CanvasManager;
 import util.StageManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertNotNull;
@@ -25,6 +28,12 @@ public class BubbleTroubleMenuTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
+        List<Level> levels = new ArrayList<>();
+
+        levels.add(new Level("filename"));
+
+        Game.setLevels(levels);
+
         StageManager.init(stage);
         Canvas canvas = CanvasManager.createCanvas(stage);
         CanvasManager.setCanvas(canvas);

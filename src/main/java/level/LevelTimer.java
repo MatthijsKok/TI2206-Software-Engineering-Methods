@@ -29,7 +29,7 @@ public class LevelTimer {
     /**
      * Creates a new LevelTimer with default duration.
      */
-    LevelTimer() {
+    public LevelTimer() {
         this.duration = DEFAULT_DURATION;
     }
 

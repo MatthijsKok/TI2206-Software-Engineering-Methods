@@ -28,7 +28,7 @@ public class PickupTest extends BubbleTroubleApplicationTest{
     public void setUp() {
         AbstractPowerUp powerUp = new AbstractPowerUp() {
             @Override
-            void activate() {
+            protected void activate() {
 
             }
         };

@@ -18,7 +18,7 @@ abstract class AbstractDuringPowerUp extends AbstractPowerUp {
     private long duration = DEFAULT_DURATION;
 
     @Override
-    /* default */ final void activate() {
+    protected final void activate() {
         enableEffect();
         new Timer().schedule(new TimerTask() {
             @Override
