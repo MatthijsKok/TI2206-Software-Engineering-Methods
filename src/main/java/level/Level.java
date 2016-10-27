@@ -2,7 +2,9 @@ package level;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
+import entities.Gate;
 import entities.balls.AbstractBall;
+import entities.balls.ColoredBall;
 import entities.character.Character;
 import game.Game;
 import game.GameState;
@@ -32,11 +34,6 @@ public class Level {
      * The logger access point to which everything will be logged.
      */
     private static final Logger LOGGER = Logger.getInstance();
-
-    /**
-     * Counts the total amount of ball death's in level for the mid date.
-     */
-    private int ballDeathCounter = 0;
 
     /**
      * The default size of a level.
@@ -104,6 +101,10 @@ public class Level {
      * The entities that will be added to the level after the update cycle.
      */
     private List<AbstractEntity> entitiesToAdd = new ArrayList<>();
+    /**
+     * A list with balls that are in the current level. To check if there are yellow balls.
+     */
+    private List<ColoredBall> balls = new ArrayList<>();
 
     /**
      * The file the level is loaded from.
@@ -259,6 +260,22 @@ public class Level {
     }
 
     /**
+     * Boolean that checks if there are yellow balls in the level.
+     * @return boolean.
+     */
+    private boolean yellowBallsInLevel() {
+        balls.add((ColoredBall) getEntities().stream()
+                .filter(e -> e instanceof ColoredBall)
+                .findAny()
+                .orElse(null));
+
+        ColoredBall yellowBall = balls.stream().filter(e -> e.getColor().equals(ColoredBall.Color.YELLOW))
+                .findAny().orElse(null);
+        balls.clear();
+        return (yellowBall != null);
+    }
+
+    /**
      * Really add all entities that need to be removed to the entity list.
      */
     private void addEntities() {
@@ -288,6 +305,11 @@ public class Level {
         addEntities();
         sortEntities();
 
+        if (!yellowBallsInLevel()) {
+            Gate gate = (Gate) getEntities().stream()
+                    .filter(e -> e instanceof Gate).findAny().orElse(null);
+            gate.setYSpeedAndDie();
+        }
         if (countBalls() == 0) {
             win();
         }
@@ -474,20 +496,5 @@ public class Level {
      */
     public void depthSort() {
         mustSort = true;
-    }
-
-    /**
-     * Setter for ball deaths.
-     */
-    public void setBallDeathCounter() {
-        ballDeathCounter++;
-    }
-
-    /**
-     * Getter for ball deaths.
-     * @return ball death counter.
-     */
-    public int getBallDeathCounter() {
-        return ballDeathCounter;
     }
 }

@@ -1,7 +1,6 @@
 package entities.balls;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.Plant;
 import graphics.Sprite;
 import level.Level;
 import util.sound.MultiSoundEffect;
@@ -13,11 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * Class that represents colored balls.
  */
 public class ColoredBall extends AbstractBall {
-
-    /**
-     * after 7 deaths the gate should disappear.
-     */
-    private int kilBigBall = 7;
 
     /**
      * HashMap that contains the ball's sprites by color.
@@ -101,13 +95,6 @@ public class ColoredBall extends AbstractBall {
     @Override
     void die() {
         Level level = getLevel();
-        level.setBallDeathCounter();
-        // If the count is 8 then the Plant should be removed.
-        if (level.getBallDeathCounter() == kilBigBall) {
-            getLevel().removeEntity(level.getEntities().stream()
-                    .filter(e -> e instanceof Plant).findAny().orElse(null));
-        }
-        // Split the big ball in two.
         if (getSize() > 0) {
             level.addEntity(new ColoredBall(getPosition(), getSize() - 1, getColor(),
                     new Vec2d(getXSpeed(), -getBounceSpeed())));

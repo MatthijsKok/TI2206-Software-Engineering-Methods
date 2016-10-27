@@ -185,8 +185,8 @@ public class Character extends AbstractEntity {
             collideWith((WallBlock) entity);
         }
 
-        if (entity instanceof Plant) {
-            collideWith((Plant) entity);
+        if (entity instanceof Gate) {
+            collideWith((Gate) entity);
         }
     }
 

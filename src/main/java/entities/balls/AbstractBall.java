@@ -125,8 +125,8 @@ public abstract class AbstractBall extends AbstractEntity {
             collideWith((WallBlock) entity);
         }
 
-        if (entity instanceof Plant) {
-            collideWith((Plant) entity);
+        if (entity instanceof Gate) {
+            collideWith((Gate) entity);
         }
 
         if (entity instanceof Vine) {
@@ -187,11 +187,11 @@ public abstract class AbstractBall extends AbstractEntity {
 
     /**
      * Collision between ball and plant.
-     * @param plant it collides with.
+     * @param gate it collides with.
      */
-    private void collideWith(Plant plant) {
+    private void collideWith(Gate gate) {
         Circle shape = (Circle) getShape();
-        Rectangle plantShape = (Rectangle) plant.getShape();
+        Rectangle plantShape = (Rectangle) gate.getShape();
 
         double radius = shape.getRadius();
         double right = getX() + radius;
