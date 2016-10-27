@@ -13,10 +13,6 @@ import static org.junit.Assert.assertEquals;
  * Test suite for the FloorBlock class.
  */
 public class FloorBlockTest extends BubbleTroubleApplicationTest {
-    /**
-     * The shape used for the floor object in the game.
-     */
-    private final Rectangle FLOOR_SHAPE = new Rectangle(FloorBlock.BLOCK_SPRITE.getWidth(), FloorBlock.BLOCK_SPRITE.getHeight());
 
     private FloorBlock floor;
 
@@ -32,6 +28,7 @@ public class FloorBlockTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testConstructorSetsShape() {
-        assertEquals("A floor should have a rectangular bounding box", floor.getShape(), FLOOR_SHAPE);
+        Rectangle floorShape = new Rectangle(FloorBlock.BLOCK_SPRITE.getWidth(), FloorBlock.BLOCK_SPRITE.getHeight());
+        assertEquals("A floor should have a rectangular bounding box", floor.getShape(), floorShape);
     }
 }

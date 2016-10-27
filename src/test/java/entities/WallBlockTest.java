@@ -13,10 +13,6 @@ import static org.junit.Assert.assertEquals;
  * Test suite for the WallBlock class.
  */
 public class WallBlockTest extends BubbleTroubleApplicationTest {
-    /**
-     * The shape used for the wall object in the game.
-     */
-    private static final Rectangle WALL_SHAPE = new Rectangle(WallBlock.WALL_SPRITE.getWidth(), WallBlock.WALL_SPRITE.getHeight());
 
     private static WallBlock wall;
 
@@ -32,6 +28,7 @@ public class WallBlockTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testConstructorSetsShape() {
-        assertEquals("A wall should have a rectangular bounding box", wall.getShape(), WALL_SHAPE);
+        Rectangle wallShape = new Rectangle(WallBlock.WALL_SPRITE.getWidth(), WallBlock.WALL_SPRITE.getHeight());
+        assertEquals("A wall should have a rectangular bounding box", wall.getShape(), wallShape);
     }
 }
