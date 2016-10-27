@@ -1,6 +1,8 @@
 package game.player;
 
 import entities.character.Character;
+import entities.character.CharacterMovement;
+import entities.character.Gun;
 import game.Game;
 import util.KeyboardInputManager;
 import util.Pair;
@@ -128,15 +130,18 @@ public class Player implements Observer {
      * Handles keyboard input and passes it to the character.
      */
     private void updateKeyboardInput() {
+        Gun gun = character.getGun();
+        CharacterMovement movement = character.getMovement();
+
         if (KeyboardInputManager.keyPressed(leftKey) && !KeyboardInputManager.keyPressed(rightKey)) {
-            character.moveLeft();
+            movement.moveLeft();
         } else if (!KeyboardInputManager.keyPressed(leftKey) && KeyboardInputManager.keyPressed(rightKey)) {
-            character.moveRight();
+            movement.moveRight();
         } else {
-            character.stop();
+            movement.stop();
         }
 
-        character.getGun().setShooting(KeyboardInputManager.keyPressed(shootKey));
+        gun.setShooting(KeyboardInputManager.keyPressed(shootKey));
     }
 
     private void increaseScore(int amount) {

@@ -278,7 +278,7 @@ public abstract class AbstractEntity extends Observable {
      * Sets the horizontal speed of the entity.
      * @param xSpeed horizontal speed
      */
-    protected void setXSpeed(final double xSpeed) {
+    public void setXSpeed(final double xSpeed) {
         speed.x = xSpeed;
     }
 

@@ -24,6 +24,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     private Character character;
     private Gun gun;
     private Vec2d spawnPosition = new Vec2d(100, 300);
+    private CharacterMovement movement;
 
     private int countEntities() {
         return character.getLevel().getEntities().size();
@@ -32,6 +33,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     @Before
     public void setUp() {
         character = new Character(spawnPosition);
+        movement = character.getMovement();
         gun = character.getGun();
         player = new Player(0, "", "", "");
         player.setCharacter(character);
@@ -46,7 +48,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testStop() {
-        character.stop();
+        movement.stop();
         double x = character.getX();
         character.update(1);
         character.updatePosition(1);
@@ -55,7 +57,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testMoveRight() {
-        character.moveRight();
+        movement.moveRight();
         double x = character.getX();
         character.update(1);
         character.updatePosition(1);
@@ -64,7 +66,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testMoveLeft() {
-        character.moveLeft();
+        movement.moveLeft();
         double x = character.getX();
         character.update(1);
         character.updatePosition(1);

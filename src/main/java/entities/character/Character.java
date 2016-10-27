@@ -26,10 +26,6 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
      * The bounding box of a character.
      */
     private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
-    /**
-     * The default run speed of a character.
-     */
-    private static final double DEFAULT_RUN_SPEED = 230; // px/s
 
     static {
         BOUNDING_BOX.setOffset(OFFSET.x, OFFSET.y);
@@ -44,6 +40,10 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
      */
     private final Gun gun;
     /**
+     * The object that handles the movement of this character.
+     */
+    private final CharacterMovement movement;
+    /**
      * Indicates whether a character is alive or not.
      */
     private boolean alive = true;
@@ -51,14 +51,6 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
      * The sprites of the character.
      */
     private Sprite idleSprite, runningSprite;
-    /**
-     * The running speed of a character. In pixels per second.
-     */
-    private double runSpeed = DEFAULT_RUN_SPEED;
-    /**
-     * State of the character, indicates which action a character is performing.
-     */
-    private int direction = 0;
 
     /**
      * Instantiate a new character at position (x, y).
@@ -68,6 +60,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     public Character(final Vec2d position) {
         super(position);
 
+        movement = new CharacterMovement(this);
         shield = new Shield(this);
         gun = new Gun<>(this, Vine.class);
 
@@ -103,38 +96,16 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
         return alive;
     }
 
-    /**
-     * Makes the character stop moving.
-     */
-    public void stop() {
-        this.direction = 0;
-    }
-
-    /**
-     * Makes the character move to the left.
-     */
-    public void moveLeft() {
-        this.direction = -1;
-    }
-
-    /**
-     * Makes the character move to the right.
-     */
-    public void moveRight() {
-        this.direction = 1;
-    }
-
     @Override
     public final void update(final double timeDifference) {
-        // Walk
-        setXSpeed(runSpeed * direction);
+        movement.update();
 
         // Set the character sprite
-        if (direction == 0) {
+        if (movement.isIdle()) {
             setSprite(idleSprite);
         } else {
             setSprite(runningSprite);
-            setXScale(direction);
+            setXScale(movement.getDirection());
         }
     }
 
@@ -204,10 +175,17 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     }
 
     /**
-     * @return Gun - The gun this player carries.
+     * @return Gun - The gun this character carries.
      */
     public Gun getGun() {
         return gun;
+    }
+
+    /**
+     * @return CharacterMovement - The movement of this character.
+     */
+    public CharacterMovement getMovement() {
+        return movement;
     }
 
     /**
@@ -224,23 +202,5 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
      */
     public void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
-    }
-
-    /**
-     * Increases the speed at which the entities.character runs.
-     *
-     * @param amount The speed boost.
-     */
-    public void increaseRunSpeed(final double amount) {
-        this.runSpeed += amount;
-    }
-
-    /**
-     * Getter for runSpeed.
-     *
-     * @return runSpeed
-     */
-    public double getRunSpeed() {
-        return runSpeed;
     }
 }

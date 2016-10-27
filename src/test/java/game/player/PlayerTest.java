@@ -3,6 +3,7 @@ package game.player;
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.character.Character;
+import entities.character.CharacterMovement;
 import entities.character.Gun;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,8 +27,10 @@ public class PlayerTest extends BubbleTroubleApplicationTest {
     @Before
     public void setUp() {
         Gun gun = Mockito.mock(Gun.class);
+        CharacterMovement movement = Mockito.mock(CharacterMovement.class);
         character = Mockito.mock(Character.class);
         when(character.getGun()).thenReturn(gun);
+        when(character.getMovement()).thenReturn(movement);
         player = PlayerFactory.createPlayer(0);
     }
 
