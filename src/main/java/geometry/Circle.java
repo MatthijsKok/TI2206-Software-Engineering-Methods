@@ -73,6 +73,10 @@ public class Circle extends AbstractShape {
             return intersects((Circle) shape);
         }
 
+        if (shape instanceof Point) {
+            return shape.intersects(this);
+        }
+
         return shape instanceof Rectangle && intersects((Rectangle) shape);
 
     }

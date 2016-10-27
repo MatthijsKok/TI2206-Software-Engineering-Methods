@@ -26,11 +26,11 @@ public abstract class AbstractShape {
 
     /**
      * Creates a new shape instance at position (x, y).
-     * @param x x position of the shape
-     * @param y y position of the shape
+     * @param xPosition x position of the shape
+     * @param yPosition y position of the shape
      */
-    AbstractShape(double x, double y) {
-        setPosition(x, y);
+    AbstractShape(double xPosition, double yPosition) {
+        setPosition(xPosition, yPosition);
     }
 
     /**

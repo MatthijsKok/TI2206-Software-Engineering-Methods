@@ -6,7 +6,7 @@ import entities.AbstractEntity;
 /**
  * Represents AbstractBlock entity used for different walls in the game.
  */
-abstract class AbstractBlock extends AbstractEntity {
+public abstract class AbstractBlock extends AbstractEntity {
 
     /**
      * Creates a block at position (x,y).

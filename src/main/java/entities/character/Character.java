@@ -6,9 +6,9 @@ import entities.CollidingEntity;
 import entities.DynamicEntity;
 import entities.balls.AbstractBall;
 import entities.behaviour.GravityBehaviour;
-import entities.blocks.FloorBlock;
-import entities.blocks.WallBlock;
+import entities.blocks.AbstractBlock;
 import entities.character.bullets.Vine;
+import geometry.Point;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.Pair;
@@ -36,33 +36,29 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     }
 
     /**
-     * The running speed of a character. In pixels per second.
-     */
-    private double runSpeed = DEFAULT_RUN_SPEED;
-    /**
-     * Indicates whether a character is alive or not.
-     */
-    private boolean alive = true;
-
-    /**
-     * The sprites of the character.
-     */
-    private Sprite idleSprite, runningSprite;
-
-    /**
-     * State of the character, indicates which action a character is performing.
-     */
-    private int direction = 0;
-
-    /**
      * The shield this character carries.
      */
     private final Shield shield;
-
     /**
      * The gun this character carries.
      */
     private final Gun gun;
+    /**
+     * Indicates whether a character is alive or not.
+     */
+    private boolean alive = true;
+    /**
+     * The sprites of the character.
+     */
+    private Sprite idleSprite, runningSprite;
+    /**
+     * The running speed of a character. In pixels per second.
+     */
+    private double runSpeed = DEFAULT_RUN_SPEED;
+    /**
+     * State of the character, indicates which action a character is performing.
+     */
+    private int direction = 0;
 
     /**
      * Instantiate a new character at position (x, y).
@@ -148,12 +144,8 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
             collideWithBall();
         }
 
-        if (entity instanceof FloorBlock) {
-            collideWith((FloorBlock) entity);
-        }
-
-        if (entity instanceof WallBlock) {
-            collideWith((WallBlock) entity);
+        if (entity instanceof AbstractBlock) {
+            collideWith((AbstractBlock) entity);
         }
     }
 
@@ -165,51 +157,46 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     }
 
     /**
-     * If a character collides with a ground floor, the character should not sink
-     * through it.
+     * If a character collides with a block, it should move outside of it.
      *
-     * @param floor the ground floor the character collides with
+     * @param block AbstractBlock - The block the character collides with.
      */
-    private void collideWith(final FloorBlock floor) {
+    private void collideWith(final AbstractBlock block) {
         Rectangle shape = (Rectangle) getShape();
-        Rectangle blockShape = (Rectangle) floor.getShape();
 
-        if (shape.getBottom() > blockShape.getTop() && shape.getBottom() < blockShape.getBottom()) {
-            // Hit the floor from above
-            shape.setBottom(blockShape.getTop());
-            setYSpeed(Math.min(getYSpeed(), 0));
-        } else if (shape.getTop() > blockShape.getTop() && shape.getTop() < blockShape.getBottom()) {
-            // Hit the floor from below
+        Point left = new Point(shape.getLeft(), (shape.getTop() + shape.getBottom()) / 2);
+        Point right = new Point(shape.getRight(), (shape.getTop() + shape.getBottom()) / 2);
+        Point top = new Point((shape.getLeft() + shape.getRight()) / 2, shape.getTop());
+        Point bottom = new Point((shape.getLeft() + shape.getRight()) / 2, shape.getBottom());
+
+        Rectangle blockShape = (Rectangle) block.getShape();
+
+        if (left.intersects(blockShape)) {
+            shape.setLeft(blockShape.getRight());
+            setXSpeed(Math.max(0, getXSpeed()));
+        }
+
+        if (right.intersects(blockShape)) {
+            shape.setRight(blockShape.getLeft());
+            setXSpeed(Math.min(0, getXSpeed()));
+        }
+
+        if (top.intersects(blockShape)) {
             shape.setTop(blockShape.getBottom());
             setYSpeed(Math.max(0, getYSpeed()));
         }
-    }
 
-    /**
-     * If a character collides with a wall, it should move outside that wall.
-     *
-     * @param wall the wall the character collides with
-     */
-    private void collideWith(final WallBlock wall) {
-        Rectangle shape = (Rectangle) getShape();
-        Rectangle blockShape = (Rectangle) wall.getShape();
-
-        if (shape.getRight() > blockShape.getLeft() && shape.getRight() < blockShape.getRight()) {
-            // Hit the block from above
-            shape.setRight(blockShape.getLeft());
-            setXSpeed(Math.min(getXSpeed(), 0));
-        } else if (shape.getLeft() > blockShape.getLeft() && shape.getLeft() < blockShape.getRight()) {
-            // Hit the block from below
-            shape.setLeft(blockShape.getRight());
-            setXSpeed(Math.max(0, getXSpeed()));
+        if (bottom.intersects(blockShape)) {
+            shape.setBottom(blockShape.getTop());
+            setYSpeed(Math.min(0, getYSpeed()));
         }
     }
 
     /**
      * Set the images.player that controls this Character.
      *
-     * @param playerID int - The id of the player that controls
-     *                 this Character.
+     * @param playerID Integer - The id of the player that
+     *                 controls this Character.
      */
     public void setSprites(final int playerID) {
         idleSprite = CharacterSprites.getIdleSprite(playerID);
@@ -232,6 +219,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
 
     /**
      * Increases the score of the character.
+     *
      * @param score the amount of the increase.
      */
     public void increaseScore(final int score) {
@@ -249,6 +237,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
 
     /**
      * Getter for runSpeed.
+     *
      * @return runSpeed
      */
     public double getRunSpeed() {

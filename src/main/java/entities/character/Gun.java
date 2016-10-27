@@ -51,6 +51,8 @@ public class Gun<T extends AbstractBullet> extends AbstractEntity implements Dyn
      */
     Gun(final Character character, final Class<T> bulletType) {
         super(character.getPosition());
+        bindPosition(character.getPosition());
+
         this.character = character;
         this.bulletType = bulletType;
     }
