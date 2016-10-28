@@ -2,7 +2,6 @@ package entities.character.bullets;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.CollidingEntity;
-import entities.DynamicEntity;
 import entities.character.Character;
 import geometry.Rectangle;
 import graphics.Sprite;
@@ -10,7 +9,7 @@ import graphics.Sprite;
 /**
  * Vine class, controlling the rope in the game.
  */
-public class Vine extends AbstractBullet implements DynamicEntity, CollidingEntity {
+public class Vine extends AbstractBullet implements CollidingEntity {
 
     /**
      * Sprite of the vine.

@@ -64,8 +64,8 @@ public class BallTest extends BubbleTroubleApplicationTest {
     public void testCollideWithFloorBlock() {
         FloorBlock floor = new FloorBlock(
                 new Vec2d(
-                        ball.getX(),
-                        ball.getY()));
+                        ball.getX() - 32,
+                        ball.getY() + 1));
 
         ball.collideWith(floor);
         assertThat("A ball should bounce up when it hits a floor", ball.getYSpeed(), lessThan(0.d));
@@ -76,7 +76,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
         WallBlock wall = new WallBlock(
                 new Vec2d(
                         ball.getX() + 1000,
-                        ball.getY()));
+                        ball.getY() - 32));
 
         double xSpeed = ball.getXSpeed();
         ball.collideWith(wall);
@@ -88,7 +88,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
         WallBlock wall = new WallBlock(
                 new Vec2d(
                         ball.getX() + ((Circle) ball.getShape()).getRadius() - 1,
-                        ball.getY()));
+                        ball.getY() - 32));
 
         ball.getSpeed().x = 10;
 
@@ -100,8 +100,8 @@ public class BallTest extends BubbleTroubleApplicationTest {
     public void testCollideWithWallBlockFromRight() {
         WallBlock wall = new WallBlock(
                 new Vec2d(
-                        ball.getX() - ((Circle) ball.getShape()).getRadius() - 32 + 1,
-                        ball.getY()));
+                        ball.getX() - 64 + 2,
+                        ball.getY() - 32));
 
         ball.getSpeed().x = -10;
 
@@ -114,7 +114,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
         WallBlock wall = new WallBlock(
                 new Vec2d(
                         ball.getX() + ((Circle) ball.getShape()).getRadius() - 1,
-                        ball.getY()));
+                        ball.getY() - 32));
 
         ball.getSpeed().x = -10;
 
@@ -127,7 +127,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
         WallBlock wall = new WallBlock(
                 new Vec2d(
                         ball.getX() - ((Circle) ball.getShape()).getRadius() - 32 + 1,
-                        ball.getY()));
+                        ball.getY() - 32));
 
         ball.getSpeed().x = 10;
 
