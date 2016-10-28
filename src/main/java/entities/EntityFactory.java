@@ -4,6 +4,7 @@ import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import entities.balls.ColoredBall;
 import entities.blocks.FloorBlock;
+import entities.blocks.SpikeBlock;
 import entities.blocks.WallBlock;
 import entities.character.Character;
 import game.Game;
@@ -40,6 +41,8 @@ public final class EntityFactory {
                 return createWall(position);
             case "Floor":
                 return createFloor(position);
+            case "Spike":
+                return createSpike(position);
             default:
                 return null;
         }
@@ -77,5 +80,9 @@ public final class EntityFactory {
 
     private static FloorBlock createFloor(Vec2d position) {
         return new FloorBlock(position);
+    }
+
+    private static SpikeBlock createSpike(Vec2d position) {
+        return new SpikeBlock(position);
     }
 }

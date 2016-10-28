@@ -5,6 +5,7 @@ import entities.AbstractEntity;
 import entities.CollidingEntity;
 import entities.behaviour.GravityBehaviour;
 import entities.blocks.FloorBlock;
+import entities.blocks.SpikeBlock;
 import entities.blocks.WallBlock;
 import entities.character.Shield;
 import entities.character.bullets.Vine;
@@ -34,10 +35,6 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
      * Bounce speed for the different ball sizes.
      */
     private static final double[] BOUNCE_SPEEDS = {225, 300, 375, 450, 500};
-    /**
-     * Bounce speed for the different ball sizes when the ball splits.
-     */
-    private static final double[] SPLIT_BOUNCE_SPEEDS = {100, 150, 200, 300, 400};
     /**
      * Horizontal speed of a ball. In pixels per second.
      */
@@ -124,13 +121,6 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
         return BOUNCE_SPEEDS[size];
     }
 
-    /**
-     * @return The split bounce speed of this ball.
-     */
-    /* default */ double getSplitBounceSpeed() {
-        return SPLIT_BOUNCE_SPEEDS[size];
-    }
-
     @Override
     public void collideWith(AbstractEntity entity) {
         if (entity instanceof FloorBlock) {
@@ -148,6 +138,10 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
         if (entity instanceof Shield) {
             collideWithShield();
         }
+
+        if (entity instanceof SpikeBlock) {
+            collideWith((SpikeBlock) entity);
+        }
     }
 
     /**
@@ -158,6 +152,21 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     private void collideWith(FloorBlock floor) {
         setY(Math.min(floor.getY() - ((Circle) getShape()).getRadius(), getY()));
         bounce();
+    }
+
+    /**
+     * The behaviour of the AbstractBall when it collides with a FloorBlock.
+     *
+     * @param ceiling The FloorBlock this AbstractBall collides with.
+     */
+    private void collideWith(SpikeBlock ceiling) {
+        setY(Math.max(
+                ((Rectangle) ceiling.getShape()).getBottom()
+                        + ((Circle) getShape()).getRadius(),
+                getY()));
+
+        setYSpeed(Math.max(0, getYSpeed()));
+        die();
     }
 
     /**
@@ -201,6 +210,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
      * The behaviour of the AbstractBall when it collides with a Vine AbstractEntity.
      */
     private void collideWithVine() {
+        bounce();
         die();
     }
 }
