@@ -4,12 +4,13 @@ import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.CollidingEntity;
 import entities.behaviour.GravityBehaviour;
-import entities.blocks.FloorBlock;
-import entities.blocks.WallBlock;
+import entities.blocks.AbstractBlock;
+import entities.blocks.SpikeBlock;
 import entities.character.Shield;
 import entities.character.bullets.Vine;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
+import geometry.Point;
 import geometry.Rectangle;
 import util.sound.SoundEffect;
 
@@ -34,10 +35,6 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
      * Bounce speed for the different ball sizes.
      */
     private static final double[] BOUNCE_SPEEDS = {225, 300, 375, 450, 500};
-    /**
-     * Bounce speed for the different ball sizes when the ball splits.
-     */
-    private static final double[] SPLIT_BOUNCE_SPEEDS = {100, 150, 200, 300, 400};
     /**
      * Horizontal speed of a ball. In pixels per second.
      */
@@ -120,25 +117,16 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     /**
      * @return The bounce speed of this ball.
      */
-    /* default */ double getBounceSpeed() {
+    private double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
-    }
-
-    /**
-     * @return The split bounce speed of this ball.
-     */
-    double getSplitBounceSpeed() {
-        return SPLIT_BOUNCE_SPEEDS[size];
     }
 
     @Override
     public void collideWith(AbstractEntity entity) {
-        if (entity instanceof FloorBlock) {
-            collideWith((FloorBlock) entity);
-        }
-
-        if (entity instanceof WallBlock) {
-            collideWith((WallBlock) entity);
+        if (entity instanceof SpikeBlock) {
+            collideWith((SpikeBlock) entity);
+        } else if (entity instanceof AbstractBlock) {
+            collideWith((AbstractBlock) entity);
         }
 
         if (entity instanceof Vine) {
@@ -153,11 +141,16 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     /**
      * The behaviour of the AbstractBall when it collides with a FloorBlock.
      *
-     * @param floor The FloorBlock this AbstractBall collides with.
+     * @param ceiling The FloorBlock this AbstractBall collides with.
      */
-    private void collideWith(FloorBlock floor) {
-        setY(Math.min(floor.getY() - ((Circle) getShape()).getRadius(), getY()));
-        bounce();
+    private void collideWith(SpikeBlock ceiling) {
+        setY(Math.max(
+                ((Rectangle) ceiling.getShape()).getBottom()
+                        + ((Circle) getShape()).getRadius(),
+                getY()));
+
+        setYSpeed(Math.max(0, getYSpeed()));
+        die();
     }
 
     /**
@@ -170,30 +163,35 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     /**
      * The behaviour of the AbstractBall when it collides with a WallBlock.
      *
-     * @param wall The WallBlock AbstractEntity this AbstractBall collides with.
+     * @param block The AbstractBlock AbstractEntity this AbstractBall collides with.
      */
-    private void collideWith(WallBlock wall) {
-        Circle shape = (Circle) getShape();
-        Rectangle wallShape = (Rectangle) wall.getShape();
+    private void collideWith(AbstractBlock block) {
+        Rectangle blockShape = (Rectangle) block.getShape();
+        double radius = ((Circle) getShape()).getRadius();
 
-        double radius = shape.getRadius();
-        double right = getX() + radius;
-        double left = getX() - radius;
+        Point left   = new Point(getX() - radius, getY());
+        Point right  = new Point(getX() + radius, getY());
+        Point top    = new Point(getX(), getY() - radius);
+        Point bottom = new Point(getX(), getY() + radius);
 
-        if (right > wallShape.getLeft()
-                && right < wallShape.getRight()) {
-            // Hit the wall from the right
-            setX(wallShape.getLeft() - radius);
-            if (getXSpeed() > 0) {
-                setXSpeed(-getXSpeed());
-            }
-        } else if (left > wallShape.getLeft()
-                && left < wallShape.getRight()) {
-            // Hit the wall from the left
-            setX(wallShape.getRight() + radius);
-            if (getXSpeed() < 0) {
-                setXSpeed(-getXSpeed());
-            }
+        if (left.intersects(blockShape)) {
+            setX(blockShape.getRight() + radius);
+            setXSpeed(HORIZONTAL_SPEED);
+        }
+
+        if (right.intersects(blockShape)) {
+            setX(blockShape.getLeft() - radius);
+            setXSpeed(-HORIZONTAL_SPEED);
+        }
+
+        if (bottom.intersects(blockShape)) {
+            setY(blockShape.getTop() - radius);
+            bounce();
+        }
+
+        if (top.intersects(blockShape)) {
+            setY(blockShape.getBottom() + radius);
+            setYSpeed(Math.max(0, getYSpeed()));
         }
     }
 
@@ -201,6 +199,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
      * The behaviour of the AbstractBall when it collides with a Vine AbstractEntity.
      */
     private void collideWithVine() {
+        bounce();
         die();
     }
 }

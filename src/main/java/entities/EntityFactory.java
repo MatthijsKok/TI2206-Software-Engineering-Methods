@@ -4,6 +4,8 @@ import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import entities.balls.ColoredBall;
 import entities.blocks.FloorBlock;
+import entities.blocks.Gate;
+import entities.blocks.SpikeBlock;
 import entities.blocks.WallBlock;
 import entities.character.Character;
 import game.Game;
@@ -36,10 +38,14 @@ public final class EntityFactory {
                 return createCharacter(position);
             case "Ball":
                 return createBall(position, entity.getJSONObject("attributes"));
+            case "Gate":
+                return createGate(position, entity.getJSONObject("attributes"));
             case "Wall":
                 return createWall(position);
             case "Floor":
                 return createFloor(position);
+            case "Spike":
+                return createSpike(position);
             default:
                 return null;
         }
@@ -75,7 +81,19 @@ public final class EntityFactory {
         return new WallBlock(position);
     }
 
+    private static Gate createGate(Vec2d position, JSONObject attributes) {
+        if (attributes.has("color")) {
+            ColoredBall.Color color = ColoredBall.getColor(attributes.getString("color"));
+            return new Gate(position, color);
+        }
+        return null;
+    }
+
     private static FloorBlock createFloor(Vec2d position) {
         return new FloorBlock(position);
+    }
+
+    private static SpikeBlock createSpike(Vec2d position) {
+        return new SpikeBlock(position);
     }
 }

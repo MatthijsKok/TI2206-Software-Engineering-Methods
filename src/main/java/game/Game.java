@@ -205,10 +205,9 @@ public final class Game {
 
         if (hasNextLevel()) {
             MultiSoundEffect.LEVEL_WON.playRandom();
-            getCurrentLevel().unload();
+            final Level previousLevel = getCurrentLevel();
             currentLevel++;
-            getCurrentLevel().load();
-            setState(new LevelWonState(getCurrentLevel()));
+            setState(new LevelWonState(previousLevel, getCurrentLevel()));
         } else {
             SoundEffect.GAME_WON.play();
             setState(new GameWonState());
@@ -222,6 +221,8 @@ public final class Game {
      * @throws IOException When the level file cannot be loaded.
      */
     public static void loseLevel(final boolean timeUp) throws IOException {
+        Music.stopMusic();
+
         if (timeUp) {
             PLAYERS.forEach(player -> player.increaseLives(-1));
         }
@@ -233,8 +234,6 @@ public final class Game {
                 .count();
 
         if (playersAlive > 0) {
-            getCurrentLevel().unload();
-            getCurrentLevel().load();
             setState(new LevelLostState(getCurrentLevel()));
         } else {
             MultiSoundEffect.GAME_OVER.playRandom();
