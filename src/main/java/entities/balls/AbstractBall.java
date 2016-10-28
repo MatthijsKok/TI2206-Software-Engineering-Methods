@@ -4,13 +4,13 @@ import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.CollidingEntity;
 import entities.behaviour.GravityBehaviour;
-import entities.blocks.FloorBlock;
+import entities.blocks.AbstractBlock;
 import entities.blocks.SpikeBlock;
-import entities.blocks.WallBlock;
 import entities.character.Shield;
 import entities.character.bullets.Vine;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
+import geometry.Point;
 import geometry.Rectangle;
 import util.sound.SoundEffect;
 
@@ -123,12 +123,10 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
 
     @Override
     public void collideWith(AbstractEntity entity) {
-        if (entity instanceof FloorBlock) {
-            collideWith((FloorBlock) entity);
-        }
-
-        if (entity instanceof WallBlock) {
-            collideWith((WallBlock) entity);
+        if (entity instanceof SpikeBlock) {
+            collideWith((SpikeBlock) entity);
+        } else if (entity instanceof AbstractBlock) {
+            collideWith((AbstractBlock) entity);
         }
 
         if (entity instanceof Vine) {
@@ -138,20 +136,6 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
         if (entity instanceof Shield) {
             collideWithShield();
         }
-
-        if (entity instanceof SpikeBlock) {
-            collideWith((SpikeBlock) entity);
-        }
-    }
-
-    /**
-     * The behaviour of the AbstractBall when it collides with a FloorBlock.
-     *
-     * @param floor The FloorBlock this AbstractBall collides with.
-     */
-    private void collideWith(FloorBlock floor) {
-        setY(Math.min(floor.getY() - ((Circle) getShape()).getRadius(), getY()));
-        bounce();
     }
 
     /**
@@ -179,30 +163,35 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     /**
      * The behaviour of the AbstractBall when it collides with a WallBlock.
      *
-     * @param wall The WallBlock AbstractEntity this AbstractBall collides with.
+     * @param block The AbstractBlock AbstractEntity this AbstractBall collides with.
      */
-    private void collideWith(WallBlock wall) {
-        Circle shape = (Circle) getShape();
-        Rectangle wallShape = (Rectangle) wall.getShape();
+    private void collideWith(AbstractBlock block) {
+        Rectangle blockShape = (Rectangle) block.getShape();
+        double radius = ((Circle) getShape()).getRadius();
 
-        double radius = shape.getRadius();
-        double right = getX() + radius;
-        double left = getX() - radius;
+        Point left   = new Point(getX() - radius, getY());
+        Point right  = new Point(getX() + radius, getY());
+        Point top    = new Point(getX(), getY() - radius);
+        Point bottom = new Point(getX(), getY() + radius);
 
-        if (right > wallShape.getLeft()
-                && right < wallShape.getRight()) {
-            // Hit the wall from the right
-            setX(wallShape.getLeft() - radius);
-            if (getXSpeed() > 0) {
-                setXSpeed(-getXSpeed());
-            }
-        } else if (left > wallShape.getLeft()
-                && left < wallShape.getRight()) {
-            // Hit the wall from the left
-            setX(wallShape.getRight() + radius);
-            if (getXSpeed() < 0) {
-                setXSpeed(-getXSpeed());
-            }
+        if (left.intersects(blockShape)) {
+            setX(blockShape.getRight() + radius);
+            setXSpeed(HORIZONTAL_SPEED);
+        }
+
+        if (right.intersects(blockShape)) {
+            setX(blockShape.getLeft() - radius);
+            setXSpeed(-HORIZONTAL_SPEED);
+        }
+
+        if (bottom.intersects(blockShape)) {
+            setY(blockShape.getTop() - radius);
+            bounce();
+        }
+
+        if (top.intersects(blockShape)) {
+            setY(blockShape.getBottom() + radius);
+            setYSpeed(Math.max(0, getYSpeed()));
         }
     }
 

@@ -35,9 +35,12 @@
       }
     },
     {
-      "type": "Plant",
-      "x": 482,
-      "y": 480
+      "type": "Gate",
+      "x": 496,
+      "y": 448,
+      "attributes": {
+        "color": "yellow"
+      }
     },
     {
       "type": "Wall",
