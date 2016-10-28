@@ -265,11 +265,13 @@ public class Level {
      * @return boolean.
      */
     private boolean yellowBallsInLevel() {
-        balls.addAll(getEntities().stream()
+        balls.addAll(getEntities()
+                .stream()
                 .filter(e -> e instanceof ColoredBall)
                 .collect(Collectors.toList()));
 
-        ColoredBall yellowBall = balls.stream()
+        ColoredBall yellowBall = balls
+                .stream()
                 .map(e -> (ColoredBall) e)
                 .filter(e -> e.getColor().equals(ColoredBall.Color.YELLOW))
                 .findAny()
@@ -311,7 +313,9 @@ public class Level {
         if (!yellowBallsInLevel()) {
             Gate gate = (Gate) getEntities().stream()
                     .filter(e -> e instanceof Gate).findAny().orElse(null);
-            gate.setYSpeedAndDie();
+            if (gate != null) {
+                gate.setYSpeedAndDie();
+            }
         }
         if (countBalls() == 0) {
             win();

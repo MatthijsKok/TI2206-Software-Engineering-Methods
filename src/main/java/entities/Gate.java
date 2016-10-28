@@ -40,9 +40,15 @@ import graphics.Sprite;
          */
         public void setYSpeedAndDie() {
             setYSpeed(TRAVEL_SPEED);
-//            if (getY() > getLevel().getHeight()) {
-//                getLevel().removeEntity( getLevel().getEntities().stream()
-//                        .filter(e -> e instanceof Gate).findAny().orElse(null));
-//            }
+            Gate gate = (Gate) getLevel()
+                    .getEntities()
+                    .stream()
+                    .filter(e -> e instanceof Gate)
+                    .findAny()
+                    .orElse(null);
+
+            if (getY() > getLevel().getHeight() && gate != null) {
+                getLevel().removeEntity(gate);
+           }
         }
     }
