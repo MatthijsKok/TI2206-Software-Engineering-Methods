@@ -23,6 +23,7 @@ import util.sound.SoundEffect;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The level class represents a level, which is loaded from a file and consists
@@ -104,7 +105,7 @@ public class Level {
     /**
      * A list with balls that are in the current level. To check if there are yellow balls.
      */
-    private List<ColoredBall> balls = new ArrayList<>();
+    private List<AbstractEntity> balls = new ArrayList<>();
 
     /**
      * The file the level is loaded from.
@@ -264,13 +265,15 @@ public class Level {
      * @return boolean.
      */
     private boolean yellowBallsInLevel() {
-        balls.add((ColoredBall) getEntities().stream()
+        balls.addAll(getEntities().stream()
                 .filter(e -> e instanceof ColoredBall)
-                .findAny()
-                .orElse(null));
+                .collect(Collectors.toList()));
 
-        ColoredBall yellowBall = balls.stream().filter(e -> e.getColor().equals(ColoredBall.Color.YELLOW))
-                .findAny().orElse(null);
+        ColoredBall yellowBall = balls.stream()
+                .map(e -> (ColoredBall) e)
+                .filter(e -> e.getColor().equals(ColoredBall.Color.YELLOW))
+                .findAny()
+                .orElse(null);
         balls.clear();
         return (yellowBall != null);
     }
