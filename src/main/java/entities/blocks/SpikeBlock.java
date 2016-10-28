@@ -1,4 +1,4 @@
-package entities;
+package entities.blocks;
 
 import com.sun.javafx.geom.Vec2d;
 import graphics.Sprite;
@@ -14,11 +14,12 @@ public class SpikeBlock  extends AbstractBlock {
 
     /**
      * Creates a new SpikeBlock at position (x,y).
-     * @param position the position of the block
+     * @param position Vec2d - the position of the block
      */
     public SpikeBlock(final Vec2d position) {
         super(position);
         setSprite(SPIKE_SPRITE);
         setShapeToSprite();
+        setDepth(1);
     }
 }

@@ -3,8 +3,8 @@ package entities.character.bullets;
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.CollidingEntity;
-import entities.DynamicEntity;
 import entities.balls.AbstractBall;
+import entities.blocks.SpikeBlock;
 import entities.blocks.WallBlock;
 import entities.character.Character;
 import entities.character.Gun;
@@ -13,7 +13,7 @@ import util.sound.SoundEffect;
 /**
  * The base class for all kinds of bullets.
  */
-public abstract class AbstractBullet extends AbstractEntity implements DynamicEntity, CollidingEntity {
+public abstract class AbstractBullet extends AbstractEntity implements CollidingEntity {
 
     /**
      * Score that is multiplied by the size of the ball, and then added to the score.
@@ -33,15 +33,8 @@ public abstract class AbstractBullet extends AbstractEntity implements DynamicEn
      */
     AbstractBullet(final Vec2d position, final Character character) {
         super(position);
-        setDepth(1);
+        setDepth(2);
         this.character = character;
-    }
-
-    @Override
-    public void update(final double timeDifference) {
-        if (getY() <= 0) {
-            die();
-        }
     }
 
     @Override
@@ -51,7 +44,9 @@ public abstract class AbstractBullet extends AbstractEntity implements DynamicEn
         if (entity instanceof AbstractBall) {
             collideWith((AbstractBall) entity);
         }
-        if (entity instanceof WallBlock) {
+
+        if (entity instanceof WallBlock
+                || entity instanceof SpikeBlock) {
             collideWithBlock();
         }
     }

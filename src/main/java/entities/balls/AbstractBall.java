@@ -2,11 +2,13 @@ package entities.balls;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
-import entities.FloorBlock;
-import entities.Shield;
-import entities.Vine;
-import entities.WallBlock;
+import entities.CollidingEntity;
 import entities.behaviour.GravityBehaviour;
+import entities.blocks.FloorBlock;
+import entities.blocks.SpikeBlock;
+import entities.blocks.WallBlock;
+import entities.character.Shield;
+import entities.character.bullets.Vine;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
 import geometry.Rectangle;
@@ -119,7 +121,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     /**
      * @return The bounce speed of this ball.
      */
-    /* default */ double getBounceSpeed() {
+    private double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
     }
 
@@ -149,7 +151,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
         }
 
         if (entity instanceof SpikeBlock) {
-            collideWithSpike();
+            collideWith((SpikeBlock) entity);
         }
     }
 
@@ -161,6 +163,21 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     private void collideWith(FloorBlock floor) {
         setY(Math.min(floor.getY() - ((Circle) getShape()).getRadius(), getY()));
         bounce();
+    }
+
+    /**
+     * The behaviour of the AbstractBall when it collides with a FloorBlock.
+     *
+     * @param ceiling The FloorBlock this AbstractBall collides with.
+     */
+    private void collideWith(SpikeBlock ceiling) {
+        setY(Math.max(
+                ((Rectangle) ceiling.getShape()).getBottom()
+                        + ((Circle) getShape()).getRadius(),
+                getY()));
+
+        setYSpeed(Math.max(0, getYSpeed()));
+        die();
     }
 
     /**
@@ -204,6 +221,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
      * The behaviour of the AbstractBall when it collides with a Vine AbstractEntity.
      */
     private void collideWithVine() {
+        bounce();
         die();
     }
 }
