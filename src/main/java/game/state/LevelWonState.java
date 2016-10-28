@@ -7,7 +7,7 @@ import util.KeyboardInputManager;
 /**
  * State for when a level is won.
  */
-public class LevelWonState extends LevelState {
+public class LevelWonState extends AbstractLevelState {
 
     /**
      * The key that progresses the game to the next level.
