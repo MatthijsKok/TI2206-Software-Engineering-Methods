@@ -7,9 +7,7 @@ import util.Config;
  */
 public final class PlayerFactory {
 
-    private PlayerFactory() {
-
-    }
+    private PlayerFactory() { }
 
     /**
      * Creates a new player instance with the keyboard mapping
