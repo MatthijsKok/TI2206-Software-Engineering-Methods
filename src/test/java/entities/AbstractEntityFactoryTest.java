@@ -8,7 +8,7 @@ import org.json.JSONObject;
  * Entity factory test suites.
  */
 abstract class AbstractEntityFactoryTest extends BubbleTroubleApplicationTest {
-    static /* default */ JSONObject createJSONEntity(final String type,
+    /* default */ static JSONObject createJSONEntity(final String type,
                                                  final double xPosition,
                                                  final double yPosition,
                                                  final JSONObject attributes) {
@@ -18,7 +18,7 @@ abstract class AbstractEntityFactoryTest extends BubbleTroubleApplicationTest {
         return entity;
     }
 
-    static /* default */ JSONObject createJSONEntity(final String type,
+    /* default */ static JSONObject createJSONEntity(final String type,
                                                  final double xPosition,
                                                  final double yPosition) {
         final JSONObject entity = new JSONObject();

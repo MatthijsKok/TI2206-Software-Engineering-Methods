@@ -5,13 +5,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 /**
- * Utility class which manages the game canvas and makes it available
+ * Utility class which manages the game getCanvas and makes it available
  * everywhere.
  */
 public final class CanvasManager {
 
     /**
-     * The canvas of this game.
+     * The getCanvas of this game.
      */
     private static Canvas targetCanvas;
 
@@ -25,16 +25,16 @@ public final class CanvasManager {
     }
 
     /**
-     * Creates a canvas fitting a stage and adds it to that stage.
-     * @param stage Stage to create a canvas for.
-     * @return Canvas the created canvas.
+     * Creates a getCanvas fitting a stage and adds it to that stage.
+     * @param stage Stage to create a getCanvas for.
+     * @return Canvas the created getCanvas.
      */
     public static Canvas createCanvas(final Stage stage) {
         return new Canvas(stage.getWidth(), stage.getHeight());
     }
 
     /**
-     * Sets the canvas target for drawing operations.
+     * Sets the getCanvas target for drawing operations.
      * @param canvas Canvas to draw on.
      */
     public static void setCanvas(final Canvas canvas) {
@@ -43,14 +43,14 @@ public final class CanvasManager {
     }
 
     /**
-     * @return The game canvas.
+     * @return The game getCanvas.
      */
     public static Canvas getCanvas() {
         return targetCanvas;
     }
 
     /**
-     * @return The graphics canvas to draw on.
+     * @return The graphics getCanvas to draw on.
      */
     public static GraphicsContext getContext() {
         return targetGC;

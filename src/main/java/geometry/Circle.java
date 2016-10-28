@@ -35,7 +35,7 @@ public class Circle extends AbstractShape {
      * @param sprite the sprite to create a circle around.
      */
     public Circle(final Sprite sprite) {
-        this(Math.max(sprite.getWidth(), sprite.getHeight()) / 2);
+        this(Math.max(sprite.getWidth(), sprite.getHeight()) / 2.d);
     }
 
     /**
@@ -71,6 +71,10 @@ public class Circle extends AbstractShape {
     public boolean intersects(final AbstractShape shape) {
         if (shape instanceof Circle) {
             return intersects((Circle) shape);
+        }
+
+        if (shape instanceof Point) {
+            return shape.intersects(this);
         }
 
         return shape instanceof Rectangle && intersects((Rectangle) shape);

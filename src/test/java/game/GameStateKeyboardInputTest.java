@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.is;
 import org.junit.Test;
 
 /**
- * Test suite for the KeyboardInput on GameState.
+ * Test suite for the KeyboardInput on ObsoleteGameState.
  */
 public class GameStateKeyboardInputTest {
     @Test
@@ -30,13 +30,13 @@ public class GameStateKeyboardInputTest {
 @PrepareForTest(KeyboardInputManager.class)
 public class GameStateKeyboardInputTest extends BubbleTroubleApplicationTest {
 
-    private GameState gameState;
+    private ObsoleteGameState gameState;
     private KeyboardInputManager kim = new KeyboardInputManager();
 
     @Before
     public void setUp() {
         StageManager.getStage().getScene();
-        gameState = new GameState(Game.getInstance());
+        gameState = new ObsoleteGameState(Game.getInstance());
         gameState.reset();
     }
 

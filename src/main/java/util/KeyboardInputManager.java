@@ -5,20 +5,13 @@ import javafx.scene.Scene;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Set;
 
 /**
  * This singleton class manages keyboard input and makes it available
  * everywhere.
  */
-public final class KeyboardInputManager extends Observable {
-
-    /**
-     * The singleton instance of KeyboardInputManager.
-     */
-    private static KeyboardInputManager instance = new KeyboardInputManager();
+public final class KeyboardInputManager {
 
     /**
      * The list of scenes on which the manager manages keyboard input.
@@ -26,21 +19,22 @@ public final class KeyboardInputManager extends Observable {
     private static List<Scene> scenes = new ArrayList<>();
 
     /**
-     * The list containing information about which keys are pressed at any time.
+     * The list containing information about which keys are down atm.
      */
     private static Set<String> input = new HashSet<>();
 
     /**
-     * This overrides the default public constructor.
+     * The list containing information about which keys are just pressed.
      */
-    public KeyboardInputManager() { }
+    private static Set<String> pressed = new HashSet<>();
 
     /**
-     * Adds an observer to the keyboard.
-     * @param observer the observer to add.
+     * The list containing information about which keys are just released.
      */
-    public static void addListener(Observer observer) {
-        instance.addObserver(observer);
+    private static Set<String> released = new HashSet<>();
+
+    private KeyboardInputManager() {
+
     }
 
     /**
@@ -54,33 +48,57 @@ public final class KeyboardInputManager extends Observable {
 
         scenes.add(scene);
 
-        instance.addEventHandlers(scene);
+        addEventHandlers(scene);
     }
 
-    private void addEventHandlers(final Scene scene) {
+    private static void addEventHandlers(final Scene scene) {
         scene.setOnKeyPressed(e -> pressKey(e.getCode().toString()));
         scene.setOnKeyReleased(e -> releaseKey(e.getCode().toString()));
     }
 
-    private void pressKey(String code) {
+    private static void pressKey(String code) {
+        if (!input.contains(code)) {
+            pressed.add(code);
+            pressed.add("ANY");
+        }
         input.add(code);
-
-        setChanged();
-        notifyObservers();
     }
 
-    private void releaseKey(String code) {
+    private static void releaseKey(String code) {
+        released.add(code);
+        released.add("ANY");
         input.remove(code);
+    }
 
-        setChanged();
-        notifyObservers();
+    /**
+     * Clears the presses and releases.
+     */
+    public static void update() {
+        pressed.clear();
+        released.clear();
     }
 
     /**
      * @param key a string representation of the key to check.
-     * @return a boolean that indicates if key is currently pressed.
+     * @return Boolean - Indicates if key is just pressed.
      */
     public static boolean keyPressed(final String key) {
+        return pressed.contains(key);
+    }
+
+    /**
+     * @param key a string representation of the key to check.
+     * @return Boolean -  Indicates if key is just released.
+     */
+    public static boolean keyReleased(final String key) {
+        return released.contains(key);
+    }
+
+    /**
+     * @param key a string representation of the key to check.
+     * @return Boolean - Indicates if key is currently pressed.
+     */
+    public static boolean keyDown(final String key) {
         return input.contains(key);
     }
 }

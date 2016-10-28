@@ -1,7 +1,11 @@
 package entities.balls;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.*;
+import entities.AbstractEntity;
+import entities.FloorBlock;
+import entities.Shield;
+import entities.Vine;
+import entities.WallBlock;
 import entities.behaviour.GravityBehaviour;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
@@ -11,12 +15,12 @@ import util.sound.SoundEffect;
 /**
  * Class that represents the bouncing balls in our game.
  */
-public abstract class AbstractBall extends AbstractEntity {
+public abstract class AbstractBall extends AbstractEntity implements CollidingEntity {
 
     /**
      * The chance that splitting a ball spawns a pickup.
      */
-    private static final double DROP_CHANCE = 0.2;
+    private static final double DROP_CHANCE = 0.25;
     /**
      * Radius of a ball with size 0.
      */
@@ -29,6 +33,10 @@ public abstract class AbstractBall extends AbstractEntity {
      * Bounce speed for the different ball sizes.
      */
     private static final double[] BOUNCE_SPEEDS = {225, 300, 375, 450, 500};
+    /**
+     * Bounce speed for the different ball sizes when the ball splits.
+     */
+    private static final double[] SPLIT_BOUNCE_SPEEDS = {100, 150, 200, 300, 400};
     /**
      * Horizontal speed of a ball. In pixels per second.
      */
@@ -91,10 +99,8 @@ public abstract class AbstractBall extends AbstractEntity {
      * Removes this ball from the level and adds two smaller balls on the same
      * position, moving in different directions. If the ball is already at it's
      * smallest, no new balls will be added.
-     * @param directionSmallerBalls is -1 when it dies by a vain,
-     * and 1 if it dies because of the ceiling.
      */
-    void die(int directionSmallerBalls) {
+    /* default */ void die() {
         getLevel().removeEntity(this);
 
         if (Math.random() > DROP_CHANCE) {
@@ -111,10 +117,17 @@ public abstract class AbstractBall extends AbstractEntity {
     }
 
     /**
-     * @return the bounce speed of this ball.
+     * @return The bounce speed of this ball.
      */
-    double getBounceSpeed() {
+    /* default */ double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
+    }
+
+    /**
+     * @return The split bounce speed of this ball.
+     */
+    double getSplitBounceSpeed() {
+        return SPLIT_BOUNCE_SPEEDS[size];
     }
 
     @Override
@@ -148,14 +161,6 @@ public abstract class AbstractBall extends AbstractEntity {
     private void collideWith(FloorBlock floor) {
         setY(Math.min(floor.getY() - ((Circle) getShape()).getRadius(), getY()));
         bounce();
-    }
-
-    /**
-     * the ball dies if it hits the spikes, just like in the original bubble trouble.
-     * int 1 causes the smaller balls to go down.
-     */
-    private void collideWithSpike() {
-        die(1);
     }
 
     /**
@@ -197,9 +202,8 @@ public abstract class AbstractBall extends AbstractEntity {
 
     /**
      * The behaviour of the AbstractBall when it collides with a Vine AbstractEntity.
-     * int -1 causes the smaller balls to go up
      */
     private void collideWithVine() {
-        die(-1);
+        die();
     }
 }

@@ -16,7 +16,7 @@ class SpeedBoost extends AbstractDuringPowerUp {
     /**
      * Sprite of the speed boost power-up.
      */
-    private static final Sprite SPEED_BOOST_SPRITE = new Sprite("powerUps/speed_boost.png");
+    private static final Sprite SPEED_BOOST_SPRITE = new Sprite("images/powerUps/speed_boost.png");
 
     /**
      * Constructor of the speed boost power-up.
@@ -26,13 +26,13 @@ class SpeedBoost extends AbstractDuringPowerUp {
     }
 
     @Override
-    void enableEffect() {
-        getTarget().increaseRunSpeed(SPEED_BOOST);
+    /* default */ final void enableEffect() {
+        getTarget().getMovement().increaseRunSpeed(SPEED_BOOST);
         SoundEffect.SPEED_BOOST.play();
     }
 
     @Override
-    void disableEffect() {
-        getTarget().increaseRunSpeed(-SPEED_BOOST);
+    /* default */ final void disableEffect() {
+        getTarget().getMovement().increaseRunSpeed(-SPEED_BOOST);
     }
 }

@@ -108,7 +108,7 @@ public class LoggerTest {
 
     @Test(expected = IOException.class)
     public void logWriterExceptionTest() throws IOException {
-        logger.setFile(new File("doesntexist/fake.log"));
+        logger.setFile(new File("does_not_exist/fake.log"));
         logger.writeLogRecords();
     }
 }
