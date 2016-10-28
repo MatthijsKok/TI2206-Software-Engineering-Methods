@@ -1,6 +1,5 @@
 package game.state;
 
-import game.Game;
 import level.Level;
 import ui.LevelLostOverlay;
 import util.KeyboardInputManager;
@@ -8,7 +7,7 @@ import util.KeyboardInputManager;
 /**
  * State for when a level is won.
  */
-public class LevelLostState implements GameState {
+public class LevelLostState extends LevelState {
 
     /**
      * The key that progresses the game to the next level.
@@ -35,7 +34,7 @@ public class LevelLostState implements GameState {
     @Override
     public void update(double timeDifference) {
         if (KeyboardInputManager.keyPressed(RESTART_KEY)) {
-            Game.setState(new InProgressState(level));
+            goToLevel(level, level);
         }
     }
 

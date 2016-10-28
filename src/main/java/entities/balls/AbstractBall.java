@@ -120,14 +120,14 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     /**
      * @return The bounce speed of this ball.
      */
-    /* default */ double getBounceSpeed() {
+    private double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
     }
 
     /**
      * @return The split bounce speed of this ball.
      */
-    double getSplitBounceSpeed() {
+    /* default */ double getSplitBounceSpeed() {
         return SPLIT_BOUNCE_SPEEDS[size];
     }
 

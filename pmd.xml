@@ -16,6 +16,7 @@
         <exclude name="CommentRequired"/>
     </rule>
     <rule ref="rulesets/java/coupling.xml">
+        <exclude name="LoosePackageCoupling"/>
         <exclude name="LawOfDemeter"/>
     </rule>
     <rule ref="rulesets/java/design.xml"/>

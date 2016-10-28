@@ -1,6 +1,5 @@
 package game.state;
 
-import game.Game;
 import level.Level;
 import ui.LevelWonOverlay;
 import util.KeyboardInputManager;
@@ -8,7 +7,7 @@ import util.KeyboardInputManager;
 /**
  * State for when a level is won.
  */
-public class LevelWonState implements GameState {
+public class LevelWonState extends LevelState {
 
     /**
      * The key that progresses the game to the next level.
@@ -20,23 +19,27 @@ public class LevelWonState implements GameState {
     private static final LevelWonOverlay OVERLAY = new LevelWonOverlay();
 
     /**
-     * The level that comes after the level that is just won.
+     * The levels that come before and after the level that is
+     * just won.
      */
-    private final Level nextLevel;
+    private final Level previousLevel, nextLevel;
 
     /**
      * Creates a new LevelWonState.
+     *
+     * @param previousLevel Level - The level
      * @param nextLevel Level - The level after the level that
      *                  is just won.
      */
-    public LevelWonState(Level nextLevel) {
+    public LevelWonState(Level previousLevel, Level nextLevel) {
+        this.previousLevel = previousLevel;
         this.nextLevel = nextLevel;
     }
 
     @Override
     public void update(double timeDifference) {
         if (KeyboardInputManager.keyPressed(NEXT_LEVEL_KEY)) {
-            Game.setState(new InProgressState(nextLevel));
+            goToLevel(previousLevel, nextLevel);
         }
     }
 
