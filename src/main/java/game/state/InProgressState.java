@@ -7,6 +7,7 @@ import game.player.Player;
 import level.Level;
 import level.LevelTimer;
 import util.KeyboardInputManager;
+import util.SceneManager;
 import util.logging.Logger;
 import util.sound.Music;
 import util.sound.SoundEffect;
@@ -39,6 +40,7 @@ public class InProgressState implements GameState {
     public InProgressState(Level level) {
         this.level = level;
         this.timer = level.getTimer();
+        SceneManager.removeOverlay();
     }
 
     @Override
@@ -59,11 +61,6 @@ public class InProgressState implements GameState {
             Logger.getInstance().fatal(e.getMessage());
             Game.stop();
         }
-    }
-
-    @Override
-    public void draw() {
-        // Draws nothing: HUD is already drawn in Game itself.
     }
 
     private void checkExitConditions() throws IOException {

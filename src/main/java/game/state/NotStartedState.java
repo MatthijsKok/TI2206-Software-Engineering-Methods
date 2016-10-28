@@ -9,9 +9,4 @@ public class NotStartedState implements GameState {
     public void update(double timeDifference) {
         // Does nothing.
     }
-
-    @Override
-    public void draw() {
-        // Does nothing.
-    }
 }

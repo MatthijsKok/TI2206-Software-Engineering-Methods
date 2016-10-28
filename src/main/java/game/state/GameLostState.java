@@ -1,7 +1,7 @@
 package game.state;
 
 import game.Game;
-import ui.GameLostOverlay;
+import panes.overlays.GameLostOverlay;
 import util.KeyboardInputManager;
 
 /**
@@ -23,10 +23,5 @@ public class GameLostState implements GameState {
         if (KeyboardInputManager.keyPressed(RETURN_KEY)) {
             Game.stop();
         }
-    }
-
-    @Override
-    public void draw() {
-        OVERLAY.draw();
     }
 }

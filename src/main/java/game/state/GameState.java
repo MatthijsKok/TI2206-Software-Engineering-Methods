@@ -12,9 +12,4 @@ public interface GameState {
      *                       last update.
      */
     void update(double timeDifference);
-
-    /**
-     * Handles drawing in the current game state.
-     */
-    void draw();
 }

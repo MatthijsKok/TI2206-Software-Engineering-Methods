@@ -2,8 +2,9 @@ package game.state;
 
 import game.Game;
 import level.Level;
-import ui.LevelLostOverlay;
 import util.KeyboardInputManager;
+import util.SceneManager;
+import util.StageManager;
 
 /**
  * State for when a level is won.
@@ -17,7 +18,7 @@ public class LevelLostState implements GameState {
     /**
      * The overlay that is drawn when a level is won.
      */
-    private static final LevelLostOverlay OVERLAY = new LevelLostOverlay();
+    private static final panes.overlays.LevelLostOverlay OVERLAY = new panes.overlays.LevelLostOverlay(StageManager.getStage());
 
     /**
      * The level that is lost.
@@ -30,17 +31,15 @@ public class LevelLostState implements GameState {
      */
     public LevelLostState(Level level) {
         this.level = level;
+        SceneManager.setOverlay(OVERLAY);
     }
 
     @Override
     public void update(double timeDifference) {
         if (KeyboardInputManager.keyPressed(RESTART_KEY)) {
+            SceneManager.removeOverlay();
             Game.setState(new InProgressState(level));
         }
     }
 
-    @Override
-    public void draw() {
-        OVERLAY.draw();
-    }
 }

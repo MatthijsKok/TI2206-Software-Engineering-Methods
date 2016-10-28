@@ -2,9 +2,10 @@ package game.state;
 
 import game.Game;
 import level.Level;
-import ui.PauseOverlay;
+import panes.PauseMenu;
 import util.KeyboardInputManager;
 import util.SceneManager;
+import util.StageManager;
 import util.sound.Music;
 
 /**
@@ -28,8 +29,7 @@ class PausedState implements GameState {
     /**
      * The overlay which is drawn when the game is paused.
      */
-    private static final PauseOverlay PAUSE_OVERLAY
-            = new PauseOverlay();
+    private static final PauseMenu PAUSE_OVERLAY = new PauseMenu(StageManager.getStage());
 
     /**
      * The level this state is for.
@@ -46,6 +46,7 @@ class PausedState implements GameState {
     
     @Override
     public void update(double timeDifference) {
+        SceneManager.setOverlay(PAUSE_OVERLAY);
         if (KeyboardInputManager.keyPressed(PAUSE_KEY)) {
             Music.startMusic();
             Game.setState(new InProgressState(level));
@@ -58,10 +59,6 @@ class PausedState implements GameState {
         if (KeyboardInputManager.keyPressed(QUIT_KEY)) {
             Game.stop();
         }
-    }
 
-    @Override
-    public void draw() {
-        PAUSE_OVERLAY.draw();
     }
 }

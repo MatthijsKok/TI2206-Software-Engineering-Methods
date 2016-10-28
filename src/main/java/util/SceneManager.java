@@ -3,6 +3,7 @@ package util;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import panes.GamePane;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -98,6 +99,23 @@ public final class SceneManager {
     public static void goBack() {
         history.pop();
         setScene();
+    }
+
+    /**
+     * Sets the overlay of the scene.
+     * @param overlay The overlay to be shown
+     */
+    public static void setOverlay(Pane overlay) {
+        GamePane pane = (GamePane) getScene("Game").getRoot();
+        pane.setOverlay(overlay);
+    }
+
+    /**
+     * Removes the overlay of the scene.
+     */
+    public static void removeOverlay() {
+        GamePane pane = (GamePane) getScene("Game").getRoot();
+        pane.removeOverlay();
     }
 
     private static void setScene() {

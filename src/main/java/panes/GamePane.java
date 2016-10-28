@@ -22,4 +22,28 @@ public class GamePane extends Pane {
 
         getChildren().add(canvas);
     }
+
+    /**
+     * Sets the overlay that should be shown at certain game events.
+     * @param overlay The overlay that should be shown.
+     */
+    public void setOverlay(final Pane overlay) {
+        if (getChildren().size() == 2) {
+            getChildren().remove(1);
+        }
+
+        getChildren().add(overlay);
+    }
+
+    /**
+     * Removes the overlay if it is currently being shown.
+     */
+    public void removeOverlay() {
+        if (getChildren().size() == 2) {
+            getChildren().remove(1);
+        }
+    }
+
+
+
 }

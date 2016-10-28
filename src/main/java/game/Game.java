@@ -282,8 +282,6 @@ public final class Game {
         if (hud != null) {
             hud.draw();
         }
-
-        state.draw();
     }
 
     /**

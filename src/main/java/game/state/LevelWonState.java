@@ -2,7 +2,7 @@ package game.state;
 
 import game.Game;
 import level.Level;
-import ui.LevelWonOverlay;
+import panes.overlays.LevelWonOverlay;
 import util.KeyboardInputManager;
 
 /**
@@ -38,10 +38,5 @@ public class LevelWonState implements GameState {
         if (KeyboardInputManager.keyPressed(NEXT_LEVEL_KEY)) {
             Game.setState(new InProgressState(nextLevel));
         }
-    }
-
-    @Override
-    public void draw() {
-        OVERLAY.draw();
     }
 }
