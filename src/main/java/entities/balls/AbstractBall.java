@@ -36,10 +36,6 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
      */
     private static final double[] BOUNCE_SPEEDS = {225, 300, 375, 450, 500};
     /**
-     * Bounce speed for the different ball sizes when the ball splits.
-     */
-    private static final double[] SPLIT_BOUNCE_SPEEDS = {100, 150, 200, 300, 400};
-    /**
      * Horizontal speed of a ball. In pixels per second.
      */
     private static final double HORIZONTAL_SPEED = 100; // px/s
@@ -105,7 +101,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     /* default */ void die() {
         getLevel().removeEntity(this);
 
-        if (Math.random() > DROP_CHANCE) {
+        if (Math.random() < DROP_CHANCE) {
             PickupFactory.spawnRandomPickUp(getLevel(), getPosition());
         }
     }
@@ -123,13 +119,6 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
      */
     private double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
-    }
-
-    /**
-     * @return The split bounce speed of this ball.
-     */
-    double getSplitBounceSpeed() {
-        return SPLIT_BOUNCE_SPEEDS[size];
     }
 
     @Override
