@@ -2,76 +2,81 @@ package game;
 
 import bubbletrouble.BubbleTroubleApplicationTest;
 import game.player.Player;
-import org.junit.Before;
+import game.state.InProgressState;
+import game.state.LevelLostState;
+import game.state.LevelWonState;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
 /**
  * Test suite for the game class.
  */
 public class GameTest extends BubbleTroubleApplicationTest {
 
-    /*private Game game;
-
-    @Before
-    public void setUp() {
-        game = Game.getInstance();
-    }
-
-    @Test
-    public void testGetInstance() {
-        assertThat(Game.getInstance(), is(game));
-    }
-
     @Test
     public void testSetPlayerCount() {
         final int count = 2;
-        game.setPlayerCount(count);
-        assertThat(game.getPlayers().size(), is(count));
+        Game.setPlayerCount(count);
+        assertThat(Game.getPlayers().size(), is(count));
     }
 
     @Test
     public void testGetPlayer() {
-        game.setPlayerCount(1);
-        assertThat(game.getPlayers().get(0), instanceOf(Player.class));
-    }
-
-    @Test
-    public void testSetLevelsFromFiles() {
-        final String path = "levelsForTesting";
-        List<String> levelFiles = new ArrayList<>();
-        levelFiles.add(path);
-
-        game.setLevelsFromFiles(levelFiles);
-
-        assertThat(game.getLevels().get(0).getFilename(), is(path));
+        Game.setPlayerCount(1);
+        assertThat(Game.getPlayers().get(0), instanceOf(Player.class));
     }
 
     @Test
     public void testGetState() {
-        assertNotNull(game.getState());
+        assertNotNull(Game.getState());
     }
 
     @Test
     public void testStart() {
         try {
-            game.start();
+            Game.start();
         } catch (IOException e) {
             fail();
         }
+        assertTrue(Game.getState() instanceof InProgressState);
 
-        assertTrue(game.getState().isInProgress());
-        game.stop();
-    }*/
+
+        Game.stop();
+    }
+
+    @Test
+    public void testWinLevel() {
+        try {
+            Game.winLevel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertTrue(Game.getState() instanceof LevelWonState);
+    }
+
+    @Test
+    public void testLoseLevel() {
+        try {
+            Game.loseLevel(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertTrue(Game.getState() instanceof LevelLostState);
+    }
+
+    @Test
+    public void testTimeUp() {
+        try {
+            Game.loseLevel(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertTrue(Game.getState() instanceof LevelLostState);
+    }
 
 }
