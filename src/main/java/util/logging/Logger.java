@@ -4,11 +4,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * The Logger class is the entry point for the logging framework and handles its logic.
@@ -30,7 +31,7 @@ public final class Logger {
     /**
      * An List which holds all LogRecord's that haven't been written to the log file.
      */
-    private List<LogRecord> logRecords = new ArrayList<>();
+    private final List<LogRecord> logRecords = new ArrayList<>();
 
     /**
      * The LogLevel for the unique instance of the Logger.
@@ -56,14 +57,16 @@ public final class Logger {
      * Returns the only instance of Logger that should exist.
      * @return An instance of Logger.
      */
-    public static synchronized Logger getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new Logger("docs/logs/main.BubbleTrouble Log "
-                    + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
-                    + ".log");
-        }
+    public static Logger getInstance() {
+        synchronized (new Object()) {
+            if (uniqueInstance == null) {
+                uniqueInstance = new Logger("docs/logs/main.BubbleTrouble Log "
+                        + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date())
+                        + ".log");
+            }
 
-        return uniqueInstance;
+            return uniqueInstance;
+        }
     }
 
     /**
@@ -195,7 +198,7 @@ public final class Logger {
      * Gets all the log records of the Logger.
      * @return A list containing all the log records.
      */
-    List<LogRecord> getLogRecords() {
+    /* default */ List<LogRecord> getLogRecords() {
         return logRecords;
     }
 
@@ -205,13 +208,20 @@ public final class Logger {
      * @throws IOException if you make an invalid logfile.
      */
     public void writeLogRecords() throws IOException {
-        Writer writer = new BufferedWriter(new FileWriter(logFile, true));
+        try (FileWriter fw = new FileWriter(logFile, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw)) {
 
-        for (LogRecord logRecord : getLogRecords()) {
-            writer.write(logRecord.format());
+            for (LogRecord logRecord : getLogRecords()) {
+                out.write(logRecord.format());
+            }
+
+            purgeLogRecords();
+
+        } catch (IOException e) {
+            error("Log could not be written to file.");
+            throw e;
         }
-        purgeLogRecords();
-        writer.close();
     }
 
     /**
@@ -219,7 +229,7 @@ public final class Logger {
      * This method is private because any method but writeLogRecords() calling this
      * would result in the destruction of information.
      */
-    void purgeLogRecords() {
+    /* default */ void purgeLogRecords() {
         logRecords.clear();
     }
 }

@@ -26,11 +26,11 @@ public abstract class AbstractShape {
 
     /**
      * Creates a new shape instance at position (x, y).
-     * @param x x position of the shape
-     * @param y y position of the shape
+     * @param xPosition x position of the shape
+     * @param yPosition y position of the shape
      */
-    AbstractShape(double x, double y) {
-        setPosition(x, y);
+    AbstractShape(double xPosition, double yPosition) {
+        setPosition(xPosition, yPosition);
     }
 
     /**
@@ -38,7 +38,7 @@ public abstract class AbstractShape {
      * @param x x position
      * @param y y position
      */
-    void setPosition(double x, double y) {
+    /* default */ final void setPosition(double x, double y) {
         position.x = x;
         position.y = y;
     }
@@ -83,7 +83,7 @@ public abstract class AbstractShape {
     /**
      * @return the scale of the shape.
      */
-    final Vec2d getScale() {
+    /* default */ final Vec2d getScale() {
         return scale;
     }
 

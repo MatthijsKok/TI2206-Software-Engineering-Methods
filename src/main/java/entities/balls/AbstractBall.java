@@ -1,8 +1,14 @@
 package entities.balls;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.*;
+import entities.AbstractEntity;
+import entities.CollidingEntity;
 import entities.behaviour.GravityBehaviour;
+import entities.blocks.FloorBlock;
+import entities.blocks.SpikeBlock;
+import entities.blocks.WallBlock;
+import entities.character.Shield;
+import entities.character.bullets.Vine;
 import entities.powerups.PickupFactory;
 import geometry.Circle;
 import geometry.Rectangle;
@@ -11,12 +17,12 @@ import util.sound.SoundEffect;
 /**
  * Class that represents the bouncing balls in our game.
  */
-public abstract class AbstractBall extends AbstractEntity {
+public abstract class AbstractBall extends AbstractEntity implements CollidingEntity {
 
     /**
      * The chance that splitting a ball spawns a pickup.
      */
-    private static final double DROP_CHANCE = 0.2;
+    private static final double DROP_CHANCE = 0.25;
     /**
      * Radius of a ball with size 0.
      */
@@ -92,10 +98,10 @@ public abstract class AbstractBall extends AbstractEntity {
      * position, moving in different directions. If the ball is already at it's
      * smallest, no new balls will be added.
      */
-    void die() {
+    /* default */ void die() {
         getLevel().removeEntity(this);
 
-        if (Math.random() > DROP_CHANCE) {
+        if (Math.random() < DROP_CHANCE) {
             PickupFactory.spawnRandomPickUp(getLevel(), getPosition());
         }
     }
@@ -109,9 +115,9 @@ public abstract class AbstractBall extends AbstractEntity {
     }
 
     /**
-     * @return the bounce speed of this ball.
+     * @return The bounce speed of this ball.
      */
-    double getBounceSpeed() {
+    private double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
     }
 
@@ -125,16 +131,16 @@ public abstract class AbstractBall extends AbstractEntity {
             collideWith((WallBlock) entity);
         }
 
-        if (entity instanceof Gate) {
-            collideWith((Gate) entity);
-        }
-
         if (entity instanceof Vine) {
             collideWithVine();
         }
 
         if (entity instanceof Shield) {
             collideWithShield();
+        }
+
+        if (entity instanceof SpikeBlock) {
+            collideWith((SpikeBlock) entity);
         }
     }
 
@@ -146,6 +152,21 @@ public abstract class AbstractBall extends AbstractEntity {
     private void collideWith(FloorBlock floor) {
         setY(Math.min(floor.getY() - ((Circle) getShape()).getRadius(), getY()));
         bounce();
+    }
+
+    /**
+     * The behaviour of the AbstractBall when it collides with a FloorBlock.
+     *
+     * @param ceiling The FloorBlock this AbstractBall collides with.
+     */
+    private void collideWith(SpikeBlock ceiling) {
+        setY(Math.max(
+                ((Rectangle) ceiling.getShape()).getBottom()
+                        + ((Circle) getShape()).getRadius(),
+                getY()));
+
+        setYSpeed(Math.max(0, getYSpeed()));
+        die();
     }
 
     /**
@@ -186,30 +207,10 @@ public abstract class AbstractBall extends AbstractEntity {
     }
 
     /**
-     * Collision between ball and plant.
-     * @param gate it collides with.
-     */
-    private void collideWith(Gate gate) {
-        Circle shape = (Circle) getShape();
-        Rectangle plantShape = (Rectangle) gate.getShape();
-
-        double radius = shape.getRadius();
-        double right = getX() + radius;
-
-        if (right > plantShape.getLeft()
-                && right < plantShape.getRight()) {
-            // Hit the wall from the right
-            setX(plantShape.getLeft() - radius);
-            if (getXSpeed() > 0) {
-                setXSpeed(-getXSpeed());
-            }
-        }
-    }
-
-    /**
      * The behaviour of the AbstractBall when it collides with a Vine AbstractEntity.
      */
     private void collideWithVine() {
+        bounce();
         die();
     }
 }

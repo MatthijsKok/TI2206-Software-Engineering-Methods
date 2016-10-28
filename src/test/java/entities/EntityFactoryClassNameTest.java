@@ -1,7 +1,9 @@
 package entities;
 
-import entities.character.Character;
 import entities.balls.ColoredBall;
+import entities.blocks.FloorBlock;
+import entities.blocks.WallBlock;
+import entities.character.Character;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -2,15 +2,17 @@ package entities.powerups;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
+import entities.CollidingEntity;
+import entities.DynamicEntity;
 import entities.behaviour.GravityBehaviour;
+import entities.blocks.FloorBlock;
 import entities.character.Character;
-import entities.FloorBlock;
 import geometry.Rectangle;
 
 /**
- * Pickup that contains a power-up effect that will be applied to the player.
+ * Pickup that contains a power-up effect that will be applied to a character.
  */
-class Pickup extends AbstractEntity {
+class Pickup extends AbstractEntity implements DynamicEntity, CollidingEntity {
     /**
      * The standard time before the pickup disappears in seconds.
      */

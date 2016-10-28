@@ -9,12 +9,12 @@ import javafx.stage.Stage;
 public final class StageManager {
 
     /**
-     * The default width of the game canvas.
+     * The default width of the game getCanvas.
      */
     private static final double DEFAULT_WIDTH = 1024;
 
     /**
-     * The default height of the game canvas.
+     * The default height of the game getCanvas.
      */
     private static final double DEFAULT_HEIGHT = 640;
 
@@ -41,7 +41,7 @@ public final class StageManager {
             getStage().setResizable(false);
             getStage().setWidth(DEFAULT_WIDTH);
             getStage().setHeight(DEFAULT_HEIGHT);
-            getStage().getIcons().add(new Image("logo.png"));
+            getStage().getIcons().add(new Image("images/logo.png"));
         }
         stage.show();
     }

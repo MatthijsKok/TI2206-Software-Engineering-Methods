@@ -1,19 +1,22 @@
 package entities.character;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.*;
+import entities.AbstractEntity;
+import entities.CollidingEntity;
+import entities.DynamicEntity;
 import entities.balls.AbstractBall;
 import entities.behaviour.GravityBehaviour;
-import game.player.Player;
+import entities.blocks.AbstractBlock;
+import entities.character.bullets.Vine;
+import geometry.Point;
 import geometry.Rectangle;
 import graphics.Sprite;
 import util.Pair;
-import util.sound.SoundEffect;
 
 /**
  * The Character class represents a character.
  */
-public class Character extends AbstractEntity {
+public class Character extends AbstractEntity implements DynamicEntity, CollidingEntity {
 
     /**
      * The offset of the bounding box of a character.
@@ -23,62 +26,31 @@ public class Character extends AbstractEntity {
      * The bounding box of a character.
      */
     private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
-    /**
-     * The default run speed of a character.
-     */
-    private static final double DEFAULT_RUN_SPEED = 230; // px/s
 
     static {
         BOUNDING_BOX.setOffset(OFFSET.x, OFFSET.y);
     }
 
     /**
-     * The running speed of a character. In pixels per second.
+     * The shield this character carries.
      */
-    private double runSpeed = DEFAULT_RUN_SPEED;
+    private final Shield shield;
+    /**
+     * The gun this character carries.
+     */
+    private final Gun gun;
+    /**
+     * The object that handles the movement of this character.
+     */
+    private final CharacterMovement movement;
     /**
      * Indicates whether a character is alive or not.
      */
     private boolean alive = true;
-
-    /**
-     * The amount of vines this character can shoot.
-     */
-    private int maxVineCount = 1;
-    /**
-     * The amount of vines this character has currently shot.
-     */
-    private int currentVineCount = 0;
-
     /**
      * The sprites of the character.
      */
     private Sprite idleSprite, runningSprite;
-
-    /**
-     * State of the character, indicates which action a character is performing.
-     */
-    private int direction = 0;
-
-    /**
-     * Indicates whether the character is shooting.
-     */
-    private boolean shooting = false;
-
-    /**
-     * The Player that is controlling this Character.
-     */
-    private Player player;
-
-    /**
-     * Boolean indicating whether the character is invincible.
-     */
-    private Shield shield = new Shield(this);
-
-    /**
-     * Boolean indicating whether the character can shoot.
-     */
-    private boolean canShoot = true;
 
     /**
      * Instantiate a new character at position (x, y).
@@ -88,26 +60,33 @@ public class Character extends AbstractEntity {
     public Character(final Vec2d position) {
         super(position);
 
+        movement = new CharacterMovement(this);
+        shield = new Shield(this);
+        gun = new Gun<>(this, Vine.class);
+
+        getLevel().addEntity(shield);
+        getLevel().addEntity(gun);
+
         setShape(new Rectangle(BOUNDING_BOX));
         setPhysicsBehaviour(new GravityBehaviour(this));
-        getLevel().addEntity(shield);
     }
 
     /**
      * The character dies. Soo sad...
      * After it dies it tells everybody it has died, but its already dead. How does that even work?
      */
-    public void die() {
+    /* default */ void die() {
         alive = false;
         setChanged();
-        notifyObservers(new Pair<>("die", true));
+        notifyObservers(new Pair<>("increaseLives", -1));
     }
 
     /**
      * Adds a life to this character.
      */
     public void increaseLife() {
-        getPlayer().increaseLives(1);
+        setChanged();
+        notifyObservers(new Pair<>("increaseLives", 1));
     }
 
     /**
@@ -117,58 +96,17 @@ public class Character extends AbstractEntity {
         return alive;
     }
 
-    /**
-     * Makes the character stop moving.
-     */
-    public void stop() {
-        this.direction = 0;
-    }
-
-    /**
-     * Makes the character move to the left.
-     */
-    public void moveLeft() {
-        this.direction = -1;
-    }
-
-    /**
-     * Makes the character move to the right.
-     */
-    public void moveRight() {
-        this.direction = 1;
-    }
-
-    /**
-     * Makes the player toggle shooting.
-     *
-     * @param shooting boolean whether the player is shooting or not.
-     */
-    public void setShooting(boolean shooting) {
-        this.shooting = shooting;
-    }
-
     @Override
     public final void update(final double timeDifference) {
-        // Walk
-        setXSpeed(runSpeed * direction);
+        movement.update();
 
         // Set the character sprite
-        if (direction == 0) {
+        if (movement.isIdle()) {
             setSprite(idleSprite);
         } else {
             setSprite(runningSprite);
-            setXScale(direction);
+            setXScale(movement.getDirection());
         }
-
-        // Shoot
-        if (shooting && canShoot && currentVineCount < maxVineCount) {
-            currentVineCount++;
-            getLevel().addEntity(new Vine(getPosition(), this));
-            final int occurrenceRate = 3;
-            SoundEffect.SHOOT.playSometimes(occurrenceRate);
-        }
-
-        canShoot = !shooting;
     }
 
     @Override
@@ -177,16 +115,8 @@ public class Character extends AbstractEntity {
             collideWithBall();
         }
 
-        if (entity instanceof FloorBlock) {
-            collideWith((FloorBlock) entity);
-        }
-
-        if (entity instanceof WallBlock) {
-            collideWith((WallBlock) entity);
-        }
-
-        if (entity instanceof Gate) {
-            collideWith((Gate) entity);
+        if (entity instanceof AbstractBlock) {
+            collideWith((AbstractBlock) entity);
         }
     }
 
@@ -198,87 +128,64 @@ public class Character extends AbstractEntity {
     }
 
     /**
-     * If a character collides with a ground floor, the character should not sink
-     * through it.
+     * If a character collides with a block, it should move outside of it.
      *
-     * @param floor the ground floor the character collides with
+     * @param block AbstractBlock - The block the character collides with.
      */
-    private void collideWith(final FloorBlock floor) {
+    private void collideWith(final AbstractBlock block) {
         Rectangle shape = (Rectangle) getShape();
-        Rectangle blockShape = (Rectangle) floor.getShape();
 
-        if (shape.getBottom() > blockShape.getTop() && shape.getBottom() < blockShape.getBottom()) {
-            // Hit the floor from above
-            shape.setBottom(blockShape.getTop());
-            setYSpeed(Math.min(getYSpeed(), 0));
-        } else if (shape.getTop() > blockShape.getTop() && shape.getTop() < blockShape.getBottom()) {
-            // Hit the floor from below
-            shape.setTop(blockShape.getBottom());
-            setYSpeed(Math.max(0, getYSpeed()));
-        }
-    }
+        Point left = new Point(shape.getLeft(), (shape.getTop() + shape.getBottom()) / 2);
+        Point right = new Point(shape.getRight(), (shape.getTop() + shape.getBottom()) / 2);
+        Point top = new Point((shape.getLeft() + shape.getRight()) / 2, shape.getTop());
+        Point bottom = new Point((shape.getLeft() + shape.getRight()) / 2, shape.getBottom());
 
-    /**
-     * If a character collides with a wall, it should move outside that wall.
-     *
-     * @param wallOrPlant the wall the character collides with
-     */
-    private void collideWith(final AbstractBlock wallOrPlant) {
-        Rectangle shape = (Rectangle) getShape();
-        Rectangle blockShape = (Rectangle) wallOrPlant.getShape();
+        Rectangle blockShape = (Rectangle) block.getShape();
 
-        if (shape.getRight() > blockShape.getLeft() && shape.getRight() < blockShape.getRight()) {
-            // Hit the block from above
-            shape.setRight(blockShape.getLeft());
-            setXSpeed(Math.min(getXSpeed(), 0));
-        } else if (shape.getLeft() > blockShape.getLeft() && shape.getLeft() < blockShape.getRight()) {
-            // Hit the block from below
+        if (left.intersects(blockShape)) {
             shape.setLeft(blockShape.getRight());
             setXSpeed(Math.max(0, getXSpeed()));
         }
-    }
 
-    /**
-     * Increases the speed at which the entities.character runs.
-     *
-     * @param amount The speed boost.
-     */
-    public void increaseRunSpeed(final double amount) {
-        this.runSpeed += amount;
-    }
+        if (right.intersects(blockShape)) {
+            shape.setRight(blockShape.getLeft());
+            setXSpeed(Math.min(0, getXSpeed()));
+        }
 
-    /**
-     * @return The Player object that is controlling this Character object
-     */
-    public Player getPlayer() {
-        return player;
+        if (top.intersects(blockShape)) {
+            shape.setTop(blockShape.getBottom());
+            setYSpeed(Math.max(0, getYSpeed()));
+        }
+
+        if (bottom.intersects(blockShape)) {
+            shape.setBottom(blockShape.getTop());
+            setYSpeed(Math.min(0, getYSpeed()));
+        }
     }
 
     /**
      * Set the player that controls this Character.
      *
-     * @param player The Player object that controls this Character.
+     * @param playerID Integer - The id of the player that
+     *                 controls this Character.
      */
-    public void setPlayer(final Player player) {
-        this.player = player;
-        idleSprite = CharacterSprites.getIdleSprite(player.getId());
-        runningSprite = CharacterSprites.getRunningSprite(player.getId());
+    public void setSprites(final int playerID) {
+        idleSprite = CharacterSprites.getIdleSprite(playerID);
+        runningSprite = CharacterSprites.getRunningSprite(playerID);
     }
 
     /**
-     * Increases the amount of vines this character can shoot.
-     *
-     * @param amount the amount of vine a character can shoot extra.
+     * @return Gun - The gun this character carries.
      */
-    public void increaseMaxVineCount(int amount) {
-        maxVineCount = Math.max(1, maxVineCount + amount);
+    public Gun getGun() {
+        return gun;
     }
 
     /**
-     * Called when a vine is removed from the level.
+     * @return CharacterMovement - The movement of this character.
      */
-    public void vineRemoved() {
-        currentVineCount = Math.max(0, currentVineCount - 1);
+    public CharacterMovement getMovement() {
+        return movement;
     }
 
     /**
@@ -290,25 +197,10 @@ public class Character extends AbstractEntity {
 
     /**
      * Increases the score of the character.
+     *
      * @param score the amount of the increase.
      */
     public void increaseScore(final int score) {
         notifyObservers(new Pair<>("increaseScore", score));
-    }
-
-    /**
-     * Getter for maxHarpoonCount.
-     * @return maxHarpoonCount
-     */
-    public int getMaxVineCount() {
-        return maxVineCount;
-    }
-
-    /**
-     * Getter for runSpeed.
-     * @return runSpeed
-     */
-    public double getRunSpeed() {
-        return runSpeed;
     }
 }

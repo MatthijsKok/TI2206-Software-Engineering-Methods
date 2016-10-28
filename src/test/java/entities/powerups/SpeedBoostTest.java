@@ -3,7 +3,7 @@ package entities.powerups;
 import bubbletrouble.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.character.Character;
-import game.player.Player;
+import entities.character.CharacterMovement;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,14 +18,13 @@ import static org.hamcrest.Matchers.is;
 public class SpeedBoostTest extends BubbleTroubleApplicationTest {
 
     private SpeedBoost speedBoost;
-    private Character character;
+    private CharacterMovement movement;
 
     @Before
     public void setUp() {
         speedBoost = new SpeedBoost();
-        character = new Character(new Vec2d(100, 300));
-        Player player = new Player(1, "leftKey", "rightKey", "shootKey");
-        character.setPlayer(player);
+        Character character = new Character(new Vec2d(100, 300));
+        movement = character.getMovement();
         speedBoost.setTarget(character);
     }
 
@@ -36,16 +35,16 @@ public class SpeedBoostTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testEnableEffect() {
-        double runSpeedBeforePickup = character.getRunSpeed();
+        double runSpeedBeforePickup = movement.getRunSpeed();
         speedBoost.enableEffect();
-        assertThat(character.getRunSpeed(), greaterThan(runSpeedBeforePickup));
+        assertThat(movement.getRunSpeed(), greaterThan(runSpeedBeforePickup));
     }
 
     @Test
     public void testDisableEffect() {
-        double runSpeedBeforePickup = character.getRunSpeed();
+        double runSpeedBeforePickup = movement.getRunSpeed();
         speedBoost.enableEffect();
         speedBoost.disableEffect();
-        assertThat(character.getRunSpeed(), is(runSpeedBeforePickup));
+        assertThat(movement.getRunSpeed(), is(runSpeedBeforePickup));
     }
 }

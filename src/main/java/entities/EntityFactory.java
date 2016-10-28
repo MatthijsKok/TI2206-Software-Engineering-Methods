@@ -1,9 +1,12 @@
 package entities;
 
-import entities.character.Character;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
 import entities.balls.ColoredBall;
+import entities.blocks.FloorBlock;
+import entities.blocks.SpikeBlock;
+import entities.blocks.WallBlock;
+import entities.character.Character;
 import game.Game;
 import game.player.Player;
 import org.json.JSONObject;
@@ -40,14 +43,15 @@ public final class EntityFactory {
                 return createWall(position);
             case "Floor":
                 return createFloor(position);
+            case "Spike":
+                return createSpike(position);
             default:
                 return null;
         }
     }
 
     private static Character createCharacter(Vec2d position) {
-
-        for (Player player : Game.getInstance().getPlayers()) {
+        for (Player player : Game.getPlayers()) {
             if (player.getCharacter() == null && player.getLives() > 0) {
                 return instantiateCharacter(position, player);
             }
@@ -82,5 +86,9 @@ public final class EntityFactory {
 
     private static FloorBlock createFloor(Vec2d position) {
         return new FloorBlock(position);
+    }
+
+    private static SpikeBlock createSpike(Vec2d position) {
+        return new SpikeBlock(position);
     }
 }

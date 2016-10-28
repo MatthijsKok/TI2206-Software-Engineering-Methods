@@ -58,6 +58,11 @@ public final class SoundEffect {
      */
     public static final SoundEffect GAME_WON = new SoundEffect("game_won.wav");
 
+    /**
+     * Sound effect played when a vine is picked up.
+     */
+    public static final SoundEffect EXTRA_VINE = new SoundEffect("happy_mario2.wav");
+
     // -------- CLASS LOGIC --------
 
     /**
@@ -73,13 +78,13 @@ public final class SoundEffect {
     /**
      * The audio clip to  of this SoundEffect.
      */
-    private AudioClip audio;
+    private final AudioClip audio;
 
     /**
      * counts how many times the sound has been played for sounds
      * that play once in x times.
      */
-    private int playCount;
+    private transient int playCount;
 
     /**
      * Creates a new SoundEffect Object.

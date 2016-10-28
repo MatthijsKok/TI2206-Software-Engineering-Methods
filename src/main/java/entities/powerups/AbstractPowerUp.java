@@ -10,7 +10,7 @@ abstract class AbstractPowerUp {
     /**
      * The default power-up sprite.
      */
-    private static final Sprite POWERUP_SPRITE = new Sprite("powerUps/speed_boost.png");
+    private static final Sprite POWER_UP_SPRITE = new Sprite("images/powerUps/speed_boost.png");
 
     /**
      * The character which picked up the power-up.
@@ -26,36 +26,42 @@ abstract class AbstractPowerUp {
      * Creates a new ExtraTime power-up.
      */
     AbstractPowerUp() {
-        setSprite(POWERUP_SPRITE);
+        setSprite(POWER_UP_SPRITE);
     }
 
     /**
-     * Enables the effect of the specific power-up.
-     * @param character The character that picked up the power-up.
+     * Activates the effect of this power-up.
      */
-    /* default */ void setTarget(final Character character) {
+    protected abstract void activate();
+
+    /**
+     * Enables the effect of the specific power-up.
+     * @param character Character - character that picked up the power-up.
+     */
+    /* default */ final void setTarget(final Character character) {
         target = character;
+        activate();
     }
 
     /**
      * @return The character which picked up the power-up.
      */
-    /* default */ Character getTarget() {
+    /* default */ final Character getTarget() {
         return target;
     }
 
     /**
      * Sets the sprite of this power-up.
-     * @param sprite The sprite to set.
+     * @param sprite Sprite - sprite to set.
      */
-    /* default */ final void setSprite(final Sprite sprite) {
+    protected final void setSprite(final Sprite sprite) {
         this.sprite = sprite;
     }
 
     /**
-     * @return The sprite of the power-up.
+     * @return Sprite - sprite of the power-up.
      */
-    /* default */ Sprite getSprite() {
+    protected final Sprite getSprite() {
         return sprite;
     }
 }

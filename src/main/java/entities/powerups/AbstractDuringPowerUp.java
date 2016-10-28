@@ -1,7 +1,5 @@
 package entities.powerups;
 
-import entities.character.Character;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,12 +17,8 @@ abstract class AbstractDuringPowerUp extends AbstractPowerUp {
      */
     private long duration = DEFAULT_DURATION;
 
-    /**
-     * Enables the effect of the specific power-up.
-     * @param character The entities.character that picked up the power-up.
-     */
-    void setTarget(final Character character) {
-        super.setTarget(character);
+    @Override
+    protected final void activate() {
         enableEffect();
         new Timer().schedule(new TimerTask() {
             @Override
@@ -38,17 +32,17 @@ abstract class AbstractDuringPowerUp extends AbstractPowerUp {
      * Sets the duration of the power-up.
      * @param duration the duration of the power-up.
      */
-    void setDuration(final long duration) {
+    /* default */ final void setDuration(final long duration) {
         this.duration =  duration;
     }
 
     /**
      * Enables the effect of the specific power-up.
      */
-    abstract void enableEffect();
+    /* default */ abstract void enableEffect();
 
     /**
      * Disables the effect of the specific power-up.
      */
-    abstract void disableEffect();
+    /* default */ abstract void disableEffect();
 }
