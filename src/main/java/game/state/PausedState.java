@@ -11,7 +11,7 @@ import util.sound.Music;
 /**
  * State for when the game is paused.
  */
-class PausedState implements GameState {
+public class PausedState implements GameState {
 
     /**
      * The key which resumes the game.
@@ -27,11 +27,6 @@ class PausedState implements GameState {
     private static final String QUIT_KEY = "ESCAPE";
 
     /**
-     * The overlay which is drawn when the game is paused.
-     */
-    private static final PauseMenu PAUSE_OVERLAY = new PauseMenu(StageManager.getStage());
-
-    /**
      * The level this state is for.
      */
     private final Level level;
@@ -42,11 +37,34 @@ class PausedState implements GameState {
      */
     /* default */ PausedState(Level level) {
         this.level = level;
+        SceneManager.setOverlay(new PauseMenu(StageManager.getStage(), this));
+
+    }
+
+    /**
+     * Behaviour that should be executed when the resume button is pressed.
+     */
+    public void handleResume() {
+        Game.setState(new InProgressState(level));
+        Music.startMusic();
+    }
+
+    /**
+     * Behaviour that should be executed when the stop button is pressed.
+     */
+    public void handleMenu() {
+        Game.stop();
+    }
+
+    /**
+     * Behaviour that should be executed when the settings button is pressed.
+     */
+    public void handleSettings() {
+        SceneManager.goToScene("SettingsMenu");
     }
     
     @Override
     public void update(double timeDifference) {
-        SceneManager.setOverlay(PAUSE_OVERLAY);
         if (KeyboardInputManager.keyPressed(PAUSE_KEY)) {
             Music.startMusic();
             Game.setState(new InProgressState(level));
@@ -61,4 +79,6 @@ class PausedState implements GameState {
         }
 
     }
+
+
 }
