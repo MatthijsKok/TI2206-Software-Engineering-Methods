@@ -6,7 +6,7 @@ import panes.OverlayMenuBuilder;
 /**
  * State for when a level is won.
  */
-public class LevelWonState extends GameState {
+public class LevelWonState implements GameState {
 
     /**
      * Creates a new LevelWonState.
@@ -19,8 +19,9 @@ public class LevelWonState extends GameState {
         OverlayMenuBuilder builder = new OverlayMenuBuilder();
 
         builder.setTitle("You won the level!");
-        builder.addItem("Next level", event -> goToLevel(previousLevel, nextLevel));
+        builder.addItem("Next level",
+                event -> GameStateHelper.goToLevel(previousLevel, nextLevel));
 
-        setOverlay(builder.build());
+        GameStateHelper.setOverlay(builder.build());
     }
 }

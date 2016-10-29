@@ -8,7 +8,7 @@ import util.sound.Music;
 /**
  * State for when the game is paused.
  */
-public class PausedState extends GameState {
+class PausedState implements GameState {
 
     /**
      * The level this state is for.
@@ -27,10 +27,10 @@ public class PausedState extends GameState {
 
         builder.setTitle("Game Paused");
         builder.addItem("Resume", event -> resume());
-        builder.addItem("Settings", event -> goToSettings());
-        builder.addItem("Main menu", event -> goToMainMenu());
+        builder.addItem("Settings", event -> GameStateHelper.goToSettings());
+        builder.addItem("Main menu", event -> GameStateHelper.goToMainMenu());
 
-        setOverlay(builder.build());
+        GameStateHelper.setOverlay(builder.build());
     }
 
     /**

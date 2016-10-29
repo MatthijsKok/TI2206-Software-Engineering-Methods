@@ -5,7 +5,7 @@ import panes.OverlayMenuBuilder;
 /**
  * State for when the game is won.
  */
-public class GameWonState extends GameState {
+public class GameWonState implements GameState {
 
     /**
      * Creates a new GameWonState instance.
@@ -14,8 +14,9 @@ public class GameWonState extends GameState {
         OverlayMenuBuilder builder = new OverlayMenuBuilder();
 
         builder.setTitle("You won the game!");
-        builder.addItem("Main menu", event -> goToMainMenu());
+        builder.addItem("Main menu",
+                event -> GameStateHelper.goToMainMenu());
 
-        setOverlay(builder.build());
+        GameStateHelper.setOverlay(builder.build());
     }
 }

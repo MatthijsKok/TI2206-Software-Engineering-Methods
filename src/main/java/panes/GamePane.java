@@ -28,18 +28,14 @@ public class GamePane extends Pane {
      * @param overlay The overlay that should be shown.
      */
     public void setOverlay(final Pane overlay) {
-        if (getChildren().size() == 2) {
-            getChildren().remove(1);
-        }
-
-        getChildren().add(overlay);
+        getChildren().add(1, overlay);
     }
 
     /**
      * Removes the overlay if it is currently being shown.
      */
     public void removeOverlay() {
-        if (getChildren().size() == 2) {
+        if (getChildren().size() > 1) {
             getChildren().remove(1);
         }
     }

@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * State for when the game is in progress.
  */
-public class InProgressState extends GameState {
+public class InProgressState implements GameState {
 
     /**
      * The key which resumes the game.
@@ -57,7 +57,7 @@ public class InProgressState extends GameState {
     public InProgressState(Level level) {
         this.level = level;
         this.levelTimer = level.getTimer();
-        setOverlay(null);
+        GameStateHelper.setOverlay(null);
 
         timer = new AnimationTimer() {
             @Override

@@ -124,7 +124,7 @@ public final class Game {
 
     /**
      * Sets the state of the game.
-     * @param state GameState - The state the game should go to.
+     * @param state AbstractGameState - The state the game should go to.
      */
     public static void setState(GameState state) {
         Game.state = state;

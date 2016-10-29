@@ -5,7 +5,7 @@ import panes.OverlayMenuBuilder;
 /**
  * State for when the game is lost.
  */
-public class GameLostState extends GameState {
+public class GameLostState implements GameState {
 
     /**
      * Creates a new GameLostState instance.
@@ -14,9 +14,10 @@ public class GameLostState extends GameState {
         OverlayMenuBuilder builder = new OverlayMenuBuilder();
 
         builder.setTitle("Game over...");
-        builder.addItem("Main menu", event -> goToMainMenu());
+        builder.addItem("Main menu",
+                event -> GameStateHelper.goToMainMenu());
 
-        setOverlay(builder.build());
+        GameStateHelper.setOverlay(builder.build());
     }
 
 }

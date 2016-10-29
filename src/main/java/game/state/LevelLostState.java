@@ -6,7 +6,7 @@ import panes.OverlayMenuBuilder;
 /**
  * State for when a level is lost.
  */
-public class LevelLostState extends GameState {
+public class LevelLostState implements GameState {
 
     /**
      * Creates a new LevelLostState instance.
@@ -23,9 +23,10 @@ public class LevelLostState extends GameState {
             builder.setTitle("You died...");
         }
 
-        builder.addItem("Retry", event -> goToLevel(level, level));
+        builder.addItem("Retry",
+                event -> GameStateHelper.goToLevel(level, level));
 
-        setOverlay(builder.build());
+        GameStateHelper.setOverlay(builder.build());
     }
 
 }
