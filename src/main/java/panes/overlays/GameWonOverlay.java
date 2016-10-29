@@ -3,7 +3,7 @@ package panes.overlays;
 import javafx.scene.layout.Pane;
 
 /**
- * Created by Timo on 28-10-16.
+ * Class responsible for the look of the game won overlay.
  */
 public class GameWonOverlay extends Pane {
 }
