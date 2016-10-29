@@ -1,6 +1,8 @@
 package game.state;
 
+import game.Game;
 import level.Level;
+import panes.overlays.LevelLostOverlay;
 import util.KeyboardInputManager;
 import util.SceneManager;
 import util.StageManager;
@@ -14,10 +16,6 @@ public class LevelLostState extends AbstractLevelState {
      * The key that progresses the game to the next level.
      */
     private static final String RESTART_KEY = "ANY";
-    /**
-     * The overlay that is drawn when a level is won.
-     */
-    private static final panes.overlays.LevelLostOverlay OVERLAY = new panes.overlays.LevelLostOverlay(StageManager.getStage());
 
     /**
      * The level that is lost.
@@ -30,7 +28,8 @@ public class LevelLostState extends AbstractLevelState {
      */
     public LevelLostState(Level level) {
         this.level = level;
-        SceneManager.setOverlay(OVERLAY);
+        //TODO: this should only be called if the state is not game over
+        SceneManager.setOverlay(new LevelLostOverlay(StageManager.getStage(), this));
     }
 
     @Override
@@ -41,4 +40,10 @@ public class LevelLostState extends AbstractLevelState {
         }
     }
 
+    /**
+     *
+     */
+    public void handleRetry() {
+        goToLevel(level, level);
+    }
 }

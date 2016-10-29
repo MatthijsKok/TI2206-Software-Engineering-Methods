@@ -1,15 +1,10 @@
 package panes.overlays;
 
-import game.Game;
-import javafx.application.Platform;
+import game.state.LevelLostState;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import util.SceneManager;
-
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.List;
 
 /**
  * Overlay to be shown when the level is lost.
@@ -18,87 +13,56 @@ import java.util.List;
 public class LevelLostOverlay extends Pane {
 
     /**
+     * The X coordinate of the menu.
+     */
+    private static final double MENU_X_POSITION = 180;
+
+    /**
+     * The Y coordinate of the menu.
+     */
+    private static final double MENU_Y_POSITION = 200;
+
+    /**
+     * The state used for implementing button behaviour.
+     */
+    private final LevelLostState state;
+
+    /**
      * Create a new menu element with all sub nodes.
-     * @param stage the stage this menu is drawn on.
+     * @param stage The stage this menu is drawn on.
+     * @param state The state implementing behaviour for the buttons.
      */
-    public LevelLostOverlay(Stage stage) {
+    public LevelLostOverlay(Stage stage, LevelLostState state) {
         setPrefSize(stage.getWidth(), stage.getHeight());
-        getChildren().add(createSinglePlayerButton());
-        getChildren().add(createMultiPlayerButton());
-        getChildren().add(createSettingsButton());
-        getChildren().add(createQuitButton());
+        getChildren().add(createLevelLostLabel());
+        getChildren().add(createRetryButton());
+        this.state = state;
     }
 
     /**
-     * Button to start a singlePlayerGame.
-     * @return Button - singlePlayerGame
+     * Button to resume the game.
+     * @return Button - Resume button
      */
-    private Button createSinglePlayerButton() {
-        Button button = new Button("Start Single Player Game");
-        button.setLayoutX(180);
-        button.setLayoutY(224);
-        button.getStyleClass().add("green");
-        button.idProperty().set("singlePlayerButton");
+    private Label createLevelLostLabel() {
+        Label label = new Label("You Died!");
+        label.setLayoutX(MENU_X_POSITION);
+        label.setLayoutY(MENU_Y_POSITION - 50);
+        label.idProperty().set("levelLostLabel");
 
-        return button;
+        return label;
     }
 
     /**
-     * Button to start a multiPlayerGame.
-     * @return Button - multiPlayerGame
+     * Button to go to the menu.
+     * @return Button - Menu button
      */
-    private Button createMultiPlayerButton() {
-        Button button = new Button("Start Multi Player Game");
-        button.setLayoutX(180);
-        button.setLayoutY(282);
-        button.getStyleClass().add("green");
-        button.idProperty().set("multiPlayerButton");
+    private Button createRetryButton() {
+        Button button = new Button("Retry");
+        button.setLayoutX(MENU_X_POSITION);
+        button.setLayoutY(MENU_Y_POSITION);
+        button.idProperty().set("retryButton");
 
-
+        button.setOnMouseClicked(e -> state.handleRetry());
         return button;
-    }
-
-    /**
-     * Creates a settings button.
-     * @return Button - Settings button
-     */
-    private Button createSettingsButton() {
-        Button button = new Button("Settings");
-        button.setLayoutX(180);
-        button.setLayoutY(342);
-        button.getStyleClass().add("green");
-
-        button.setOnMouseClicked(e -> SceneManager.goToScene("SettingsMenu"));
-
-        button.idProperty().set("settingsButton");
-        return button;
-    }
-
-    /**
-     * Button to quit the game.
-     * @return Button - Quit button.
-     */
-    private Button createQuitButton() {
-        Button button = new Button("Quit");
-        button.setLayoutX(180);
-        button.setLayoutY(402);
-        button.getStyleClass().add("green");
-        button.idProperty().set("quitButton");
-
-        button.setOnMouseClicked(e -> Platform.exit());
-
-        return button;
-    }
-
-    private void startGame(List<String> levels, int playerCount) {
-        Game.setLevelsFromFiles(levels);
-        Game.setPlayerCount(playerCount);
-        SceneManager.goToScene("Game");
-
-        try {
-            Game.start();
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
     }
 }

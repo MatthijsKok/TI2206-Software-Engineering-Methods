@@ -3,6 +3,8 @@ package game.state;
 import level.Level;
 import panes.overlays.LevelWonOverlay;
 import util.KeyboardInputManager;
+import util.SceneManager;
+import util.StageManager;
 
 /**
  * State for when a level is won.
@@ -13,10 +15,6 @@ public class LevelWonState extends AbstractLevelState {
      * The key that progresses the game to the next level.
      */
     private static final String NEXT_LEVEL_KEY = "ANY";
-    /**
-     * The overlay that is drawn when a level is won.
-     */
-    private static final LevelWonOverlay OVERLAY = new LevelWonOverlay();
 
     /**
      * The levels that come before and after the level that is
@@ -34,6 +32,7 @@ public class LevelWonState extends AbstractLevelState {
     public LevelWonState(Level previousLevel, Level nextLevel) {
         this.previousLevel = previousLevel;
         this.nextLevel = nextLevel;
+        SceneManager.setOverlay(new LevelWonOverlay(StageManager.getStage(), this));
     }
 
     @Override
@@ -41,5 +40,12 @@ public class LevelWonState extends AbstractLevelState {
         if (KeyboardInputManager.keyPressed(NEXT_LEVEL_KEY)) {
             goToLevel(previousLevel, nextLevel);
         }
+    }
+
+    /**
+     * Method for behaviour of the next level button.
+     */
+    public void handleNextLevel() {
+        goToLevel(previousLevel, nextLevel);
     }
 }
