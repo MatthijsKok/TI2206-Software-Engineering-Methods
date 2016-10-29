@@ -2,29 +2,13 @@ package game.state;
 
 import game.Game;
 import level.Level;
-import panes.PauseMenu;
-import util.KeyboardInputManager;
-import util.SceneManager;
-import util.StageManager;
+import panes.OverlayMenuBuilder;
 import util.sound.Music;
 
 /**
  * State for when the game is paused.
  */
-public class PausedState implements GameState {
-
-    /**
-     * The key which resumes the game.
-     */
-    private static final String PAUSE_KEY = "P";
-    /**
-     * The key which goes to the settings menu.
-     */
-    private static final String SETTINGS_KEY = "S";
-    /**
-     * The key which returns to the main menu.
-     */
-    private static final String QUIT_KEY = "ESCAPE";
+public class PausedState extends GameState {
 
     /**
      * The level this state is for.
@@ -33,52 +17,27 @@ public class PausedState implements GameState {
 
     /**
      * Creates a new PausedState.
+     *
      * @param level Level - The level that is paused.
      */
     /* default */ PausedState(Level level) {
         this.level = level;
-        SceneManager.setOverlay(new PauseMenu(StageManager.getStage(), this));
 
+        OverlayMenuBuilder builder = new OverlayMenuBuilder();
+
+        builder.setTitle("Game Paused");
+        builder.addItem("Resume", event -> resume());
+        builder.addItem("Settings", event -> goToSettings());
+        builder.addItem("Main menu", event -> goToMainMenu());
+
+        setOverlay(builder.build());
     }
 
     /**
      * Behaviour that should be executed when the resume button is pressed.
      */
-    public void handleResume() {
-        Game.setState(new InProgressState(level));
+    private void resume() {
         Music.startMusic();
+        Game.setState(new InProgressState(level));
     }
-
-    /**
-     * Behaviour that should be executed when the stop button is pressed.
-     */
-    public void handleMenu() {
-        Game.stop();
-    }
-
-    /**
-     * Behaviour that should be executed when the settings button is pressed.
-     */
-    public void handleSettings() {
-        SceneManager.goToScene("SettingsMenu");
-    }
-    
-    @Override
-    public void update(double timeDifference) {
-        if (KeyboardInputManager.keyPressed(PAUSE_KEY)) {
-            Music.startMusic();
-            Game.setState(new InProgressState(level));
-        }
-
-        if (KeyboardInputManager.keyPressed(SETTINGS_KEY)) {
-            SceneManager.goToScene("SettingsMenu");
-        }
-
-        if (KeyboardInputManager.keyPressed(QUIT_KEY)) {
-            Game.stop();
-        }
-
-    }
-
-
 }

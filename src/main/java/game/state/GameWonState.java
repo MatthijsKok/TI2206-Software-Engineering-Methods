@@ -1,27 +1,21 @@
 package game.state;
 
-import game.Game;
-import panes.overlays.GameWonOverlay;
-import util.KeyboardInputManager;
+import panes.OverlayMenuBuilder;
 
 /**
  * State for when the game is won.
  */
-public class GameWonState implements GameState {
+public class GameWonState extends GameState {
 
     /**
-     * The key to press to return to the main menu.
+     * Creates a new GameWonState instance.
      */
-    private static final String RETURN_KEY = "ANY";
-    /**
-     * The overlay that is drawn when the game is won.
-     */
-    private static final GameWonOverlay GAME_WON_OVERLAY = new GameWonOverlay();
+    public GameWonState() {
+        OverlayMenuBuilder builder = new OverlayMenuBuilder();
 
-    @Override
-    public void update(double timeDifference) {
-        if (KeyboardInputManager.keyPressed(RETURN_KEY)) {
-            Game.stop();
-        }
+        builder.setTitle("You won the game!");
+        builder.addItem("Main menu", event -> goToMainMenu());
+
+        setOverlay(builder.build());
     }
 }

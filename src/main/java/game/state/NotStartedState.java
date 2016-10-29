@@ -3,10 +3,6 @@ package game.state;
 /**
  * State when the game is not yet playing.
  */
-public class NotStartedState implements GameState {
+public class NotStartedState extends GameState {
 
-    @Override
-    public void update(double timeDifference) {
-        // Does nothing.
-    }
 }
