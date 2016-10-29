@@ -1,5 +1,6 @@
 package panes;
 
+import game.state.GameStateHelper;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -21,25 +22,15 @@ public class GamePane extends Pane {
         CanvasManager.setCanvas(canvas);
 
         getChildren().add(canvas);
+
+        Pane overlay = new Pane();
+        overlay.setPrefSize(
+                canvas.getWidth(),
+                canvas.getHeight());
+
+        getChildren().add(overlay);
+
+        GameStateHelper.setAnchor(overlay);
     }
-
-    /**
-     * Sets the overlay that should be shown at certain game events.
-     * @param overlay The overlay that should be shown.
-     */
-    public void setOverlay(final Pane overlay) {
-        getChildren().add(1, overlay);
-    }
-
-    /**
-     * Removes the overlay if it is currently being shown.
-     */
-    public void removeOverlay() {
-        if (getChildren().size() > 1) {
-            getChildren().remove(1);
-        }
-    }
-
-
 
 }

@@ -11,10 +11,24 @@ import java.io.IOException;
 /**
  * Utility class that implements methods useful for game states.
  */
-final class GameStateHelper {
+public final class GameStateHelper {
+
+    /**
+     * The pane in which the overlays should be placed.
+     */
+    private static Pane anchor;
 
     private GameStateHelper() {
 
+    }
+
+    /**
+     * Sets the pane where game overlays should be drawn on.
+     * @param anchor Pane - The pane where game overlays should
+     *               be drawn on.
+     */
+    public static void setAnchor(final Pane anchor) {
+        GameStateHelper.anchor = anchor;
     }
 
     /**
@@ -23,10 +37,12 @@ final class GameStateHelper {
      * @param overlay Pane - The pane to draw as overlay.
      */
     /* default */ static void setOverlay(final Pane overlay) {
-        if (overlay == null) {
-            SceneManager.removeOverlay();
-        } else {
-            SceneManager.setOverlay(overlay);
+        if (!anchor.getChildren().isEmpty()) {
+            anchor.getChildren().remove(0);
+        }
+
+        if (overlay != null) {
+            anchor.getChildren().add(overlay);
         }
     }
 
