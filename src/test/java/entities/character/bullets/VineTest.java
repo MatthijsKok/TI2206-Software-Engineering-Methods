@@ -1,6 +1,6 @@
 package entities.character.bullets;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
+import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.ColoredBall;
 import entities.character.Gun;

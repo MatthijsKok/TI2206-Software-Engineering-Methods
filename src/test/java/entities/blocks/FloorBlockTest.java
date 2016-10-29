@@ -1,6 +1,6 @@
 package entities.blocks;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
+import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import geometry.Rectangle;
 import org.junit.Before;

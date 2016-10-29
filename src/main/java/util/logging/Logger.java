@@ -207,13 +207,15 @@ public final class Logger {
      * and then purges the ArrayList.
      * @throws IOException if you make an invalid logfile.
      */
-    public void writeLogRecords() throws IOException {
+    void writeLogRecords() throws IOException {
         try (FileWriter fw = new FileWriter(logFile, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw)) {
 
-            for (LogRecord logRecord : getLogRecords()) {
-                out.write(logRecord.format());
+            synchronized (logRecords) {
+                for (LogRecord logRecord : logRecords) {
+                    out.write(logRecord.format());
+                }
             }
 
             purgeLogRecords();

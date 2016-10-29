@@ -1,7 +1,6 @@
 package level;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
-import entities.AbstractEntity;
+import main.BubbleTroubleApplicationTest;
 import org.junit.Before;
 import org.junit.Test;
 

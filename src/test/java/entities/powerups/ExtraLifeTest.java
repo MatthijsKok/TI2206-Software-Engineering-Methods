@@ -1,6 +1,6 @@
 package entities.powerups;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
+import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.character.Character;
 import org.junit.Before;

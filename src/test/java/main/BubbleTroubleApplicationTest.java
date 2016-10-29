@@ -1,13 +1,10 @@
-package bubbletrouble;
+package main;
 
 import game.Game;
-import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import level.Level;
 import level.LevelTimer;
 import org.testfx.framework.junit.ApplicationTest;
-import util.CanvasManager;
-import util.StageManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +16,7 @@ public class BubbleTroubleApplicationTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-        StageManager.init(stage);
-
-        Canvas canvas = CanvasManager.createCanvas(stage);
-        CanvasManager.setCanvas(canvas);
+        BubbleTrouble.loadScenes(stage);
 
         setUpGame();
     }

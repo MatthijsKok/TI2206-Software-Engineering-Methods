@@ -1,7 +1,10 @@
 package game.state;
 
 import game.Game;
+import javafx.application.Platform;
 import javafx.scene.layout.Pane;
+import level.Level;
+import main.BubbleTroubleApplicationTest;
 import org.junit.Test;
 import util.SceneManager;
 
@@ -12,7 +15,8 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test suite for the GameStateHelper class.
  */
-public class GameStateHelperTest {
+public class GameStateHelperTest extends BubbleTroubleApplicationTest {
+
     @Test
     public void testSetAnchor() {
         Pane pane = new Pane();
@@ -24,13 +28,14 @@ public class GameStateHelperTest {
         assertThat(pane.getChildren().get(0), is(overlay));
     }
 
-    /*@Test
+    @Test
     public void testGoToSettings() {
-        SceneManager.addScene("SettingsMenu", new Pane());
+        Platform.runLater(() -> {
+            GameStateHelper.goToSettings();
 
-        GameStateHelper.goToSettings();
-        assertThat(SceneManager.getCurrentScene(),
-                is(SceneManager.getScene("SettingsMenu")));
+            assertThat(SceneManager.getCurrentScene(),
+                    is(SceneManager.getScene("SettingsMenu")));
+        });
     }
 
     @Test
@@ -38,6 +43,26 @@ public class GameStateHelperTest {
         GameStateHelper.goToMainMenu();
 
         assertTrue(Game.getState() instanceof NotStartedState);
-    }*/
+    }
+
+    @Test
+    public void testGoToLevel() {
+        Level newLevel = new Level("src/main/resources/levels/level3.json");
+
+        GameStateHelper.goToLevel(
+                Game.getCurrentLevel(),
+                newLevel);
+
+        assertTrue(Game.getState() instanceof InProgressState);
+    }
+
+    @Test
+    public void testGoToLevelStop() {
+        GameStateHelper.goToLevel(
+                Game.getCurrentLevel(),
+                new Level("does_not_exist.json"));
+
+        assertTrue(Game.getState() instanceof NotStartedState);
+    }
 
 }

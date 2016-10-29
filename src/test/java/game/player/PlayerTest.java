@@ -1,6 +1,6 @@
 package game.player;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
+import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.character.Character;
 import entities.character.CharacterMovement;

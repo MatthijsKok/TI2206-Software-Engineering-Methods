@@ -1,6 +1,6 @@
 package entities;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
+import main.BubbleTroubleApplicationTest;
 import org.json.JSONObject;
 
 /**
