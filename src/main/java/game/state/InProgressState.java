@@ -59,6 +59,8 @@ public class InProgressState implements GameState {
         this.levelTimer = level.getTimer();
         GameStateHelper.setOverlay(null);
 
+        KeyboardInputManager.update();
+
         timer = new AnimationTimer() {
             @Override
             public void handle(final long now) {
