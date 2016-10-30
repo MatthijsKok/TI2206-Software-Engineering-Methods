@@ -20,7 +20,7 @@ public class OverlayMenuBuilder {
     /**
      * The items the menu consists of.
      */
-    private List<Pair<String, EventHandler<? super MouseEvent>>> items = new ArrayList<>();
+    private final List<Pair<String, EventHandler<? super MouseEvent>>> items = new ArrayList<>();
 
     /**
      * Sets the title of the menu.

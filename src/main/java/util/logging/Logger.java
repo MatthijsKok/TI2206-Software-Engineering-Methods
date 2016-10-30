@@ -207,7 +207,7 @@ public final class Logger {
      * and then purges the ArrayList.
      * @throws IOException if you make an invalid logfile.
      */
-    void writeLogRecords() throws IOException {
+    /* default */ void writeLogRecords() throws IOException {
         try (FileWriter fw = new FileWriter(logFile, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw)) {
