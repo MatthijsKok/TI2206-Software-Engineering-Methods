@@ -1,17 +1,14 @@
 package game.state;
 
 /**
- * State when the game is not yet playing.
+ * Dummy state for when the game is not yet playing.
  */
 public class NotStartedState implements GameState {
 
-    @Override
-    public void update(double timeDifference) {
-        // Does nothing.
-    }
-
-    @Override
-    public void draw() {
-        // Does nothing.
+    /**
+     * Creates a new NotStartedState instance.
+     */
+    public NotStartedState() {
+        GameStateHelper.setOverlay(null);
     }
 }

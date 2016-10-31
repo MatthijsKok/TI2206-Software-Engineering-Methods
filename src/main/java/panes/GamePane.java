@@ -1,5 +1,6 @@
 package panes;
 
+import game.state.GameStateHelper;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -21,5 +22,15 @@ public class GamePane extends Pane {
         CanvasManager.setCanvas(canvas);
 
         getChildren().add(canvas);
+
+        Pane overlay = new Pane();
+        overlay.setPrefSize(
+                canvas.getWidth(),
+                canvas.getHeight());
+
+        getChildren().add(overlay);
+
+        GameStateHelper.setAnchor(overlay);
     }
+
 }

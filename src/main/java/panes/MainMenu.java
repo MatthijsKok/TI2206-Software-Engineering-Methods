@@ -8,6 +8,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import panes.elements.MarioButton;
 import util.SceneManager;
 
 import java.io.IOException;
@@ -60,13 +61,12 @@ public class MainMenu extends Pane {
      * @return Button - singlePlayerGame
      */
     private Button createSinglePlayerButton() {
-        Button button = new Button("Start Single Player Game");
+        Button button = new MarioButton("Start Single Player Game",
+                event -> startGame(DEFAULT_LEVELS, 1));
         button.setLayoutX(180);
         button.setLayoutY(224);
-        button.getStyleClass().add("green");
         button.idProperty().set("singlePlayerButton");
 
-        button.setOnMouseClicked(e -> startGame(DEFAULT_LEVELS, 1));
         return button;
     }
 
@@ -75,13 +75,11 @@ public class MainMenu extends Pane {
      * @return Button - multiPlayerGame
      */
     private Button createMultiPlayerButton() {
-        Button button = new Button("Start Multi Player Game");
+        Button button = new MarioButton("Start Multi Player Game",
+                event -> startGame(DEFAULT_LEVELS, 2));
         button.setLayoutX(180);
         button.setLayoutY(282);
-        button.getStyleClass().add("green");
         button.idProperty().set("multiPlayerButton");
-
-        button.setOnMouseClicked(e -> startGame(DEFAULT_LEVELS, 2));
 
         return button;
     }
@@ -91,14 +89,12 @@ public class MainMenu extends Pane {
      * @return Button - Settings button
      */
     private Button createSettingsButton() {
-        Button button = new Button("Settings");
+        Button button = new MarioButton("Settings",
+                event -> SceneManager.goToScene("SettingsMenu"));
         button.setLayoutX(180);
         button.setLayoutY(342);
-        button.getStyleClass().add("green");
-
-        button.setOnMouseClicked(e -> SceneManager.goToScene("SettingsMenu"));
-
         button.idProperty().set("settingsButton");
+
         return button;
     }
 
@@ -107,13 +103,11 @@ public class MainMenu extends Pane {
      * @return Button - Quit button.
      */
     private Button createQuitButton() {
-        Button button = new Button("Quit");
+        Button button = new MarioButton("Quit",
+                event -> Platform.exit());
         button.setLayoutX(180);
         button.setLayoutY(402);
-        button.getStyleClass().add("green");
         button.idProperty().set("quitButton");
-
-        button.setOnMouseClicked(e -> Platform.exit());
 
         return button;
     }

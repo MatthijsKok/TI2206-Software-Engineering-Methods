@@ -123,6 +123,10 @@ public class Player implements Observer {
      * Handles keyboard input and passes it to the character.
      */
     public void updateKeyboardInput() {
+        if (character == null) {
+            return;
+        }
+
         Gun gun = character.getGun();
         CharacterMovement movement = character.getMovement();
 

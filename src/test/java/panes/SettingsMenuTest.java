@@ -1,6 +1,6 @@
 package panes;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
+import main.BubbleTroubleApplicationTest;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;

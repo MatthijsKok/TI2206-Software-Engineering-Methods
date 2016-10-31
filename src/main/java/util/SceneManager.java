@@ -67,6 +67,10 @@ public final class SceneManager {
      * @return The Scene that is currently displayed.
      */
     public static Scene getCurrentScene() {
+        if (history.isEmpty()) {
+            return null;
+        }
+
         return history.peek();
     }
 

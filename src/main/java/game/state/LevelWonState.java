@@ -1,28 +1,12 @@
 package game.state;
 
 import level.Level;
-import ui.LevelWonOverlay;
-import util.KeyboardInputManager;
+import panes.OverlayMenuBuilder;
 
 /**
  * State for when a level is won.
  */
-public class LevelWonState extends AbstractLevelState {
-
-    /**
-     * The key that progresses the game to the next level.
-     */
-    private static final String NEXT_LEVEL_KEY = "ANY";
-    /**
-     * The overlay that is drawn when a level is won.
-     */
-    private static final LevelWonOverlay OVERLAY = new LevelWonOverlay();
-
-    /**
-     * The levels that come before and after the level that is
-     * just won.
-     */
-    private final Level previousLevel, nextLevel;
+public class LevelWonState implements GameState {
 
     /**
      * Creates a new LevelWonState.
@@ -32,19 +16,12 @@ public class LevelWonState extends AbstractLevelState {
      *                  is just won.
      */
     public LevelWonState(Level previousLevel, Level nextLevel) {
-        this.previousLevel = previousLevel;
-        this.nextLevel = nextLevel;
-    }
+        OverlayMenuBuilder builder = new OverlayMenuBuilder();
 
-    @Override
-    public void update(double timeDifference) {
-        if (KeyboardInputManager.keyPressed(NEXT_LEVEL_KEY)) {
-            goToLevel(previousLevel, nextLevel);
-        }
-    }
+        builder.setTitle("You won the level!");
+        builder.addItem("Next level",
+                event -> GameStateHelper.goToLevel(previousLevel, nextLevel));
 
-    @Override
-    public void draw() {
-        OVERLAY.draw();
+        GameStateHelper.setOverlay(builder.build());
     }
 }

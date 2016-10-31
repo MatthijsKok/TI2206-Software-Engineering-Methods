@@ -1,6 +1,6 @@
 package entities.behaviour;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
+import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import entities.balls.ColoredBall;

@@ -9,13 +9,11 @@ import game.state.InProgressState;
 import game.state.LevelLostState;
 import game.state.LevelWonState;
 import game.state.NotStartedState;
-import javafx.animation.AnimationTimer;
 import level.Level;
 import level.LevelTimer;
 import ui.HeadsUpDisplay;
 import ui.MultiPlayerHUD;
 import ui.SinglePlayerHUD;
-import util.KeyboardInputManager;
 import util.SceneManager;
 import util.logging.Logger;
 import util.sound.MultiSoundEffect;
@@ -36,14 +34,6 @@ public final class Game {
      * The logger access point to which everything will be logged.
      */
     private static final Logger LOGGER = Logger.getInstance();
-    /**
-     * Defines how many nano seconds there are in one second.
-     */
-    private static final double NANO_SECONDS_IN_SECOND = 1000000000.0;
-    /**
-     * Defines the maximum time span a frame can simulate.
-     */
-    private static final double MAX_FRAME_DURATION = 0.033333333;
 
     /**
      * The state of the game.
@@ -65,26 +55,9 @@ public final class Game {
      * The current level.
      */
     private static int currentLevel = 0;
-    /**
-     * The last time recorded.
-     */
-    private static long lastNanoTime;
-    /**
-     * The timer that handles the main update loop.
-     */
-    private static AnimationTimer timer = null;
 
     private Game() {
 
-    }
-
-    private static void setUpAnimationLoop() {
-        timer = new AnimationTimer() {
-            public void handle(final long currentNanoTime) {
-                update();
-                draw();
-            }
-        };
     }
 
     /**
@@ -151,7 +124,7 @@ public final class Game {
 
     /**
      * Sets the state of the game.
-     * @param state GameState - The state the game should go to.
+     * @param state AbstractGameState - The state the game should go to.
      */
     public static void setState(GameState state) {
         Game.state = state;
@@ -162,17 +135,11 @@ public final class Game {
      * @throws IOException when the first level's file is not found.
      */
     public static void start() throws IOException {
-        if (timer == null) {
-            setUpAnimationLoop();
-        }
-
         PLAYERS.forEach(Player::resetLives);
 
         currentLevel = 0;
         getCurrentLevel().load();
         setState(new InProgressState(getCurrentLevel()));
-        timer.start();
-        lastNanoTime = System.nanoTime();
     }
 
     /**
@@ -180,9 +147,6 @@ public final class Game {
      */
     public static void stop() {
         setState(new NotStartedState());
-        if (timer != null) {
-            timer.stop();
-        }
 
         getCurrentLevel().unload();
 
@@ -234,7 +198,7 @@ public final class Game {
                 .count();
 
         if (playersAlive > 0) {
-            setState(new LevelLostState(getCurrentLevel()));
+            setState(new LevelLostState(getCurrentLevel(), timeUp));
         } else {
             MultiSoundEffect.GAME_OVER.playRandom();
             setState(new GameLostState());
@@ -242,38 +206,9 @@ public final class Game {
     }
 
     /**
-     * Updates the game.
-     */
-    private static void update() {
-        LOGGER.debug("Updating the game...");
-        long currentNanoTime = System.nanoTime();
-
-        // Gives the time difference in seconds
-        double dt = Math.min(
-                (currentNanoTime - lastNanoTime) / NANO_SECONDS_IN_SECOND,
-                MAX_FRAME_DURATION);
-        LOGGER.trace("Time difference since last update: " + dt + " seconds.");
-
-        lastNanoTime = currentNanoTime;
-
-        if (SceneManager.getCurrentScene().equals(SceneManager.getScene("Game"))) {
-            state.update(dt);
-        }
-
-        // Clear the keyboard
-        KeyboardInputManager.update();
-
-        try {
-            LOGGER.writeLogRecords();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Draws the current level.
      */
-    private static void draw() {
+    public static void draw() {
         LOGGER.debug("Drawing the game...");
 
         getCurrentLevel().draw();
@@ -281,8 +216,6 @@ public final class Game {
         if (hud != null) {
             hud.draw();
         }
-
-        state.draw();
     }
 
     /**

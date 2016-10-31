@@ -41,6 +41,18 @@ public class BubbleTrouble extends Application {
 
         loadSounds();
 
+        loadScenes(stage);
+
+        KeyboardInputManager.addScene(SceneManager.getScene("Game"));
+
+        LOGGER.info("App started");
+    }
+
+    /**
+     * Initializes all scenes the app uses.
+     * @param stage The stage the app plays in.
+     */
+    public static void loadScenes(final Stage stage) {
         StageManager.init(stage);
 
         SceneManager.setStage(stage);
@@ -50,12 +62,9 @@ public class BubbleTrouble extends Application {
         SceneManager.addScene("SettingsMenu", new SettingsMenu(stage));
         SceneManager.getScene("SettingsMenu").getStylesheets().add("stylesheets/settingsMenu.css");
         SceneManager.addScene("Game", new GamePane(stage));
+        SceneManager.getScene("Game").getStylesheets().add("stylesheets/overlays.css");
 
         SceneManager.goToScene("MainMenu");
-
-        KeyboardInputManager.addScene(SceneManager.getScene("Game"));
-
-        LOGGER.info("App started");
     }
 
     private static void loadSounds() {

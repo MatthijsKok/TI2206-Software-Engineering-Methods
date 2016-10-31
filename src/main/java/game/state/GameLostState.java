@@ -1,8 +1,6 @@
 package game.state;
 
-import game.Game;
-import ui.GameLostOverlay;
-import util.KeyboardInputManager;
+import panes.OverlayMenuBuilder;
 
 /**
  * State for when the game is lost.
@@ -10,23 +8,16 @@ import util.KeyboardInputManager;
 public class GameLostState implements GameState {
 
     /**
-     * The key to press to return to the main menu.
+     * Creates a new GameLostState instance.
      */
-    private static final String RETURN_KEY = "ANY";
-    /**
-     * The overlay that is drawn when the game is lost.
-     */
-    private static final GameLostOverlay OVERLAY = new GameLostOverlay();
+    public GameLostState() {
+        OverlayMenuBuilder builder = new OverlayMenuBuilder();
 
-    @Override
-    public void update(double timeDifference) {
-        if (KeyboardInputManager.keyPressed(RETURN_KEY)) {
-            Game.stop();
-        }
+        builder.setTitle("Game over...");
+        builder.addItem("Main menu",
+                event -> GameStateHelper.goToMainMenu());
+
+        GameStateHelper.setOverlay(builder.build());
     }
 
-    @Override
-    public void draw() {
-        OVERLAY.draw();
-    }
 }

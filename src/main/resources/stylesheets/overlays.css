@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'New Super Mario Font U';
+    src: url('../fonts/newSuperMario.ttf');
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#234463, #5b81a4);
+}
+
+
+.button {
+    -fx-effect: dropshadow( three-pass-box , rgba(0, 0, 0, 0.94), 10, 0.0 , 0 , 1 );
+    -fx-background-color: linear-gradient(#be271f, #f0001a);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+
+    -fx-font-family: 'New Super Mario Font U';
+    -fx-font-size: 30px;
+}
+
+.label {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.94) , 0, 0, 1, 3);
+    -fx-font-family: 'New Super Mario Font U';
+    -fx-font-size: 40px;
+}

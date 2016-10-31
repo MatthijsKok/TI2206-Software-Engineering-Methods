@@ -1,6 +1,6 @@
 package entities.balls;
 
-import bubbletrouble.BubbleTroubleApplicationTest;
+import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.blocks.FloorBlock;
 import entities.blocks.WallBlock;

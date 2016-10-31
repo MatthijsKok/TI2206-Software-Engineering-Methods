@@ -1,45 +1,32 @@
 package game.state;
 
 import level.Level;
-import ui.LevelLostOverlay;
-import util.KeyboardInputManager;
+import panes.OverlayMenuBuilder;
 
 /**
- * State for when a level is won.
+ * State for when a level is lost.
  */
-public class LevelLostState extends AbstractLevelState {
-
-    /**
-     * The key that progresses the game to the next level.
-     */
-    private static final String RESTART_KEY = "ANY";
-    /**
-     * The overlay that is drawn when a level is won.
-     */
-    private static final LevelLostOverlay OVERLAY = new LevelLostOverlay();
-
-    /**
-     * The level that is lost.
-     */
-    private final Level level;
+public class LevelLostState implements GameState {
 
     /**
      * Creates a new LevelLostState instance.
      * @param level Level - The level that is lost.
+     * @param timeUp Boolean - Indicates whether the
+     *               level is lost by timeUp or not.
      */
-    public LevelLostState(Level level) {
-        this.level = level;
-    }
+    public LevelLostState(final Level level, boolean timeUp) {
+        OverlayMenuBuilder builder = new OverlayMenuBuilder();
 
-    @Override
-    public void update(double timeDifference) {
-        if (KeyboardInputManager.keyPressed(RESTART_KEY)) {
-            goToLevel(level, level);
+        if (timeUp) {
+            builder.setTitle("Time's up!");
+        } else {
+            builder.setTitle("You died...");
         }
+
+        builder.addItem("Retry",
+                event -> GameStateHelper.goToLevel(level, level));
+
+        GameStateHelper.setOverlay(builder.build());
     }
 
-    @Override
-    public void draw() {
-        OVERLAY.draw();
-    }
 }
