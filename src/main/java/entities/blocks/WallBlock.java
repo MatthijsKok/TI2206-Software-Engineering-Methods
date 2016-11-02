@@ -4,7 +4,7 @@ import com.sun.javafx.geom.Vec2d;
 import graphics.Sprite;
 
 /**
- * Represents a FloorBlock entity used for walls in the game.
+ * Represents a WallBlock entity used for walls in the game.
  */
 public class WallBlock extends AbstractBlock {
 
@@ -15,8 +15,7 @@ public class WallBlock extends AbstractBlock {
 
     /**
      * Creates a wall on position (x,y).
-     *
-     * @param position the position of the wall
+     * @param position the position of the wall.
      */
     public WallBlock(final Vec2d position) {
         super(position);

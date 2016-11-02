@@ -8,12 +8,13 @@ import geometry.Rectangle;
 import graphics.Sprite;
 
 /**
- * Plant, the mid level gate.
+ * This class represents a gate that usually is placed in the middle of a game.
+ * A character has to destroy the ball at his side to let the gate disappear.
  */
 public class Gate extends AbstractBlock implements DynamicEntity {
 
     /**
-     * Travel speed of the gate.
+     * Travel speed of the gate when it dies.
      */
     private static final double TRAVEL_SPEED = 100; // px/s
     /**
@@ -24,13 +25,10 @@ public class Gate extends AbstractBlock implements DynamicEntity {
      * The collision shape of the gate. Created around the original sprite.
      */
     private static final Rectangle GATE_SHAPE = new Rectangle(GATE_SPRITE);
-
     /**
-     * The color of the balls of which all need to be gone before this gate
-     * opens.
+     * The color of the balls of which need to be gone before this gate opens.
      */
     private final ColoredBall.Color color;
-
     /**
      * The threshold below which the gate can disappear.
      */
@@ -38,9 +36,8 @@ public class Gate extends AbstractBlock implements DynamicEntity {
 
     /**
      * Creates a new FloorBlock at position (x,y).
-     *
      * @param position The position of the block.
-     * @param color The color of the ball this gate is for.
+     * @param color    The color of the ball this gate is for.
      */
     public Gate(final Vec2d position, final ColoredBall.Color color) {
         super(position);
@@ -68,6 +65,12 @@ public class Gate extends AbstractBlock implements DynamicEntity {
         }
     }
 
+    /**
+     * Boolean that returns true if the color of a ColoredBall
+     * is the same as the color that is necessary to open the gate.
+     * @param entity AbstractEntity entity.
+     * @return       true if the entity is a ColoredBall and the colors are the same.
+     */
     private boolean myColor(AbstractEntity entity) {
         return entity instanceof ColoredBall
                 && ((ColoredBall) entity).getColor() == color;
