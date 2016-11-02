@@ -22,6 +22,11 @@ public class Player implements Observer {
     private static final int LIVES_AT_START = 3;
 
     /**
+     * The amount of lives the player can maximally have.
+     */
+    private static final int MAX_LIVES = 99;
+
+    /**
      * The ID of the player.
      */
     private final int id;
@@ -157,7 +162,8 @@ public class Player implements Observer {
      * @param amount The amount of lives you want to get.
      */
     public void increaseLives(int amount) {
-        lives = Math.max(0, Math.min(lives + amount, LIVES_AT_START));
+        //Lives cannot be below 0 and cannot be higher than the maximum amount of lives
+        lives = Math.max(0, Math.min(lives + amount, MAX_LIVES));
 
         if (lives == 0) {
             MultiSoundEffect.PLAYER_OUT_OF_LIVES.play(id);

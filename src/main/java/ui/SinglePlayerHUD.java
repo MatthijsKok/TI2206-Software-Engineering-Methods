@@ -1,8 +1,7 @@
 package ui;
 
-import com.sun.javafx.geom.Vec2d;
 import game.player.Player;
-import graphics.Sprite;
+import javafx.scene.paint.Color;
 import level.LevelTimer;
 
 /**
@@ -11,22 +10,7 @@ import level.LevelTimer;
 public class SinglePlayerHUD extends HeadsUpDisplay {
 
     /**
-     * The heart sprite.
-     */
-    private static final Sprite HEART = new Sprite("images/heart.png");
-
-    /**
-     * The offset of the start place of the hearts.
-     */
-    private static final Vec2d MARGIN = new Vec2d(16, 64);
-
-    /**
-     * The space between to heart sprites.
-     */
-    private static final double SPACE = 48;
-
-    /**
-     * The player this HUD draws the lives for.
+     * The players this HUD draws the lives for.
      */
     private final Player player;
 
@@ -44,12 +28,51 @@ public class SinglePlayerHUD extends HeadsUpDisplay {
     public void draw() {
         super.draw();
 
-        for (int i = player.getLives() - 1; i >= 0; i--) {
-            HEART.draw(MARGIN.x + SPACE * i, getCanvas().getHeight() - MARGIN.y);
-        }
+        //Set text color to white
+        getGraphicsContext().setFill(Color.WHITE);
 
+        drawLifeCounters();
+        drawScore();
+        getGraphicsContext().setEffect(null);
+    }
+
+    /**
+     * Draws the life counters to the screen.
+     */
+    private void drawLifeCounters() {
+        //Draw lives images
+        //Mario
+        getGraphicsContext().drawImage(MARIO_MUGSHOT, MUGSHOT_MARGIN.x, MUGSHOT_MARGIN.y, MUGSHOT_SIZE, MUGSHOT_SIZE);
+
+        //Draw lives strings
+        //Set drop shadow
+        getGraphicsContext().setEffect(DROP_SHADOW);
+
+        //Set font to smaller font
+        getGraphicsContext().setFont(LIVES_FONT);
+
+        //Mario
+        String livesString1 = "x" + String.format("%02d", player.getLives());
         getGraphicsContext().fillText(
-                String.valueOf(player.getScore()),
-                MARGIN.x, getCanvas().getHeight() - 2 * MARGIN.y);
+                livesString1,
+                LIVES_MARGIN.x, LIVES_MARGIN.y);
+    }
+
+    /**
+     * Draws the score to the screen.
+     */
+    public void drawScore() {
+
+        //Set bigger font
+        getGraphicsContext().setFont(SCORE_FONT);
+
+        //Add leading zeros to score
+        String score1 = String.format("%06d", player.getScore());
+
+        //Draw score
+        //Mario
+        getGraphicsContext().fillText(
+                score1,
+                SCORE_MARGIN.x, SCORE_MARGIN.y);
     }
 }
