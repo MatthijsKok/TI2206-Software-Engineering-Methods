@@ -15,8 +15,12 @@ import java.util.List;
  */
 public class BubbleTroubleApplicationTest extends ApplicationTest {
 
+    private Stage stage;
+
     @Override
     public void start(Stage stage) throws Exception {
+        this.stage = stage;
+
         BubbleTrouble.loadScenes(stage);
         SceneManager.goToScene("MainMenu");
 
@@ -35,5 +39,9 @@ public class BubbleTroubleApplicationTest extends ApplicationTest {
         levelList.add(level2);
         Game.setLevels(levelList);
         Game.setPlayerCount(1);
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }
