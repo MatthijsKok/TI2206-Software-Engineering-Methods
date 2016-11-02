@@ -40,10 +40,12 @@ public class MainMenu extends Pane {
      */
     public MainMenu(Stage stage) {
         setPrefSize(stage.getWidth(), stage.getHeight());
-        getChildren().add(createSinglePlayerButton());
-        getChildren().add(createMultiPlayerButton());
-        getChildren().add(createSettingsButton());
-        getChildren().add(createQuitButton());
+        getChildren().addAll(
+                createSinglePlayerButton(),
+                createMultiPlayerButton(),
+                createSettingsButton(),
+                createQuitButton());
+
         setBackground(new Background(createBackgroundImage()));
     }
 
@@ -65,7 +67,6 @@ public class MainMenu extends Pane {
                 event -> startGame(DEFAULT_LEVELS, 1));
         button.setLayoutX(180);
         button.setLayoutY(224);
-        button.idProperty().set("singlePlayerButton");
 
         return button;
     }
@@ -79,7 +80,6 @@ public class MainMenu extends Pane {
                 event -> startGame(DEFAULT_LEVELS, 2));
         button.setLayoutX(180);
         button.setLayoutY(282);
-        button.idProperty().set("multiPlayerButton");
 
         return button;
     }
@@ -93,7 +93,6 @@ public class MainMenu extends Pane {
                 event -> SceneManager.goToScene("SettingsMenu"));
         button.setLayoutX(180);
         button.setLayoutY(342);
-        button.idProperty().set("settingsButton");
 
         return button;
     }
@@ -107,7 +106,6 @@ public class MainMenu extends Pane {
                 event -> Platform.exit());
         button.setLayoutX(180);
         button.setLayoutY(402);
-        button.idProperty().set("quitButton");
 
         return button;
     }

@@ -1,7 +1,7 @@
 package panes;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import util.Pair;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class OverlayMenuBuilder {
     /**
      * The items the menu consists of.
      */
-    private final List<Pair<String, EventHandler<? super MouseEvent>>> items = new ArrayList<>();
+    private final List<Pair<String, EventHandler<ActionEvent>>> items = new ArrayList<>();
 
     /**
      * Sets the title of the menu.
@@ -36,7 +36,7 @@ public class OverlayMenuBuilder {
      * @param onclick EventHandler - The action that
      *                should happen when the item is clicked.
      */
-    public final void addItem(String name, EventHandler<? super MouseEvent> onclick) {
+    public final void addItem(String name, EventHandler<ActionEvent> onclick) {
         items.add(new Pair<>(name, onclick));
     }
 

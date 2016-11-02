@@ -1,10 +1,9 @@
 package panes;
 
 import com.sun.javafx.geom.Vec2d;
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
@@ -44,10 +43,7 @@ class OverlayMenu extends Pane {
      *              the menu items.
      */
     OverlayMenu(String title,
-                       List<Pair<String, EventHandler<? super MouseEvent>>> items) {
-
-        Platform.runLater(() -> setPrefSize(getScene().getWidth(), getScene().getHeight()));
-
+                       List<Pair<String, EventHandler<ActionEvent>>> items) {
         setBackground(new Background(new BackgroundFill(BACKGROUND_COLOR, null, null)));
 
         getChildren().add(createTitle(title));
@@ -66,7 +62,7 @@ class OverlayMenu extends Pane {
     }
 
     private MarioButton createItem(
-            Pair<String, EventHandler<? super MouseEvent>> item, int index) {
+            Pair<String, EventHandler<ActionEvent>> item, int index) {
         MarioButton button = new MarioButton(item.getL(), item.getR());
 
         button.setLayoutX(PADDING.x);

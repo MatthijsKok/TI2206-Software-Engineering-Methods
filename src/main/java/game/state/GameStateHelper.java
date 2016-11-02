@@ -43,6 +43,8 @@ public final class GameStateHelper {
 
         if (overlay != null) {
             anchor.getChildren().add(overlay);
+            overlay.setPrefWidth(anchor.getPrefWidth());
+            overlay.setPrefHeight(anchor.getPrefHeight());
         }
     }
 
