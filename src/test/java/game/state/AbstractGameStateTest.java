@@ -37,13 +37,13 @@ public abstract class AbstractGameStateTest extends BubbleTroubleApplicationTest
         button.fire();
     }
 
-    final void testChildAmount(final int amount) {
+    final void assertChildAmount(final int amount) {
         Pane menu = (Pane) pane.getChildren().get(0);
 
         assertThat(menu.getChildren().size(), is(amount));
     }
 
-    final void testTitle(final String title) {
+    final void assertTitle(final String title) {
         Pane menu = (Pane) pane.getChildren().get(0);
         Label titleLabel = (Label) menu.getChildren().get(0);
 

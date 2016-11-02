@@ -13,15 +13,15 @@ public class LevelLostStateTest extends AbstractGameStateTest {
     @Test
     public void testConstructor() {
         new LevelLostState(new Level(""), false);
-        testChildAmount(2);
-        testTitle("You died...");
+        assertChildAmount(2);
+        assertTitle("You died...");
     }
 
     @Test
     public void testConstructorTimeUp() {
         new LevelLostState(new Level(""), true);
-        testChildAmount(2);
-        testTitle("Time's up!");
+        assertChildAmount(2);
+        assertTitle("Time's up!");
     }
 
     @Test

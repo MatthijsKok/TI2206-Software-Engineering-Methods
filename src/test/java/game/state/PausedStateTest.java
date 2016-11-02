@@ -13,7 +13,7 @@ public class PausedStateTest extends AbstractGameStateTest {
     @Test
     public void testConstructor() {
         new PausedState(new Level(""));
-        testChildAmount(4);
+        assertChildAmount(4);
     }
 
     @Test

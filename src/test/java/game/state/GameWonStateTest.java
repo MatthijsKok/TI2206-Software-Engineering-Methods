@@ -13,7 +13,7 @@ public class GameWonStateTest extends AbstractGameStateTest {
     @Test
     public void testConstructor() {
         new GameWonState();
-        testChildAmount(2);
+        assertChildAmount(2);
     }
 
     @Test

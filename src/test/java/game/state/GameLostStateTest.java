@@ -13,7 +13,7 @@ public class GameLostStateTest extends AbstractGameStateTest {
     @Test
     public void testConstructor() {
         new GameLostState();
-        testChildAmount(2);
+        assertChildAmount(2);
     }
 
     @Test
