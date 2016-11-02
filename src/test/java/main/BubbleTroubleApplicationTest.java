@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import level.Level;
 import level.LevelTimer;
 import org.testfx.framework.junit.ApplicationTest;
+import util.SceneManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class BubbleTroubleApplicationTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws Exception {
         BubbleTrouble.loadScenes(stage);
+        SceneManager.goToScene("MainMenu");
 
         setUpGame();
     }
