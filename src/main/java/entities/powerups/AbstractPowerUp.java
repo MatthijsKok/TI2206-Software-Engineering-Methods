@@ -11,12 +11,10 @@ abstract class AbstractPowerUp {
      * The default power-up sprite.
      */
     private static final Sprite POWER_UP_SPRITE = new Sprite("images/powerUps/speed_boost.png");
-
     /**
      * The character which picked up the power-up.
      */
     private Character target;
-
     /**
      * The sprite of the power-up.
      */
@@ -36,7 +34,7 @@ abstract class AbstractPowerUp {
 
     /**
      * Enables the effect of the specific power-up.
-     * @param character Character - character that picked up the power-up.
+     * @param character Character character that picked up the power-up.
      */
     /* default */ final void setTarget(final Character character) {
         target = character;
@@ -52,14 +50,14 @@ abstract class AbstractPowerUp {
 
     /**
      * Sets the sprite of this power-up.
-     * @param sprite Sprite - sprite to set.
+     * @param sprite Sprite to set.
      */
     protected final void setSprite(final Sprite sprite) {
         this.sprite = sprite;
     }
 
     /**
-     * @return Sprite - sprite of the power-up.
+     * @return Sprite of the power-up.
      */
     protected final Sprite getSprite() {
         return sprite;
