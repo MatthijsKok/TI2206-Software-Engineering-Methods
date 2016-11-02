@@ -20,27 +20,22 @@ public class Player implements Observer {
      * The amount of lives the player starts the game with.
      */
     private static final int LIVES_AT_START = 3;
-
     /**
      * The ID of the player.
      */
     private final int id;
-
     /**
      * These Strings represent the keyboard characters this player uses.
      */
     private final String leftKey, rightKey, shootKey;
-
     /**
      * The initial score of a player is zero.
      */
     private int score;
-
     /**
      * Every player starts with 3 lives.
      */
     private int lives = LIVES_AT_START;
-
     /**
      * The entities.character this player observes. Changes each level.
      */
@@ -48,11 +43,10 @@ public class Player implements Observer {
 
     /**
      * Creates a new player instance with the keys.
-     *
      * @param leftKey  The keyboard key that makes the character move left.
      * @param rightKey The keyboard key that makes the character move right.
      * @param shootKey The keyboard key that makes the character shoot.
-     * @param id The id of the player.
+     * @param id       The id of the player.
      */
     public Player(int id, String leftKey, String rightKey, String shootKey) {
         this.id = id;
@@ -62,22 +56,21 @@ public class Player implements Observer {
     }
 
     /**
-     * Removes the entities.character instance from this player.
+     * Removes the character instance from this player.
      */
     public void clearCharacter() {
         character = null;
     }
 
     /**
-     * @return The entities.character instance this player controls.
+     * @return The character instance this player controls.
      */
     public Character getCharacter() {
         return character;
     }
 
     /**
-     * Assigns a entities.character instance to this player.
-     *
+     * Assigns a character instance to this player.
      * @param character the entities.character to assign.
      */
     public void setCharacter(Character character) {
@@ -90,7 +83,6 @@ public class Player implements Observer {
 
     /**
      * Entry point for observations.
-     *
      * @param observable The observable that is updated.
      * @param obj        The changes that are observed.
      */
@@ -103,7 +95,6 @@ public class Player implements Observer {
 
     /**
      * Updates the player according to the information in the HashMap the Character supplied.
-     *
      * @param pair The pair containing information about the changed state of the Character object.
      */
     private void updateFromCharacter(Pair<String, Object> pair) {

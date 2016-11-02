@@ -24,7 +24,7 @@ public final class GameStateHelper {
 
     /**
      * Sets the pane where game overlays should be drawn on.
-     * @param anchor Pane - The pane where game overlays should
+     * @param anchor Pane where game overlays should
      *               be drawn on.
      */
     public static void setAnchor(final Pane anchor) {
@@ -33,8 +33,7 @@ public final class GameStateHelper {
 
     /**
      * Sets the overlay in SceneManager.
-     *
-     * @param overlay Pane - The pane to draw as overlay.
+     * @param overlay Pane to draw as overlay.
      */
     /* default */ static void setOverlay(final Pane overlay) {
         if (!anchor.getChildren().isEmpty()) {
