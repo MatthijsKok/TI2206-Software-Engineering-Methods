@@ -208,21 +208,22 @@ public final class Logger {
      * @throws IOException if you make an invalid logfile.
      */
     /* default */ void writeLogRecords() throws IOException {
-        try (FileWriter fw = new FileWriter(logFile, true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter out = new PrintWriter(bw)) {
 
-            synchronized (logRecords) {
+        synchronized (logRecords) {
+            try (FileWriter fw = new FileWriter(logFile, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter out = new PrintWriter(bw)) {
+
                 for (LogRecord logRecord : logRecords) {
                     out.write(logRecord.format());
                 }
+
+                purgeLogRecords();
+
+            } catch (IOException e) {
+                error("Log could not be written to file.");
+                throw e;
             }
-
-            purgeLogRecords();
-
-        } catch (IOException e) {
-            error("Log could not be written to file.");
-            throw e;
         }
     }
 
