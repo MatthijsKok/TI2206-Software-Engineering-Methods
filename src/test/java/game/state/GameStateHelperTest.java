@@ -5,9 +5,13 @@ import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import level.Level;
 import main.BubbleTroubleApplicationTest;
+import main.UtilityClassTest;
 import org.junit.Test;
 import util.SceneManager;
 
+import java.lang.reflect.InvocationTargetException;
+
+import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
@@ -63,6 +67,16 @@ public class GameStateHelperTest extends BubbleTroubleApplicationTest {
                 new Level("does_not_exist.json"));
 
         assertTrue(Game.getState() instanceof NotStartedState);
+    }
+
+    @Test
+    public void testUtilityClass() {
+        try {
+            UtilityClassTest.assertUtilityClassWellDefined(GameStateHelper.class);
+        } catch (NoSuchMethodException | InstantiationException
+                | IllegalAccessException | InvocationTargetException e) {
+            fail();
+        }
     }
 
 }

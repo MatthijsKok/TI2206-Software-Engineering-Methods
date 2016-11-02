@@ -1,9 +1,14 @@
 package util.sound;
 
 import javafx.embed.swing.JFXPanel;
+import main.UtilityClassTest;
 import org.junit.Before;
 import org.junit.Test;
+import util.JSONParser;
 
+import java.lang.reflect.InvocationTargetException;
+
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -24,12 +29,6 @@ public class MusicTest {
         assertNull(Music.getCurrentMusic());
     }
 
-//    @Test
-//    public void testSetMusicValidURI() {
-//        Music.setMusic("yoshi_falls.mp3");
-//        assertNotNull(Music.getCurrentMusic());
-//    }
-
     @Test
     public void testSetInvalidSoundEffectVolume() {
         Music.setMusicVolume(1);
@@ -41,5 +40,15 @@ public class MusicTest {
     public void testSetValidSoundEffectVolume() {
         Music.setMusicVolume(0.5);
         assertEquals(0.5, Music.getMusicVolume(), 0);
+    }
+
+    @Test
+    public void testUtilityClass() {
+        try {
+            UtilityClassTest.assertUtilityClassWellDefined(Music.class);
+        } catch (NoSuchMethodException | InstantiationException
+                | IllegalAccessException | InvocationTargetException e) {
+            fail();
+        }
     }
 }

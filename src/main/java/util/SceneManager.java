@@ -39,6 +39,8 @@ public final class SceneManager {
      */
     public static void setStage(Stage stage) {
         SceneManager.stage = stage;
+        scenes.clear();
+        history.clear();
     }
 
     /**
