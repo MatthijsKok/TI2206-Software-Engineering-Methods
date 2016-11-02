@@ -16,7 +16,6 @@ public class MarioButton extends Button {
      *                 the button is clicked.
      */
     public MarioButton(String text, EventHandler<ActionEvent> onAction) {
-        getStyleClass().add("green");
         setText(text);
         setOnAction(onAction);
     }

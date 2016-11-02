@@ -52,7 +52,7 @@ public class BubbleTrouble extends Application {
      * Initializes all scenes the app uses.
      * @param stage The stage the app plays in.
      */
-    public static void loadScenes(final Stage stage) {
+    static void loadScenes(final Stage stage) {
         StageManager.init(stage);
 
         SceneManager.setStage(stage);
