@@ -37,17 +37,17 @@ public final class PickupFactory {
      */
     private static AbstractPowerUp createRandomPowerUp() {
         int totalProbability = powerUpProbabilities.stream()
-                .map(Pair::getL)
+                .map(Pair::getLeftValue)
                 .reduce(0, (a, b) -> a + b);
         double random = Math.random() * totalProbability;
 
         int p = 0, i = 0;
-        while ((p = p + powerUpProbabilities.get(i).getL()) < random) {
+        while ((p = p + powerUpProbabilities.get(i).getLeftValue()) < random) {
             i++;
         }
 
         try {
-            return (AbstractPowerUp) powerUpProbabilities.get(i).getR().newInstance();
+            return (AbstractPowerUp) powerUpProbabilities.get(i).getRightValue().newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }

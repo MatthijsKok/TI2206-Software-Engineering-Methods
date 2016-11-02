@@ -71,7 +71,7 @@ class OverlayMenu extends Pane {
      */
     private MarioButton createItem(
             Pair<String, EventHandler<ActionEvent>> item, int index) {
-        MarioButton button = new MarioButton(item.getL(), item.getR());
+        MarioButton button = new MarioButton(item.getLeftValue(), item.getRightValue());
 
         button.setLayoutX(PADDING.x);
         button.setLayoutY(PADDING.y + index * ITEM_HEIGHT);

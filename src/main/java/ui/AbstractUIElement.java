@@ -17,14 +17,14 @@ abstract class AbstractUIElement {
     }
 
     /**
-     * @return Canvas - The getCanvas to draw on.
+     * @return Canvas, The getCanvas to draw on.
      */
     protected final Canvas getCanvas() {
         return CanvasManager.getCanvas();
     }
 
     /**
-     * @return GraphicsContext - The graphics context to draw on.
+     * @return GraphicsContext, The graphics context to draw on.
      */
     protected final GraphicsContext getGraphicsContext() {
         return CanvasManager.getContext();

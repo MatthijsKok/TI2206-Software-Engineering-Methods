@@ -14,17 +14,14 @@ public class SinglePlayerHUD extends HeadsUpDisplay {
      * The heart sprite.
      */
     private static final Sprite HEART = new Sprite("images/heart.png");
-
     /**
      * The offset of the start place of the hearts.
      */
     private static final Vec2d MARGIN = new Vec2d(16, 64);
-
     /**
      * The space between to heart sprites.
      */
     private static final double SPACE = 48;
-
     /**
      * The player this HUD draws the lives for.
      */
@@ -32,7 +29,7 @@ public class SinglePlayerHUD extends HeadsUpDisplay {
 
     /**
      * Creates a new SinglePlayerHUD.
-     * @param timer The timer to draw the HUD for.
+     * @param timer  The timer to draw the HUD for.
      * @param player The player to draw the HUD for.
      */
     public SinglePlayerHUD(LevelTimer timer, Player player) {
