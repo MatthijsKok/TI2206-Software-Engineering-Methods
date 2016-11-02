@@ -18,6 +18,7 @@ import util.sound.SoundEffect;
  * Bubble Trouble is a game written in JavaFX.
  */
 public class BubbleTrouble extends Application {
+
     /**
      * The logger access point to which everything will be logged.
      */
@@ -67,6 +68,9 @@ public class BubbleTrouble extends Application {
         SceneManager.goToScene("MainMenu");
     }
 
+    /**
+     * Loads sounds and sets the volume.
+     */
     private static void loadSounds() {
         // Set volume
         String volume;
@@ -93,5 +97,4 @@ public class BubbleTrouble extends Application {
         Music.setMusic("menu_gusty_garden.mp3");
         Music.startMusic();
     }
-
 }

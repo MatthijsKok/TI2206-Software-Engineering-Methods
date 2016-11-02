@@ -11,8 +11,8 @@ public class MarioButton extends Button {
 
     /**
      * Creates a new MarioButton with the text and event handler.
-     * @param text String - The text to display on the button.
-     * @param onAction EventHandler - The method that occurs when
+     * @param text     String, the text to display on the button.
+     * @param onAction EventHandler, the method that occurs when
      *                 the button is clicked.
      */
     public MarioButton(String text, EventHandler<ActionEvent> onAction) {

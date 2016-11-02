@@ -51,7 +51,7 @@ public class MainMenu extends Pane {
 
     /**
      * Creates the background.
-     * @return backgroundImage
+     * @return backgroundImage.
      */
     private BackgroundImage createBackgroundImage() {
         Image image = new Image("images/menu.jpg");
@@ -60,7 +60,7 @@ public class MainMenu extends Pane {
 
     /**
      * Button to start a singlePlayerGame.
-     * @return Button - singlePlayerGame
+     * @return Button singlePlayerGame.
      */
     private Button createSinglePlayerButton() {
         Button button = new MarioButton("Start Single Player Game",
@@ -73,7 +73,7 @@ public class MainMenu extends Pane {
 
     /**
      * Button to start a multiPlayerGame.
-     * @return Button - multiPlayerGame
+     * @return Button multiPlayerGame.
      */
     private Button createMultiPlayerButton() {
         Button button = new MarioButton("Start Multi Player Game",
@@ -86,7 +86,7 @@ public class MainMenu extends Pane {
 
     /**
      * Creates a settings button.
-     * @return Button - Settings button
+     * @return Button Settings button.
      */
     private Button createSettingsButton() {
         Button button = new MarioButton("Settings",
@@ -99,7 +99,7 @@ public class MainMenu extends Pane {
 
     /**
      * Button to quit the game.
-     * @return Button - Quit button.
+     * @return Button, Quit button.
      */
     private Button createQuitButton() {
         Button button = new MarioButton("Quit",
@@ -110,6 +110,11 @@ public class MainMenu extends Pane {
         return button;
     }
 
+    /**
+     * Start a new game.
+     * @param levels      List<String> of levels that the game contains.
+     * @param playerCount int with amount of players.
+     */
     private void startGame(List<String> levels, int playerCount) {
         Game.setLevelsFromFiles(levels);
         Game.setPlayerCount(playerCount);
