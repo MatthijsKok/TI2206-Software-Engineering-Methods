@@ -1,7 +1,6 @@
 package entities;
 
 import com.sun.javafx.geom.Vec2d;
-import com.sun.tools.doclint.Entity;
 import entities.balls.ColoredBall;
 import junit.framework.TestCase;
 import main.UtilityClassTest;
