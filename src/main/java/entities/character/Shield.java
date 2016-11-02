@@ -56,6 +56,9 @@ public class Shield extends AbstractEntity implements CollidingEntity {
         }
     }
 
+    /**
+     * If the shield collides with a ball it should become invisible.
+     */
     private void collideWithBall() {
         setVisibility(false);
     }

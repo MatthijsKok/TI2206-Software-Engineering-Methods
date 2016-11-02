@@ -24,8 +24,7 @@ public class Gun<T extends AbstractBullet> extends AbstractEntity implements Dyn
      */
     private final Class<T> bulletType;
     /**
-     * The amount of bullets this character can shoot
-     * concurrently.
+     * The amount of bullets this character can shoot concurrently.
      */
     private int maxConcurrentShots = 1;
     /**
@@ -43,10 +42,9 @@ public class Gun<T extends AbstractBullet> extends AbstractEntity implements Dyn
 
     /**
      * Creates a new Gun instance.
-     *
-     * @param character Character - The character this gun
+     * @param character Character the character this gun
      *                  belongs to.
-     * @param bulletType Class - The type of bullet this gun
+     * @param bulletType Class the type of bullet this gun
      *                   shoots.
      */
     Gun(final Character character, final Class<T> bulletType) {
@@ -97,8 +95,7 @@ public class Gun<T extends AbstractBullet> extends AbstractEntity implements Dyn
 
     /**
      * Toggles whether the character should be shooting.
-     *
-     * @param shooting Boolean - indicates whether the character
+     * @param shooting Boolean indicates whether the character
      *                 is shooting or not.
      */
     public void setShooting(final boolean shooting) {
@@ -107,8 +104,7 @@ public class Gun<T extends AbstractBullet> extends AbstractEntity implements Dyn
 
     /**
      * Increases the amount of bullets this character can shoot.
-     *
-     * @param amount Integer - the amount of bullets a character
+     * @param amount Integer the amount of bullets a character
      *               can shoot extra.
      */
     public void increaseMaxConcurrentShots(final int amount) {

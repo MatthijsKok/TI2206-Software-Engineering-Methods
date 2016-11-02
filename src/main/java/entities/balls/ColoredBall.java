@@ -90,7 +90,7 @@ public class ColoredBall extends AbstractBall {
 
     /**
      * Gets the ball color.
-     * @return Enum with options BLUE, GREEN, ORANGE, PURPLE, RED and YELLOW.
+     * @return ball.COLOR.
      */
     public Color getColor() {
         return color;
