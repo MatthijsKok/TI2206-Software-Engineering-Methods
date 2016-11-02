@@ -9,6 +9,7 @@ import java.util.List;
  * Class used for handling collision between entities.
  */
 final class CollisionManager {
+
     /**
      * Entities that entities which need collision handling may
      * collide with.

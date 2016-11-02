@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
  * Manages the entities for a level.
  */
 class EntityManager {
+
     /**
      * The entities currently active in the level.
      */
@@ -47,7 +48,6 @@ class EntityManager {
 
     /**
      * Register that an entity has to be added.
-     *
      * @param e entity to add
      */
     /* default */ final void addEntity(final AbstractEntity e) {
@@ -56,7 +56,6 @@ class EntityManager {
 
     /**
      * Register that an entity has to be removed.
-     *
      * @param e The entity to remove
      * @return true if e is not already removed, false otherwise
      */
@@ -71,10 +70,8 @@ class EntityManager {
 
     /**
      * Updates all entities in this manager.
-     *
      * @param timeDifference time difference between now and last update
-     *
-     * @return Boolean - Indicates whether entities have changed.
+     * @return Boolean indicates whether entities have changed.
      */
     /* default */ boolean update(final double timeDifference) {
         for (DynamicEntity entity : dynamicEntities) {
