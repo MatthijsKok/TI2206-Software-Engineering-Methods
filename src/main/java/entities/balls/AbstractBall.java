@@ -32,18 +32,17 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
      */
     private static final double GROW_FACTOR = 2;
     /**
-     * Bounce speed for the different ball sizes.
+     * Bounce speeds for the different ball sizes.
      */
     private static final double[] BOUNCE_SPEEDS = {225, 300, 375, 450, 500};
     /**
-     * Horizontal speed of a ball. In pixels per second.
+     * Horizontal speed of a ball, in pixels per second.
      */
-    private static final double HORIZONTAL_SPEED = 100; // px/s
+    private static final double HORIZONTAL_SPEED = 100;
     /**
      * The collision shape of a ball.
      */
-    private static final Circle BALL_SHAPE = new Circle(51);
-
+    private static final Circle BALL_COLLISION_SHAPE = new Circle(51);
     /**
      * Size of a ball. from 0 (16 x 16px) to 4 (256 x 256px).
      */
@@ -51,9 +50,8 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
 
     /**
      * Creates a new AbstractBall at position position, with size size and color color.
-     *
-     * @param position ball position
-     * @param size     ball size
+     * @param position ball Vec2d position
+     * @param size     ball int size
      */
     AbstractBall(final Vec2d position, final int size) {
         this(position, size, new Vec2d(HORIZONTAL_SPEED, 0));
@@ -61,7 +59,6 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
 
     /**
      * Constructor for the bouncing balls in our game.
-     *
      * @param position Vec2d of the starting position of the ball.
      * @param size     Integer ranging 0-4 representing the ball size.
      * @param speed    Vec2d initial speed of the bal.
@@ -72,7 +69,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
         this.size = Math.max(0, size);
 
         setScale();
-        setShape(new Circle(BALL_SHAPE));
+        setShape(new Circle(BALL_COLLISION_SHAPE));
         setSpeed(speed);
         setPhysicsBehaviour(new GravityBehaviour(this));
     }
@@ -86,7 +83,6 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
 
     /**
      * Gets the ball size.
-     *
      * @return Integer from 0 (tiny ball) to 4 (huge ball).
      */
     public final int getSize() {
@@ -95,8 +91,8 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
 
     /**
      * Removes this ball from the level and adds two smaller balls on the same
-     * position, moving in different directions. If the ball is already at it's
-     * smallest, no new balls will be added.
+     * position, moving in different x directions. If the ball is already at it's
+     * smallest, the ball will disappear and no new balls will be added.
      */
     /* default */ void die() {
         getLevel().removeEntity(this);
@@ -107,7 +103,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     }
 
     /**
-     * Set the vertical speed to up at the speed for that balls bounce height.
+     * Set the vertical speed to of the ball to the bounceSpeed.
      */
     private void bounce() {
         setYSpeed(-getBounceSpeed());
@@ -115,7 +111,8 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     }
 
     /**
-     * @return The bounce speed of this ball.
+     * Get the bounceSpeed.
+     * @return The bounce speed of this ball, dependent on it's size.
      */
     private double getBounceSpeed() {
         return BOUNCE_SPEEDS[size];
@@ -139,9 +136,8 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     }
 
     /**
-     * The behaviour of the AbstractBall when it collides with a FloorBlock.
-     *
-     * @param ceiling The FloorBlock this AbstractBall collides with.
+     * The behaviour of an AbstractBall when it collides with a FloorBlock.
+     * @param ceiling The SpikeBlock this AbstractBall collides with.
      */
     private void collideWith(SpikeBlock ceiling) {
         setY(Math.max(
@@ -161,8 +157,7 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
     }
 
     /**
-     * The behaviour of the AbstractBall when it collides with a WallBlock.
-     *
+     * The behaviour of an AbstractBall when it collides with a WallBlock.
      * @param block The AbstractBlock AbstractEntity this AbstractBall collides with.
      */
     private void collideWith(AbstractBlock block) {

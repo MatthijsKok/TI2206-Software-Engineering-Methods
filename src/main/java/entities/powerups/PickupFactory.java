@@ -64,7 +64,7 @@ public final class PickupFactory {
 
     /**
      * Creates a new Pickup and adds it to a level.
-     * @param level the level the pickup is created in.
+     * @param level    the level the pickup is created in.
      * @param position the spawn position of this pickup.
      */
     public static void spawnRandomPickUp(Level level, Vec2d position) {

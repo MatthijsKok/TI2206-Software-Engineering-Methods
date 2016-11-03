@@ -12,7 +12,6 @@ class SpeedBoost extends AbstractDuringPowerUp {
      * The applied speed boost in px/s.
      */
     private static final double SPEED_BOOST = 100;
-
     /**
      * Sprite of the speed boost power-up.
      */
