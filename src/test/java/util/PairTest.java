@@ -17,25 +17,25 @@ public class PairTest {
 
     @Test
     public void testGetL() {
-        assertThat(pair.getL(), is(l1));
+        assertThat(pair.getKey(), is(l1));
     }
 
     @Test
     public void testGetR() {
-        assertThat(pair.getR(), is(r1));
+        assertThat(pair.getValue(), is(r1));
     }
 
     @Test
     public void testSetL() {
         final char l2 = 'b';
-        pair.setL(l2);
-        assertThat(pair.getL(), is(l2));
+        pair.setKey(l2);
+        assertThat(pair.getKey(), is(l2));
     }
 
     @Test
     public void testSetR() {
         final int r2 = 2;
-        pair.setR(r2);
-        assertThat(pair.getR(), is(r2));
+        pair.setValue(r2);
+        assertThat(pair.getValue(), is(r2));
     }
 }
