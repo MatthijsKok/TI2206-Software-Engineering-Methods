@@ -2,6 +2,7 @@ package entities;
 
 import entities.balls.ColoredBall;
 import entities.blocks.FloorBlock;
+import entities.blocks.Gate;
 import entities.blocks.WallBlock;
 import entities.character.Character;
 import org.json.JSONObject;
@@ -25,11 +26,15 @@ public class EntityFactoryClassNameTest extends AbstractEntityFactoryTest {
         JSONObject ballParams = new JSONObject();
         ballParams.put("size", 2);
 
+        JSONObject gateParams = new JSONObject();
+        gateParams.put("color", "blue");
+
         return Arrays.asList(new Object[][] {
                 { createJSONEntity("Player", 10, 10), Character.class },
                 { createJSONEntity("Ball",   20, 10, ballParams), ColoredBall.class },
                 { createJSONEntity("Wall",   30, 10), WallBlock.class },
-                { createJSONEntity("Floor",  10, 30), FloorBlock.class }
+                { createJSONEntity("Floor",  10, 30), FloorBlock.class },
+                { createJSONEntity("Gate",   10, 30, gateParams), Gate.class }
         });
     }
 

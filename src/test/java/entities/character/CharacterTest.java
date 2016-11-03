@@ -207,4 +207,13 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
 
         assertThat(player.getLives(), is(lives + 1));
     }
+
+    @Test
+    public void testIncreaseScore() {
+        final int score = player.getScore();
+
+        character.increaseScore(100);
+
+        assertThat(player.getScore(), is(score + 100));
+    }
 }
