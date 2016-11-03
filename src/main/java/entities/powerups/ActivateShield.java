@@ -11,7 +11,7 @@ class ActivateShield extends AbstractInstantPowerUp {
     /**
      * The sprite of the shield power-up.
      */
-    private static final Sprite SHIELD_SPRITE = new Sprite("images/powerUps/Shield.png");
+    private static final Sprite SHIELD_SPRITE = new Sprite("powerUps/Shield.png");
 
     /**
      * Constructor for a new shield power-up.

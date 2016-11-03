@@ -1,7 +1,7 @@
 {
-  "name": "Level 2",
+  "name": "Cookie cave",
   "duration": 25,
-  "backgroundImageURI": "images/backgrounds/cave.png",
+  "backgroundImageURI": "cave.png",
   "backgroundMusicURI": "underground_remix.mp3",
   "entities": [
     {

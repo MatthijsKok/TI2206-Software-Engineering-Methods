@@ -11,7 +11,7 @@ public class WallBlock extends AbstractBlock {
     /**
      * The sprite of the wall.
      */
-    /* default */ static final Sprite WALL_SPRITE = new Sprite("images/blocks/wall.png");
+    private static final Sprite WALL_SPRITE = new Sprite("blocks/wall.png");
 
     /**
      * Creates a wall on position (x,y).

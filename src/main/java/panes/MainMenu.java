@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import panes.elements.MarioButton;
 import util.SceneManager;
+import util.logging.Logger;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -54,7 +55,7 @@ public class MainMenu extends Pane {
      * @return backgroundImage.
      */
     private BackgroundImage createBackgroundImage() {
-        Image image = new Image("images/menu.jpg");
+        Image image = new Image("images/backgrounds/menu.jpg");
         return new BackgroundImage(image, null, null, null, null);
     }
 
@@ -103,7 +104,10 @@ public class MainMenu extends Pane {
      */
     private Button createQuitButton() {
         Button button = new MarioButton("Quit",
-                event -> Platform.exit());
+                event -> {
+                    Logger.getInstance().writeLogRecords();
+                    Platform.exit();
+                });
         button.setLayoutX(180);
         button.setLayoutY(402);
 

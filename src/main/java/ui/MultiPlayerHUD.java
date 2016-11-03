@@ -14,7 +14,7 @@ public class MultiPlayerHUD extends HeadsUpDisplay {
     /**
      * The heart sprite.
      */
-    private static final Sprite HEART = new Sprite("images/heart.png");
+    private static final Sprite HEART = new Sprite("heart.png");
     /**
      * The offset of the start place of the hearts.
      */

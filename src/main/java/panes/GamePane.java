@@ -23,7 +23,7 @@ public class GamePane extends Pane {
 
         getChildren().add(canvas);
 
-        Pane overlay = new Pane();
+        final Pane overlay = new Pane();
         overlay.setPrefSize(
                 canvas.getWidth(),
                 canvas.getHeight());

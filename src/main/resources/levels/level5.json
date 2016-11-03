@@ -1,7 +1,7 @@
 {
-  "name": "Level 5",
+  "name": "Green garden",
   "duration": 40,
-  "backgroundImageURI": "images/backgrounds/overworld.png",
+  "backgroundImageURI": "overworld.png",
   "backgroundMusicURI": "peach_gardens.mp3",
   "entities": [
     {

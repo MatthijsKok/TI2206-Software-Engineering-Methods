@@ -3,10 +3,8 @@ package level;
 import com.sun.javafx.geom.Vec2d;
 import entities.AbstractEntity;
 import game.Game;
-import graphics.Sprite;
+import graphics.Background;
 import javafx.application.Platform;
-import javafx.scene.canvas.Canvas;
-import util.CanvasManager;
 import util.StageManager;
 import util.logging.Logger;
 import util.sound.Music;
@@ -31,7 +29,7 @@ public class Level {
     /**
      * The default background image of a level.
      */
-    private static final Sprite DEFAULT_BACKGROUND_IMAGE = new Sprite("images/backgrounds/mountains.png");
+    private static final Background DEFAULT_BACKGROUND_IMAGE = new Background("mountains.png");
     /**
      * The default background music of a level.
      */
@@ -51,11 +49,7 @@ public class Level {
     /**
      * The background image of this level.
      */
-    private Sprite backgroundImage = DEFAULT_BACKGROUND_IMAGE;
-    /**
-     * The scale at which the background image is drawn.
-     */
-    private double backgroundImageScale = 1;
+    private Background backgroundImage = DEFAULT_BACKGROUND_IMAGE;
     /**
      * A timer for which handles all time related things for this level.
      */
@@ -134,9 +128,7 @@ public class Level {
 
         // Draw background
         LOGGER.trace("Drawing background.");
-
-        final Canvas canvas = CanvasManager.getCanvas();
-        backgroundImage.draw(canvas.getWidth() / 2, canvas.getHeight() / 2, backgroundImageScale);
+        backgroundImage.draw();
 
         entityManager.draw();
     }
@@ -200,17 +192,10 @@ public class Level {
 
     /**
      * Sets the levels background image.
-     * @param backgroundImage URI of the image file.
+     * @param filename URI of the image file.
      */
-    /* default */ void setBackgroundImage(String backgroundImage) {
-        Canvas canvas = CanvasManager.getCanvas();
-        if (backgroundImage != null && !backgroundImage.equals("")) {
-            this.backgroundImage = new Sprite(backgroundImage);
-            this.backgroundImage.setOffsetToCenter();
-            this.backgroundImageScale = Math.max(
-                    canvas.getWidth() / this.backgroundImage.getWidth(),
-                    canvas.getHeight() / this.backgroundImage.getHeight());
-        }
+    /* default */ void setBackgroundImage(String filename) {
+        backgroundImage = new Background(filename);
     }
 
     /**

@@ -201,14 +201,13 @@ public final class Logger {
     /**
      * Write all LogRecords in the ArrayList to the log file,
      * and then purges the ArrayList.
-     * @throws IOException if you make an invalid logfile.
      */
-    /* default */ void writeLogRecords() throws IOException {
+    public void writeLogRecords() {
 
         synchronized (logRecords) {
             try (FileWriter fw = new FileWriter(logFile, true);
-                BufferedWriter bw = new BufferedWriter(fw);
-                PrintWriter out = new PrintWriter(bw)) {
+                 BufferedWriter bw = new BufferedWriter(fw);
+                 PrintWriter out = new PrintWriter(bw)) {
 
                 for (LogRecord logRecord : logRecords) {
                     out.write(logRecord.format());
@@ -217,8 +216,9 @@ public final class Logger {
                 purgeLogRecords();
 
             } catch (IOException e) {
-                error("Log could not be written to file.");
-                throw e;
+                System.out.println("hoi!");
+                e.printStackTrace();
+                error("Log could not be written to file." + e.getMessage());
             }
         }
     }

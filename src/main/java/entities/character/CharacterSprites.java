@@ -12,16 +12,16 @@ final class CharacterSprites {
      * The idle sprites of characters.
      */
     private static final Sprite[] IDLE_SPRITES = {
-            new Sprite("images/player/mario_idle.png", 1, new Vec2d(8, 32 - 16)),
-            new Sprite("images/player/yoshi_idle.png", 1, new Vec2d(8, 32 - 16))
+            new Sprite("player/mario_idle.png", 1, new Vec2d(8, 32 - 16)),
+            new Sprite("player/yoshi_idle.png", 1, new Vec2d(8, 32 - 16))
     };
 
     /**
      * The running sprites of characters.
      */
     private static final Sprite[] RUNNING_SPRITES = {
-            new Sprite("images/player/mario_running.png", 8, new Vec2d(11, 35 - 16)),
-            new Sprite("images/player/yoshi_running.png", 8, new Vec2d(11, 37 - 16))
+            new Sprite("player/mario_running.png", 8, new Vec2d(11, 35 - 16)),
+            new Sprite("player/yoshi_running.png", 8, new Vec2d(11, 37 - 16))
     };
 
     /**

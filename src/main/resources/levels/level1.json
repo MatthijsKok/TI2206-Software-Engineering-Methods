@@ -1,7 +1,7 @@
 {
-  "name": "Level 1",
+  "name": "Yoshi's Island",
   "duration": 15,
-  "backgroundImageURI": "images/backgrounds/mountains.png",
+  "backgroundImageURI": "mountains.png",
   "backgroundMusicURI": "mario_theme_remix.mp3",
   "entities": [
     {

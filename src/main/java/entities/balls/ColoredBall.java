@@ -21,12 +21,12 @@ public class ColoredBall extends AbstractBall {
     private static final Map<Color, Sprite> SPRITES = new ConcurrentHashMap<>();
 
     static {
-        SPRITES.put(Color.BLUE,   new Sprite("images/balls/blue_ball.png"));
-        SPRITES.put(Color.GREEN,  new Sprite("images/balls/green_ball.png"));
-        SPRITES.put(Color.ORANGE, new Sprite("images/balls/orange_ball.png"));
-        SPRITES.put(Color.PURPLE, new Sprite("images/balls/purple_ball.png"));
-        SPRITES.put(Color.RED,    new Sprite("images/balls/red_ball.png"));
-        SPRITES.put(Color.YELLOW, new Sprite("images/balls/yellow_ball.png"));
+        SPRITES.put(Color.BLUE,   new Sprite("balls/blue_ball.png"));
+        SPRITES.put(Color.GREEN,  new Sprite("balls/green_ball.png"));
+        SPRITES.put(Color.ORANGE, new Sprite("balls/orange_ball.png"));
+        SPRITES.put(Color.PURPLE, new Sprite("balls/purple_ball.png"));
+        SPRITES.put(Color.RED,    new Sprite("balls/red_ball.png"));
+        SPRITES.put(Color.YELLOW, new Sprite("balls/yellow_ball.png"));
 
         SPRITES.values().forEach(Sprite::setOffsetToCenter);
     }
