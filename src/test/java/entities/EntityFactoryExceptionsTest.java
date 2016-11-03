@@ -2,8 +2,12 @@ package entities;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.ColoredBall;
+import junit.framework.TestCase;
+import main.UtilityClassTest;
 import org.json.JSONObject;
 import org.junit.Test;
+
+import java.lang.reflect.InvocationTargetException;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -45,5 +49,15 @@ public class EntityFactoryExceptionsTest extends AbstractEntityFactoryTest {
     public void testNonExistentType() {
         JSONObject json = createJSONEntity("Unknown", 0, 0);
         assertNull(EntityFactory.createEntity(json));
+    }
+
+    @Test
+    public void testUtilityClass() {
+        try {
+            UtilityClassTest.assertUtilityClassWellDefined(EntityFactory.class);
+        } catch (NoSuchMethodException | InstantiationException
+                | IllegalAccessException | InvocationTargetException e) {
+            TestCase.fail();
+        }
     }
 }

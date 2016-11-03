@@ -49,13 +49,6 @@ public class LoggerTest {
     }
 
     @Test
-    public void fatalTest() {
-        logger.setLevel(LogLevel.FATAL);
-        logger.fatal(LOG_MESSAGE);
-        assertThat(logger.getLogRecords().size(), is(1));
-    }
-
-    @Test
     public void errorTest() {
         logger.setLevel(LogLevel.ERROR);
         logger.error(LOG_MESSAGE);

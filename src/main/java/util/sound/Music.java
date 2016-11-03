@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public final class Music {
 
     /**
-     * The mediaPlayer that plays the background music.
+     * The media player that plays the background music.
      */
     private static MediaPlayer mediaPlayer;
     /**
@@ -97,13 +97,6 @@ public final class Music {
      */
     public static double getMusicVolume() {
         return musicVolume;
-    }
-
-    /**
-     * @return The MediaPlayer object controlling the music.
-     */
-    public static MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
     }
 
     /**

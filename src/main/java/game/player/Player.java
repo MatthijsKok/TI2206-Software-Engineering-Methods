@@ -98,12 +98,12 @@ public class Player implements Observer {
      * @param pair The pair containing information about the changed state of the Character object.
      */
     private void updateFromCharacter(Pair<String, Object> pair) {
-        switch (pair.getLeftValue()) {
+        switch (pair.getKey()) {
             case "increaseLives":
-                increaseLives((int) pair.getRightValue());
+                increaseLives((int) pair.getValue());
                 break;
             case "increaseScore":
-                increaseScore((int) pair.getRightValue());
+                increaseScore((int) pair.getValue());
                 break;
             default:
                 break;

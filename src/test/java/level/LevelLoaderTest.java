@@ -1,4 +1,4 @@
-package game.player;
+package level;
 
 import main.UtilityClassTest;
 import org.junit.Test;
@@ -6,23 +6,15 @@ import org.junit.Test;
 import java.lang.reflect.InvocationTargetException;
 
 import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertNotNull;
 
 /**
- * Test suite for the PlayerFactory class.
+ * Test suite for the LevelLoader class.
  */
-public class PlayerFactoryTest {
-
-    @Test
-    public void testCreatePlayer2() {
-        Player player = PlayerFactory.createPlayer(2);
-        assertNotNull(player);
-    }
-
+public class LevelLoaderTest {
     @Test
     public void testUtilityClass() {
         try {
-            UtilityClassTest.assertUtilityClassWellDefined(PlayerFactory.class);
+            UtilityClassTest.assertUtilityClassWellDefined(LevelLoader.class);
         } catch (NoSuchMethodException | InstantiationException
                 | IllegalAccessException | InvocationTargetException e) {
             fail();
