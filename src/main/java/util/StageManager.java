@@ -12,17 +12,18 @@ public final class StageManager {
      * The default width of the game getCanvas.
      */
     private static final double DEFAULT_WIDTH = 1024;
-
     /**
      * The default height of the game getCanvas.
      */
     private static final double DEFAULT_HEIGHT = 640;
-
     /**
      * The main stage of the whole application.
      */
     private static Stage stage;
 
+    /**
+     * Empty constructor.
+     */
     private StageManager() {
 
     }
@@ -61,5 +62,4 @@ public final class StageManager {
     public static Stage getStage() {
         return stage;
     }
-
 }

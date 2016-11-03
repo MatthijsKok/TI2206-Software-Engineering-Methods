@@ -18,17 +18,18 @@ public final class SceneManager {
      * The HashMap that holds all Scenes.
      */
     private static Map<String, Scene> scenes = new HashMap<>();
-
     /**
      * The stage on which the scenes are shown.
      */
     private static Stage stage;
-
     /**
      * The scene history.
      */
     private static Stack<Scene> history = new Stack<>();
 
+    /**
+     * empty constructor.
+     */
     private SceneManager() {
 
     }
@@ -43,7 +44,6 @@ public final class SceneManager {
 
     /**
      * Creates a new Scene with a new Group as root.
-     *
      * @param pane The pane with the content of the scene.
      * @return The created Scene.
      */
@@ -53,8 +53,7 @@ public final class SceneManager {
 
     /**
      * Gets a Scene from the HashMap corresponding to the given String.
-     *
-     * @param name String - The name of the scene.
+     * @param name String with the name of the scene.
      * @return The Scene corresponding to the name.
      */
     public static Scene getScene(String name) {
@@ -63,7 +62,6 @@ public final class SceneManager {
 
     /**
      * Gets the Scene that is currently displayed.
-     *
      * @return The Scene that is currently displayed.
      */
     public static Scene getCurrentScene() {
@@ -76,7 +74,6 @@ public final class SceneManager {
 
     /**
      * Add the given Key, Value pair to the sceneHashMap.
-     *
      * @param name The String representing the name of the Scene.
      * @param pane The pane that containing the content of the scene.
      */
@@ -104,6 +101,9 @@ public final class SceneManager {
         setScene();
     }
 
+    /**
+     * Setter for the scene.
+     */
     private static void setScene() {
         stage.setScene(history.peek());
     }

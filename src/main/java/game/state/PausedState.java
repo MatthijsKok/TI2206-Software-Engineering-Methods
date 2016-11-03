@@ -17,8 +17,7 @@ class PausedState implements GameState {
 
     /**
      * Creates a new PausedState.
-     *
-     * @param level Level - The level that is paused.
+     * @param level Level, the level that is paused.
      */
     /* default */ PausedState(Level level) {
         this.level = level;

@@ -36,7 +36,6 @@ public class Level {
      * The default background music of a level.
      */
     private static final String DEFAULT_BACKGROUND_MUSIC = "mario_theme_remix.mp3";
-
     /**
      * The size of the level.
      */
@@ -57,7 +56,6 @@ public class Level {
      * The scale at which the background image is drawn.
      */
     private double backgroundImageScale = 1;
-
     /**
      * A timer for which handles all time related things for this level.
      */
@@ -91,7 +89,6 @@ public class Level {
 
     /**
      * Loads a level from a file.
-     *
      * @throws IOException when the file is not found.
      */
     public void load() throws IOException {
@@ -115,7 +112,6 @@ public class Level {
 
     /**
      * Updates the state of all entities in the level.
-     *
      * @param timeDifference time difference between now and last update
      */
     public final void update(final double timeDifference) {
@@ -170,7 +166,6 @@ public class Level {
 
     /**
      * Set the level size.
-     *
      * @param width  the width of the level
      * @param height the height of the level
      */
@@ -182,7 +177,6 @@ public class Level {
 
     /**
      * Sets the level's name.
-     *
      * @param name The name of this level.
      */
     /* default */ void setName(String name) {
@@ -191,7 +185,6 @@ public class Level {
 
     /**
      * Sets the level's timer.
-     *
      * @param timer The timer of this level.
      */
     public void setTimer(LevelTimer timer) {
@@ -199,7 +192,7 @@ public class Level {
     }
 
     /**
-     * @return Timer - The timer of this level.
+     * @return Timer, the timer of this level.
      */
     public LevelTimer getTimer() {
         return timer;
@@ -207,7 +200,6 @@ public class Level {
 
     /**
      * Sets the levels background image.
-     *
      * @param backgroundImage URI of the image file.
      */
     /* default */ void setBackgroundImage(String backgroundImage) {

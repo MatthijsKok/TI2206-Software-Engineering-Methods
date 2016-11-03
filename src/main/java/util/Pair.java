@@ -2,58 +2,57 @@ package util;
 
 /**
  * The class Pair contains a 2 values.
- *
- * @param <L> Type of the left value of the pair.
- * @param <R> Type of the right value of the pair.
+ * @param <LeftValue> Type of the left value of the pair.
+ * @param <RightValue> Type of the right value of the pair.
  */
-public class Pair<L, R> {
+public class Pair<LeftValue, RightValue> {
+
     /**
      * The left entry of the pair.
      */
-    private L l;
-
+    private LeftValue leftValue;
     /**
      * The right entry of the pair.
      */
-    private R r;
+    private RightValue rightValue;
 
     /**
      * Creates a new pair.
      * @param l Value of left entry.
      * @param r Value of right entry.
      */
-    public Pair(L l, R r) {
-        this.l = l;
-        this.r = r;
+    public Pair(LeftValue l, RightValue r) {
+        this.leftValue = l;
+        this.rightValue = r;
     }
 
     /**
      * @return The left value of the pair.
      */
-    public L getL() {
-        return l;
+    public LeftValue getLeftValue() {
+        return leftValue;
     }
 
     /**
      * Sets the left value of the pair.
-     * @param l The value of the left entry of the pair.
+     * @param leftValue The value of the left entry of the pair.
      */
-    public void setL(L l) {
-        this.l = l;
+    public void setLeftValue(LeftValue leftValue) {
+        this.leftValue = leftValue;
     }
 
     /**
      * @return The right value of the pair.
      */
-    public R getR() {
-        return r;
+    public RightValue getRightValue() {
+        return rightValue;
     }
 
     /**
      * Sets the right value of the pair.
-     * @param r The value of the right entry of the pair.
+     * @param rightValue The value of the right entry of the pair.
      */
-    public void setR(R r) {
-        this.r = r;
+    public void setRightValue(RightValue rightValue) {
+        this.rightValue = rightValue;
     }
 }

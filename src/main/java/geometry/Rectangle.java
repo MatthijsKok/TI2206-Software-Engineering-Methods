@@ -15,8 +15,8 @@ public class Rectangle extends AbstractShape {
 
     /**
      * Creates a new rectangle at position (0, 0) with size (width, height).
-     * @param width rectangle width
-     * @param height rectangle height
+     * @param width  rectangle width.
+     * @param height rectangle height.
      */
     public Rectangle(final double width, final double height) {
         this(0, 0, width, height);
@@ -43,10 +43,10 @@ public class Rectangle extends AbstractShape {
 
     /**
      * Creates a new rectangle at position (x, y) with size (width, height).
-     * @param x x coordinate
-     * @param y y coordinate
-     * @param width width
-     * @param height height
+     * @param x      x coordinate.
+     * @param y      y coordinate.
+     * @param width  width.
+     * @param height height.
      */
     private Rectangle(final double x, final double y, final double width, final double height) {
         super(x, y);
@@ -57,8 +57,8 @@ public class Rectangle extends AbstractShape {
     /**
      * Sets the size of the rectangle. Both width and height should be greater
      * than or equal to zero.
-     * @param width target width
-     * @param height target height
+     * @param width  target width.
+     * @param height target height.
      */
     private void setSize(double width, double height) {
         setSize(new Vec2d(width, height));
@@ -67,7 +67,7 @@ public class Rectangle extends AbstractShape {
     /**
      * Sets the size of the rectangle. Both width and height should be greater
      * than or equal to zero.
-     * @param size target size
+     * @param size target size.
      */
     public void setSize(Vec2d size) {
         size.x = Math.max(size.x, 0);
@@ -85,8 +85,8 @@ public class Rectangle extends AbstractShape {
 
     /**
      * Sets the rectangle offset.
-     * @param x x coordinate
-     * @param y y coordinate
+     * @param x x coordinate.
+     * @param y y coordinate.
      */
     public void setOffset(double x, double y) {
         setOffset(new Vec2d(x, y));
@@ -94,7 +94,7 @@ public class Rectangle extends AbstractShape {
 
     /**
      * Sets the rectangle offset.
-     * @param offset target offset
+     * @param offset target offset.
      */
     private void setOffset(Vec2d offset) {
         this.offset = offset;
@@ -137,7 +137,7 @@ public class Rectangle extends AbstractShape {
 
     /**
      * Set the left side of the rectangle.
-     * @param left the target for the left side of the rectangle
+     * @param left the target for the left side of the rectangle.
      */
     public void setLeft(final double left) {
         setPosition(left + offset.x, getY());
@@ -153,7 +153,7 @@ public class Rectangle extends AbstractShape {
 
     /**
      * Set the left side of the rectangle.
-     * @param top the target for the left side of the rectangle
+     * @param top the target for the left side of the rectangle.
      */
     public void setTop(final double top) {
         setPosition(getX(), top + offset.y);
@@ -169,8 +169,8 @@ public class Rectangle extends AbstractShape {
 
     /**
      * Entry point for intersection checks.
-     * @param shape the shape to check intersection with
-     * @return whether the rectangle intersects with shape
+     * @param shape the shape to check intersection with.
+     * @return whether the rectangle intersects with shape.
      */
     public boolean intersects(AbstractShape shape) {
         if (shape instanceof Rectangle) {
@@ -186,8 +186,8 @@ public class Rectangle extends AbstractShape {
 
     /**
      * Checks whether the rectangle intersects with the other rectangle.
-     * @param rect the rectangle to check intersection with
-     * @return whether the rectangle intersects the other rectangle
+     * @param rect the rectangle to check intersection with.
+     * @return whether the rectangle intersects the other rectangle.
      */
     private boolean intersects(Rectangle rect) {
         return rect.getLeft() < getRight()

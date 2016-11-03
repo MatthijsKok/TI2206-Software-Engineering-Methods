@@ -34,7 +34,6 @@ public final class Game {
      * The logger access point to which everything will be logged.
      */
     private static final Logger LOGGER = Logger.getInstance();
-
     /**
      * The state of the game.
      */
@@ -56,13 +55,15 @@ public final class Game {
      */
     private static int currentLevel = 0;
 
+    /**
+     * Empty constructor.
+     */
     private Game() {
 
     }
 
     /**
      * Removes the old players and creates new ones.
-     *
      * @param count the amount of players.
      */
     public static void setPlayerCount(int count) {
@@ -76,7 +77,6 @@ public final class Game {
 
     /**
      * Gets the players in the game.
-     *
      * @return The list of players in the game.
      */
     public static List<Player> getPlayers() {
@@ -102,14 +102,14 @@ public final class Game {
     }
 
     /**
-     * @return Level - The current level that is playing.
+     * @return Level the current level that is playing.
      */
     public static Level getCurrentLevel() {
         return levels.get(currentLevel);
     }
 
     /**
-     * @return Boolean - Whether the game has a next level.
+     * @return Boolean whether the game has a next level.
      */
     private static boolean hasNextLevel() {
         return currentLevel + 1 < levels.size();
@@ -180,7 +180,7 @@ public final class Game {
 
     /**
      * Lose the current level.
-     * @param timeUp Boolean - Whether the level was lost
+     * @param timeUp Boolean whether the level was lost
      *               by a lack of time.
      * @throws IOException When the level file cannot be loaded.
      */
@@ -220,7 +220,7 @@ public final class Game {
 
     /**
      * Sets the timer the Game's HUD should draw.
-     * @param timer LevelTimer - The timer to draw.
+     * @param timer LevelTimer the timer to draw.
      */
     public static void setTimer(LevelTimer timer) {
         switch (PLAYERS.size()) {

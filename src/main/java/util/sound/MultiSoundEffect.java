@@ -26,7 +26,7 @@ public final class MultiSoundEffect {
             new MultiSoundEffect(new String[]{"game_over.wav", "game_over2.wav"});
 
     /**
-     *
+     * Sound that plays when the game is over.
      */
     public static final MultiSoundEffect LEVEL_WON =
             new MultiSoundEffect(new String[]{"happy_mario.wav", "happy_yoshi.wav",
@@ -47,7 +47,8 @@ public final class MultiSoundEffect {
 
     /**
      * Creates a new SoundEffect Object.
-     * @param soundEffectNames Array containing the names of the soundEffect files, for example 'effect.wav'.
+     * @param soundEffectNames Array containing the names of the soundEffect files,
+     *                         for example 'effect.wav'.
      */
     @SuppressWarnings("PMD") // Warning makes no sense in this case
     private MultiSoundEffect(String[] soundEffectNames) {
@@ -59,7 +60,7 @@ public final class MultiSoundEffect {
     }
 
     /**
-     * Plays the given index of the MulitSoundEffect.
+     * Plays the given index of the MultiSoundEffect.
      * @param index The index that should be played.
      */
     public void play(int index) {

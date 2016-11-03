@@ -56,6 +56,10 @@ public class SettingsMenu extends Pane {
         setBackground(new Background(BACKGROUND));
     }
 
+    /**
+     * Create a button to go back.
+     * @return button
+     */
     private Button createBackButton() {
         Button button = new Button("Back");
         button.setLayoutX(180);
@@ -66,6 +70,10 @@ public class SettingsMenu extends Pane {
         return button;
     }
 
+    /**
+     * Creates a background music slider, to set the volume of the music.
+     * @return sliderPane.
+     */
     private Pane createBackgroundMusicSlider() {
         Pane sliderPane = new MusicSlider("Background Music Volume");
 
@@ -88,6 +96,10 @@ public class SettingsMenu extends Pane {
         return sliderPane;
     }
 
+    /**
+     * Create a sound effect slider.
+     * @return sliderpane.
+     */
     private Pane createSoundEffectSlider() {
         Pane sliderPane = new MusicSlider("Sound Effect Volume");
 
@@ -111,6 +123,10 @@ public class SettingsMenu extends Pane {
         return sliderPane;
     }
 
+    /**
+     * Create a GridPane for the input of player one.
+     * @return GridPane for player one.
+     */
     private GridPane createPlayerOneInput() {
 
         GridPane grid = createInputGrid("Player 1", "playerOne");
@@ -122,6 +138,10 @@ public class SettingsMenu extends Pane {
         return grid;
     }
 
+    /**
+     * Create a GridPane for the input of player two.
+     * @return GridPane for player two.
+     */
     private Node createPlayerTwoInput() {
         GridPane grid = createInputGrid("Player 2", "playerTwo");
 
@@ -132,6 +152,12 @@ public class SettingsMenu extends Pane {
         return grid;
     }
 
+    /**
+     * Create an Input Grid.
+     * @param label         String with a label.
+     * @param configMainKey String with the configMainKey
+     * @return GridPane.
+     */
     private GridPane createInputGrid(String label, String configMainKey) {
         GridPane grid = new GridPane();
 
@@ -157,6 +183,11 @@ public class SettingsMenu extends Pane {
         return grid;
     }
 
+    /**
+     * Create a field for the key input.
+     * @param configKey String for the configuration.
+     * @return A TextField with a configKey.
+     */
     private TextField createKeyInputField(String configKey) {
         TextField field = new TextField(Config.get(configKey));
 
