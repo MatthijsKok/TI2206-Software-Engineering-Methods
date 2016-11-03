@@ -11,12 +11,10 @@ public abstract class AbstractShape {
      * The central position of the shape.
      */
     private Vec2d position = new Vec2d(0, 0);
-
     /**
      * The scale of the shape.
      */
     private Vec2d scale = new Vec2d(1, 1);
-
     /**
      * Creates a new shape instance at position (0, 0).
      */

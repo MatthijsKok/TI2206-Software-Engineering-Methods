@@ -22,23 +22,19 @@ public final class Logger {
      * The static unique instance of Logger.
      */
     private static Logger uniqueInstance;
-
     /**
      * The File in which all logging shall take place this run of the program.
      */
     private File logFile;
-
     /**
      * An List which holds all LogRecord's that haven't been written to the log file.
      */
     private final List<LogRecord> logRecords = new ArrayList<>();
-
     /**
      * The LogLevel for the unique instance of the Logger.
      * Set to LogLevel.INFO by default.
      */
     private LogLevel logLevel;
-
     /**
      * The depth of the stack trace where the className and methodName is that called Logger.
      */
@@ -106,7 +102,7 @@ public final class Logger {
      * Checks if the message exists and if its LogLevel is important enough to be logged.
      * If so it adds a new LogRecord to the logRecords ArrayList.
      * @param logLevel The LogLevel this LogRecord is logged at.
-     * @param message The String message to be logged.
+     * @param message  The String message to be logged.
      */
     private void log(LogLevel logLevel, String message) {
         if (message != null && logLevel.getValue() >= logLevel.getValue()) {

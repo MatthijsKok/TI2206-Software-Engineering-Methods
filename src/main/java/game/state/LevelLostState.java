@@ -10,8 +10,8 @@ public class LevelLostState implements GameState {
 
     /**
      * Creates a new LevelLostState instance.
-     * @param level Level - The level that is lost.
-     * @param timeUp Boolean - Indicates whether the
+     * @param level Level that is lost.
+     * @param timeUp Boolean that indicates whether the
      *               level is lost by timeUp or not.
      */
     public LevelLostState(final Level level, boolean timeUp) {

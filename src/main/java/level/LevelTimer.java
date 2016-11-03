@@ -4,10 +4,10 @@ import util.sound.Music;
 import util.sound.SoundEffect;
 
 /**
- * A timer which handles all time related things for
- * a level.
+ * A timer which handles all time related things for a level.
  */
 public class LevelTimer {
+
     /**
      * The default duration of a level.
      */
@@ -16,7 +16,6 @@ public class LevelTimer {
      * The time that is left in the level when the time almost up should play.
      */
     private static final double TIME_ALMOST_UP = 2.1;
-
     /**
      * Duration of the level.
      */
@@ -43,7 +42,7 @@ public class LevelTimer {
 
     /**
      * Update the timer.
-     * @param timeDifference Double - The time between now and the last
+     * @param timeDifference Double with the time between now and the last
      *                       time the timer was updated.
      */
     protected void update(final double timeDifference) {

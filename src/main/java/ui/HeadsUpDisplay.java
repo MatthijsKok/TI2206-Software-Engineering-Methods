@@ -13,17 +13,14 @@ public class HeadsUpDisplay extends AbstractUIElement {
      * Height of the time bar.
      */
     private static final int HEIGHT = 24;
-
     /**
      * Padding around the time bar.
      */
     private static final int MARGIN = 8;
-
     /**
      * Padding around the time bar.
      */
     private static final int PADDING = 2;
-
     /**
      * The level to draw the HUD for.
      */
@@ -31,13 +28,16 @@ public class HeadsUpDisplay extends AbstractUIElement {
 
     /**
      * Creates a new HUD for.
-     * @param timer LevelTimer - The timer for the current level to draw a HUD for.
+     * @param timer LevelTimer, The timer for the current level to draw a HUD for.
      */
     public HeadsUpDisplay(LevelTimer timer) {
         this.timer = timer;
     }
 
-
+    /**
+     * Getter for time left in the game.
+     * @return the remaining time in the current level.
+     */
     private double getTimeLeft() {
         return timer.getTimeLeft() / timer.getDuration();
     }

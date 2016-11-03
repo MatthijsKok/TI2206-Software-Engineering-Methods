@@ -23,11 +23,9 @@ public class MultiPlayerHUD extends HeadsUpDisplay {
      * The space between to heart sprites.
      */
     private static final double SPACE = 48;
-
     static {
         HEART.setOffsetToCenter();
     }
-
     /**
      * The players this HUD draws the lives for.
      */
@@ -35,7 +33,7 @@ public class MultiPlayerHUD extends HeadsUpDisplay {
 
     /**
      * Creates a new SinglePlayerHUD.
-     * @param timer The timer to draw the HUD for.
+     * @param timer   The timer to draw the HUD for.
      * @param player1 The player to draw the HUD for.
      * @param player2 The player to draw the HUD for.
      */

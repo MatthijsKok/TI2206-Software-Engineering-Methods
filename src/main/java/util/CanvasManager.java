@@ -14,12 +14,14 @@ public final class CanvasManager {
      * The getCanvas of this game.
      */
     private static Canvas targetCanvas;
-
     /**
      * The graphics context where the game is drawn on.
      */
     private static GraphicsContext targetGC;
 
+    /**
+     * empty constructor.
+     */
     private CanvasManager() {
 
     }

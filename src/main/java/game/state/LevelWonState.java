@@ -10,9 +10,8 @@ public class LevelWonState implements GameState {
 
     /**
      * Creates a new LevelWonState.
-     *
-     * @param previousLevel Level - The level
-     * @param nextLevel Level - The level after the level that
+     * @param previousLevel Level, the level
+     * @param nextLevel Level, the level after the level that
      *                  is just won.
      */
     public LevelWonState(Level previousLevel, Level nextLevel) {

@@ -28,10 +28,19 @@ public class MusicSlider extends Pane {
         );
     }
 
+    /**
+     * Create a label.
+     * @param label String label to create.
+     * @return new Label with String label.
+     */
     private Label createLabel(final String label) {
         return new Label(label);
     }
 
+    /**
+     * Creates a slider.
+     * @return a slider with a min, max and step-size.
+     */
     @SuppressWarnings("magicnumber")
     private Slider createSlider() {
         final Slider slider = new Slider();

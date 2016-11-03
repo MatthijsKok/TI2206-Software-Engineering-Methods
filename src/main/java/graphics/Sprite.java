@@ -9,43 +9,37 @@ import util.CanvasManager;
  * Class that handles the creation of sprites.
  */
 public class Sprite {
+
     /**
      * The default frame per second rate of any sprite.
      */
     private static final double DEFAULT_FPS = 15; // f / s
-
     /**
      * Image of the sprite.
      */
     private Image image;
-
     /**
      * The amount of frames the sprite consists of.
      */
     private int frames;
-
     /**
      * The current frame to be displayed.
      */
     private transient int currentFrame;
-
     /**
      * The frameSpeed at which the sprite should be displayed in
      * frames per second.
      */
     private transient double frameSpeed; // Frames / second
-
     /**
      * A Vec2d containing the x and y coordinates to be used as the
      * center of the sprite.
      */
     private Vec2d offset;
-
     /**
      * The with and height of the sprite in pixels.
      */
     private transient int width, height;
-
     /**
      * A double representing a timeline from frame 0 to the last
      * frame. Is used to determine currentFrame.
@@ -63,7 +57,7 @@ public class Sprite {
     /**
      * Create new Sprite with offset of (0,0).
      *
-     * @param uri the document name of the sprite image.
+     * @param uri    the document name of the sprite image.
      * @param frames the amount of frames the sprite consists of.
      */
     public Sprite(final String uri, final int frames) {
@@ -72,8 +66,7 @@ public class Sprite {
 
     /**
      * Create new Sprite with 1 frame.
-     *
-     * @param uri the document name of the sprite image.
+     * @param uri    the document name of the sprite image.
      * @param offset a Vec2D containing the (x,y) offset to the center of the sprite.
      */
     public Sprite(final String uri, final Vec2d offset) {
@@ -82,8 +75,7 @@ public class Sprite {
 
     /**
      * Create a new Sprite.
-     *
-     * @param uri the document name of the sprite image.
+     * @param uri    the document name of the sprite image.
      * @param frames the amount of frames the sprite consists of.
      * @param offset a Vec2D containing the (x,y) offset to the center of the sprite.
      */
@@ -93,8 +85,7 @@ public class Sprite {
 
     /**
      * Create a new Sprite.
-     *
-     * @param image the Image object of the sprite image.
+     * @param image  the Image object of the sprite image.
      * @param frames the amount of frames the sprite consists of.
      * @param offset a Vec2D containing the (x,y) offset to the center of the sprite.
      */
@@ -110,7 +101,6 @@ public class Sprite {
     /**
      * Clones a sprite using the same Image instance.
      * Use this when you want two sprites with the same image moving independently.
-     *
      * @param sprite the sprite to copy.
      */
     public Sprite(final Sprite sprite) {
@@ -119,7 +109,6 @@ public class Sprite {
 
     /**
      * Sets the sprite image.
-     *
      * @param image a image object containing the desired image.
      */
     private void setImage(final Image image) {
@@ -130,7 +119,6 @@ public class Sprite {
 
     /**
      * Gets the sprite's image.
-     *
      * @return the image of the sprite.
      */
     private Image getImage() {
@@ -139,7 +127,6 @@ public class Sprite {
 
     /**
      * Sets the sprite's amount of frames.
-     *
      * @param frames amount of frames
      */
     private void setFrames(final int frames) {
@@ -148,7 +135,6 @@ public class Sprite {
 
     /**
      * Gets the sprite's amount of frames.
-     *
      * @return the frame amount of the sprite.
      */
     private int getFrames() {
@@ -157,7 +143,6 @@ public class Sprite {
 
     /**
      * Sets the sprite's frame speed.
-     *
      * @param speed frame speed in frames per second.
      */
     private void setFrameSpeed(final double speed) {
@@ -173,7 +158,6 @@ public class Sprite {
 
     /**
      * Moves the center of the sprite to the x and y locations.
-     *
      * @param xOffset offset on the x axis.
      * @param yOffset offset on the y axis.
      */
@@ -183,7 +167,6 @@ public class Sprite {
 
     /**
      * Moves the center of the sprite to the x and y locations.
-     *
      * @param offset A Vec2d containing the x and y values of the offset.
      */
     private void setOffset(final Vec2d offset) {
@@ -192,7 +175,6 @@ public class Sprite {
 
     /**
      * Updates the sprite.
-     *
      * @param timeDifference time expired since the last time the method was called.
      */
     public final void update(final double timeDifference) {
@@ -202,7 +184,6 @@ public class Sprite {
 
     /**
      * Draws the sprite to the screen.
-     *
      * @param position a Vec2D containing the x and y coordinates of the sprite.
      */
     public final void draw(final Vec2d position) {
@@ -211,10 +192,9 @@ public class Sprite {
 
     /**
      * Draws the Sprite to the screen.
-     *
      * @param position a Vec2D containing the x and y coordinates of the sprite.
-     * @param scale a double used to scale the sprite upon drawing e.g. 0,5 for
-     *              half the size.
+     * @param scale    a double used to scale the sprite upon drawing e.g. 0,5 for
+     *                 half the size.
      */
     public final void draw(final Vec2d position, final double scale) {
         draw(position.x, position.y, scale);
@@ -222,10 +202,9 @@ public class Sprite {
 
     /**
      * Draws the Sprite to the screen.
-     *
      * @param position Vec2D containing the x and y coordinates of the sprite.
-     * @param xScale double used to scale the sprite in width.
-     * @param yScale double used to scale the sprite in height.
+     * @param xScale   double used to scale the sprite in width.
+     * @param yScale   double used to scale the sprite in height.
      */
     public final void draw(final Vec2d position, final double xScale, final double yScale) {
         draw(position.x, position.y, xScale, yScale);
@@ -233,7 +212,6 @@ public class Sprite {
 
     /**
      * Draws the Sprite to the screen.
-     *
      * @param xPosition the x position where the sprite should be drawn.
      * @param yPosition the y position where the sprite should be drawn.
      */
@@ -243,10 +221,9 @@ public class Sprite {
 
     /**
      * Draws the Sprite to the screen.
-     *
      * @param xPosition the x position where the sprite should be drawn.
      * @param yPosition the y position where the sprite should be drawn.
-     * @param scale the scale at which the Sprite should be drawn.
+     * @param scale     the scale at which the Sprite should be drawn.
      */
     public final void draw(final double xPosition, final double yPosition, final double scale) {
         draw(xPosition, yPosition, scale, scale);
@@ -254,9 +231,8 @@ public class Sprite {
 
     /**
      * Draws the Sprite to the screen.
-     *
      * @param position the x position where the sprite should be drawn.
-     * @param scale the scale at which the Sprite should be drawn.
+     * @param scale    the scale at which the Sprite should be drawn.
      */
     public final void draw(final Vec2d position, final Vec2d scale) {
         draw(position.x, position.y, scale.x, scale.y);
@@ -264,11 +240,10 @@ public class Sprite {
 
     /**
      * Draws the Sprite to the screen.
-     *
      * @param xPosition the x position where the sprite should be drawn.
      * @param yPosition the y position where the sprite should be drawn.
-     * @param xScale double used to scale the sprite in width upon drawing.
-     * @param yScale double used to scale the sprite in height upon drawing.
+     * @param xScale    double used to scale the sprite in width upon drawing.
+     * @param yScale    double used to scale the sprite in height upon drawing.
      */
     public final void draw(final double xPosition, final double yPosition,
                            final double xScale, final double yScale) {
@@ -282,10 +257,7 @@ public class Sprite {
         }
     }
 
-    // GETTERS
     /**
-     * Returns a Vec2D with the offset of the Sprite.
-     *
      * @return a Vec2D with the offset of the Sprite
      */
     public Vec2d getOffset() {
@@ -293,8 +265,6 @@ public class Sprite {
     }
 
     /**
-     * Returns the width of the sprite in pixels.
-     *
      * @return the width of the sprite in pixels.
      */
     public int getWidth() {
@@ -302,12 +272,9 @@ public class Sprite {
     }
 
     /**
-     * Returns the height of the sprite in pixels.
-     *
      * @return the height of the sprite in pixels.
      */
     public int getHeight() {
         return height;
     }
-
 }

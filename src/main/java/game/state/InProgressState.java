@@ -31,7 +31,6 @@ public class InProgressState implements GameState {
      * Defines the maximum time span a frame can simulate.
      */
     private static final double MAX_FRAME_DURATION = 0.033333333;
-
     /**
      * The last time recorded.
      */
@@ -40,7 +39,6 @@ public class InProgressState implements GameState {
      * The timer that handles the main update loop.
      */
     private final AnimationTimer timer;
-
     /**
      * The level this state is for.
      */
@@ -52,7 +50,7 @@ public class InProgressState implements GameState {
 
     /**
      * Creates a new PausedState.
-     * @param level Level - The level that is paused.
+     * @param level Level that is paused.
      */
     public InProgressState(Level level) {
         this.level = level;
@@ -72,6 +70,10 @@ public class InProgressState implements GameState {
         timer.start();
     }
 
+    /**
+     * Updates the current state.
+     * @param now long that indicates the current moment.
+     */
     private void update(final long now) {
         final double timeDifference = Math.min(
                 (now - lastNanoTime) / NANO_SECONDS_IN_SECOND,
@@ -100,6 +102,10 @@ public class InProgressState implements GameState {
         }
     }
 
+    /**
+     * Checks conditions to see if a game is won or lost.
+     * @throws IOException can be thrown.
+     */
     private void checkExitConditions() throws IOException {
         if (levelTimer.getTimeLeft() < 0) {
             exit();
@@ -126,6 +132,9 @@ public class InProgressState implements GameState {
         }
     }
 
+    /**
+     * When exit, the timer stops and the music pauses.
+     */
     private void exit() {
         Music.pauseMusic();
         timer.stop();

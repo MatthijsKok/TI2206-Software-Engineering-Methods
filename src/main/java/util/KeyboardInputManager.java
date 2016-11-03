@@ -17,22 +17,22 @@ public final class KeyboardInputManager {
      * The list of scenes on which the manager manages keyboard input.
      */
     private static List<Scene> scenes = new ArrayList<>();
-
     /**
      * The list containing information about which keys are down atm.
      */
     private static Set<String> input = new HashSet<>();
-
     /**
      * The list containing information about which keys are just pressed.
      */
     private static Set<String> pressed = new HashSet<>();
-
     /**
      * The list containing information about which keys are just released.
      */
     private static Set<String> released = new HashSet<>();
 
+    /**
+     * empty constructor.
+     */
     private KeyboardInputManager() {
 
     }
@@ -51,11 +51,19 @@ public final class KeyboardInputManager {
         addEventHandlers(scene);
     }
 
+    /**
+     * Adds eventHandlers to a scene.
+     * @param scene to set the eventHandlers on.
+     */
     private static void addEventHandlers(final Scene scene) {
         scene.setOnKeyPressed(e -> pressKey(e.getCode().toString()));
         scene.setOnKeyReleased(e -> releaseKey(e.getCode().toString()));
     }
 
+    /**
+     * A key is pressed, add the pressed key to the input.
+     * @param code String of the inputKey.
+     */
     private static void pressKey(String code) {
         if (!input.contains(code)) {
             pressed.add(code);
@@ -64,6 +72,10 @@ public final class KeyboardInputManager {
         input.add(code);
     }
 
+    /**
+     * A key is released, remove the code of the key from input.
+     * @param code String with the key that was pressed.
+     */
     private static void releaseKey(String code) {
         released.add(code);
         released.add("ANY");
@@ -79,24 +91,27 @@ public final class KeyboardInputManager {
     }
 
     /**
+     * When a key is pressed.
      * @param key a string representation of the key to check.
-     * @return Boolean - Indicates if key is just pressed.
+     * @return Boolean, indicates if key is just pressed.
      */
     public static boolean keyPressed(final String key) {
         return pressed.contains(key);
     }
 
     /**
+     * When a key is released.
      * @param key a string representation of the key to check.
-     * @return Boolean -  Indicates if key is just released.
+     * @return Boolean, indicates if key is just released.
      */
     public static boolean keyReleased(final String key) {
         return released.contains(key);
     }
 
     /**
+     * When a key is held down.
      * @param key a string representation of the key to check.
-     * @return Boolean - Indicates if key is currently pressed.
+     * @return Boolean, indicates if key is currently pressed.
      */
     public static boolean keyDown(final String key) {
         return input.contains(key);

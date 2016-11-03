@@ -201,6 +201,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
      * @param score the amount of the increase.
      */
     public void increaseScore(final int score) {
+        setChanged();
         notifyObservers(new Pair<>("increaseScore", score));
     }
 }

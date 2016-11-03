@@ -15,17 +15,14 @@ public final class Music {
      * The media player that plays the background music.
      */
     private static MediaPlayer mediaPlayer;
-
     /**
      * Path where the music is stored.
      */
     private static final String MUSIC_PATH = "src/main/resources/sounds/music/";
-
     /**
      * The music that is currently playing.
      */
     private static Media currentMusic;
-
     /**
      * The volume at which the background is played.
      */
@@ -44,7 +41,6 @@ public final class Music {
             mediaPlayer.pause();
         }
     }
-
 
     /**
      * Starts the music that is defined in the music property.
