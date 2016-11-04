@@ -11,9 +11,11 @@ import game.state.LevelWonState;
 import game.state.NotStartedState;
 import level.Level;
 import level.LevelTimer;
-import ui.HeadsUpDisplay;
-import ui.MultiPlayerHUD;
-import ui.SinglePlayerHUD;
+import ui.EmptyHUD;
+import ui.MarioStats;
+import ui.TimeBar;
+import ui.UIElement;
+import ui.YoshiStats;
 import util.SceneManager;
 import util.logging.Logger;
 import util.sound.MultiSoundEffect;
@@ -42,7 +44,7 @@ public final class Game {
     /**
      * The UI of the game.
      */
-    private static HeadsUpDisplay hud;
+    private static UIElement hud;
     /**
      * A list containing all the players that play the game.
      */
@@ -223,15 +225,19 @@ public final class Game {
      * @param timer LevelTimer - The timer to draw.
      */
     public static void setTimer(LevelTimer timer) {
+
+        // Create the time bar
+        TimeBar timeBar = new TimeBar(new EmptyHUD(), timer);
+
         switch (PLAYERS.size()) {
             case 1:
-                hud = new SinglePlayerHUD(timer, PLAYERS.get(0));
+                hud = new MarioStats(timeBar, PLAYERS.get(0));
                 break;
             case 2:
-                hud = new MultiPlayerHUD(timer, PLAYERS.get(0), PLAYERS.get(1));
+                hud = new YoshiStats(new MarioStats(timeBar, PLAYERS.get(0)), PLAYERS.get(1));
                 break;
             default:
-                hud = new HeadsUpDisplay(timer);
+                hud = timeBar;
                 break;
         }
     }

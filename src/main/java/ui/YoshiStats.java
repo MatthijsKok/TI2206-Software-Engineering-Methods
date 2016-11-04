@@ -2,12 +2,12 @@ package ui;
 
 import game.player.Player;
 import javafx.scene.paint.Color;
-import level.LevelTimer;
 
 /**
- * Draws a HeadsUpDisplay for a game with a single player.
+ * Class responsible for drawing the lives and score of player 2 (Yoshi) to the screen.
+ * Adheres to the decorator pattern.
  */
-public class MultiPlayerHUD extends HeadsUpDisplay {
+public class YoshiStats extends HUDDecorator {
 
     /**
      * The spacing between the two lives and scores of the player.
@@ -15,20 +15,18 @@ public class MultiPlayerHUD extends HeadsUpDisplay {
     private static final int SPACING = 800;
 
     /**
-     * The players this HUD draws the lives for.
+     * Player object to draw the score and lives for.
      */
-    private final Player player1, player2;
+    private final Player player;
 
     /**
-     * Creates a new MultiPlayerHUD.
-     * @param timer The timer to draw the HUD for.
-     * @param player1 The player to draw the HUD for.
-     * @param player2 The player to draw the HUD for.
+     * Creates a new YoshiStats object.
+     * @param newUI The UIElement to draw over.
+     * @param player Player object to draw the score and lives for.
      */
-    public MultiPlayerHUD(LevelTimer timer, Player player1, Player player2) {
-        super(timer);
-        this.player1 = player1;
-        this.player2 = player2;
+    public YoshiStats(UIElement newUI, Player player) {
+        super(newUI);
+        this.player = player;
     }
 
     @Override
@@ -47,9 +45,7 @@ public class MultiPlayerHUD extends HeadsUpDisplay {
      * Draws the life counters to the screen.
      */
     private void drawLifeCounters() {
-        //Draw lives images
-        //Mario
-        getGraphicsContext().drawImage(MARIO_MUGSHOT, MUGSHOT_MARGIN.x, MUGSHOT_MARGIN.y, MUGSHOT_SIZE, MUGSHOT_SIZE);
+        //Draw lives image
 
         //Yoshi
         getGraphicsContext().drawImage(YOSHI_MUGSHOT, MUGSHOT_MARGIN.x + SPACING, MUGSHOT_MARGIN.y, MUGSHOT_SIZE, MUGSHOT_SIZE);
@@ -61,14 +57,8 @@ public class MultiPlayerHUD extends HeadsUpDisplay {
         //Set font to smaller font
         getGraphicsContext().setFont(LIVES_FONT);
 
-        //Mario
-        String livesString1 = "x" + String.format("%02d", player1.getLives());
-        getGraphicsContext().fillText(
-                livesString1,
-                LIVES_MARGIN.x, LIVES_MARGIN.y);
-
         //Yoshi
-        String livesString2 = "x" + String.format("%02d", player2.getLives());
+        String livesString2 = "x" + String.format("%02d", player.getLives());
         getGraphicsContext().fillText(
                 livesString2,
                 LIVES_MARGIN.x + SPACING, LIVES_MARGIN.y);
@@ -83,16 +73,9 @@ public class MultiPlayerHUD extends HeadsUpDisplay {
         getGraphicsContext().setFont(SCORE_FONT);
 
         //Add leading zeros to score
-        String score1 = String.format("%06d", player1.getScore());
-        String score2 = String.format("%06d", player2.getScore());
+        String score2 = String.format("%06d", player.getScore());
 
         //Draw score
-        //Mario
-        getGraphicsContext().fillText(
-                score1,
-                SCORE_MARGIN.x, SCORE_MARGIN.y);
-
-        //Yoshi
         getGraphicsContext().fillText(
                 score2,
                 SCORE_MARGIN.x + SPACING, SCORE_MARGIN.y);

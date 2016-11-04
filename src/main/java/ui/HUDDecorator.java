@@ -1,49 +1,45 @@
 package ui;
 
 import com.sun.javafx.geom.Vec2d;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import level.LevelTimer;
+import util.CanvasManager;
 
 import java.net.URISyntaxException;
 
 /**
- * HeadsUpDisplay is a acronym for Heads Up Display. A common name
- * for the overlay of a game.
+ * Decorator for the Heads Up Display.
  */
-public class HeadsUpDisplay extends AbstractUIElement {
+public abstract class HUDDecorator implements UIElement {
 
     /**
      * Height of the time bar.
      */
-    private static final int HEIGHT = 24;
+    public static final int HEIGHT = 24;
 
     /**
      * Padding around the time bar.
      */
-    private static final int MARGIN = 8;
+    public static final int MARGIN = 8;
 
     /**
      * Padding around the time bar.
      */
-    private static final int PADDING = 2;
-
-    /**
-     * The level to draw the HUD for.
-     */
-    private final LevelTimer timer;
+    public static final int PADDING = 2;
 
     /**
      * Font size used for the score.
      */
-    private static final int SCORE_FONT_SIZE = 30;
+    public static final int SCORE_FONT_SIZE = 30;
 
     /**
      * Font size used for the score.
      */
-    private static final int LIVES_FONT_SIZE = 25;
+    public static final int LIVES_FONT_SIZE = 25;
 
     /**
      * Font size used for the score.
@@ -91,29 +87,23 @@ public class HeadsUpDisplay extends AbstractUIElement {
     public static final DropShadow DROP_SHADOW = new DropShadow(1.0, 3.0, 3.0, Color.color(0.0, 0.0, 0.0));
 
     /**
-     * Creates a new HUD for.
-     * @param timer LevelTimer - The timer for the current level to draw a HUD for.
+     * Temporary UI element to be decorated.
      */
-    public HeadsUpDisplay(LevelTimer timer) {
-        this.timer = timer;
+    protected UIElement tempUI;
+
+    /**
+     * Constructor for HUDDecorator.
+     * @param tempUI The UI element to decorate.
+     */
+    public HUDDecorator(UIElement tempUI) {
+        this.tempUI = tempUI;
     }
 
-    private double getTimeLeft() {
-        return timer.getTimeLeft() / timer.getDuration();
-    }
-
-    @Override
+    /**
+     * Draws the UI to the screen.
+     */
     public void draw() {
-        // Outer time bar
-        getGraphicsContext().setFill(Color.BLACK);
-        getGraphicsContext().fillRect(
-                0, getCanvas().getHeight() - HEIGHT - MARGIN,
-                getCanvas().getWidth(), HEIGHT);
-
-        // Inner time bar
-        getGraphicsContext().setFill(Color.RED);
-        getGraphicsContext().fillRect(0, getCanvas().getHeight() - HEIGHT - MARGIN + PADDING,
-                (getCanvas().getWidth() - 2 * (PADDING + MARGIN)) * getTimeLeft(), HEIGHT);
+        tempUI.draw();
     }
 
     /**
@@ -124,11 +114,26 @@ public class HeadsUpDisplay extends AbstractUIElement {
     private static Font createFont(int fontSize) {
         String fontURI = "";
         try {
-            fontURI = HeadsUpDisplay.class.getClassLoader().getResource("fonts/newSuperMario.ttf").toURI().toString();
+            fontURI = EmptyHUD.class.getClassLoader().getResource("fonts/newSuperMario.ttf").toURI().toString();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
         return Font.loadFont(fontURI, fontSize);
     }
+
+    /**
+     * @return Canvas - The getCanvas to draw on.
+     */
+    protected final Canvas getCanvas() {
+        return CanvasManager.getCanvas();
+    }
+
+    /**
+     * @return GraphicsContext - The graphics context to draw on.
+     */
+    protected final GraphicsContext getGraphicsContext() {
+        return CanvasManager.getContext();
+    }
+
 }

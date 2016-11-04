@@ -2,12 +2,12 @@ package ui;
 
 import game.player.Player;
 import javafx.scene.paint.Color;
-import level.LevelTimer;
 
 /**
- * Draws a HeadsUpDisplay for a game with a single player.
+ * Class responsible for drawing the lives and score of player 1 (Mario) to the screen.
+ * Adheres to the decorator pattern.
  */
-public class SinglePlayerHUD extends HeadsUpDisplay {
+public class MarioStats extends HUDDecorator {
 
     /**
      * The players this HUD draws the lives for.
@@ -16,11 +16,11 @@ public class SinglePlayerHUD extends HeadsUpDisplay {
 
     /**
      * Creates a new SinglePlayerHUD.
-     * @param timer The timer to draw the HUD for.
      * @param player The player to draw the HUD for.
+     * @param newUI The UIElement to draw over.
      */
-    public SinglePlayerHUD(LevelTimer timer, Player player) {
-        super(timer);
+    public MarioStats(UIElement newUI, Player player) {
+        super(newUI);
         this.player = player;
     }
 
