@@ -2,6 +2,7 @@ package util.logging;
 
 import game.Game;
 import game.state.NotStartedState;
+import main.BubbleTroubleApplicationTest;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,17 +15,11 @@ import static org.hamcrest.Matchers.is;
 /**
  * Class that tests Logger.
  */
-public class LoggerTest {
+public class LoggerTest extends BubbleTroubleApplicationTest {
 
     private static final String LOG_MESSAGE = "hello hello, check out this BEAUTIFUL logger!";
     private final Logger logger = Logger.getInstance();
     private File logFile = new File("docs/logs/LoggerTestLog.log");
-
-    // This is to prevent log messages being written during the tests.
-    @BeforeClass
-    public static void setUpClass() {
-        Game.setState(new NotStartedState());
-    }
 
     @Before
     public void setUp() {
