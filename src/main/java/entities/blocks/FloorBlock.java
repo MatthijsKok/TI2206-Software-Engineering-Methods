@@ -15,7 +15,7 @@ public class FloorBlock extends AbstractBlock {
 
     /**
      * Creates a new FloorBlock at position (x,y).
-     * @param position Vec2d - Position of the block
+     * @param position Vec2d Position of the block.
      */
     public FloorBlock(final Vec2d position) {
         super(position);

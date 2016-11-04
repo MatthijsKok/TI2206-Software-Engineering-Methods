@@ -1,10 +1,15 @@
 package util;
 
 import javafx.application.Platform;
+import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
+import main.UtilityClassTest;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
+import java.lang.reflect.InvocationTargetException;
+
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -30,6 +35,19 @@ public class CanvasManagerTest extends ApplicationTest {
 
     @Test
     public void testContextEqualsCanvasContext() {
-        Platform.runLater(() -> assertEquals(CanvasManager.getCanvas().getGraphicsContext2D(), CanvasManager.getContext()));
+        Platform.runLater(() -> {
+            CanvasManager.setCanvas(new Canvas());
+            assertEquals(CanvasManager.getCanvas().getGraphicsContext2D(), CanvasManager.getContext());
+        });
+    }
+
+    @Test
+    public void testUtilityClass() {
+        try {
+            UtilityClassTest.assertUtilityClassWellDefined(CanvasManager.class);
+        } catch (NoSuchMethodException | InstantiationException
+                | IllegalAccessException | InvocationTargetException e) {
+            fail();
+        }
     }
 }

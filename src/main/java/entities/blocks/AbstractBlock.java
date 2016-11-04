@@ -10,7 +10,7 @@ public abstract class AbstractBlock extends AbstractEntity {
 
     /**
      * Creates a block at position (x,y).
-     * @param position Vec2d - Position of the block
+     * @param position Vec2d Position of the block.
      */
     AbstractBlock(final Vec2d position) {
         super(position);

@@ -1,59 +1,58 @@
 package util;
 
 /**
- * The class Pair contains a 2 values.
- *
- * @param <L> Type of the left value of the pair.
- * @param <R> Type of the right value of the pair.
+ * The Pair class represents a key value pair.
+ * @param <Key> Type of the key of the pair.
+ * @param <Value> Type of the value of the pair.
  */
-public class Pair<L, R> {
-    /**
-     * The left entry of the pair.
-     */
-    private L l;
+public class Pair<Key, Value> {
 
     /**
-     * The right entry of the pair.
+     * The key of the pair.
      */
-    private R r;
+    private Key key;
+    /**
+     * The value of the pair.
+     */
+    private Value value;
 
     /**
-     * Creates a new pair.
-     * @param l Value of left entry.
-     * @param r Value of right entry.
+     * Creates a new key value pair.
+     * @param key Key of the pair.
+     * @param value Value of the pair.
      */
-    public Pair(L l, R r) {
-        this.l = l;
-        this.r = r;
+    public Pair(Key key, Value value) {
+        this.key = key;
+        this.value = value;
     }
 
     /**
-     * @return The left value of the pair.
+     * @return The key of the pair.
      */
-    public L getL() {
-        return l;
+    public Key getKey() {
+        return key;
     }
 
     /**
-     * Sets the left value of the pair.
-     * @param l The value of the left entry of the pair.
+     * Sets the key of the pair.
+     * @param key The key of the pair.
      */
-    public void setL(L l) {
-        this.l = l;
+    public void setKey(Key key) {
+        this.key = key;
     }
 
     /**
-     * @return The right value of the pair.
+     * @return The value of the pair.
      */
-    public R getR() {
-        return r;
+    public Value getValue() {
+        return value;
     }
 
     /**
      * Sets the right value of the pair.
-     * @param r The value of the right entry of the pair.
+     * @param value The value of the pair.
      */
-    public void setR(R r) {
-        this.r = r;
+    public void setValue(Value value) {
+        this.value = value;
     }
 }

@@ -12,7 +12,6 @@ class ExtraVine extends AbstractDuringPowerUp {
      * The sprite of the extra vine power-up.
      */
     private static final Sprite SPRITE = new Sprite("images/powerUps/extra_vine.png");
-
     /**
      * The duration of the extra vine power-up (in ms).
      */

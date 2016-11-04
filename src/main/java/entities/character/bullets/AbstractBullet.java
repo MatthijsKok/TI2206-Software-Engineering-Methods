@@ -12,6 +12,7 @@ import util.sound.SoundEffect;
 
 /**
  * The base class for all kinds of bullets.
+ * A character shoots a bullet to kill balls.
  */
 public abstract class AbstractBullet extends AbstractEntity implements CollidingEntity {
 
@@ -19,7 +20,6 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
      * Score that is multiplied by the size of the ball, and then added to the score.
      */
     private static final int SCORE_PER_BALL = 100;
-
     /**
      * The character that shot this vine.
      */
@@ -27,8 +27,7 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
 
     /**
      * Creates a new vine.
-     *
-     * @param position spawn position of the vine.
+     * @param position  spawn position of the vine.
      * @param character character which shot the vine.
      */
     AbstractBullet(final Vec2d position, final Character character) {
@@ -51,9 +50,8 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
     }
 
     /**
-     * Collision with a ball, the vine should disappear and the score should increase.
-     *
-     * @param ball the ball this rope collides with
+     * When a bullet collides with a ball, the bullet should disappear and the score should increase.
+     * @param ball the ball this rope collides with.
      */
     private void collideWith(final AbstractBall ball) {
         die();
@@ -64,7 +62,7 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
     }
 
     /**
-     * Collision with a block, the vine should disappear and the score should increase.
+     * When a bullet collides with a block, the vine should disappear and the score should increase.
      */
     private void collideWithBlock() {
         die();
@@ -72,6 +70,7 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
     }
 
     /**
+     * Getter for the gun.
      * @return The gun this bullet is shot from.
      */
     /* default */ final Gun getGun() {
@@ -79,6 +78,7 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
     }
 
     /**
+     * Getter for the character.
      * @return The character that shot this bullet.
      */
     /* default */ final Character getCharacter() {
@@ -89,5 +89,4 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
      * Called when the bullet dies.
      */
     /* default */ abstract void die();
-
 }

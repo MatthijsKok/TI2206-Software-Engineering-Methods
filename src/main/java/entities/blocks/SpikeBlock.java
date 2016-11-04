@@ -5,8 +5,10 @@ import graphics.Sprite;
 
 /**
  * Represents a SpikeBlock entity used for the ceiling in the game.
+ * If a ball hits the ceiling the ball dies.
  */
 public class SpikeBlock  extends AbstractBlock {
+
     /**
      * The sprite used for the spike block object in the game.
      */
@@ -14,7 +16,7 @@ public class SpikeBlock  extends AbstractBlock {
 
     /**
      * Creates a new SpikeBlock at position (x,y).
-     * @param position Vec2d - the position of the block
+     * @param position Vec2d the position of the block.
      */
     public SpikeBlock(final Vec2d position) {
         super(position);

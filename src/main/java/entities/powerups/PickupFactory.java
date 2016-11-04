@@ -37,17 +37,17 @@ public final class PickupFactory {
      */
     private static AbstractPowerUp createRandomPowerUp() {
         int totalProbability = powerUpProbabilities.stream()
-                .map(Pair::getL)
+                .map(Pair::getKey)
                 .reduce(0, (a, b) -> a + b);
         double random = Math.random() * totalProbability;
 
         int p = 0, i = 0;
-        while ((p = p + powerUpProbabilities.get(i).getL()) < random) {
+        while ((p = p + powerUpProbabilities.get(i).getKey()) < random) {
             i++;
         }
 
         try {
-            return (AbstractPowerUp) powerUpProbabilities.get(i).getR().newInstance();
+            return (AbstractPowerUp) powerUpProbabilities.get(i).getValue().newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }
@@ -64,7 +64,7 @@ public final class PickupFactory {
 
     /**
      * Creates a new Pickup and adds it to a level.
-     * @param level the level the pickup is created in.
+     * @param level    the level the pickup is created in.
      * @param position the spawn position of this pickup.
      */
     public static void spawnRandomPickUp(Level level, Vec2d position) {

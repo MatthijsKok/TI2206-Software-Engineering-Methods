@@ -26,11 +26,9 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
      * The bounding box of a character.
      */
     private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
-
     static {
         BOUNDING_BOX.setOffset(OFFSET.x, OFFSET.y);
     }
-
     /**
      * The shield this character carries.
      */
@@ -54,7 +52,6 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
 
     /**
      * Instantiate a new character at position (x, y).
-     *
      * @param position position of the character
      */
     public Character(final Vec2d position) {
@@ -72,8 +69,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     }
 
     /**
-     * The character dies. Soo sad...
-     * After it dies it tells everybody it has died, but its already dead. How does that even work?
+     * The character dies.
      */
     /* default */ void die() {
         alive = false;
@@ -90,7 +86,8 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     }
 
     /**
-     * @return whether the character is alive
+     * Check if the player is alive.
+     * @return whether the character is alive.
      */
     public boolean isAlive() {
         return alive;
@@ -129,8 +126,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
 
     /**
      * If a character collides with a block, it should move outside of it.
-     *
-     * @param block AbstractBlock - The block the character collides with.
+     * @param block AbstractBlock The block the character collides with.
      */
     private void collideWith(final AbstractBlock block) {
         Rectangle shape = (Rectangle) getShape();
@@ -165,8 +161,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
 
     /**
      * Set the player that controls this Character.
-     *
-     * @param playerID Integer - The id of the player that
+     * @param playerID Integer the id of the player that
      *                 controls this Character.
      */
     public void setSprites(final int playerID) {
@@ -175,14 +170,14 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     }
 
     /**
-     * @return Gun - The gun this character carries.
+     * @return Gun the gun this character carries.
      */
     public Gun getGun() {
         return gun;
     }
 
     /**
-     * @return CharacterMovement - The movement of this character.
+     * @return CharacterMovement the movement of this character.
      */
     public CharacterMovement getMovement() {
         return movement;
@@ -197,8 +192,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
 
     /**
      * Increases the score of the character.
-     *
-     * @param score the amount of the increase.
+     * @param score integer the amount of the increase.
      */
     public void increaseScore(final int score) {
         setChanged();

@@ -15,45 +15,38 @@ import java.util.Observable;
  * Class containing all the functionality shared by all in-game entities.
  */
 public abstract class AbstractEntity extends Observable {
+
     /**
      * Position of the entity.
      */
     /* default */ private Vec2d position = new Vec2d(0, 0);
-
     /**
      * Speed of the entity.
      */
     /* default */ private final Vec2d speed = new Vec2d(0, 0);
-
     /**
      * Scale of the entity.
      */
     /* default */ private final Vec2d scale = new Vec2d(1, 1);
-
     /**
      * Sprite of the entity.
      */
     private Sprite sprite;
-
     /**
      * AbstractShape used for collision detection of the entity.
      */
     private AbstractShape shape;
-
     /**
      * Boolean with the current visibility state of an entity.
      */
     private transient boolean visible = true;
-
     /**
      * The physics behaviour of an entity.
      */
     private transient AbstractPhysicsBehaviour physicsBehaviour = new NoGravityBehaviour(this);
-
     /**
-     * Depth of this entity.
-     * Entities with higher depth are drawn below entities with
-     * lower depth.
+     * Depth of this entity. Entities with higher depth are drawn below
+     * entities with lower depth.
      */
     private int depth;
 
@@ -68,7 +61,6 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Update the entity's position and collision shape.
-     *
      * @param timeDifference the time
      */
     public final void updatePosition(final double timeDifference) {
@@ -92,7 +84,7 @@ public abstract class AbstractEntity extends Observable {
     /**
      * Applies physics on the entity.
      * @param timeDifference The time elapsed since the last time
-     *                       the method was called
+     *                       the method was called.
      */
     public final void applyPhysicsBehaviour(final double timeDifference) {
         physicsBehaviour.applyPhysics(timeDifference);
@@ -100,9 +92,8 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Checks if the entity intersects with another entity.
-     * @param entity The entity you want to check for intersection
-     * @return a boolean indicating if the entity intersects with
-     * the other entity
+     * @param entity The entity you want to check for intersection.
+     * @return       a boolean indicating if two entities intersect.
      */
     public final boolean intersects(final AbstractEntity entity) {
         return isVisible()
@@ -120,17 +111,16 @@ public abstract class AbstractEntity extends Observable {
         }
     }
 
-    // GETTERS
-
     /**
      * Returns the position of the entity.
-     * @return the position
+     * @return Vec2d the position.
      */
     public Vec2d getPosition() {
         return position;
     }
 
     /**
+     * Getter for x.
      * @return The x position of the entity.
      */
     public double getX() {
@@ -138,6 +128,7 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
+     * Getter for y.
      * @return The y position of the entity.
      */
     public double getY() {
@@ -145,21 +136,23 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
-     * Returns the speed of the entity.
-     * @return the speed of the entity
+     * Getter for speed.
+     * @return Vec2d the speed of the entity
      */
     public Vec2d getSpeed() {
         return speed;
     }
 
     /**
-     * @return The horizontal speed of the entity.
+     * Getter for xSpeed.
+     * @return double The horizontal speed of the entity.
      */
     public double getXSpeed() {
         return speed.x;
     }
 
     /**
+     * Getter for ySpeed.
      * @return The vertical speed of the entity.
      */
     public double getYSpeed() {
@@ -167,14 +160,15 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
-     * Returns the scale of the entity.
-     * @return the scale of the entity
+     * Getter for scale.
+     * @return the scale of the entity.
      */
     private Vec2d getScale() {
         return scale;
     }
 
     /**
+     * Getter for xScale.
      * @return The horizontal scale of the entity.
      */
     private double getXScale() {
@@ -189,7 +183,7 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
-     * Returns the sprite of the entity.
+     * Getter for sprite.
      * @return the sprite of the entity
      */
     /* default */ public Sprite getSprite() {
@@ -197,7 +191,7 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
-     * Returns The shape that is used for collisions of the entity.
+     * Getter for the shape.
      * @return The shape that is used for collisions of the entity
      */
     public AbstractShape getShape() {
@@ -205,7 +199,7 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
-     * Returns the boolean indicating if the sprite is visible.
+     * A boolean indicating if the sprite is visible.
      * @return the boolean indicating if the sprite is visible
      */
     public boolean isVisible() {
@@ -213,14 +207,12 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
-     * Returns the level the entity is in.
+     * Getter for the currentLevel.
      * @return the level the entity is in
      */
     public Level getLevel() {
         return Game.getCurrentLevel();
     }
-
-    //SETTERS
 
     /**
      * Set the position of the entity.
@@ -242,7 +234,7 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Set the horizontal position of the entity.
-     * @param xPosition the x coordinate of the entity
+     * @param xPosition the x coordinate of the entity.
      */
     protected void setX(final double xPosition) {
         position.x = xPosition;
@@ -250,7 +242,7 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Set the vertical position of the entity.
-     * @param yPosition the y coordinate of the entity
+     * @param yPosition the y coordinate of the entity.
      */
     protected void setY(final double yPosition) {
         position.y = yPosition;
@@ -258,7 +250,7 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Sets the speed of the entity.
-     * @param speed The speed vector
+     * @param speed The speed vector.
      */
     protected void setSpeed(final Vec2d speed) {
         setSpeed(speed.x, speed.y);
@@ -266,8 +258,8 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Sets the speed of the entity.
-     * @param xSpeed The horizontal speed
-     * @param ySpeed The vertical speed
+     * @param xSpeed The horizontal speed.
+     * @param ySpeed The vertical speed.
      */
     private void setSpeed(final double xSpeed, final double ySpeed) {
         speed.x = xSpeed;
@@ -276,7 +268,7 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Sets the horizontal speed of the entity.
-     * @param xSpeed horizontal speed
+     * @param xSpeed horizontal speed.
      */
     public void setXSpeed(final double xSpeed) {
         speed.x = xSpeed;
@@ -284,7 +276,7 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Sets the vertical speed of the entity.
-     * @param ySpeed vertical speed
+     * @param ySpeed vertical speed.
      */
     public final void setYSpeed(final double ySpeed) {
         speed.y = ySpeed;
@@ -292,7 +284,7 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Sets the scale of the entity.
-     * @param xScale double - the target horizontal scale
+     * @param xScale double the target horizontal scale.
      */
     protected final void setXScale(final double xScale) {
         setScale(xScale, getYScale());
@@ -300,7 +292,7 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Sets the scale of the entity.
-     * @param yScale double - the target vertical scale
+     * @param yScale double the target vertical scale.
      */
     protected final void setYScale(final double yScale) {
         setScale(getXScale(), yScale);
@@ -308,7 +300,7 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Sets the scale of the entity.
-     * @param scale double - the target scale
+     * @param scale double the target scale.
      */
     protected final void setScale(final double scale) {
         setScale(scale, scale);
@@ -316,8 +308,8 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Sets the scale of the entity.
-     * @param xScale double - the target horizontal scale
-     * @param yScale double - the target vertical scale
+     * @param xScale double the target horizontal scale.
+     * @param yScale double the target vertical scale.
      */
     private void setScale(final double xScale, final double yScale) {
         scale.x = xScale;
@@ -326,7 +318,7 @@ public abstract class AbstractEntity extends Observable {
 
     /**
      * Sets the sprite of the entity.
-     * @param sprite a Sprite object for the entity
+     * @param sprite a Sprite object for the entity.
      */
     protected void setSprite(final Sprite sprite) {
         this.sprite = sprite;
@@ -380,7 +372,8 @@ public abstract class AbstractEntity extends Observable {
     }
 
     /**
-     * @return Integer - the depth of this entity.
+     * Getter for the depth.
+     * @return Integer the depth of this entity.
      */
     public final int getDepth() {
         return depth;

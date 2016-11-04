@@ -40,9 +40,9 @@ public class Circle extends AbstractShape {
 
     /**
      * Create a new circle at position (x, y) with radius radius.
-     * @param xPosition x coordinate
-     * @param yPosition y coordinate
-     * @param radius radius
+     * @param xPosition x coordinate.
+     * @param yPosition y coordinate.
+     * @param radius    radius.
      */
     private Circle(final double xPosition, final double yPosition, final double radius) {
         super(xPosition, yPosition);
@@ -60,7 +60,7 @@ public class Circle extends AbstractShape {
     }
 
     /**
-     * @return the radius of the circle
+     * @return the radius of the circle.
      */
     public final /* default */ double getRadius() {
         Vec2d s = getScale();

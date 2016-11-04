@@ -1,14 +1,14 @@
 package entities.character;
 
 /**
- * Class which handles a character's movement.
+ * Class that handles a character's movement.
  */
 public class CharacterMovement {
 
     /**
      * The default run speed of a character.
      */
-    private static final double DEFAULT_RUN_SPEED = 230; // px/s
+    private static final double DEFAULT_RUN_SPEED = 230;
     /**
      * The character this instance handles the movement for.
      */
@@ -18,16 +18,13 @@ public class CharacterMovement {
      */
     private transient double runSpeed = DEFAULT_RUN_SPEED;
     /**
-     * State of the character, indicates which action a character
-     * is performing.
+     * State of the character, indicates which action a character is performing.
      */
     private transient int direction;
 
     /**
      * Creates a new CharacterMovement object.
-     *
-     * @param character Character - The character to handle
-     *                  movement for.
+     * @param character Character the character to handle movement for.
      */
     CharacterMovement(final Character character) {
         this.character = character;
@@ -41,21 +38,21 @@ public class CharacterMovement {
     }
 
     /**
-     * Makes the character stop moving.
+     * The character stops moving.
      */
     public void stop() {
         this.direction = 0;
     }
 
     /**
-     * Makes the character move to the left.
+     * Moves character to the left.
      */
     public void moveLeft() {
         this.direction = -1;
     }
 
     /**
-     * Makes the character move to the right.
+     * Moves character to the right.
      */
     public void moveRight() {
         this.direction = 1;
@@ -63,8 +60,7 @@ public class CharacterMovement {
 
     /**
      * Increases the speed at which the character runs.
-     *
-     * @param amount Double - The speed boost.
+     * @param amount Double the speed boost.
      */
     public void increaseRunSpeed(final double amount) {
         this.runSpeed += amount;
@@ -72,15 +68,14 @@ public class CharacterMovement {
 
     /**
      * Getter for runSpeed.
-     *
-     * @return Double - runSpeed
+     * @return Double runSpeed
      */
     public double getRunSpeed() {
         return runSpeed;
     }
 
     /**
-     * @return Boolean - Whether the character is idle or not.
+     * @return Boolean whether the character is idle or not.
      */
     /* default */ boolean isIdle() {
         return direction == 0;
@@ -88,8 +83,7 @@ public class CharacterMovement {
 
     /**
      * Getter for the direction.
-     *
-     * @return Integer - Movement direction.
+     * @return Integer movement direction.
      */
     /* default */ int getDirection() {
         return direction;

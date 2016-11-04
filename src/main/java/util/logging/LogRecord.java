@@ -32,11 +32,11 @@ class LogRecord {
 
     /**
      * Constructor for LogRecord. Should only be called by Logger.log().
-     * @param logLevel The LogLevel for this LogRecord.
-     * @param sourceClassName The name of the class that called logger.log().
+     * @param logLevel         The LogLevel for this LogRecord.
+     * @param sourceClassName  The name of the class that called logger.log().
      * @param sourceMethodName The name of the method that called logger.log().
-     * @param message The message of this LogRecord.
-     * @param milliseconds The amount of milliseconds since epoch in POSIX time.
+     * @param message          The message of this LogRecord.
+     * @param milliseconds     The amount of milliseconds since epoch in POSIX time.
      */
     LogRecord(
             final LogLevel logLevel, final String sourceClassName,
@@ -52,8 +52,7 @@ class LogRecord {
      * Formats the LogRecord as a String to be written to the log file.
      * Example:
      * [2016-09-21][13:17:45.980][main.BubbleTrouble][start]
-     * DEBUG: Testing Logging....
-     *
+     * DEBUG: Testing Logging...
      * @return a String representing the LogRecord.
      */
     /* default */ final String format() {

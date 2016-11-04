@@ -13,16 +13,15 @@ import geometry.Rectangle;
  * Pickup that contains a power-up effect that will be applied to a character.
  */
 class Pickup extends AbstractEntity implements DynamicEntity, CollidingEntity {
+
     /**
      * The standard time before the pickup disappears in seconds.
      */
     private static final double LIFE_DURATION = 5;
-
     /**
      * The amount of time remaining before the pick-up the pickup disappears.
      */
     private double timeRemaining = LIFE_DURATION;
-
     /**
      * The power-up that this pickup activates.
      */
@@ -31,7 +30,7 @@ class Pickup extends AbstractEntity implements DynamicEntity, CollidingEntity {
     /**
      * Constructor for Pickup.
      * @param position The position of the power-up.
-     * @param powerUp The power-up that the pickup contains.
+     * @param powerUp  The power-up that the pickup contains.
      */
     Pickup(final Vec2d position, final AbstractPowerUp powerUp) {
         super(position);
@@ -65,7 +64,7 @@ class Pickup extends AbstractEntity implements DynamicEntity, CollidingEntity {
 
     /**
      * The behaviour of the AbstractBall when it collides with a AbstractBlock Entity.
-     * @param floor The AbstractBlock Entity this AbstractBall collides with.
+     * @param floor The FloorBlock Entity this AbstractBall collides with.
      */
     private void collideWith(final FloorBlock floor) {
         ((Rectangle) getShape()).setBottom(((Rectangle) floor.getShape()).getTop());

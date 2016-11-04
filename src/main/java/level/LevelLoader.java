@@ -19,7 +19,7 @@ final class LevelLoader {
 
     /**
      * Loads metadata and entities in a level.
-     * @param level The level to load.
+     * @param level    The level to load.
      * @param filename The file to load the level from.
      * @throws IOException If the level file is not found.
      */
@@ -31,6 +31,11 @@ final class LevelLoader {
         loadEntities(level, entities);
     }
 
+    /**
+     * Loads the MeatData.
+     * @param level    Level to load the data in.
+     * @param metaData JSONObject with the metaData.
+     */
     private static void loadMetaData(Level level, JSONObject metaData) {
         // Size
         if (metaData.has("size")) {
@@ -59,6 +64,11 @@ final class LevelLoader {
         }
     }
 
+    /**
+     * Loads the entities.
+     * @param level    Level to lead the entities in.
+     * @param entities SDONArray with entities.
+     */
     private static void loadEntities(Level level, JSONArray entities) {
         for (Object obj : entities) {
             JSONObject json = (JSONObject) obj;

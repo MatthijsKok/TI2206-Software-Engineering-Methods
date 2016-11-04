@@ -7,7 +7,7 @@ import geometry.Rectangle;
 import graphics.Sprite;
 
 /**
- * Vine class, controlling the rope in the game.
+ * Vine class, controlling the bullet in the game.
  */
 public class Vine extends AbstractBullet implements CollidingEntity {
 
@@ -15,12 +15,10 @@ public class Vine extends AbstractBullet implements CollidingEntity {
      * Sprite of the vine.
      */
     private static final Sprite VINE_SPRITE = new Sprite("images/vine.png", new Vec2d(12, 0));
-
     /**
-     * collision shape of the vine. Created around the original sprite.
+     * Collision shape of the vine. Created around the original sprite.
      */
     private static final Rectangle VINE_SHAPE = new Rectangle(VINE_SPRITE);
-
     /**
      * Constant upward speed of the vine in px/s.
      */
@@ -28,8 +26,7 @@ public class Vine extends AbstractBullet implements CollidingEntity {
 
     /**
      * Creates a new vine.
-     *
-     * @param position spawn position of the vine.
+     * @param position  spawn position of the vine.
      * @param character character which shot the vine.
      */
     public Vine(final Vec2d position, final Character character) {

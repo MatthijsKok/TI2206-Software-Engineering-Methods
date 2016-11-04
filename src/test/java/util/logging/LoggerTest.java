@@ -8,7 +8,8 @@ import java.io.File;
 import java.io.IOException;
 
 import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Class that tests Logger.
@@ -31,27 +32,20 @@ public class LoggerTest {
 
     @Test
     public void getInstanceTest() {
-        assertEquals(logger, Logger.getInstance());
+        assertThat(logger, is(Logger.getInstance()));
     }
 
     @Test
     public void setLevelTest() {
         LogLevel logLevel = LogLevel.DEBUG;
         logger.setLevel(logLevel);
-        assertEquals(Logger.getInstance().getLevel(), logLevel);
+        assertThat(Logger.getInstance().getLevel(), is(logLevel));
     }
 
     @Test
     public void getFileTest() {
         logger.setFile(logFile);
-        assertEquals(logger.getFile(), logFile);
-    }
-
-    @Test
-    public void fatalTest() {
-        logger.setLevel(LogLevel.FATAL);
-        logger.fatal(LOG_MESSAGE);
-        assertEquals(logger.getLogRecords().size(), 1);
+        assertThat(logger.getFile(), is(logFile));
     }
 
     @Test
@@ -59,36 +53,36 @@ public class LoggerTest {
         logger.setLevel(LogLevel.ERROR);
         logger.error(LOG_MESSAGE);
         logger.error(LOG_MESSAGE);
-        assertEquals(logger.getLogRecords().size(), 2);
+        assertThat(logger.getLogRecords().size(), is(2));
     }
 
     @Test
     public void warnTest() {
         logger.setLevel(LogLevel.WARN);
-        assertEquals(logger.getLogRecords().size(), 0);
+        assertThat(logger.getLogRecords().size(), is(0));
         logger.warn(LOG_MESSAGE);
-        assertEquals(logger.getLogRecords().size(), 1);
+        assertThat(logger.getLogRecords().size(), is(1));
     }
 
     @Test
     public void infoTest() {
         logger.setLevel(LogLevel.INFO);
         logger.info(LOG_MESSAGE);
-        assertEquals(logger.getLogRecords().size(), 1);
+        assertThat(logger.getLogRecords().size(), is(1));
     }
 
     @Test
     public void debugTest() {
         logger.setLevel(LogLevel.DEBUG);
         logger.debug(LOG_MESSAGE);
-        assertEquals(logger.getLogRecords().size(), 1);
+        assertThat(logger.getLogRecords().size(), is(1));
     }
 
     @Test
     public void traceTest() {
         logger.setLevel(LogLevel.TRACE);
         logger.trace(LOG_MESSAGE);
-        assertEquals(logger.getLogRecords().size(), 1);
+        assertThat(logger.getLogRecords().size(), is(1));
     }
 
     @Test
@@ -103,7 +97,7 @@ public class LoggerTest {
             fail(e.getMessage());
         }
 
-        assertEquals(logger.getLogRecords().size(), 0);
+        assertThat(logger.getLogRecords().size(), is(0));
     }
 
     @Test(expected = IOException.class)

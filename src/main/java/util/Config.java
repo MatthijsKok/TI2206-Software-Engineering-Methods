@@ -19,27 +19,22 @@ public final class Config {
      * The logger access point to which everything will be logged.
      */
     private static final Logger LOGGER = Logger.getInstance();
-
     /**
      * The properties object wherein all default config properties are defined.
      */
     private static final Properties DEFAULT_PROPERTIES;
-
     /**
      * The properties object wherein all config properties will be loaded.
      */
     private static final Properties PROPERTIES;
-
     /**
      * The file containing all config properties.
      */
     private static final String PROPERTIES_FILE_NAME = "properties/settings.properties";
-
     /**
      * The file containing all default config properties.
      */
     private static final String DEFAULT_PROPERTIES_FILE_NAME = "properties/default_settings.properties";
-
     static {
         DEFAULT_PROPERTIES = new Properties();
         try (InputStream inputStream = createInputStream(DEFAULT_PROPERTIES_FILE_NAME)) {
@@ -62,14 +57,29 @@ public final class Config {
         }
     }
 
+    /**
+     * Empty constructor.
+     */
     private Config() {
 
     }
 
+    /**
+     * Creates an input Stream.
+     * @param fileName String with the name of the file.
+     * @return FileInputStream with a fileName.
+     * @throws IOException thrown if the file doesn't exist.
+     */
     private static InputStream createInputStream(String fileName) throws IOException {
         return new FileInputStream(getFile(fileName));
     }
 
+    /**
+     * Creates an output Stream.
+     * @param fileName String with the name of the file.
+     * @return FileOutputStream with a fileName.
+     * @throws IOException thrown if the file doesn't exist.
+     */
     private static OutputStream createOutputStream(String fileName) throws IOException {
         return new FileOutputStream(getFile(fileName));
     }
@@ -82,7 +92,6 @@ public final class Config {
 
     /**
      * Gets the property value corresponding to the key.
-     *
      * @param key the key to check.
      * @return the value corresponding to the key.
      */
@@ -92,7 +101,7 @@ public final class Config {
 
     /**
      * Stores the key and value in the properties file.
-     * @param key The Key.
+     * @param key   The Key.
      * @param value The Value.
      */
     public static void put(String key, String value) {

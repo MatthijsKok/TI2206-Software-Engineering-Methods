@@ -1,10 +1,9 @@
 package panes;
 
 import com.sun.javafx.geom.Vec2d;
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
@@ -25,12 +24,10 @@ class OverlayMenu extends Pane {
      * The padding around the menu.
      */
     private static final Vec2d PADDING = new Vec2d(180, 180);
-
     /**
      * The space between two menu items.
      */
     private static final int ITEM_HEIGHT = 64;
-
     /**
      * The background color of the menu.
      */
@@ -38,16 +35,12 @@ class OverlayMenu extends Pane {
 
     /**
      * Creates a new OverlayMenu.
-     *
-     * @param title String - The title of the menu.
-     * @param items Pair[] - The names and actions of
+     * @param title String with the title of the menu.
+     * @param items Pair[] with the names and actions of
      *              the menu items.
      */
     OverlayMenu(String title,
-                       List<Pair<String, EventHandler<? super MouseEvent>>> items) {
-
-        Platform.runLater(() -> setPrefSize(getScene().getWidth(), getScene().getHeight()));
-
+                       List<Pair<String, EventHandler<ActionEvent>>> items) {
         setBackground(new Background(new BackgroundFill(BACKGROUND_COLOR, null, null)));
 
         getChildren().add(createTitle(title));
@@ -57,6 +50,11 @@ class OverlayMenu extends Pane {
         }
     }
 
+    /**
+     * Create a Title.
+     * @param title String for the game.
+     * @return a label.
+     */
     private Label createTitle(String title) {
         Label label = new Label(title);
         label.setLayoutX(PADDING.x);
@@ -65,9 +63,15 @@ class OverlayMenu extends Pane {
         return label;
     }
 
+    /**
+     * Create a MarioButton.
+     * @param item  EventHandler.
+     * @param index int with the index.
+     * @return a button.
+     */
     private MarioButton createItem(
-            Pair<String, EventHandler<? super MouseEvent>> item, int index) {
-        MarioButton button = new MarioButton(item.getL(), item.getR());
+            Pair<String, EventHandler<ActionEvent>> item, int index) {
+        MarioButton button = new MarioButton(item.getKey(), item.getValue());
 
         button.setLayoutX(PADDING.x);
         button.setLayoutY(PADDING.y + index * ITEM_HEIGHT);

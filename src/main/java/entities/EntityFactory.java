@@ -17,15 +17,16 @@ import org.json.JSONObject;
  */
 public final class EntityFactory {
 
+    /**
+     * Empty constructor.
+     */
     private EntityFactory() {
-
     }
 
     /**
      * Parses the JSONArray entities in entity objects.
-     *
      * @param entity JSONObject representing the entity.
-     * @return The created entity.
+     * @return       The created entity.
      */
     public static AbstractEntity createEntity(JSONObject entity) {
         String type = entity.getString("type");
@@ -51,6 +52,11 @@ public final class EntityFactory {
         }
     }
 
+    /**
+     * Creates a character.
+     * @param position Vec2d the position where the new character will be created.
+     * @return a character or else null.
+     */
     private static Character createCharacter(Vec2d position) {
         for (Player player : Game.getPlayers()) {
             if (player.getCharacter() == null && player.getLives() > 0) {
@@ -60,12 +66,24 @@ public final class EntityFactory {
         return null;
     }
 
+    /**
+     * Instanciates character.
+     * @param position Vec2d Position where the character will be placed.
+     * @param player   Player that will play the character.
+     * @return         A new character linked to a player.
+     */
     private static Character instantiateCharacter(Vec2d position, Player player) {
         Character character = new Character(position);
         player.setCharacter(character);
         return character;
     }
 
+    /**
+     * Creates a ball.
+     * @param position   Vec2d position where the ball will be placed.
+     * @param attributes JSONObject attributes the ball has.
+     * @return           A ball with a size, color and position.
+     */
     private static AbstractBall createBall(Vec2d position, JSONObject attributes) {
         int size = attributes.getInt("size");
 
@@ -77,10 +95,21 @@ public final class EntityFactory {
         return new ColoredBall(position, size);
     }
 
+    /**
+     * Creates a wall.
+     * @param position Vec2d position where the WallBlock will be placed.
+     * @return         A wallBlock at position.
+     */
     private static WallBlock createWall(Vec2d position) {
         return new WallBlock(position);
     }
 
+    /**
+     * Creates a gate.
+     * @param position   Vec2d position where the Gate will be placed.
+     * @param attributes JSONObject attributes the Gate has.
+     * @return           Gate object.
+     */
     private static Gate createGate(Vec2d position, JSONObject attributes) {
         if (attributes.has("color")) {
             ColoredBall.Color color = ColoredBall.getColor(attributes.getString("color"));
@@ -89,10 +118,20 @@ public final class EntityFactory {
         return null;
     }
 
+    /**
+     * Creates a floor.
+     * @param position Vec2d position where the FloorBlock will be placed.
+     * @return         FloorBlock object at position.
+     */
     private static FloorBlock createFloor(Vec2d position) {
         return new FloorBlock(position);
     }
 
+    /**
+     * Creates a floor.
+     * @param position Vec2d position where the SpikeBlock will be placed.
+     * @return         SpikeBlock object at position.
+     */
     private static SpikeBlock createSpike(Vec2d position) {
         return new SpikeBlock(position);
     }

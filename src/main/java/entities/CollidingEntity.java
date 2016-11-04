@@ -7,7 +7,7 @@ public interface CollidingEntity {
     /**
      * Handles the collision between a colliding entity and
      * another entity.
-     * @param entity AbstractEntity - entity that the colliding
+     * @param entity AbstractEntity entity that the colliding
      *               entity collides with.
      */
     void collideWith(AbstractEntity entity);

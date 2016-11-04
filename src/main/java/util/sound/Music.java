@@ -12,20 +12,17 @@ import java.nio.file.Paths;
 public final class Music {
 
     /**
-     * The mediaplayer that plays the background music.
+     * The media player that plays the background music.
      */
     private static MediaPlayer mediaPlayer;
-
     /**
      * Path where the music is stored.
      */
     private static final String MUSIC_PATH = "src/main/resources/sounds/music/";
-
     /**
      * The music that is currently playing.
      */
     private static Media currentMusic;
-
     /**
      * The volume at which the background is played.
      */
@@ -44,7 +41,6 @@ public final class Music {
             mediaPlayer.pause();
         }
     }
-
 
     /**
      * Starts the music that is defined in the music property.
@@ -101,13 +97,6 @@ public final class Music {
      */
     public static double getMusicVolume() {
         return musicVolume;
-    }
-
-    /**
-     * @return The MediaPlayer object controlling the music.
-     */
-    public static MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
     }
 
     /**

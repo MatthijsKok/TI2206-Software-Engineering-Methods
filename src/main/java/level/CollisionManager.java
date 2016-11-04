@@ -9,6 +9,7 @@ import java.util.List;
  * Class used for handling collision between entities.
  */
 final class CollisionManager {
+
     /**
      * Entities that entities which need collision handling may
      * collide with.
@@ -27,6 +28,10 @@ final class CollisionManager {
      * Handles collisions between this managers entities.
      */
     /* default */ void update() {
+        if (entities == null) {
+            return;
+        }
+
         int n = entities.size();
         AbstractEntity a, b;
 

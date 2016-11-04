@@ -40,16 +40,18 @@ public class MainMenu extends Pane {
      */
     public MainMenu(Stage stage) {
         setPrefSize(stage.getWidth(), stage.getHeight());
-        getChildren().add(createSinglePlayerButton());
-        getChildren().add(createMultiPlayerButton());
-        getChildren().add(createSettingsButton());
-        getChildren().add(createQuitButton());
+        getChildren().addAll(
+                createSinglePlayerButton(),
+                createMultiPlayerButton(),
+                createSettingsButton(),
+                createQuitButton());
+
         setBackground(new Background(createBackgroundImage()));
     }
 
     /**
      * Creates the background.
-     * @return backgroundImage
+     * @return backgroundImage.
      */
     private BackgroundImage createBackgroundImage() {
         Image image = new Image("images/menu.jpg");
@@ -58,60 +60,61 @@ public class MainMenu extends Pane {
 
     /**
      * Button to start a singlePlayerGame.
-     * @return Button - singlePlayerGame
+     * @return Button singlePlayerGame.
      */
     private Button createSinglePlayerButton() {
         Button button = new MarioButton("Start Single Player Game",
                 event -> startGame(DEFAULT_LEVELS, 1));
         button.setLayoutX(180);
         button.setLayoutY(224);
-        button.idProperty().set("singlePlayerButton");
 
         return button;
     }
 
     /**
      * Button to start a multiPlayerGame.
-     * @return Button - multiPlayerGame
+     * @return Button multiPlayerGame.
      */
     private Button createMultiPlayerButton() {
         Button button = new MarioButton("Start Multi Player Game",
                 event -> startGame(DEFAULT_LEVELS, 2));
         button.setLayoutX(180);
         button.setLayoutY(282);
-        button.idProperty().set("multiPlayerButton");
 
         return button;
     }
 
     /**
      * Creates a settings button.
-     * @return Button - Settings button
+     * @return Button Settings button.
      */
     private Button createSettingsButton() {
         Button button = new MarioButton("Settings",
                 event -> SceneManager.goToScene("SettingsMenu"));
         button.setLayoutX(180);
         button.setLayoutY(342);
-        button.idProperty().set("settingsButton");
 
         return button;
     }
 
     /**
      * Button to quit the game.
-     * @return Button - Quit button.
+     * @return Button, Quit button.
      */
     private Button createQuitButton() {
         Button button = new MarioButton("Quit",
                 event -> Platform.exit());
         button.setLayoutX(180);
         button.setLayoutY(402);
-        button.idProperty().set("quitButton");
 
         return button;
     }
 
+    /**
+     * Start a new game.
+     * @param levels      List<String> of levels that the game contains.
+     * @param playerCount int with amount of players.
+     */
     private void startGame(List<String> levels, int playerCount) {
         Game.setLevelsFromFiles(levels);
         Game.setPlayerCount(playerCount);
