@@ -169,24 +169,24 @@ public abstract class AbstractBall extends AbstractEntity implements CollidingEn
         Point top    = new Point(getX(), getY() - radius);
         Point bottom = new Point(getX(), getY() + radius);
 
-        if (left.intersects(blockShape)) {
+        if (left.intersects(blockShape) && getXSpeed() < 0) {
             setX(blockShape.getRight() + radius);
             setXSpeed(HORIZONTAL_SPEED);
         }
 
-        if (right.intersects(blockShape)) {
+        if (right.intersects(blockShape) && getXSpeed() > 0) {
             setX(blockShape.getLeft() - radius);
             setXSpeed(-HORIZONTAL_SPEED);
         }
 
-        if (bottom.intersects(blockShape)) {
-            setY(blockShape.getTop() - radius);
-            bounce();
-        }
-
-        if (top.intersects(blockShape)) {
+        if (top.intersects(blockShape) && getYSpeed() < 0) {
             setY(blockShape.getBottom() + radius);
             setYSpeed(Math.max(0, getYSpeed()));
+        }
+
+        if (bottom.intersects(blockShape) && getYSpeed() > 0) {
+            setY(blockShape.getTop() - radius);
+            bounce();
         }
     }
 

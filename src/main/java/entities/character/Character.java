@@ -138,22 +138,22 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
 
         Rectangle blockShape = (Rectangle) block.getShape();
 
-        if (left.intersects(blockShape)) {
+        if (left.intersects(blockShape) && getXSpeed() < 0) {
             shape.setLeft(blockShape.getRight());
             setXSpeed(Math.max(0, getXSpeed()));
         }
 
-        if (right.intersects(blockShape)) {
+        if (right.intersects(blockShape) && getXSpeed() > 0) {
             shape.setRight(blockShape.getLeft());
             setXSpeed(Math.min(0, getXSpeed()));
         }
 
-        if (top.intersects(blockShape)) {
+        if (top.intersects(blockShape) && getYSpeed() < 0) {
             shape.setTop(blockShape.getBottom());
             setYSpeed(Math.max(0, getYSpeed()));
         }
 
-        if (bottom.intersects(blockShape)) {
+        if (bottom.intersects(blockShape) && getYSpeed() > 0) {
             shape.setBottom(blockShape.getTop());
             setYSpeed(Math.min(0, getYSpeed()));
         }
