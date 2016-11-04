@@ -1,5 +1,5 @@
 {
-  "name": "Yoshi's Island",
+  "name": "Mushroom Kingdom",
   "duration": 15,
   "backgroundImageURI": "mountains.png",
   "backgroundMusicURI": "mario_theme_remix.mp3",
@@ -7,14 +7,12 @@
     {
       "type": "Player",
       "x": 512,
-      "y": 500,
-      "attributes": {}
+      "y": 500
     },
     {
       "type": "Player",
       "x": 300,
-      "y": 500,
-      "attributes": {}
+      "y": 500
     },
     {
       "type": "Ball",
@@ -153,87 +151,130 @@
     {
       "type": "Floor",
       "x": 0,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block_left_corner.png"
+      }
     },
     {
       "type": "Floor",
       "x": 64,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 128,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 192,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 256,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 320,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 384,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 448,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 512,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 576,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 640,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 704,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 768,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 832,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 896,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block.png"
+      }
     },
     {
       "type": "Floor",
       "x": 960,
-      "y": 544
-    },
-    {
-      "type": "Floor",
-      "x": 1024,
-      "y": 544
+      "y": 544,
+      "attributes": {
+        "sprite": "grass_block_right_corner.png"
+      }
     },
     {
       "type": "Spike",
