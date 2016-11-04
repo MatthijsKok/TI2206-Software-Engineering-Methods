@@ -1,5 +1,6 @@
 package entities.powerups;
 
+import graphics.Sprite;
 import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.blocks.FloorBlock;
@@ -23,6 +24,7 @@ public class PickupTest extends BubbleTroubleApplicationTest{
     private Character character;
     private Level level;
     private static FloorBlock floor;
+    private Sprite sprite = new Sprite("/blocks/mushroom_block.png");
 
     @Before
     public void setUp() {
@@ -36,7 +38,7 @@ public class PickupTest extends BubbleTroubleApplicationTest{
         pickup = new Pickup(spawnPosition, powerUp);
 
         character = new Character(new Vec2d(100, 300));
-        floor = new FloorBlock(new Vec2d(0, 0));
+        floor = new FloorBlock(new Vec2d(0, 0), sprite);
 
         level = Game.getCurrentLevel();
         level.addEntity(pickup);

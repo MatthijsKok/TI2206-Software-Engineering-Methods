@@ -1,5 +1,6 @@
 package entities.blocks;
 
+import graphics.Sprite;
 import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import org.junit.Before;
@@ -13,10 +14,11 @@ import static junit.framework.TestCase.assertNotNull;
 public class FloorBlockTest extends BubbleTroubleApplicationTest {
 
     private FloorBlock floor;
+    private Sprite sprite = new Sprite("/blocks/mushroom_block.png");
 
     @Before
     public void setUp() {
-        floor = new FloorBlock(new Vec2d(0, 0));
+        floor = new FloorBlock(new Vec2d(0, 0), sprite);
     }
 
     @Test

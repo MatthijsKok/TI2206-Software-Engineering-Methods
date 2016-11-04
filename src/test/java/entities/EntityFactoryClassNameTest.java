@@ -26,6 +26,9 @@ public class EntityFactoryClassNameTest extends AbstractEntityFactoryTest {
         JSONObject ballParams = new JSONObject();
         ballParams.put("size", 2);
 
+        JSONObject floorParams = new JSONObject();
+        floorParams.put("sprite", "mushroom_block.png");
+
         JSONObject gateParams = new JSONObject();
         gateParams.put("color", "blue");
 
@@ -33,7 +36,7 @@ public class EntityFactoryClassNameTest extends AbstractEntityFactoryTest {
                 { createJSONEntity("Player", 10, 10), Character.class },
                 { createJSONEntity("Ball",   20, 10, ballParams), ColoredBall.class },
                 { createJSONEntity("Wall",   30, 10), WallBlock.class },
-                { createJSONEntity("Floor",  10, 30), FloorBlock.class },
+                { createJSONEntity("Floor",  10, 30, floorParams), FloorBlock.class },
                 { createJSONEntity("Gate",   10, 30, gateParams), Gate.class }
         });
     }

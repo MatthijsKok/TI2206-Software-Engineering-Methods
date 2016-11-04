@@ -1,5 +1,6 @@
 package entities.balls;
 
+import graphics.Sprite;
 import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.blocks.FloorBlock;
@@ -31,6 +32,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
     private Vec2d spawnPosition = new Vec2d(100, 300);
     private int ballSize = 2;
     private ColoredBall.Color ballColor = ColoredBall.Color.BLUE;
+    private Sprite sprite = new Sprite("/blocks/mushroom_block.png");
 
     private Level level;
 
@@ -65,7 +67,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
         FloorBlock floor = new FloorBlock(
                 new Vec2d(
                         ball.getX() - 32,
-                        ball.getY() + 1));
+                        ball.getY() + 1), sprite);
 
         ball.setYSpeed(10);
         ball.collideWith(floor);

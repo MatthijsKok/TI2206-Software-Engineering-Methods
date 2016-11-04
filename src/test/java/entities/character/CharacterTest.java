@@ -1,5 +1,6 @@
 package entities.character;
 
+import graphics.Sprite;
 import main.BubbleTroubleApplicationTest;
 import com.sun.javafx.geom.Vec2d;
 import entities.balls.AbstractBall;
@@ -25,6 +26,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
     private Gun gun;
     private Vec2d spawnPosition = new Vec2d(100, 300);
     private CharacterMovement movement;
+    private Sprite sprite = new Sprite("/blocks/mushroom_block.png");
 
     private int countEntities() {
         return character.getLevel().getEntities().size();
@@ -87,7 +89,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         FloorBlock floor = new FloorBlock(
                 new Vec2d(
                         spawnPosition.x,
-                        spawnPosition.y + 100));
+                        spawnPosition.y + 100), sprite);
 
         double y = character.getY();
         character.collideWith(floor);
@@ -100,7 +102,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         FloorBlock floor = new FloorBlock(
                 new Vec2d(
                         spawnPosition.x - 5,
-                        spawnPosition.y - 5));
+                        spawnPosition.y - 5), sprite);
 
         character.setYSpeed(10);
         double y = character.getY();
@@ -115,7 +117,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         FloorBlock floor = new FloorBlock(
                 new Vec2d(
                         spawnPosition.x - 5,
-                        rect.getTop() - 59));
+                        rect.getTop() - 59), sprite);
 
         character.setYSpeed(-10);
 

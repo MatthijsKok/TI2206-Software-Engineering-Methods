@@ -16,10 +16,11 @@ public class FloorBlock extends AbstractBlock {
     /**
      * Creates a new FloorBlock at position (x,y).
      * @param position Vec2d Position of the block.
+     * @param blockSprite The Sprite object for this block.
      */
-    public FloorBlock(final Vec2d position) {
+    public FloorBlock(final Vec2d position, Sprite blockSprite) {
         super(position);
-        setSprite(FLOOR_SPRITE);
+        setSprite(blockSprite);
         setShapeToSprite();
     }
 }
