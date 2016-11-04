@@ -28,11 +28,11 @@ public class MainMenu extends Pane {
      */
     private static final List<String> DEFAULT_LEVELS = new ArrayList<>();
     static {
-        DEFAULT_LEVELS.add("src/main/resources/levels/level1.json");
-        DEFAULT_LEVELS.add("src/main/resources/levels/level2.json");
-        DEFAULT_LEVELS.add("src/main/resources/levels/level3.json");
-        DEFAULT_LEVELS.add("src/main/resources/levels/level4.json");
-        DEFAULT_LEVELS.add("src/main/resources/levels/level5.json");
+        DEFAULT_LEVELS.add("level1.json");
+        DEFAULT_LEVELS.add("level2.json");
+        DEFAULT_LEVELS.add("level3.json");
+        DEFAULT_LEVELS.add("level4.json");
+        DEFAULT_LEVELS.add("level5.json");
     }
 
     /**
