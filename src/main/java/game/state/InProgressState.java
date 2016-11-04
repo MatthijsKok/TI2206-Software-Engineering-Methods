@@ -77,6 +77,7 @@ public class InProgressState implements GameState {
     private void update(final long now) {
         if (!Game.getState().equals(this)) {
             timer.stop();
+            return;
         }
 
         final double timeDifference = Math.min(

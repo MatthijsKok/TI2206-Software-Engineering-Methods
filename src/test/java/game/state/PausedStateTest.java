@@ -22,5 +22,6 @@ public class PausedStateTest extends AbstractGameStateTest {
         fireButton(0);
 
         assertTrue(Game.getState() instanceof InProgressState);
+        Game.setState(new NotStartedState());
     }
 }

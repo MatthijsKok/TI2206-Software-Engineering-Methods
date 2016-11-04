@@ -112,6 +112,8 @@ public final class Logger {
                     getCallerMethodName(),
                     message,
                     System.currentTimeMillis()));
+
+            System.out.println(logRecords.get(logRecords.size() - 1).format());
         }
     }
 

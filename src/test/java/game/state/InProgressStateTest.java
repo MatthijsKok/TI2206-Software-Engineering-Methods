@@ -15,5 +15,6 @@ public class InProgressStateTest extends AbstractGameStateTest {
     public void testConstructor() {
         new InProgressState(Game.getCurrentLevel());
         assertThat(getAnchor().getChildren().size(), is(0));
+        Game.setState(new NotStartedState());
     }
 }
