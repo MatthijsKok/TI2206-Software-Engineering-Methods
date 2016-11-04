@@ -20,7 +20,7 @@ public class Gate extends AbstractBlock implements DynamicEntity {
     /**
      * The sprite used for the block object in the game.
      */
-    private static final Sprite GATE_SPRITE = new Sprite("images/blocks/plant.png");
+    private static final Sprite GATE_SPRITE = new Sprite("blocks/plant.png");
     /**
      * The collision shape of the gate. Created around the original sprite.
      */

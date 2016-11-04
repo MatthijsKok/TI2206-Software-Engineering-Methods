@@ -75,6 +75,10 @@ public class InProgressState implements GameState {
      * @param now long that indicates the current moment.
      */
     private void update(final long now) {
+        if (!Game.getState().equals(this)) {
+            timer.stop();
+        }
+
         final double timeDifference = Math.min(
                 (now - lastNanoTime) / NANO_SECONDS_IN_SECOND,
                 MAX_FRAME_DURATION);
@@ -85,6 +89,17 @@ public class InProgressState implements GameState {
 
         Game.draw();
 
+        updateKeyboard();
+
+        try {
+            checkExitConditions();
+        } catch (IOException e) {
+            Logger.getInstance().fatal(e.getMessage());
+            Game.stop();
+        }
+    }
+
+    private void updateKeyboard() {
         if (KeyboardInputManager.keyPressed(PAUSE_KEY)) {
             SoundEffect.PAUSE.play();
             exit();
@@ -93,13 +108,6 @@ public class InProgressState implements GameState {
 
         // Clear the keyboard
         KeyboardInputManager.update();
-
-        try {
-            checkExitConditions();
-        } catch (IOException e) {
-            Logger.getInstance().fatal(e.getMessage());
-            Game.stop();
-        }
     }
 
     /**

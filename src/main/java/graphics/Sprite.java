@@ -11,6 +11,10 @@ import util.CanvasManager;
 public class Sprite {
 
     /**
+     * The path to the sprites folder.
+     */
+    private static final String PATH_PREFIX = "images/sprites/";
+    /**
      * The default frame per second rate of any sprite.
      */
     private static final double DEFAULT_FPS = 15; // f / s
@@ -80,7 +84,7 @@ public class Sprite {
      * @param offset a Vec2D containing the (x,y) offset to the center of the sprite.
      */
     public Sprite(final String uri, final int frames, final Vec2d offset) {
-        this(new Image(uri), frames, offset);
+        this(new Image(PATH_PREFIX + uri), frames, offset);
     }
 
     /**

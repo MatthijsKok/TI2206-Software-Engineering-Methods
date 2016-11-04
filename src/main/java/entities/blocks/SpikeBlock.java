@@ -12,7 +12,7 @@ public class SpikeBlock  extends AbstractBlock {
     /**
      * The sprite used for the spike block object in the game.
      */
-    private static final Sprite SPIKE_SPRITE = new Sprite("images/blocks/spike_block.png");
+    private static final Sprite SPIKE_SPRITE = new Sprite("blocks/spike_block.png");
 
     /**
      * Creates a new SpikeBlock at position (x,y).

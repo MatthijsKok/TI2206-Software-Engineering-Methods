@@ -39,11 +39,12 @@ public final class StageManager {
 
         synchronized (new Object()) {
             setStage(stage);
-            getStage().setResizable(false);
-            getStage().setWidth(DEFAULT_WIDTH);
-            getStage().setHeight(DEFAULT_HEIGHT);
-            getStage().getIcons().add(new Image("images/logo.png"));
+            stage.setResizable(false);
+            stage.setWidth(DEFAULT_WIDTH);
+            stage.setHeight(DEFAULT_HEIGHT);
+            stage.getIcons().add(new Image("images/logo.png"));
         }
+        
         stage.show();
     }
 
