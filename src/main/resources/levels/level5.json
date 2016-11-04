@@ -1,6 +1,6 @@
 {
   "name": "Green garden",
-  "duration": 40,
+  "duration": 35,
   "backgroundImageURI": "overworld.png",
   "backgroundMusicURI": "peach_gardens.mp3",
   "entities": [
