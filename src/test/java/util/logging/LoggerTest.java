@@ -28,6 +28,7 @@ public class LoggerTest {
 
     @Before
     public void setUp() {
+        Game.setState(new NotStartedState());
         logger.purgeLogRecords();
     }
 
