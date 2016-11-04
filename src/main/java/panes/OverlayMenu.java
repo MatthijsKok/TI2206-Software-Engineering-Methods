@@ -18,7 +18,7 @@ import java.util.List;
  * OverlayMenu represents a menu that is drawn over
  * the current game.
  */
-class OverlayMenu extends Pane {
+public class OverlayMenu extends Pane {
 
     /**
      * The padding around the menu.

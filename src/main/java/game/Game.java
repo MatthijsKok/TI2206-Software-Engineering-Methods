@@ -176,7 +176,7 @@ public final class Game {
             setState(new LevelWonState(previousLevel, getCurrentLevel()));
         } else {
             SoundEffect.GAME_WON.play();
-            setState(new GameWonState());
+            setState(new GameWonState(getPlayerScores()));
         }
     }
 
@@ -235,5 +235,11 @@ public final class Game {
                 hud = new YoshiStats(hud, PLAYERS.get(1));
             }
         }
+    }
+
+    private static List<Integer> getPlayerScores() {
+        return PLAYERS.stream()
+                .map(Player::getScore)
+                .collect(Collectors.toList());
     }
 }
