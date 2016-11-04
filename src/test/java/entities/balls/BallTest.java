@@ -67,6 +67,7 @@ public class BallTest extends BubbleTroubleApplicationTest {
                         ball.getX() - 32,
                         ball.getY() + 1));
 
+        ball.setYSpeed(10);
         ball.collideWith(floor);
         assertThat("A ball should bounce up when it hits a floor", ball.getYSpeed(), lessThan(0.d));
     }
@@ -149,21 +150,6 @@ public class BallTest extends BubbleTroubleApplicationTest {
 
         assertThat(ball.getYSpeed(), lessThan(0.d));
     }
-
-    /*@Test
-    public void testCollideWithVineSizeIsZero() {
-        AbstractBall ball2 = new AbstractBall(spawnPosition, 0);
-
-        level.removeEntity(ball);
-        level.addEntity(ball2);
-        level.update(0);
-
-        int size = level.getEntities().size();
-
-        ball2.collideWith(vine);
-
-        assertThat(level.getEntities().size(), is(size - 1));
-    }*/
 
     @Test
     public void testCollideWithOtherEntity() {

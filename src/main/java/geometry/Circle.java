@@ -62,7 +62,7 @@ public class Circle extends AbstractShape {
     /**
      * @return the radius of the circle.
      */
-    public final /* default */ double getRadius() {
+    public final double getRadius() {
         Vec2d s = getScale();
         return this.radius * (s.x + s.y) / 2;
     }
