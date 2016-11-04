@@ -21,14 +21,9 @@ public class LoggerTest extends BubbleTroubleApplicationTest {
     private final Logger logger = Logger.getInstance();
     private File logFile = new File("docs/logs/LoggerTestLog.log");
 
-    // This is to prevent log messages being written during the tests.
-    @BeforeClass
-    public static void setUpClass() {
-        Game.setState(new NotStartedState());
-    }
-
     @Before
     public void setUp() {
+        Game.setState(new NotStartedState());
         logger.purgeLogRecords();
     }
 
