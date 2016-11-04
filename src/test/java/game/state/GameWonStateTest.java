@@ -25,8 +25,10 @@ public class GameWonStateTest extends AbstractGameStateTest {
 
     @Test
     public void testConstructor() {
-        new GameWonState(scores);
-        assertChildAmount(3);
+        Platform.runLater(() -> {
+            new GameWonState(scores);
+            assertChildAmount(4);
+        });
     }
 
     @Test
