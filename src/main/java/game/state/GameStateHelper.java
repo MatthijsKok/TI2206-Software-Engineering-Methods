@@ -36,6 +36,10 @@ public final class GameStateHelper {
      * @param overlay Pane to draw as overlay.
      */
     /* default */ static void setOverlay(final Pane overlay) {
+        if (anchor == null) {
+            return;
+        }
+
         if (!anchor.getChildren().isEmpty()) {
             anchor.getChildren().remove(0);
         }
