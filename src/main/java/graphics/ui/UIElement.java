@@ -1,7 +1,7 @@
-package ui;
+package graphics.ui;
 
 /**
- * Abstract class with functionality used by most ui elements.
+ * Abstract class with functionality used by most graphics.ui elements.
  */
 public interface UIElement {
 

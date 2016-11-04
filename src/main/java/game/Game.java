@@ -9,13 +9,13 @@ import game.state.InProgressState;
 import game.state.LevelLostState;
 import game.state.LevelWonState;
 import game.state.NotStartedState;
+import graphics.ui.HeadsUpDisplay;
+import graphics.ui.MarioStats;
+import graphics.ui.TimeBar;
+import graphics.ui.UIElement;
+import graphics.ui.YoshiStats;
 import level.Level;
 import level.LevelTimer;
-import ui.EmptyHUD;
-import ui.MarioStats;
-import ui.TimeBar;
-import ui.UIElement;
-import ui.YoshiStats;
 import util.SceneManager;
 import util.logging.Logger;
 import util.sound.MultiSoundEffect;
@@ -225,20 +225,15 @@ public final class Game {
      * @param timer LevelTimer the timer to draw.
      */
     public static void setTimer(LevelTimer timer) {
-
         // Create the time bar
-        TimeBar timeBar = new TimeBar(new EmptyHUD(), timer);
+        hud = new TimeBar(new HeadsUpDisplay(), timer);
 
-        switch (PLAYERS.size()) {
-            case 1:
-                hud = new MarioStats(timeBar, PLAYERS.get(0));
-                break;
-            case 2:
-                hud = new YoshiStats(new MarioStats(timeBar, PLAYERS.get(0)), PLAYERS.get(1));
-                break;
-            default:
-                hud = timeBar;
-                break;
+        if (PLAYERS.size() >= 1) {
+            hud = new MarioStats(hud, PLAYERS.get(0));
+
+            if (PLAYERS.size() >= 2) {
+                hud = new YoshiStats(hud, PLAYERS.get(1));
+            }
         }
     }
 }

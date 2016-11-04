@@ -1,4 +1,4 @@
-package ui;
+package graphics.ui;
 
 import javafx.scene.paint.Color;
 import level.LevelTimer;
@@ -11,17 +11,17 @@ public class TimeBar extends AbstractHUDDecorator {
     /**
      * Padding around the time bar.
      */
-    public static final int MARGIN = 8;
+    private static final int MARGIN = 8;
 
     /**
      * Padding around the time bar.
      */
-    public static final int PADDING = 2;
+    private static final int PADDING = 2;
 
     /**
      * Height of the time bar.
      */
-    public static final int HEIGHT = 24;
+    private static final int HEIGHT = 24;
 
     /**
      * The level timer to draw.
@@ -31,10 +31,10 @@ public class TimeBar extends AbstractHUDDecorator {
     /**
      * Creates a new HUD for.
      * @param timer LevelTimer - The timer for the current level to draw a HUD for.
-     * @param newUI The UIElement to draw over.
+     * @param element The UIElement to draw over.
      */
-    public TimeBar(UIElement newUI, LevelTimer timer) {
-        super(newUI);
+    public TimeBar(UIElement element, LevelTimer timer) {
+        super(element);
         this.timer = timer;
     }
 

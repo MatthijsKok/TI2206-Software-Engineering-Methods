@@ -1,4 +1,4 @@
-package ui;
+package graphics.ui;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -7,39 +7,39 @@ import util.CanvasManager;
 /**
  * Decorator for the Heads Up Display.
  */
-public abstract class AbstractHUDDecorator implements UIElement {
+abstract class AbstractHUDDecorator implements UIElement {
 
     /**
      * Temporary UI element to be decorated.
      */
-    private final UIElement tempUI;
+    private final transient UIElement element;
 
     /**
      * Constructor for HUDDecorator.
-     * @param tempUI The UI element to decorate.
+     * @param element The UI element to decorate.
      */
-    public AbstractHUDDecorator(UIElement tempUI) {
-        this.tempUI = tempUI;
+    /* default */ AbstractHUDDecorator(final UIElement element) {
+        this.element = element;
     }
 
     /**
      * Draws the UI to the screen.
      */
     public void draw() {
-        tempUI.draw();
+        element.draw();
     }
 
     /**
      * @return Canvas - The getCanvas to draw on.
      */
-    protected final Canvas getCanvas() {
+    /* default */ final Canvas getCanvas() {
         return CanvasManager.getCanvas();
     }
 
     /**
      * @return GraphicsContext - The graphics context to draw on.
      */
-    protected final GraphicsContext getGraphicsContext() {
+    /* default */ final GraphicsContext getGraphicsContext() {
         return CanvasManager.getContext();
     }
 
