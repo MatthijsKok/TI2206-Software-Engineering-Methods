@@ -1,6 +1,5 @@
 package util.sound;
 
-
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaException;
 
@@ -14,7 +13,7 @@ public final class SoundEffect {
     /**
      * Sound effect for the extra life power-up.
      */
-    public static final SoundEffect EXTRA_LIFE = new SoundEffect("1-up.wav");
+    public static final SoundEffect EXTRA_LIFE = new SoundEffect("one_up.wav");
     /**
      * Sound effect for the speed boost power-up.
      */

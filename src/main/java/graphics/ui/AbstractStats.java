@@ -52,7 +52,7 @@ abstract class AbstractStats extends AbstractHUDDecorator {
      * @return A Font object with the correct size.
      */
     private static Font loadMarioFont(final int fontSize) {
-        final String path = Paths.get("src/main/resources/fonts/newSuperMario.ttf").toUri().toString();
+        String path = Paths.get("src/main/resources/fonts/newSuperMario.ttf").toUri().toString();
 
         return Font.loadFont(path, fontSize);
     }

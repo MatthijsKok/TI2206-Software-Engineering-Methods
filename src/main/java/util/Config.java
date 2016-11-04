@@ -3,7 +3,6 @@ package util;
 import util.logging.Logger;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,11 +29,11 @@ public final class Config {
     /**
      * The file containing all config properties.
      */
-    private static final String PROPERTIES_FILE_NAME = "properties/settings.properties";
+    private static final String PROPERTIES_FILE_NAME = "settings.properties";
     /**
      * The file containing all default config properties.
      */
-    private static final String DEFAULT_PROPERTIES_FILE_NAME = "properties/default_settings.properties";
+    private static final String DEFAULT_PROPERTIES_FILE_NAME = "default_settings.properties";
     static {
         DEFAULT_PROPERTIES = new Properties();
         try (InputStream inputStream = createInputStream(DEFAULT_PROPERTIES_FILE_NAME)) {
@@ -71,7 +70,7 @@ public final class Config {
      * @throws IOException thrown if the file doesn't exist.
      */
     private static InputStream createInputStream(String fileName) throws IOException {
-        return new FileInputStream(getFile(fileName));
+        return Config.class.getResourceAsStream("/properties/" + fileName);
     }
 
     /**
@@ -85,9 +84,7 @@ public final class Config {
     }
 
     private static File getFile(String fileName) throws IOException {
-        return new File(
-                Config.class.getClassLoader().getResource(fileName).getFile()
-        );
+        return new File(Config.class.getResource("/properties/" + fileName).getFile());
     }
 
     /**
