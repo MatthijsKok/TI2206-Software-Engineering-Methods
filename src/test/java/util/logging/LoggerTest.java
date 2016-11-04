@@ -1,13 +1,13 @@
 package util.logging;
 
+import game.Game;
+import game.state.NotStartedState;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.IOException;
 
-import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -17,12 +17,13 @@ import static org.hamcrest.Matchers.is;
 public class LoggerTest {
 
     private static final String LOG_MESSAGE = "hello hello, check out this BEAUTIFUL logger!";
-    private static Logger logger;
+    private final Logger logger = Logger.getInstance();
     private File logFile = new File("docs/logs/LoggerTestLog.log");
 
+    // This is to prevent log messages being written during the tests.
     @BeforeClass
     public static void setUpClass() {
-        logger = Logger.getInstance();
+        Game.setState(new NotStartedState());
     }
 
     @Before
@@ -49,11 +50,17 @@ public class LoggerTest {
     }
 
     @Test
+    public void fatalTest() {
+        logger.setLevel(LogLevel.FATAL);
+        logger.fatal(LOG_MESSAGE);
+        assertThat(logger.getLogRecords().size(), is(1));
+    }
+
+    @Test
     public void errorTest() {
         logger.setLevel(LogLevel.ERROR);
         logger.error(LOG_MESSAGE);
-        logger.error(LOG_MESSAGE);
-        assertThat(logger.getLogRecords().size(), is(2));
+        assertThat(logger.getLogRecords().size(), is(1));
     }
 
     @Test
@@ -91,18 +98,8 @@ public class LoggerTest {
         logger.setLevel(LogLevel.INFO);
         logger.info(LOG_MESSAGE);
 
-        try {
-            logger.writeLogRecords();
-        } catch (IOException e) {
-            fail(e.getMessage());
-        }
+        logger.writeLogRecords();
 
         assertThat(logger.getLogRecords().size(), is(0));
-    }
-
-    @Test(expected = IOException.class)
-    public void logWriterExceptionTest() throws IOException {
-        logger.setFile(new File("does_not_exist/fake.log"));
-        logger.writeLogRecords();
     }
 }

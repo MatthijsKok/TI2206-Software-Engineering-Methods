@@ -53,7 +53,7 @@ public class BubbleTrouble extends Application {
      * Initializes all scenes the app uses.
      * @param stage The stage the app plays in.
      */
-    static void loadScenes(final Stage stage) {
+    /* default */ static void loadScenes(final Stage stage) {
         StageManager.init(stage);
 
         SceneManager.setStage(stage);
@@ -97,4 +97,5 @@ public class BubbleTrouble extends Application {
         Music.setMusic("menu_gusty_garden.mp3");
         Music.startMusic();
     }
+
 }

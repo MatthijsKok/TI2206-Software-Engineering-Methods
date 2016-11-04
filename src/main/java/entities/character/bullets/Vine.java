@@ -14,7 +14,7 @@ public class Vine extends AbstractBullet implements CollidingEntity {
     /**
      * Sprite of the vine.
      */
-    private static final Sprite VINE_SPRITE = new Sprite("images/vine.png", new Vec2d(12, 0));
+    private static final Sprite VINE_SPRITE = new Sprite("vine.png", new Vec2d(12, 0));
     /**
      * Collision shape of the vine. Created around the original sprite.
      */

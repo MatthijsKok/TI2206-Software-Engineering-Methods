@@ -1,7 +1,7 @@
 {
-  "name": "Level 2",
+  "name": "Puffer paradise",
   "duration": 40,
-  "backgroundImageURI": "images/backgrounds/underwater.png",
+  "backgroundImageURI": "underwater.png",
   "backgroundMusicURI": "dire_docks.mp3",
   "entities": [
     {
