@@ -6,7 +6,22 @@ import level.LevelTimer;
 /**
  * Decorator class for the HUD elements.
  */
-public class TimeBar extends HUDDecorator {
+public class TimeBar extends AbstractHUDDecorator {
+
+    /**
+     * Padding around the time bar.
+     */
+    public static final int MARGIN = 8;
+
+    /**
+     * Padding around the time bar.
+     */
+    public static final int PADDING = 2;
+
+    /**
+     * Height of the time bar.
+     */
+    public static final int HEIGHT = 24;
 
     /**
      * The level timer to draw.

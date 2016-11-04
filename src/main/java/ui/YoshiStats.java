@@ -1,13 +1,18 @@
 package ui;
 
 import game.player.Player;
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 
 /**
  * Class responsible for drawing the lives and score of player 2 (Yoshi) to the screen.
  * Adheres to the decorator pattern.
  */
-public class YoshiStats extends HUDDecorator {
+public class YoshiStats extends AbstractStats {
+
+    /**
+     * The mugshot next to the lives counter.
+     */
+    public static final Image YOSHI_MUGSHOT = new Image("images/mugshots/yoshi_mugshot.png");
 
     /**
      * The spacing between the two lives and scores of the player.
@@ -30,54 +35,35 @@ public class YoshiStats extends HUDDecorator {
     }
 
     @Override
-    public void draw() {
-        super.draw();
-
-        //Set text color to white
-        getGraphicsContext().setFill(Color.WHITE);
-
-        drawLifeCounters();
-        drawScore();
-        getGraphicsContext().setEffect(null);
+    /* default */ void drawMugshots() {
+        getGraphicsContext().drawImage(YOSHI_MUGSHOT, getMugshotMargin().x
+                + SPACING, getMugshotMargin().y, getMugshotSize(), getMugshotSize());
     }
 
     /**
      * Draws the life counters to the screen.
      */
-    private void drawLifeCounters() {
-        //Draw lives image
-
-        //Yoshi
-        getGraphicsContext().drawImage(YOSHI_MUGSHOT, MUGSHOT_MARGIN.x + SPACING, MUGSHOT_MARGIN.y, MUGSHOT_SIZE, MUGSHOT_SIZE);
-
-        //Draw lives strings
-        //Set drop shadow
-        getGraphicsContext().setEffect(DROP_SHADOW);
+    /* default */ void drawLifeCounters() {
 
         //Set font to smaller font
-        getGraphicsContext().setFont(LIVES_FONT);
+        getGraphicsContext().setFont(getLivesFont());
 
-        //Yoshi
-        String livesString2 = "x" + String.format("%02d", player.getLives());
         getGraphicsContext().fillText(
-                livesString2,
-                LIVES_MARGIN.x + SPACING, LIVES_MARGIN.y);
+                formatLivesString(player),
+                getLivesMargin().x + SPACING, getLivesMargin().y);
     }
 
     /**
      * Draws the score to the screen.
      */
-    public void drawScore() {
+    /* default */ void drawScore() {
 
         //Set bigger font
-        getGraphicsContext().setFont(SCORE_FONT);
-
-        //Add leading zeros to score
-        String score2 = String.format("%06d", player.getScore());
+        getGraphicsContext().setFont(getScoreFont());
 
         //Draw score
         getGraphicsContext().fillText(
-                score2,
-                SCORE_MARGIN.x + SPACING, SCORE_MARGIN.y);
+                formatScoreString(player),
+                getScoreMargin().x + SPACING, getScoreMargin().y);
     }
 }

@@ -1,13 +1,18 @@
 package ui;
 
 import game.player.Player;
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 
 /**
  * Class responsible for drawing the lives and score of player 1 (Mario) to the screen.
  * Adheres to the decorator pattern.
  */
-public class MarioStats extends HUDDecorator {
+public class MarioStats extends AbstractStats {
+
+    /**
+     * The mugshot next to the lives counter.
+     */
+    public static final Image MARIO_MUGSHOT = new Image("images/mugshots/mario_mugshot.png");
 
     /**
      * The players this HUD draws the lives for.
@@ -25,54 +30,30 @@ public class MarioStats extends HUDDecorator {
     }
 
     @Override
-    public void draw() {
-        super.draw();
-
-        //Set text color to white
-        getGraphicsContext().setFill(Color.WHITE);
-
-        drawLifeCounters();
-        drawScore();
-        getGraphicsContext().setEffect(null);
+    /* default */ void drawMugshots() {
+        getGraphicsContext().drawImage(MARIO_MUGSHOT, getMugshotMargin().x,
+                                       getMugshotMargin().y, getMugshotSize(), getMugshotSize());
     }
 
-    /**
-     * Draws the life counters to the screen.
-     */
-    private void drawLifeCounters() {
-        //Draw lives images
-        //Mario
-        getGraphicsContext().drawImage(MARIO_MUGSHOT, MUGSHOT_MARGIN.x, MUGSHOT_MARGIN.y, MUGSHOT_SIZE, MUGSHOT_SIZE);
-
-        //Draw lives strings
-        //Set drop shadow
-        getGraphicsContext().setEffect(DROP_SHADOW);
-
+    @Override
+    /* default */ void drawLifeCounters() {
         //Set font to smaller font
-        getGraphicsContext().setFont(LIVES_FONT);
+        getGraphicsContext().setFont(getLivesFont());
 
-        //Mario
-        String livesString1 = "x" + String.format("%02d", player.getLives());
         getGraphicsContext().fillText(
-                livesString1,
-                LIVES_MARGIN.x, LIVES_MARGIN.y);
+                formatLivesString(player),
+                getLivesMargin().x, getLivesMargin().y);
     }
 
-    /**
-     * Draws the score to the screen.
-     */
-    public void drawScore() {
+    @Override
+    /* default */ void drawScore() {
 
         //Set bigger font
-        getGraphicsContext().setFont(SCORE_FONT);
-
-        //Add leading zeros to score
-        String score1 = String.format("%06d", player.getScore());
+        getGraphicsContext().setFont(getScoreFont());
 
         //Draw score
-        //Mario
         getGraphicsContext().fillText(
-                score1,
-                SCORE_MARGIN.x, SCORE_MARGIN.y);
+                formatScoreString(player),
+                getScoreMargin().x, getScoreMargin().y);
     }
 }
