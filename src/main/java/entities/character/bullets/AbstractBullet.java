@@ -38,7 +38,6 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
 
     @Override
     public void collideWith(final AbstractEntity entity) {
-        SoundEffect.SHOOT.getAudio().stop();
 
         if (entity instanceof AbstractBall) {
             collideWith((AbstractBall) entity);
@@ -56,6 +55,7 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
      */
     private void collideWith(final AbstractBall ball) {
         die();
+        SoundEffect.SHOOT.getAudio().stop();
 
         final int score = (ball.getSize() + 1) * SCORE_PER_BALL;
         getCharacter().increaseScore(score);
@@ -66,6 +66,7 @@ public abstract class AbstractBullet extends AbstractEntity implements Colliding
      */
     private void collideWithBlock() {
         die();
+        SoundEffect.SHOOT.getAudio().stop();
     }
 
     /**

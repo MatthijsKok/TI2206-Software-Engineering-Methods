@@ -4,7 +4,7 @@ import main.BubbleTroubleApplicationTest;
 import org.json.JSONObject;
 
 /**
- * Base class for that provides usefull methods for the
+ * Base class for that provides useful methods for the
  * Entity factory test suites.
  */
 abstract class AbstractEntityFactoryTest extends BubbleTroubleApplicationTest {
