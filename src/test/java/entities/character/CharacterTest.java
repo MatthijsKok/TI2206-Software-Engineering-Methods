@@ -73,13 +73,6 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
         assertThat("A character should move to the left if its direction is -1", character.getX(), lessThan(x));
     }
 
-    /*@Test
-    public void testSetShooting() {
-        character.setShooting(true);
-        character.update(1);
-        assertThat("A character should shoot when told to.", character.getVine().isVisible(), is(true));
-    }*/
-
     @Test
     public void testCollideWithBall() {
         AbstractBall mockedBall = Mockito.mock(AbstractBall.class);
@@ -109,6 +102,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
                         spawnPosition.x - 5,
                         spawnPosition.y - 5));
 
+        character.setYSpeed(10);
         double y = character.getY();
         character.collideWith(floor);
 
@@ -122,6 +116,8 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
                 new Vec2d(
                         spawnPosition.x - 5,
                         rect.getTop() - 59));
+
+        character.setYSpeed(-10);
 
         double y = character.getY();
         character.collideWith(floor);
@@ -150,6 +146,7 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
                         spawnPosition.x + 5,
                         spawnPosition.y - 30));
 
+        character.setXSpeed(10);
         double x = character.getX();
         character.collideWith(wall);
 
@@ -163,18 +160,13 @@ public class CharacterTest extends BubbleTroubleApplicationTest {
                         spawnPosition.x - 60,
                         spawnPosition.y - 32));
 
+        character.setXSpeed(-10);
+
         double x = character.getX();
         character.collideWith(wall);
 
         assertThat(character.getX(), greaterThan(x));
     }
-
-    /*@Test
-    public void testIncreaseScore() {
-        int score = player.getScore();
-        character.increaseScore(100);
-        assertThat(player.getScore(), is(score + 100));
-    }*/
 
     @Test
     public void testShoot() {

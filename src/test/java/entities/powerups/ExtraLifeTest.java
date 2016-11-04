@@ -27,12 +27,4 @@ public class ExtraLifeTest extends BubbleTroubleApplicationTest {
     public void testConstructorSetsSprite() {
         assertNotNull("A extraLife should have a sprite", extraLife.getSprite());
     }
-
-    /*@Test
-    public void testApplyEffect() {
-        player.update(character, new Pair<>("increaseLives", -1));
-        int livesBeforePickup = player.getLives();
-        extraLife.applyEffect();
-        assertEquals(livesBeforePickup + 1, player.getLives());
-    }*/
 }
