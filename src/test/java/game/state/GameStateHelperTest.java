@@ -44,9 +44,11 @@ public class GameStateHelperTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testGoToMainMenu() {
-        GameStateHelper.goToMainMenu();
+        Platform.runLater(() -> {
+            GameStateHelper.goToMainMenu();
 
-        assertTrue(Game.getState() instanceof NotStartedState);
+            assertTrue(Game.getState() instanceof NotStartedState);
+        });
     }
 
     @Test
@@ -62,11 +64,13 @@ public class GameStateHelperTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testGoToLevelStop() {
+        Platform.runLater(() -> {
         GameStateHelper.goToLevel(
                 Game.getCurrentLevel(),
                 new Level("does_not_exist.json"));
 
         assertTrue(Game.getState() instanceof NotStartedState);
+    });
     }
 
     @Test

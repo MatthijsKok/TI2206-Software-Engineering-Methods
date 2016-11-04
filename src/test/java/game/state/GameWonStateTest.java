@@ -1,5 +1,6 @@
 package game.state;
 
+import javafx.application.Platform;
 import org.junit.Test;
 import util.SceneManager;
 
@@ -18,9 +19,11 @@ public class GameWonStateTest extends AbstractGameStateTest {
 
     @Test
     public void testFire() {
-        new GameWonState();
-        fireButton(0);
-        assertThat(SceneManager.getCurrentScene(),
-                is(SceneManager.getScene("MainMenu")));
+        Platform.runLater(() -> {
+            new GameWonState();
+            fireButton(0);
+            assertThat(SceneManager.getCurrentScene(),
+                    is(SceneManager.getScene("MainMenu")));
+        });
     }
 }
