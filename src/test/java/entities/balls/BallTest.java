@@ -32,12 +32,13 @@ public class BallTest extends BubbleTroubleApplicationTest {
     private Vec2d spawnPosition = new Vec2d(100, 300);
     private int ballSize = 2;
     private ColoredBall.Color ballColor = ColoredBall.Color.BLUE;
-    private Sprite sprite = new Sprite("/blocks/mushroom_block.png");
+    private Sprite sprite;
 
     private Level level;
 
     @Before
     public void setUp() {
+        sprite = new Sprite("/blocks/mushroom_block.png");
         level = Game.getCurrentLevel();
         ball = new ColoredBall(spawnPosition, ballSize, ballColor);
         level.addEntity(ball);

@@ -216,7 +216,6 @@ public final class Logger {
                 purgeLogRecords();
 
             } catch (IOException e) {
-                System.out.println("hoi!");
                 e.printStackTrace();
                 error("Log could not be written to file." + e.getMessage());
             }

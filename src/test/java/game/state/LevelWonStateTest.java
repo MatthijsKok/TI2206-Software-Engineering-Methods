@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class LevelWonStateTest extends AbstractGameStateTest {
     @Test
     public void testConstructor() {
-        new LevelWonState(new Level(""), new Level(""));
+        new LevelWonState(new Level("level1.json"), new Level("level2.json"));
         assertChildAmount(2);
     }
 
