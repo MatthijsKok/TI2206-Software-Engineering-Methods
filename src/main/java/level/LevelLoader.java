@@ -24,7 +24,7 @@ final class LevelLoader {
      * @throws IOException If the level file is not found.
      */
     /* default */ static void load(Level level, String filename) throws IOException {
-        JSONObject json = JSONParser.parseJSONFile("/levels/" + filename);
+        JSONObject json = JSONParser.parseJSONFile("src/main/resources/levels/" + filename);
         JSONArray entities = json.getJSONArray("entities");
 
         loadMetaData(level, json);

@@ -2,10 +2,9 @@ package util;
 
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Utility class that parses JSON strings and files.
@@ -36,23 +35,7 @@ public final class JSONParser {
      * @throws IOException If the path/file is not found.
      */
     private static String readFile(final String path) throws IOException {
-        final File file = new File(JSONParser.class.getResource(path).getFile());
-
-        String content = "";
-
-        try (FileReader fileStream = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileStream)) {
-
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null) {
-                content += line;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return content;
+        final byte[] bytes = Files.readAllBytes(Paths.get(path));
+        return new String(bytes);
     }
 }

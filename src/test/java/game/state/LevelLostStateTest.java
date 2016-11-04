@@ -12,14 +12,14 @@ import static org.junit.Assert.assertTrue;
 public class LevelLostStateTest extends AbstractGameStateTest {
     @Test
     public void testConstructor() {
-        new LevelLostState(new Level(""), false);
+        new LevelLostState(new Level("level3.json"), false);
         assertChildAmount(2);
         assertTitle("You died...");
     }
 
     @Test
     public void testConstructorTimeUp() {
-        new LevelLostState(new Level(""), true);
+        new LevelLostState(new Level("level3.json"), true);
         assertChildAmount(2);
         assertTitle("Time's up!");
     }

@@ -53,7 +53,7 @@ public class GameStateHelperTest extends BubbleTroubleApplicationTest {
 
     @Test
     public void testGoToLevel() {
-        Level newLevel = new Level("levelForLoader.json");
+        Level newLevel = new Level("level3.json");
 
         GameStateHelper.goToLevel(
                 Game.getCurrentLevel(),

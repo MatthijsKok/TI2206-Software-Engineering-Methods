@@ -18,7 +18,7 @@ public class LevelTest extends BubbleTroubleApplicationTest {
 
     @Before
     public void setUp(){
-        level2 = new Level("levelForLoader.json");
+        level2 = new Level("level3.json");
     }
 
     @Test
