@@ -14,3 +14,5 @@ notifications:
       - matthijs.kok2@gmail.com
     on_succes: never
     on_failure: always
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t 646be567-c7fc-4967-852b-bf1460d8a55e
