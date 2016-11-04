@@ -1,6 +1,6 @@
 {
   "name": "Cookie cave",
-  "duration": 25,
+  "duration": 23,
   "backgroundImageURI": "cave.png",
   "backgroundMusicURI": "underground_remix.mp3",
   "entities": [
