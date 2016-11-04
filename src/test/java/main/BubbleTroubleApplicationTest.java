@@ -28,8 +28,8 @@ public class BubbleTroubleApplicationTest extends ApplicationTest {
     }
 
     private void setUpGame() {
-        Level level1 = new Level("src/test/resources/levels/noBallsLevel.json");
-        Level level2 = new Level("src/test/resources/levels/timeUpLevel.json");
+        Level level1 = new Level("noBallsLevel.json");
+        Level level2 = new Level("timeUpLevel.json");
 
         level1.setTimer(new LevelTimer());
         level2.setTimer(new LevelTimer());
