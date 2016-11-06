@@ -21,14 +21,18 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
     /**
      * The offset of the bounding box of a character.
      */
-    private static final Vec2d OFFSET = new Vec2d(8, 16);
+    private static final Vec2d OFFSET = new Vec2d(12, 24);
     /**
      * The bounding box of a character.
      */
-    private static final Rectangle BOUNDING_BOX = new Rectangle(16, 32);
+    private static final Rectangle BOUNDING_BOX = new Rectangle(24, 48);
     static {
         BOUNDING_BOX.setOffset(OFFSET.x, OFFSET.y);
     }
+    /**
+     * The offset of the bounding box of a character.
+     */
+    private static final double SCALE = 1.3;
     /**
      * The shield this character carries.
      */
@@ -60,7 +64,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
         movement = new CharacterMovement(this);
         shield = new Shield(this);
         gun = new Gun<>(this, Vine.class);
-
+        this.setScale(SCALE);
         getLevel().addEntity(shield);
         getLevel().addEntity(gun);
 
@@ -102,7 +106,7 @@ public class Character extends AbstractEntity implements DynamicEntity, Collidin
             setSprite(idleSprite);
         } else {
             setSprite(runningSprite);
-            setXScale(movement.getDirection());
+            setXScale(SCALE * movement.getDirection());
         }
     }
 
